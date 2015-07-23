@@ -124,7 +124,6 @@
 		364BC66E1B5E458400EAFCCE /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		364BC6701B5E458400EAFCCE /* AlipaySDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipaySDK.h; sourceTree = "<group>"; };
 		364BC6711B5E458400EAFCCE /* APayAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APayAuthInfo.h; sourceTree = "<group>"; };
-		364BC6731B5E458400EAFCCE /* BeeCloud.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BeeCloud.framework; sourceTree = "<group>"; };
 		364BC6761B5E458400EAFCCE /* UPPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPlugin.h; sourceTree = "<group>"; };
 		364BC6771B5E458400EAFCCE /* UPPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPluginDelegate.h; sourceTree = "<group>"; };
 		364BC67A1B5E458400EAFCCE /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -280,7 +279,6 @@
 			children = (
 				364BC65B1B5E458400EAFCCE /* AFNetworking */,
 				364BC66F1B5E458400EAFCCE /* AliPaySDK */,
-				364BC6721B5E458400EAFCCE /* BeeCloudSDK */,
 				364BC6741B5E458400EAFCCE /* UnionPaySDK */,
 				364BC6781B5E458400EAFCCE /* WeChatSDK */,
 			);
@@ -320,14 +318,6 @@
 				364BC6711B5E458400EAFCCE /* APayAuthInfo.h */,
 			);
 			path = AliPaySDK;
-			sourceTree = "<group>";
-		};
-		364BC6721B5E458400EAFCCE /* BeeCloudSDK */ = {
-			isa = PBXGroup;
-			children = (
-				364BC6731B5E458400EAFCCE /* BeeCloud.framework */,
-			);
-			path = BeeCloudSDK;
 			sourceTree = "<group>";
 		};
 		364BC6741B5E458400EAFCCE /* UnionPaySDK */ = {

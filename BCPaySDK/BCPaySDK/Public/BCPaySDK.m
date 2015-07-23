@@ -47,9 +47,13 @@
     return instance->registerStatus;
 }
 
-+ (BOOL)handleOpenUrl:(NSURL *)url delegate:(id<BCApiDelegate>)delegate {
++ (void)setBCApiDelegate:(id<BCApiDelegate>)delegate {
+    [BCPaySDK sharedInstance].deleagte = delegate;
+}
+
++ (BOOL)handleOpenUrl:(NSURL *)url {
     BCPaySDK *instance = [BCPaySDK sharedInstance];
-    instance.deleagte = delegate;
+    
     if (BCPayUrlWeChat == [BCPayUtil getUrlType:url]) {
         return [WXApi handleOpenURL:url delegate:instance];
     } else if (BCPayUrlAlipay == [BCPayUtil getUrlType:url]) {
@@ -69,22 +73,8 @@
     [BCPayCache sharedInstance].willPrintLogMsg = flag;
 }
 
-- (NSString *)getChannelString:(PayChannel)channel {
-    NSString *cType = @"";
-    switch (channel) {
-        case WX:
-            cType = @"WX_APP";
-            break;
-        case Ali:
-            cType = @"ALI_APP";
-            break;
-        case Union:
-            cType = @"UN_APP";
-            break;
-        default:
-            break;
-    }
-    return cType;
++ (void)setNetworkTimeout:(NSTimeInterval)time {
+    [BCPayCache sharedInstance].networkTimeout = time;
 }
 
 + (BOOL)sendBCReq:(BCBaseReq *)req {
@@ -98,6 +88,9 @@
     return YES;
 }
 
+#pragma mark private class functions
+
+#pragma mark pay
 - (void)reqPay:(BCPayReq *)req {
     if (![[BCPaySDK sharedInstance] checkParameters:req]) return;
     
@@ -133,14 +126,19 @@
                   NSLog(@"channel=%@,resp=%@", cType, response);
                   NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                               (NSDictionary *)response];
-                  [dic setObject:req.scheme forKey:@"scheme"];
-                  [dic setObject:req.viewController forKey:@"viewController"];
+                  if (req.channel == Ali) {
+                     [dic setObject:req.scheme forKey:@"scheme"];
+                  } else if (req.channel == Union) {
+                     [dic setObject:req.viewController forKey:@"viewController"];
+                  }
                   [self doPayAction:req.channel source:dic];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [self doErrorResponse:kNetWorkError];
           }];
 }
+
+#pragma mark query bills/refunds
 
 - (void)reqQueryOrder:(BCQueryReq *)req {
     if (req == nil) {
@@ -206,9 +204,28 @@
          }];
 }
 
+- (NSString *)getChannelString:(PayChannel)channel {
+    NSString *cType = @"";
+    switch (channel) {
+        case WX:
+            cType = @"WX_APP";
+            break;
+        case Ali:
+            cType = @"ALI_APP";
+            break;
+        case Union:
+            cType = @"UN_APP";
+            break;
+        default:
+            break;
+    }
+    return cType;
+}
+
 - (void)doErrorResponse:(NSString *)errMsg {
     BCBaseResp *resp = [[BCBaseResp alloc] init];
     resp.result_code = BCErrCodeCommon;
+    resp.result_msg = errMsg;
     resp.err_detail = errMsg;
     if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
         [_deleagte doBCResp:resp];
@@ -241,6 +258,13 @@
             return NO;
         } else if ((req.channel == Union) && (req.viewController == nil)) {
             [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
+            return NO;
+        }
+        
+        if (req.channel == WX ) {
+            if (![WXApi isWXAppInstalled]) {
+                [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
+            }
             return NO;
         }
     }

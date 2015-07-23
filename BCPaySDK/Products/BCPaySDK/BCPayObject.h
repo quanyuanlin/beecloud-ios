@@ -107,36 +107,38 @@ typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 @end
 
 
-#pragma mark BCBillsResp
+#pragma mark BCQueryResp
 /**
  *  queryBills 响应结构体
  */
-@interface BCBillsResp : BCBaseResp
+@interface BCQueryResp : BCBaseResp
 /**
  *  查询到得结果数量
  */
 @property (nonatomic, assign) NSInteger count;
 
-@property (nonatomic, retain) NSArray *bills;
+@property (nonatomic, retain) NSArray *results;
 
 @end
 
-#pragma mark BCBillsReq
+#pragma mark BCQueryReq
 /**
  *  queryBills 请求结构体
  */
-@interface BCBillsReq : BCBaseReq
+@interface BCQueryReq : BCBaseReq
 
 @property (assign) PayChannel channel;
-@property (strong, nonatomic) NSString *billno;
-@property (assign) long long  starttime;
-@property (assign) long long endtime;
-@property (assign) NSUInteger skip;
-@property (assign) NSUInteger limit;
+@property (nonatomic, retain) NSString *billno;
+@property (assign) NSString *starttime;
+@property (assign) NSString *endtime;
+@property (assign) NSInteger skip;
+@property (assign) NSInteger limit;
 
-+ (BCBillsResp *)reqQuerybills;
+@end
 
-+ (void)reqQueryBillsAsync:(BCPayBlock)block;
+@interface BCQRefundReq : BCQueryReq
+
+@property (nonatomic, retain) NSString *refundno;
 
 @end
 

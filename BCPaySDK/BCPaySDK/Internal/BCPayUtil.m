@@ -12,14 +12,6 @@
 
 @implementation BCPayUtil
 
-+ (NSError *)errorWithCode:(NSInteger)code message:(NSString *)errorMsg {
-    NSMutableDictionary *userInfo = nil;
-    if (errorMsg != nil) {
-        userInfo = [NSMutableDictionary dictionaryWithObject:errorMsg forKey:@"error"];
-    }
-    return [NSError errorWithDomain:kErrorDomain code:code userInfo:userInfo];
-}
-
 + (AFHTTPRequestOperationManager *)getAFHTTPRequestOperationManager {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.securityPolicy.allowInvalidCertificates = NO;
@@ -86,7 +78,7 @@
 
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
-    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],apiVersion]; //2015.07.09
+    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],reqApiVersion]; //2015.07.09
     verHost = @"http://58.211.191.123:8080/1";
     return [NSString stringWithFormat:format, verHost];
 }

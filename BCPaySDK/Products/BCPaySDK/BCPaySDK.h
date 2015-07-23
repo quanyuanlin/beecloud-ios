@@ -37,14 +37,20 @@
 + (BOOL)initWeChatPay:(NSString *)wxAppID;
 
 /**
- * 处理通过URL启动App时传递的数据
+ * 处理通过URL启动App时传递的数据。需要在application:openURL:sourceApplication:annotation:中调用。
  *
- * @param 需要在application:openURL:sourceApplication:annotation:中调用。
  * @param url 启动第三方应用时传递过来的URL
  *
  * @return 成功返回YES，失败返回NO。
  */
-+ (BOOL)handleOpenUrl:(NSURL *)url delegate:(id<BCApiDelegate>)delegate;
++ (BOOL)handleOpenUrl:(NSURL *)url;
+
+/**
+ *  设置接收消息的对象
+ *
+ *  @param delegate BCApiDelegate对象，用来接收BeeCloud触发的消息。
+ */
++ (void)setBCApiDelegate:(id<BCApiDelegate>)delegate;
 
 /**
  *  获取API版本号
@@ -53,27 +59,23 @@
  */
 + (NSString *)getBCApiVersion;
 
-#pragma mark - pay function
-/** @name pay function */
+/**
+ *  设置是否打印log
+ *
+ *  @param flag YES打印
+ */
++ (void)setWillPrintLog:(BOOL)flag;
+
+/**
+ *  设置网络请求超时时间
+ *
+ *  @param time 超时时间, 5.0代表5秒。
+ */
++ (void)setNetworkTimeout:(NSTimeInterval)time;
+
+#pragma mark - Send BeeCloud Request
+/** @name send request function */
 
 + (BOOL)sendBCReq:(BCBaseReq *)req;
-
-#pragma mark - query WX orders
-
-/**
- *  向微信发送查询订单状态请求
- *
- *  @param outTradeNo 商户系统内部的订单号,32个字节内、只包含数字与字母,确保在商户系统中唯一
- *  @param block      查询结果回调。success=YES时，正确返回从微信后台获取的订单状态;success=NO时，返回订单查询请求失败原因
- */
-+ (void)reqQueryWXPay:(NSString *)outTradeNo queryBlock:(BCPayBlock)block;
-
-/**
- *  向微信发送查询退款状态请求
- *
- *  @param out_refund_no 商户自定义退款订单号
- *  @param block         退款状态回调。success=YES时，正确返回从微信后台获取的退款状态;success=NO时，返回退款查询请求失败原因。
- */
-+ (void)reqQueryWXRefund:(NSString *)out_refund_no block:(BCPayBlock)block;
 
 @end

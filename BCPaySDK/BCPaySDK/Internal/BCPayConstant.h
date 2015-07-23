@@ -12,7 +12,6 @@
 static NSString * const kApiVersion = @"3.0";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
-static NSString * const kErrorDomain = @"cn.beecloud.api";
 static NSString * const kKeyResponseResultCode = @"result_code";
 static NSString * const kKeyResponseResultMsg = @"result_msg";
 static NSString * const kKeyResponseErrDetail = @"err_detail";
@@ -24,7 +23,7 @@ static NSString * const kBCHosts[] = {@"https://apisz.beecloud.cn",
     @"https://apibj.beecloud.cn",
     @"https://apihz.beecloud.cn"};
 
-static NSString * const apiVersion = @"/1";
+static NSString * const reqApiVersion = @"/1";
 
 //rest api
 static NSString * const kRestApiPay = @"%@/rest/bill";

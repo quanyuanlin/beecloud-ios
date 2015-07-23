@@ -37,14 +37,20 @@
 + (BOOL)initWeChatPay:(NSString *)wxAppID;
 
 /**
- * 处理通过URL启动App时传递的数据
+ * 处理通过URL启动App时传递的数据。需要在application:openURL:sourceApplication:annotation:中调用。
  *
- * @param 需要在application:openURL:sourceApplication:annotation:中调用。
  * @param url 启动第三方应用时传递过来的URL
  *
  * @return 成功返回YES，失败返回NO。
  */
-+ (BOOL)handleOpenUrl:(NSURL *)url delegate:(id<BCApiDelegate>)delegate;
++ (BOOL)handleOpenUrl:(NSURL *)url;
+
+/**
+ *  设置接收消息的对象
+ *
+ *  @param delegate BCApiDelegate对象，用来接收BeeCloud触发的消息。
+ */
++ (void)setBCApiDelegate:(id<BCApiDelegate>)delegate;
 
 /**
  *  获取API版本号
@@ -60,8 +66,15 @@
  */
 + (void)setWillPrintLog:(BOOL)flag;
 
-#pragma mark - pay function
-/** @name pay function */
+/**
+ *  设置网络请求超时时间
+ *
+ *  @param time 超时时间, 5.0代表5秒。
+ */
++ (void)setNetworkTimeout:(NSTimeInterval)time;
+
+#pragma mark - Send BeeCloud Request
+/** @name send request function */
 
 + (BOOL)sendBCReq:(BCBaseReq *)req;
 

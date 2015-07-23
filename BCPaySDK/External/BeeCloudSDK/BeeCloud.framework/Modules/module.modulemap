@@ -1,6 +1,0 @@
-framework module BeeCloud {
-  umbrella header "BeeCloud.h"
-
-  export *
-  module * { export * }
-}

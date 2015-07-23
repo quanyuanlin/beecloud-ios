@@ -18,16 +18,6 @@
 
 /** @name util functions*/
 
-/**
- *  Produces an error object within BeeCloud domain with customized errorMsg.
- *
- *  @param code     Error code is a customized NSInteger.
- *  @param errorMsg Error message, which can be nil.
- *
- *  @return Error
- */
-+ (NSError *)errorWithCode:(NSInteger)code message:(NSString *)errorMsg;
-
 /*!
  A wrapper for AFHTTPRequestOperationManager.
  */

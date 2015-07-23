@@ -47,14 +47,15 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     NSLog(@"traceno = %@", outTradeNo);
     BCPayReq *payReq = [[BCPayReq alloc] init];
-    payReq.channel = WX;
+    payReq.channel = Ali;
     payReq.title = @"test";
     payReq.totalfee = @"1";
-    payReq.billno = @"2015";
+    payReq.billno = outTradeNo;
     payReq.scheme = @"payTestDemo";
     payReq.viewController = nil;
     payReq.optional = dict;
     [BCPaySDK sendBCReq:payReq];
+    [self waitForTimeout:3];
 }
 
 - (void)testQueryBills {
