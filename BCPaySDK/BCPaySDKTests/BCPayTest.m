@@ -47,7 +47,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     NSLog(@"traceno = %@", outTradeNo);
     BCPayReq *payReq = [[BCPayReq alloc] init];
-    payReq.channel = Ali;
+    payReq.channel = WX;
     payReq.title = @"test";
     payReq.totalfee = @"1";
     payReq.billno = outTradeNo;
