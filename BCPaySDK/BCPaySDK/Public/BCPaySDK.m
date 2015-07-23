@@ -289,12 +289,8 @@
         } else if ((req.channel == Union) && (req.viewController == nil)) {
             [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
             return NO;
-        }
-        
-        if (req.channel == WX ) {
-            if (![WXApi isWXAppInstalled]) {
-                [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
-            }
+        } else if (req.channel == WX && ![WXApi isWXAppInstalled]) {
+            [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
             return NO;
         }
     }
