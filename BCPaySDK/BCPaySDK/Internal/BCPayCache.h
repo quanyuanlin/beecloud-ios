@@ -31,16 +31,6 @@
 @property (nonatomic) NSTimeInterval networkTimeout;
 
 /**
- *  server host map [host:RTT,...]
- */
-@property (nonatomic, strong) NSMutableDictionary *hostRTTMap;
-
-/**
- * best host
- */
-@property (nonatomic, strong) NSString *bestHost;
-
-/**
  *  Mark whether print log message.
  */
 @property (nonatomic, assign) BOOL willPrintLogMsg;

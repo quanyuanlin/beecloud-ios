@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BCPayObject.h"
 #import "AFNetworking.h"
-#import "BeeCloud.h"
 #import "BCPayConstant.h"
 #import "BCPayCache.h"
+#import "BCUtil.h"
 
 
 @interface BCPayUtil : NSObject
@@ -43,33 +43,13 @@
 + (NSMutableDictionary *)getWrappedParametersForGetRequest:(NSDictionary *) parameters;
 
 /**
- *  Common method to get error string based on the highest level response's resultCode and errMsg field.
- *
- *  @param response JSON response object replied by the cloud.
- *
- *  @return error string if there is error; nil otherwise.
- */
-+ (NSString *)getErrorStringBasedOnResultCodeAndErrMsgInResponse:(id)response;
-
-/**
- *   Get app signature.
- *
- *   @param appId
- *
- *   @param appSecret
- *
- *   @return app signature using MD5
- */
-+ (NSString *)getAppSignature:(NSString*)appId appSecret:(NSString *)appSecret;
-
-/**
  *  prepare parameters
  *
  *  @param block result block
  *
  *  @return default request map
  */
-+ (NSMutableDictionary *)prepareParametersForPay:(BCPayBlock)block;
++ (NSMutableDictionary *)prepareParametersForPay;
 
 /**
  *  获取url的类型，微信或者支付宝
@@ -79,6 +59,15 @@
  *  @return 微信或者支付宝
  */
 + (BCPayUrlType)getUrlType:(NSURL *)url;
+
+/**
+ *  getBestHost
+ *
+ *  @param format url
+ *
+ *  @return url
+ */
++ (NSString *)getBestHostWithFormat:(NSString *)format;
 
 @end
 

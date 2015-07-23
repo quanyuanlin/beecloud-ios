@@ -20,32 +20,6 @@
     return [NSError errorWithDomain:kErrorDomain code:code userInfo:userInfo];
 }
 
-+ (NSString *)getAppSignature:(NSString *)appId appSecret:(NSString *)appSecret
-{
-    NSString *input = [appId stringByAppendingString:appSecret];
-    const char* str = [input UTF8String];
-    unsigned char result[CC_MD5_DIGEST_LENGTH];
-    CC_MD5(str, (CC_LONG)strlen(str), result);
-    NSMutableString *ret = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH*2];
-    
-    for(int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
-        [ret appendFormat:@"%02x",result[i]];
-    }
-    return ret;
-}
-
-+ (NSString *)getErrorStringBasedOnResultCodeAndErrMsgInResponse:(id)response {
-    NSNumber *resultCode = [response objectForKey:kKeyResponseResultCode];
-    NSString *errMsg = [response objectForKey:kKeyResponseErrDetail];
-    if (resultCode == nil || errMsg == nil) {
-        return @"Invalid response.";
-    } else if ([resultCode intValue] != 0) {
-        // Result code indicating error.
-        return errMsg;
-    }
-    return nil;
-}
-
 + (AFHTTPRequestOperationManager *)getAFHTTPRequestOperationManager {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.securityPolicy.allowInvalidCertificates = NO;
@@ -62,28 +36,24 @@
     return paramWrapper;
 }
 
-+ (NSMutableDictionary *)prepareParametersForPay:(BCPayBlock)block {
++ (NSMutableDictionary *)prepareParametersForPay {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    NSString *timeStamp = [BCPayUtil getNowTimeStamp];
-    NSString *appSign = [BCPayUtil getAppSignature:timeStamp];
+    NSNumber *timeStamp = [BCUtil getTimeStampFromDate:[NSDate date]];
+    NSString *appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
     if(appSign) {
         [parameters setObject:[BCPayCache sharedInstance].appId forKey:@"app_id"];
-        [parameters setObject:[NSNumber numberWithLongLong:[timeStamp longLongValue]] forKey:@"timestamp"];
+        [parameters setObject:timeStamp forKey:@"timestamp"];
         [parameters setObject:appSign forKey:@"app_sign"];
-    } else {
-        if (block) {
-            block(NO, @"Prepare parameters: appID and appSecret needs to be specified.",nil);
-        }
-        return nil;
+        return parameters;
     }
-    return parameters;
+    return nil;
 }
 
-+ (NSString *)getNowTimeStamp {
-    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
-    NSTimeInterval a = [dat timeIntervalSince1970]*1000;
-    NSString *timeString = [NSString stringWithFormat:@"%.0f", a];//转为字符型
-    return timeString;
++ (NSDate *)stringToDate:(NSString *)string {
+    if (string == nil || string.length == 0) return nil;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyyMMddHHmm"];
+    return [dateFormatter dateFromString:string];
 }
 
 + (NSString *)getAppSignature:(NSString *)timeStamp {
@@ -114,10 +84,17 @@
         return BCPayUrlUnknown;
 }
 
+
++ (NSString *)getBestHostWithFormat:(NSString *)format {
+    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],apiVersion]; //2015.07.09
+    verHost = @"http://58.211.191.123:8080/1";
+    return [NSString stringWithFormat:format, verHost];
+}
+
 @end
 
 void BCPayLog(NSString *format,...) {
-    if ([BeeCloud getWillPrintLog]) {
+    if ([BCPayCache sharedInstance].willPrintLogMsg) {
         va_list list;
         va_start(list,format);
         NSLogv(format, list);

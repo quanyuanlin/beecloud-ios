@@ -8,7 +8,6 @@
 
 #import "BeeCloud.h"
 
-#import "BCCache.h"
 #import "BCUtilPrivate.h"
 
 // This is to enable connecting to beecloud servers with HTTPS.

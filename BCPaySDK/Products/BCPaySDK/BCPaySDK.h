@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "BCPayObject.h"
 
+@protocol BCApiDelegate <NSObject>
+@optional
+- (void)doBCResp:(BCBaseResp *)resp;
+
+@end
+
 
 @interface BCPaySDK : NSObject
 
@@ -38,7 +44,7 @@
  *
  * @return 成功返回YES，失败返回NO。
  */
-+ (BOOL)handleOpenUrl:(NSURL *)url;
++ (BOOL)handleOpenUrl:(NSURL *)url delegate:(id<BCApiDelegate>)delegate;
 
 /**
  *  获取API版本号
@@ -50,43 +56,7 @@
 #pragma mark - pay function
 /** @name pay function */
 
-/**
-*  发起支付
-*
-*  @param channel        支付渠道(WeChatPay,AliPay,UnionPay)
-*  @param title          订单描述,32个字节内,最长16个汉字
-*  @param totalfee       支付金额,以分为单位,必须为整数,100表示1元
-*  @param traceno        商户系统内部的订单号,8~32位数字和/或字母组合,确保在商户系统中唯一
-*  @param scheme         调用支付的app注册在info.plist中的scheme,支付宝支付需要
-*  @param viewController 调起银联支付的页面，银联支付需要
-*  @param optional       扩展参数,可以传入任意数量的key/value对来补充对业务逻辑的需求
-*  @param block          支付结果回调
-*/
-+ (void)reqPayChannel:(PayChannel)channel
-                title:(NSString *)title
-             totalfee:(NSString *)totalfee
-              traceno:(NSString *)traceno
-               scheme:(NSString *)scheme
-       viewController:(UIViewController *)viewController
-             optional:(NSDictionary *)optional
-             payBlock:(BCPayBlock)block;
-
-/**
- *  根据traceno,refundno,reason,refundee生成预退款订单。预退款订单生成成功后，在BeeCloud商户后台对预退款订单进行处理。
- *
- *  @param channel   支付渠道(WeChatPay,AliPay,UnionPay)
- *  @param traceno   商户系统内部的订单号,8~32位数字和/或字母组合,确保在商户系统中唯一
- *  @param refundno  格式为:退款日期(8位)+流水号(3~24位)。不可重复,且退款日期必须是当天日期(年月   日)。流水号可以接受数字或英文字符,建议使用数字,但不可接受“000”。例如: 201101120001
- *  @param reason    用户退款理由
- *  @param refundfee 退款金额，以分为单位
- *  @param block     退款结果回调.如果预退款成功,success=YES;失败success=NO.
- */
-+ (void)reqRefundChannel:(PayChannel)channel
-                 traceno:(NSString *)traceno
-                refundno:(NSString *)refundno
-                  reason:(NSString *)reason
-               refundfee:(NSString *)refundfee
-                payBlock:(BCPayBlock)block;
++ (BOOL)sendBCReq:(BCBaseReq *)req;
 
 #pragma mark - query WX orders
 

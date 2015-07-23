@@ -22,11 +22,6 @@
         instance.appId = nil;
         instance.appSecret = nil;
         instance.networkTimeout = 5.0;
-        
-        instance.hostRTTMap = [NSMutableDictionary dictionary];
-        
-        instance.bestHost = kBCHosts[(arc4random() % kBCHostCount)];
-        
         instance.willPrintLogMsg = NO;
         
     });

@@ -7,20 +7,21 @@
 //
 
 #import "BCPaySDK.h"
-#import "BCWXPay.h"
-#import "BCAliPay.h"
-#import "BCUnionPay.h"
+
 #import "BCPayUtil.h"
 #import "WXApi.h"
 #import "AlipaySDK.h"
 #import "UPPayPlugin.h"
 
-@interface BCPaySDK () {
+@interface BCPaySDK ()<WXApiDelegate, UPPayPluginDelegate> {
     BOOL registerStatus;
-    BCPayBlock payBlock;
 }
+@property (nonatomic, weak) id<BCApiDelegate> deleagte;
 
+- (void)reqPay:(BCPayReq *)req;
+- (void)reqQueryOrder:(BCQueryReq *)req;
 @end
+
 
 @implementation BCPaySDK
 
@@ -41,14 +42,21 @@
 }
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
-    return [BCWXPay initWeChatPay:wxAppID];
+    BCPaySDK *instance = [BCPaySDK sharedInstance];
+    instance->registerStatus =  [WXApi registerApp:wxAppID];
+    return instance->registerStatus;
 }
 
-+ (BOOL)handleOpenUrl:(NSURL *)url {
++ (BOOL)handleOpenUrl:(NSURL *)url delegate:(id<BCApiDelegate>)delegate {
+    BCPaySDK *instance = [BCPaySDK sharedInstance];
+    instance.deleagte = delegate;
     if (BCPayUrlWeChat == [BCPayUtil getUrlType:url]) {
-        return [BCWXPay handleOpenUrl:url];
+        return [WXApi handleOpenURL:url delegate:instance];
     } else if (BCPayUrlAlipay == [BCPayUtil getUrlType:url]) {
-        return [BCAliPay handleOpenUrl:url];
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            [instance processOrderForAliPay:resultDic];
+        }];
+        return YES; //AliPay
     }
     return NO;
 }
@@ -57,33 +65,12 @@
     return kApiVersion;
 }
 
-+ (void)reqPayChannel:(PayChannel)channel
-                title:(NSString *)title
-             totalfee:(NSString *)totalfee
-              traceno:(NSString *)traceno
-               scheme:(NSString *)scheme
-       viewController:(UIViewController *)viewController
-             optional:(NSDictionary *)optional
-             payBlock:(BCPayBlock)block {
-    
-    if (![BCUtil isValidString:title] || [BCUtil getBytes:title] > 32) {
-        if (block) block(NO, @"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串", nil);
-        return;
-    } else if (![BCUtil isValidString:totalfee] || ![BCUtil isPureInt:totalfee]) {
-        if (block) block(NO, @"totalfee 以分为单位，必须是只包含数值的字符串", nil);
-        return;
-    } else if (![BCUtil isValidString:traceno] || (![BCUtil isValidTraceNo:traceno]) || (traceno.length < 8) || (traceno.length > 32)) {
-        if (block) block(NO, @"traceno 必须是长度8~32位字母和/或数字组合成的字符串", nil);
-        return;
-    } else if ((channel == AliPay) && ![BCUtil isValidString:scheme]) {
-        if (block) block(NO, @"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用", nil);
-        return;
-    } else if ((channel == Union) && (viewController == nil)) {
-        if (block) block(NO, @"viewController 不合法，将导致无法正常执行银联支付", nil);
-        return;
-    }
-    
-    NSString *cType = nil;
++ (void)setWillPrintLog:(BOOL)flag {
+    [BCPayCache sharedInstance].willPrintLogMsg = flag;
+}
+
+- (NSString *)getChannelString:(PayChannel)channel {
+    NSString *cType = @"";
     switch (channel) {
         case WX:
             cType = @"WX_APP";
@@ -97,78 +84,215 @@
         default:
             break;
     }
+    return cType;
+}
+
++ (BOOL)sendBCReq:(BCBaseReq *)req {
+    if (req.type == 1) {
+        [[BCPaySDK sharedInstance] reqPay:(BCPayReq *)req];
+    } else if (req.type == 2 ) {
+        [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryReq *)req];
+    } else if (req.type == 3) {
+        [[BCPaySDK sharedInstance] reqQueryOrder:(BCQRefundReq *)req];
+    }
+    return YES;
+}
+
+- (void)reqPay:(BCPayReq *)req {
+    if (![[BCPaySDK sharedInstance] checkParameters:req]) return;
     
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay:block];
-    if (parameters == nil) return ;
+    NSString *cType = [self getChannelString:req.channel];
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
     
     parameters[@"channel"] = cType;
-    parameters[@"total_fee"] = [NSNumber numberWithInteger:[totalfee integerValue]];
-    parameters[@"bill_no"] = traceno;
-    parameters[@"title"] = title;
-    if (optional) {
-        parameters[@"optional"] = optional;
+    parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
+    parameters[@"bill_no"] = req.billno;
+    parameters[@"title"] = req.title;
+    if (req.optional) {
+        parameters[@"optional"] = req.optional;
     }
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     
     __block NSTimeInterval tStart = [NSDate timeIntervalSinceReferenceDate];
     
-    [manager POST:[BCUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              BCPayLog(@"wechat end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
+              BCBaseResp *resp = [self getErrorInResponse:response];
+              if (resp.result_code != 0) {
+                  if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
+                      [_deleagte doBCResp:resp];
+                  }
+              } else {
+                  NSLog(@"channel=%@,resp=%@", cType, response);
+                  NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
+                                              (NSDictionary *)response];
+                  [dic setObject:req.scheme forKey:@"scheme"];
+                  [dic setObject:req.viewController forKey:@"viewController"];
+                  [self doPayAction:req.channel source:dic];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [self doErrorResponse:kNetWorkError];
+          }];
+}
+
+- (void)reqQueryOrder:(BCQueryReq *)req {
+    if (req == nil) {
+        [self doErrorResponse:@"请求结构体不合法"];
+        return;
+    }
+    
+    NSString *cType = [[BCPaySDK sharedInstance] getChannelString:req.channel];
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    NSString *reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryBills];
+    
+    if ([BCUtil isValidString:req.billno]) {
+        parameters[@"bill_no"] = req.billno;
+    }
+    if ([BCUtil isValidString:req.starttime]) {
+        parameters[@"start_time"] = [BCUtil getTimeStampFromString:req.starttime];
+    }
+    if ([BCUtil isValidString:req.endtime]) {
+        parameters[@"end_time"] = [BCUtil getTimeStampFromString:req.endtime];
+    }
+    if (req.type == 3) {
+        BCQRefundReq *refundReq = (BCQRefundReq *)req;
+        if ([BCUtil isValidString:refundReq.refundno]) {
+            parameters[@"refund_no"] = refundReq.refundno;
+        }
+        reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryRefunds];
+    }
+    parameters[@"channel"] = [[cType componentsSeparatedByString:@"_"] firstObject];
+    parameters[@"skip"] = [NSNumber numberWithInteger:req.skip];
+    parameters[@"limit"] = [NSNumber numberWithInteger:req.limit];
+    
+    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    
+    __block NSTimeInterval tStart = [NSDate timeIntervalSinceReferenceDate];
+    
+    [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
-             BCPayLog(@"wechat end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
-             NSString *basicErrorMsg = [BCPayUtil getErrorStringBasedOnResultCodeAndErrMsgInResponse:response];
-             if (basicErrorMsg != nil) {
-                 if (block) block(NO, basicErrorMsg, nil);
-             } else {
-                 NSLog(@"channel=%@,resp=%@", cType, response);
-                 NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
-                                             (NSDictionary *)response];
-                 [dic setObject:scheme forKey:@"scheme"];
-                 [dic setObject:viewController forKey:@"viewController"];
-                 [BCPaySDK doPayAction:channel source:dic];
+             BCPayLog(@"query end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
+             NSLog(@"channel=%@, resp=%@", cType, response);
+             NSDictionary *dic = (NSDictionary *)response;
+             BCQueryResp *resp = [[BCQueryResp alloc] init];
+             resp.result_code = [dic[kKeyResponseResultCode] intValue];
+             resp.result_msg = dic[kKeyResponseResultMsg];
+             resp.err_detail = dic[kKeyResponseErrDetail];
+             resp.count = [[dic objectForKey:@"count"] integerValue];
+             if (req.type == 2) {
+                 resp.results = [dic objectForKey:@"bills"];
+             } else if (req.type == 3) {
+                 resp.results = [dic objectForKey:@"refunds"];
+             }
+             if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
+                 [_deleagte doBCResp:resp];
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             if (block) block(NO, @"网络请求失败", error);
-             [BCUtil checkRequestFail];
+             [self doErrorResponse:kNetWorkError];
          }];
 }
 
-+ (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
+- (void)doErrorResponse:(NSString *)errMsg {
+    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    resp.result_code = BCErrCodeCommon;
+    resp.err_detail = errMsg;
+    if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
+        [_deleagte doBCResp:resp];
+    }
+}
+
+- (BCBaseResp *)getErrorInResponse:(id)response {
+    NSDictionary *dic = (NSDictionary *)response;
+    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    resp.result_code = [dic[kKeyResponseResultCode] intValue];
+    resp.result_msg = dic[kKeyResponseResultMsg];
+    resp.err_detail = dic[kKeyResponseErrDetail];
+    return resp;
+}
+
+- (BOOL)checkParameters:(BCBaseReq *)request {
+    if (request.type == 1) {
+        BCPayReq *req = (BCPayReq *)request;
+        if (![BCUtil isValidString:req.title] || [BCUtil getBytes:req.title] > 32) {
+            [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
+            return NO;
+        } else if (![BCUtil isValidString:req.totalfee] || ![BCUtil isPureInt:req.totalfee]) {
+            [self doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
+            return NO;
+        } else if (![BCUtil isValidString:req.billno] || (![BCUtil isValidTraceNo:req.billno]) || (req.billno.length < 8) || (req.billno.length > 32)) {
+            [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
+            return NO;
+        } else if ((req.channel == Ali) && ![BCUtil isValidString:req.scheme]) {
+            [self doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
+            return NO;
+        } else if ((req.channel == Union) && (req.viewController == nil)) {
+            [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
+            return NO;
+        }
+    }
+    return YES ;
+}
+
+#pragma mark WXPay
+- (void)doWXPay:(NSMutableDictionary *)dic {
+    BCPayLog(@"WeChat pay prepayid = %@", [dic objectForKey:@"prepay_id"]);
+    PayReq *request = [[PayReq alloc] init];
+    request.partnerId = [dic objectForKey:@"partner_id"];
+    request.prepayId = [dic objectForKey:@"prepay_id"];
+    request.package = [dic objectForKey:@"package"];
+    request.nonceStr = [dic objectForKey:@"nonce_str"];
+    NSMutableString *time = [dic objectForKey:@"timestamp"];
+    request.timeStamp = time.intValue;
+    request.sign = [dic objectForKey:@"pay_sign"];
+    [WXApi sendReq:request];
+}
+
+#pragma mark AliPay
+- (void)doAliPay:(NSMutableDictionary *)dic {
+    BCPayLog(@"Ali Pay Start");
+    NSString *orderString = [dic objectForKey:@"order_string"];
+    [[AlipaySDK defaultService] payOrder:orderString fromScheme:dic[@"scheme"]
+                                callback:^(NSDictionary *resultDic) {
+                                    [self processOrderForAliPay:resultDic];
+                                }];
+}
+
+#pragma mark UnionPay
+
+- (void)doUnionPay:(NSMutableDictionary *)dic {
+    NSString *tn = [dic objectForKey:@"tn"];
+    BCPayLog(@"Union Pay Start %@", dic);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCPaySDK sharedInstance]];
+    });
+}
+
+#pragma mark do pay
+- (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
     if (dic) {
         switch (channel) {
             case WX:
-            {
-                BCPayLog(@"WeChat pay prepayid = %@", [dic objectForKey:@"prepay_id"]);
-                PayReq *request = [[PayReq alloc] init];
-                request.partnerId = [dic objectForKey:@"partner_id"];
-                request.prepayId = [dic objectForKey:@"prepay_id"];
-                request.package = [dic objectForKey:@"package"];
-                request.nonceStr = [dic objectForKey:@"nonce_str"];
-                NSMutableString *time = [dic objectForKey:@"timestamp"];
-                request.timeStamp = time.intValue;
-                request.sign = [dic objectForKey:@"pay_sign"];
-                [WXApi sendReq:request];
-            }
+                [self doWXPay:dic];
                 break;
             case Ali:
-            {
-                BCPayLog(@"Ali Pay Start");
-                NSString *orderString = [dic objectForKey:@"order_string"];
-                [[AlipaySDK defaultService] payOrder:orderString fromScheme:dic[@"scheme"]
-                                            callback:^(NSDictionary *resultDic) {
-                                                [BCAliPay processOrderForAliPay:resultDic];
-                                            }];
-            }
+                [self doAliPay:dic];
                 break;
             case Union:
-            {
-                NSString *tn = [dic objectForKey:@"tn"];
-                BCPayLog(@"Union Pay Start %@", dic);
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCUnionPay sharedInstance]];
-                });
-            }
+                [self doUnionPay:dic];
                 break;
             default:
                 break;
@@ -176,71 +300,94 @@
     }
 }
 
-#pragma mark refund
-+ (void)reqRefundChannel:(PayChannel)channel
-                 traceno:(NSString *)traceno
-                refundno:(NSString *)refundno
-                  reason:(NSString *)reason
-               refundfee:(NSString *)refundfee
-                payBlock:(BCPayBlock)block {
+#pragma mark - Implementation WXApiDelegate
+/** @name  WxApiDelegate_onResp*/
+
+- (void)onResp:(BaseResp *)resp {
     
-    if (![BCUtil isValidString:traceno] || (![BCUtil isValidTraceNo:traceno]) || (traceno.length < 8) || (traceno.length > 32)) {
-        if (block) block(NO, @"traceno 必须是长度8~32位字母和/或数字组合成的字符串", nil);
-        return;
-    } else if (![BCPaySDK checkRefundNo:refundno]) {
-        if (block) block(NO, @"refundno 格式为:退款日期(8位)+流水号(3~24位)。不可重复,且退款日期必须是当天日期(年月日)。流水号可以接受数字或英文字符,建议使用数字,但不可接受'000'", nil);
-        return;
-    } else if (![BCUtil isValidString:reason]) {
-        if (block) block(NO, @"reason 不是合法的字符串", nil);
-        return;
-    } else if (![BCUtil isValidString:refundfee] || ![BCUtil isPureInt:refundfee]) {
-        if (block) block(NO, @"refundfee 以分为单位，必须是只包含数值的字符串", nil);
-        return;
-    }
-    switch (channel) {
-        case WX:
-            [BCWXPay reqWXRefundV3:traceno outRefundNo:refundno refundReason:reason refundFee:refundfee payBlock:block];
-            break;
-        case Ali:
-        {
-            NSString *amount = [NSString stringWithFormat:@"%.2lf", [refundfee intValue] / 100.0];
-            [BCAliPay reqAliRefund:traceno refundNo:refundno refundFee:amount refundReason:reason refundBlock:block];
+    if ([resp isKindOfClass:[PayResp class]]) {
+        PayResp *tempResp = (PayResp *)resp;
+        NSString *strMsg = nil;
+        int errcode = 0;
+        switch (tempResp.errCode) {
+            case WXSuccess:
+                strMsg = @"支付成功";
+                errcode = BCSuccess;
+                break;
+            case WXErrCodeUserCancel:
+                strMsg = @"支付取消";
+                errcode = BCErrCodeUserCancel;
+                break;
+            default:
+                strMsg = @"支付失败";
+                errcode = BCErrCodeSentFail;
+                break;
         }
+        NSString *result = [BCUtil isValidString:tempResp.errStr]?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
+        BCBaseResp *resp = [[BCBaseResp alloc] init];
+        resp.result_code = errcode;
+        resp.result_msg = result;
+        if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
+            [_deleagte doBCResp:resp];
+        }
+    }
+}
+
+#pragma mark - Implementation AliPayDelegate
+/** @name  AliPayDelegate*/
+
+- (void)processOrderForAliPay:(NSDictionary *)resultDic {
+    int status = [resultDic[@"resultStatus"] intValue];
+    NSString *strMsg;
+    int errcode = 0;
+    switch (status) {
+        case 9000:
+            strMsg = @"支付成功";
+            errcode = BCSuccess;
             break;
-        case Union:
-            [BCUnionPay reqUnionRefund:traceno refundFee:refundfee outRefundNo:refundno refundReason:reason refundBlock:block];
+        case 4000:
+        case 6002:
+            strMsg = @"支付失败";
+            errcode = BCErrCodeSentFail;
+            break;
+        case 6001:
+            strMsg = @"支付取消";
+            errcode = BCErrCodeUserCancel;
             break;
         default:
+            strMsg = @"未知错误";
+            errcode = BCErrCodeUnsupport;
             break;
     }
-}
-
-+ (BOOL)checkRefundNo:(NSString *)refundno {
-    if (![BCUtil isValidString:refundno] || ![BCUtil isValidTraceNo:refundno] || (refundno.length < 8) || (refundno.length > 32)) {
-        return NO;
+    BCPayResp *resp = [[BCPayResp alloc] init];
+    resp.result_code = errcode;
+    resp.result_msg = strMsg;
+    resp.paySource = resultDic;
+    if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
+        [_deleagte doBCResp:resp];
     }
-    NSString *dateString = [refundno substringWithRange:NSMakeRange(0, 8)];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMdd"];
-    return [[formatter stringFromDate:[NSDate date]] isEqualToString:dateString];
 }
 
-#pragma mark query WeChat Order from BeeCloud
-+ (void)reqQueryWXRefund:(NSString *)refundno block:(BCPayBlock)block {
-    if (![BCPaySDK checkRefundNo:refundno]) {
-        if (block) block(NO, @"refundno 格式为:退款日期(8位)+流水号(3~24位)。不可重复,且退款日期必须是当天日期(年月日)。流水号可以接受数字或英文字符,建议使用数字,但不可接受'000'", nil);
-        return;
+#pragma mark - Implementation UnionPayDelegate
+/** @name  UnionPayDelegate*/
+
+- (void)UPPayPluginResult:(NSString *)result {
+    int errcode = BCErrCodeSentFail;
+    NSString *strMsg = @"支付失败";
+    if ([result isEqualToString:@"success"]) {
+        errcode = BCSuccess;
+        strMsg = @"支付成功";
+    } else if ([result isEqualToString:@"cancel"]) {
+        errcode = BCErrCodeUserCancel;
+        strMsg = @"支付取消";
     }
-    [BCWXPay reqQueryRefund:refundno block:block];
-}
-
-+ (void)reqQueryWXPay:(NSString *)traceno queryBlock:(BCPayBlock)block {
-    if (![BCUtil isValidString:traceno] || (![BCUtil isValidTraceNo:traceno]) || (traceno.length < 8) || (traceno.length > 32)) {
-        if (block) block(NO, @"traceno 必须是长度8~32位字母和/或数字组合成的字符串", nil);
-        return;
+    
+    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    resp.result_code = errcode;
+    resp.result_msg = strMsg;
+    if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
+        [_deleagte doBCResp:resp];
     }
-    [BCWXPay reqQueryPayOrder:traceno queryBlock:block];
 }
-
 
 @end

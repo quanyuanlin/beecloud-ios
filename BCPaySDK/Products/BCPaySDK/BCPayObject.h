@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, PayChannel) {
     None  = 0,
@@ -15,64 +16,133 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     Union = 1 << 2
 };
 
+enum  BCErrCode {
+    BCSuccess           = 0,    /**< 成功    */
+    BCErrCodeCommon     = -1,   /**< 参数错误类型    */
+    BCErrCodeUserCancel = -2,   /**< 用户点击取消并返回    */
+    BCErrCodeSentFail   = -3,   /**< 发送失败    */
+    BCErrCodeUnsupport  = -4,   /**< BeeCloud不支持 */
+};
+
 /**
  *  Result block for pay result.
  *
- *  @param result Pay result, success\fail\cancel\invalid
+ *  @param strMsg Pay result, success\fail\cancel\invalid
  *  @param error  Error
  */
 typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 
+#pragma mark BCBaseReq
 /**
- *  Result block for array result.
- *
- *  @param objects Array result.
- *  @param error   Carries error if there is one, or nil otherwise.
+ *  BCPay 所有请求的基类
  */
-typedef void (^BCArrayResultBlock)(NSArray *objects, NSError *error);
-
-
-@interface BCQueryOrder : NSObject
+@interface BCBaseReq : NSObject
 /**
- *  11:wxPay;  12:wxRefund;
- *  21:aliPay; 22:aliRefund; 
- *  31:unPay;  32:unRefund;
+ *  //1:Pay;2:queryBills;3:queryRefunds;
  */
-@property (assign) NSString *queryType;
-/**
- *  queryType=11/21/31时orderid为billno,即根据支付订单号查询支付订单;
- *  queryType=12/22/32时orderid为refundno,即根据退款订单号查询退款订单;
- */
-@property (assign) NSString *orderid;
-
-/**
- *  同步查询支付订单或退款订单。内置购买只支持查询支付订单表。
- *
- *  @param orderid   out_trade_no或者out_refund_no
- *  @param type      支付平台的支付订单或者退款订单
- *
- *  @return 符合条件的订单列表
- @refund status
- REFUND_START = 0; //退款开始
- REFUND_REJECT = 1; //退款被商家拒绝
- REFUND_ACCEPT = 2; //退款被商家同意
- REFUND_SUCCESS = 3; //退款成功
- REFUND_FAIL = 4; //退款被渠道拒绝
- REFUND_RETRY = 5; //退款被渠道拒绝，但原因不明， 需要用原退款单号重试
- REFUND_NEED_OFFLINE = 6; //用户银行卡已注销，现金回流到商户账户，需要走线下人工操作
- */
-+ (NSArray *)queryOrder:(NSString *)type orderid:(NSString *)orderid ;
-
-/**
- *  异步查询支付订单或退款订单。内置购买只支持查询支付订单表。
- *
- *  @param orderid   out_trade_no或者out_refund_no
- *  @param type      支付平台的支付订单或者退款订单
- *  @param block     接收查询结果
- */
-+ (void)querOrderAsync:(NSString *)orderid type:(NSString *)type block:(BCArrayResultBlock)block ;
+@property (nonatomic, assign) NSInteger type;
 
 @end
+
+#pragma mark BCBaseResp
+/**
+ *  BCPay所有响应的基类
+ */
+@interface BCBaseResp : NSObject
+
+/** 响应码 */
+@property (nonatomic, assign) int result_code;
+/** 响应提示字符串 */
+@property (nonatomic, retain) NSString *result_msg;
+/** 错误详情 */
+@property (nonatomic, retain) NSString *err_detail;
+
+@end
+
+#pragma mark BCPayReq
+/**
+ *  Pay 请求结构体
+ */
+@interface BCPayReq : BCBaseReq
+/**
+ *  支付渠道(WX,Ali,Union)
+ */
+@property (nonatomic, assign) PayChannel channel;
+/**
+ *  订单描述,32个字节内,最长16个汉字
+ */
+@property (nonatomic, retain) NSString *title;
+/**
+ *  支付金额,以分为单位,必须为整数,100表示1元
+ */
+@property (nonatomic, retain) NSString *totalfee;
+/**
+ *  商户系统内部的订单号,8~32位数字和/或字母组合,确保在商户系统中唯一
+ */
+@property (nonatomic, retain) NSString *billno;
+/**
+ *  调用支付的app注册在info.plist中的scheme,支付宝支付需要
+ */
+@property (nonatomic, retain) NSString *scheme;
+/**
+ *  调起银联支付的页面，银联支付需要
+ */
+@property (nonatomic, retain) UIViewController *viewController;
+/**
+ *  扩展参数,可以传入任意数量的key/value对来补充对业务逻辑的需求
+ */
+@property (nonatomic, retain) NSMutableDictionary *optional;
+
+@end
+
+
+#pragma mark BCPayResp
+/**
+ *  Pay 响应结构体
+ */
+@interface BCPayResp : BCBaseResp
+
+@property (nonatomic, retain) NSDictionary *paySource;
+
+@end
+
+
+#pragma mark BCBillsResp
+/**
+ *  queryBills 响应结构体
+ */
+@interface BCBillsResp : BCBaseResp
+/**
+ *  查询到得结果数量
+ */
+@property (nonatomic, assign) NSInteger count;
+
+@property (nonatomic, retain) NSArray *bills;
+
+@end
+
+#pragma mark BCBillsReq
+/**
+ *  queryBills 请求结构体
+ */
+@interface BCBillsReq : BCBaseReq
+
+@property (assign) PayChannel channel;
+@property (strong, nonatomic) NSString *billno;
+@property (assign) long long  starttime;
+@property (assign) long long endtime;
+@property (assign) NSUInteger skip;
+@property (assign) NSUInteger limit;
+
++ (BCBillsResp *)reqQuerybills;
+
++ (void)reqQueryBillsAsync:(BCPayBlock)block;
+
+@end
+
+
+
+
 
 
 

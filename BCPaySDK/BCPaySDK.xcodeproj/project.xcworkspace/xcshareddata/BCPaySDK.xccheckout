@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D06A395A-DEE3-49CC-98C9-135EAEB2CF89</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BCPaySDK</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D6FDA59098209373CEF6E25F7D2119BF99485441</key>
+		<string>https://github.com/beecloud/beecloud-ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BCPaySDK/BCPaySDK.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D6FDA59098209373CEF6E25F7D2119BF99485441</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/beecloud/beecloud-ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D6FDA59098209373CEF6E25F7D2119BF99485441</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D6FDA59098209373CEF6E25F7D2119BF99485441</string>
+			<key>IDESourceControlWCCName</key>
+			<string>beecloud-ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>

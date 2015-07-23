@@ -9,6 +9,16 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>BCPaySDKTests copy 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>BCPaySDKTests copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>payLib.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,6 +38,16 @@
 			<true/>
 		</dict>
 		<key>364BC6261B5E401800EAFCCE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>364BC6F91B5F882B00EAFCCE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>36F5E08C1B608AF10012B843</key>
 		<dict>
 			<key>primary</key>
 			<true/>

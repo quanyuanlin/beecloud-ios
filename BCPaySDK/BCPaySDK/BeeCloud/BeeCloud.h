@@ -7,10 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "BCConfig.h"
 #import "BCConstants.h"
-#import "BCObject.h"
-#import "BCQuery.h"
 #import "BCUtil.h"
 
 /**

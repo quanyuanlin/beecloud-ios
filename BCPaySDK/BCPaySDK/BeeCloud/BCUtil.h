@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 BeeCloud Inc. All rights reserved.
 //
 
-#import "BCConstants.h"
+#import "BCPayConstant.h"
 
 /**
  *  This is a utility class, which provides useful functions for developers to write code using BeeCloud.
@@ -208,41 +208,9 @@
  *  @return the string's bytes
  */
 + (NSUInteger)getBytes:(NSString *)str;
-/**
- *  get IP address
- *
- *  @param preferIPv4 preferIPv4
- *
- *  @return return valid IP address or "0.0.0.0"
- */
-+ (NSString *)getIPAddress:(BOOL)preferIPv4;
 
-/**
- *  get best host
- *
- *  @param format url format
- *
- *  @return request url
- */
-+ (NSString *)getBestHostWithFormat:(NSString *)format;
++ (NSNumber *)getTimeStampFromString:(NSString *)string;
 
-/**
- *  get App singnature
- *
- *  @return signature
- */
-+ (NSString *)getAppSignature;
-
-/**
- *  BeeCloud App ID
- *
- *  @return appID
- */
-+ (NSString *)getAppID;
-
-/**
- *  when network failure, check host
- */
-+ (void)checkRequestFail;
++ (NSNumber *)getTimeStampFromDate:(NSDate *)date;
 
 @end
