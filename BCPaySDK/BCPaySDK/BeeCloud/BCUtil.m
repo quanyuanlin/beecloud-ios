@@ -204,15 +204,4 @@
     return [NSNumber numberWithLongLong:(long long)a];
 }
 
-+ (void)removeNilObjectFromDic:(NSMutableDictionary *)dic {
-    if (dic) {
-        NSArray *keys = [dic allKeys];
-        for(NSString *key in keys) {
-            if ([dic objectForKey:key] == nil) {
-                [dic removeObjectForKey:key];
-            }
-        }
-    }
-}
-
 @end

@@ -95,7 +95,6 @@ typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 
 @end
 
-
 #pragma mark BCPayResp
 /**
  *  Pay 响应结构体
@@ -106,6 +105,20 @@ typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 
 @end
 
+#pragma mark BCQueryReq
+/**
+ *  queryBills 请求结构体
+ */
+@interface BCQueryReq : BCBaseReq
+
+@property (nonatomic, assign) PayChannel channel;
+@property (nonatomic, retain) NSString *billno;
+@property (nonatomic, assign) NSString *starttime;
+@property (nonatomic, assign) NSString *endtime;
+@property (nonatomic, assign) NSInteger skip;
+@property (nonatomic, assign) NSInteger limit;
+
+@end
 
 #pragma mark BCQueryResp
 /**
@@ -115,30 +128,49 @@ typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 /**
  *  查询到得结果数量
  */
+@property (nonatomic, assign) NSInteger type;
+
 @property (nonatomic, assign) NSInteger count;
 
-@property (nonatomic, retain) NSArray *results;
+@property (nonatomic, retain) NSMutableArray *results;
 
 @end
 
-#pragma mark BCQueryReq
-/**
- *  queryBills 请求结构体
- */
-@interface BCQueryReq : BCBaseReq
-
-@property (assign) PayChannel channel;
-@property (nonatomic, retain) NSString *billno;
-@property (assign) NSString *starttime;
-@property (assign) NSString *endtime;
-@property (assign) NSInteger skip;
-@property (assign) NSInteger limit;
-
-@end
-
+#pragma mark BCQRefundReq
 @interface BCQRefundReq : BCQueryReq
 
 @property (nonatomic, retain) NSString *refundno;
+
+@end
+
+#pragma mark BCBaseResult
+
+@interface BCBaseResult : NSObject
+
+@property (nonatomic, retain) NSString  *bill_no;
+@property (nonatomic, assign) NSNumber  *total_fee;//NSInteger
+@property (nonatomic, retain) NSString  *title;
+@property (nonatomic, retain) NSNumber  *created_time;//long long
+@property (nonatomic, retain) NSString  *channel;
+
+@end
+
+#pragma mark BCQBillsResult
+
+@interface BCQBillsResult : BCBaseResult
+
+@property (nonatomic, assign) NSNumber  *spay_result;//BOOL
+
+@end
+
+#pragma mark BCQRefundResult
+
+@interface BCQRefundResult : BCBaseResult
+
+@property (nonatomic, retain) NSString *refund_no;
+@property (nonatomic, assign) NSNumber *refund_fee; //NSInteger
+@property (nonatomic, assign) NSNumber *finish;//BOOL
+@property (nonatomic, assign) NSNumber *result;//BOOL
 
 @end
 

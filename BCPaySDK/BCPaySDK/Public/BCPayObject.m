@@ -94,5 +94,46 @@
 }
 @end
 
+@implementation BCBaseResult
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.channel = @"";
+        self.bill_no = @"";
+        self.title = @"";
+        self.created_time = @0;
+        self.total_fee = @0;
+    }
+    return self;
+}
+@end
+
+@implementation BCQBillsResult
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.spay_result = @NO;
+    }
+    return self;
+}
+@end
+
+@implementation BCQRefundResult
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.refund_no = @"";
+        self.refund_fee = @0;
+        self.result = @NO;
+        self.finish = @NO;
+    }
+    return self;
+}
+
+@end
+
 
 

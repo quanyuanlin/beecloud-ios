@@ -13,13 +13,11 @@
 #import "AlipaySDK.h"
 #import "UPPayPlugin.h"
 
-@interface BCPaySDK ()<WXApiDelegate, UPPayPluginDelegate> {
-    BOOL registerStatus;
-}
+@interface BCPaySDK ()<WXApiDelegate, UPPayPluginDelegate>
+
+@property (nonatomic, assign) BOOL registerStatus;
 @property (nonatomic, weak) id<BCApiDelegate> deleagte;
 
-- (void)reqPay:(BCPayReq *)req;
-- (void)reqQueryOrder:(BCQueryReq *)req;
 @end
 
 
@@ -30,7 +28,7 @@
     static BCPaySDK *instance = nil;
     dispatch_once(&onceToken, ^{
         instance = [[BCPaySDK alloc] init];
-        instance->registerStatus = NO;
+        instance.registerStatus = NO;
     });
     return instance;
 }
@@ -43,8 +41,8 @@
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
     BCPaySDK *instance = [BCPaySDK sharedInstance];
-    instance->registerStatus =  [WXApi registerApp:wxAppID];
-    return instance->registerStatus;
+    instance.registerStatus =  [WXApi registerApp:wxAppID];
+    return instance.registerStatus;
 }
 
 + (void)setBCApiDelegate:(id<BCApiDelegate>)delegate {
@@ -60,7 +58,7 @@
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             [instance processOrderForAliPay:resultDic];
         }];
-        return YES; //AliPay
+        return YES;
     }
     return NO;
 }
@@ -185,23 +183,55 @@
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"query end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
              NSLog(@"channel=%@, resp=%@", cType, response);
-             NSDictionary *dic = (NSDictionary *)response;
-             BCQueryResp *resp = [[BCQueryResp alloc] init];
-             resp.result_code = [dic[kKeyResponseResultCode] intValue];
-             resp.result_msg = dic[kKeyResponseResultMsg];
-             resp.err_detail = dic[kKeyResponseErrDetail];
-             resp.count = [[dic objectForKey:@"count"] integerValue];
-             if (req.type == 2) {
-                 resp.results = [dic objectForKey:@"bills"];
-             } else if (req.type == 3) {
-                 resp.results = [dic objectForKey:@"refunds"];
-             }
-             if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
-                 [_deleagte doBCResp:resp];
-             }
+             [self doQueryResponse:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [self doErrorResponse:kNetWorkError];
          }];
+}
+
+- (void)doQueryResponse:(NSDictionary *)dic {
+    BCQueryResp *resp = [[BCQueryResp alloc] init];
+    resp.result_code = [dic[kKeyResponseResultCode] intValue];
+    resp.result_msg = dic[kKeyResponseResultMsg];
+    resp.err_detail = dic[kKeyResponseErrDetail];
+    resp.count = [[dic objectForKey:@"count"] integerValue];
+    resp.results = [self parseResults:dic];
+    if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
+        [_deleagte doBCResp:resp];
+    }
+}
+
+- (NSMutableArray *)parseResults:(NSDictionary *)dic {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:10];
+    if ([[dic allKeys] containsObject:@"bills"]) {
+        for (NSDictionary *result in [dic objectForKey:@"bills"]) {
+            [array addObject:[self parseQueryResult:result]];
+        } ;
+    } else if ([[dic allKeys] containsObject:@"refunds"]) {
+        for (NSDictionary *result in [dic objectForKey:@"refunds"]) {
+            [array addObject:[self parseQueryResult:result]];
+        } ;
+    }
+    return array;
+}
+
+- (BCBaseResult *)parseQueryResult:(NSDictionary *)dic {
+    if (dic) {
+        if ([[dic allKeys] containsObject:@"spay_result"]) {
+            BCQBillsResult *qResp = [[BCQBillsResult alloc] init];
+            for (NSString *key in [dic allKeys]) {
+                [qResp setValue:[dic objectForKey:key] forKey:key];
+            }
+            return qResp;
+        } else if ([[dic allKeys] containsObject:@"refund_no"]) {
+            BCQRefundResult *qResp = [[BCQRefundResult alloc] init];
+            for (NSString *key in [dic allKeys]) {
+                [qResp setValue:[dic objectForKey:key] forKey:key];
+            }
+            return qResp;
+        }
+    }
+    return nil;
 }
 
 - (NSString *)getChannelString:(PayChannel)channel {

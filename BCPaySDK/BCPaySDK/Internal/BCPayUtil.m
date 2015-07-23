@@ -44,7 +44,7 @@
 + (NSDate *)stringToDate:(NSString *)string {
     if (string == nil || string.length == 0) return nil;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyyMMddHHmm"];
+    [dateFormatter setDateFormat:kBCDateFormat];
     return [dateFormatter dateFromString:string];
 }
 
