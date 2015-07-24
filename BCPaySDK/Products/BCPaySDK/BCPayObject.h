@@ -148,9 +148,9 @@ typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 @interface BCBaseResult : NSObject
 
 @property (nonatomic, retain) NSString  *bill_no;
-@property (nonatomic, assign) NSNumber  *total_fee;
+@property (nonatomic, assign) NSNumber  *total_fee;//NSInteger
 @property (nonatomic, retain) NSString  *title;
-@property (nonatomic, retain) NSNumber  *created_time;
+@property (nonatomic, retain) NSNumber  *created_time;//long long
 @property (nonatomic, retain) NSString  *channel;
 
 @end
@@ -159,7 +159,7 @@ typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 
 @interface BCQBillsResult : BCBaseResult
 
-@property (nonatomic, assign) NSNumber  *spay_result;
+@property (nonatomic, assign) NSNumber  *spay_result;//BOOL
 
 @end
 
@@ -168,9 +168,9 @@ typedef void (^BCPayBlock)(BOOL success, NSString *strMsg, NSError *error);
 @interface BCQRefundResult : BCBaseResult
 
 @property (nonatomic, retain) NSString *refund_no;
-@property (nonatomic, assign) NSNumber *refund_fee;
-@property (nonatomic, assign) NSNumber *finish;
-@property (nonatomic, assign) NSNumber *result;
+@property (nonatomic, assign) NSNumber *refund_fee; //NSInteger
+@property (nonatomic, assign) NSNumber *finish;//BOOL
+@property (nonatomic, assign) NSNumber *result;//BOOL
 
 @end
 

@@ -286,10 +286,11 @@
         } else if ((req.channel == Ali) && ![BCUtil isValidString:req.scheme]) {
             [self doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
             return NO;
-        } else if ((req.channel == Union) && (req.viewController == nil)) {
-            [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
-            return NO;
-        } else if (req.channel == WX && ![WXApi isWXAppInstalled]) {
+//        } else if ((req.channel == Union) && (req.viewController == nil)) {
+//            [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
+//            return NO;
+        }
+            else if (req.channel == WX && ![WXApi isWXAppInstalled]) {
             [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
             return NO;
         }

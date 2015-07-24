@@ -6,6 +6,8 @@
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
