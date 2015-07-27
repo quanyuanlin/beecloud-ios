@@ -7,56 +7,32 @@
 //
 
 #import "ViewController.h"
+#import "QueryResultViewController.h"
 
-@interface ViewController ()<BCApiDelegate> {
-    NSString *_out_trade_no;
-    NSString *_out_refund_no;
-}
+@interface ViewController ()<BCApiDelegate>
 
 @end
 
 @implementation ViewController
 
-@synthesize payButton;
-@synthesize paySegment;
-@synthesize listButton;
-@synthesize listTableView;
-@synthesize payList;
-@synthesize listName;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.listTableView.dataSource = self;
-    self.listTableView.delegate = self;
-    self.listName.text = @"请查询";
-    self.payList = [NSMutableArray arrayWithCapacity:10];
+    
+    self.channelTbView.delegate = self ;
+    self.channelTbView.dataSource = self ;
+    self.payList = @[@(WX), @(Ali), @(Union)];
+
     [BCPaySDK setBCApiDelegate:self];
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self setHideTableViewCell:self.listTableView];
+    [self setHideTableViewCell:self.channelTbView];
 }
 
-- (NSDate *)stringToDate:(NSString *)string {
-    if (string == nil || string.length == 0) return nil;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:kBCDateFormat];
-    return [dateFormatter dateFromString:string];
-}
 
-- (NSString *)dateToString:(NSDate *)date {
-    if (date == nil) return nil;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:kBCDateFormat];
-    return [dateFormatter stringFromDate:date];
-}
 
-- (NSString *)getDateString:(long long)timeStamp {
-    NSLog(@"%lld", timeStamp);
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp/1000];
-    return [self dateToString:date];
-}
+
 
 - (BOOL)isPureFloat:(NSString *)str {
     NSScanner *scan = [NSScanner scannerWithString:str];
@@ -68,27 +44,6 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
     return [formatter stringFromDate:[NSDate date]];
-}
-
-- (IBAction)pay:(id)sender {
-    [self doPay:[self getChannel]];
-}
-
-- (PayChannel)getChannel {
-    PayChannel channel;
-    switch ([paySegment selectedSegmentIndex]) {
-        case 0:
-            channel = WX;
-            break;
-        case 1:
-            channel = Ali;
-            break;
-        case 2:
-            channel = Union;
-        default:
-            break;
-    }
-    return channel;
 }
 
 - (void)doPay:(PayChannel)channel {
@@ -106,23 +61,29 @@
     [BCPaySDK sendBCReq:payReq];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    QueryResultViewController *vc = (QueryResultViewController *)segue.destinationViewController;
+    vc.dataList = self.payList;
+}
+
 - (void)doBCResp:(BCBaseResp *)resp {
     if ([resp isKindOfClass:[BCQueryResp class]]) {
-        [self.payList removeAllObjects];
-        [self.payList addObjectsFromArray:((BCQueryResp *)resp).results];
-        [self.listTableView reloadData];
+        if (resp.result_code == 0) {
+            BCQueryResp *tempResp = (BCQueryResp *)resp;
+            if (tempResp.count == 0) {
+                [self showAlertView:@"未找到相关订单信息"];
+            } else {
+                self.payList = tempResp.results;
+                [self performSegueWithIdentifier:@"queryResult" sender:self];
+            }
+        }
     } else {
         if (resp.result_code == 0) {
              [self showAlertView:resp.result_msg];
         } else {
              [self showAlertView:resp.err_detail];
         }
-       
     }
-}
-
-- (void)queryWxRefund:(NSString *)outRefundNo {
-
 }
 
 #pragma mark - 银联支付
@@ -134,14 +95,13 @@
 
 #pragma mark - 订单查询
 
-- (IBAction)checkPayList:(id)sender {
-
- //20150722164700237
+- (void)doQuery:(PayChannel)channel {
+    //20150722164700237
     BCQueryReq *req = [[BCQueryReq alloc] init];
-    req.channel = WX;
-  //  req.billno = @"20150722164700237";
-    req.starttime = @"201507210000";
-    req.endtime = @"201507231200";
+    req.channel = channel;
+    //  req.billno = @"20150722164700237";
+  //  req.starttime = @"201507210000";
+   // req.endtime = @"201507231200";
     req.skip = 0;
     req.limit = 20;
     [BCPaySDK sendBCReq:req];
@@ -153,29 +113,43 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 125;
+    return 80.0f;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"orderCell";
+    static NSString *cellIdentifier = @"channelCell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
-    BCQBillsResult *result = (BCQBillsResult *)[self.payList objectAtIndex:indexPath.row];
-    UILabel *lab1 = (UILabel *)[cell viewWithTag:1001];
-    lab1.text = result.title;
+    int channel = [[self.payList objectAtIndex:indexPath.row] intValue];
+    UIImageView *imgView = (UIImageView *)[cell viewWithTag:200];
+    UILabel *lab = (UILabel *)[cell viewWithTag:201];
     
-    UILabel *lab2 = (UILabel *)[cell viewWithTag:1002];
-    lab2.text = [self getDateString:[result.created_time longLongValue]];
-    
-    UILabel *lab3 = (UILabel *)[cell viewWithTag:1003];
-    lab3.text = result.bill_no;
+    if (channel == WX) {
+        imgView.image = [UIImage imageNamed:@"wxPay"];
+        lab.text = @"微信支付";
+    } else if (channel == Ali) {
+        imgView.image = [UIImage imageNamed:@"aliPay"];
+        lab.text = @"支付宝";
+    } else if (channel == Union) {
+        imgView.image = [UIImage imageNamed:@"uPay"];
+        lab.text = @"银联在线";
+    }
 
-    UILabel *lab4 = (UILabel *)[cell viewWithTag:1004];
-    lab4.text = [NSString stringWithFormat:@"交易状态:%@  渠道:%@  金额:%@", [result.spay_result boolValue]?@"成功":@"失败", result.channel, result.total_fee];
-    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    int channel = [[self.payList objectAtIndex:indexPath.row] intValue];
+    if (self.actionType == 0) {
+        [self doPay:(PayChannel)channel];
+    } else {
+        [self doQuery:(PayChannel)channel];
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 - (NSString *)genOutTradeNo {

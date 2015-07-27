@@ -13,32 +13,108 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="fvh-HW-kBP"/>
+                        <segue destination="ZZF-b9-bZT" kind="relationship" relationship="rootViewController" id="G1u-9Q-LIL"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nqq-BX-Cz1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1106" y="81"/>
         </scene>
-        <!--View Controller-->
+        <!--支付-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="x33-GS-tbh">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="x33-GS-tbh">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="channelCell" rowHeight="80" id="Sms-WV-Ax2">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sms-WV-Ax2" id="yz2-YU-xXO">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="200" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wxPay" translatesAutoresizingMaskIntoConstraints="NO" id="9Qp-Xu-v6o">
+                                            <rect key="frame" x="35" y="10" width="60" height="60"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="201" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="channel" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pqe-lx-VkM">
+                                            <rect key="frame" x="130" y="11" width="300" height="60"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" id="ObC-GO-EOu"/>
+                    <navigationItem key="navigationItem" title="支付" id="ObC-GO-EOu"/>
+                    <connections>
+                        <outlet property="channelTbView" destination="x33-GS-tbh" id="wr0-Hi-W94"/>
+                        <segue destination="xVZ-Rk-Ui1" kind="show" identifier="queryResult" id="boa-Kr-H2Q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-412" y="101"/>
+            <point key="canvasLocation" x="502" y="81"/>
         </scene>
-        <!--Table View Controller-->
+        <!--BeeCloud支付-->
+        <scene sceneID="Uxx-c0-MgI">
+            <objects>
+                <viewController id="ZZF-b9-bZT" customClass="GuideViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uvi-4h-iVK"/>
+                        <viewControllerLayoutGuide type="bottom" id="lID-vX-5Jh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BPp-TD-kQt" customClass="GLKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEI-LT-H2h">
+                                <rect key="frame" x="192" y="206" width="216" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="6xE-aL-IcI"/>
+                                    <constraint firstAttribute="width" constant="216" id="PBl-yK-Fbf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="支付">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="doPay" id="L4t-oX-PTu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24I-1V-Aps">
+                                <rect key="frame" x="192" y="267" width="216" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="查询订单">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="doQuery" id="51c-63-t8J"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="24I-1V-Aps" firstAttribute="trailing" secondItem="PEI-LT-H2h" secondAttribute="trailing" id="JK7-bP-I3a"/>
+                            <constraint firstItem="PEI-LT-H2h" firstAttribute="top" secondItem="uvi-4h-iVK" secondAttribute="bottom" constant="142" id="TgN-Iv-2Jf"/>
+                            <constraint firstItem="PEI-LT-H2h" firstAttribute="centerX" secondItem="BPp-TD-kQt" secondAttribute="centerX" id="Tpy-h8-MhO"/>
+                            <constraint firstItem="24I-1V-Aps" firstAttribute="top" secondItem="PEI-LT-H2h" secondAttribute="bottom" constant="31" id="bYe-Te-gFg"/>
+                            <constraint firstItem="lID-vX-5Jh" firstAttribute="top" secondItem="24I-1V-Aps" secondAttribute="bottom" constant="303" id="c4w-z2-lfd"/>
+                            <constraint firstItem="PEI-LT-H2h" firstAttribute="leading" secondItem="24I-1V-Aps" secondAttribute="leading" id="fFk-1O-Lnt"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="BeeCloud支付" id="BRq-Rh-458"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VbA-ES-uO7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-353" y="81"/>
+        </scene>
+        <!--查询结果-->
         <scene sceneID="E8g-lj-qTk">
             <objects>
-                <tableViewController id="xVZ-Rk-Ui1" sceneMemberID="viewController">
+                <tableViewController id="xVZ-Rk-Ui1" customClass="QueryResultViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="t2i-vF-row">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -83,10 +159,20 @@
                             <outlet property="delegate" destination="xVZ-Rk-Ui1" id="JgO-yf-rfL"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="查询结果" id="T8U-hc-9vs"/>
+                    <connections>
+                        <outlet property="resultTableView" destination="t2i-vF-row" id="o64-7T-ahS"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0zS-GV-hAR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="381" y="81"/>
+            <point key="canvasLocation" x="1150" y="81"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="wxPay" width="80" height="80"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="L4t-oX-PTu"/>
+    </inferredMetricsTieBreakers>
 </document>

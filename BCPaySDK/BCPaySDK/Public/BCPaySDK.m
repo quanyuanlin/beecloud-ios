@@ -413,6 +413,7 @@
     BCPayResp *resp = [[BCPayResp alloc] init];
     resp.result_code = errcode;
     resp.result_msg = strMsg;
+    resp.err_detail = strMsg;
     resp.paySource = resultDic;
     if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
         [_deleagte doBCResp:resp];

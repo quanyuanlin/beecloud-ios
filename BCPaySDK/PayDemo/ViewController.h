@@ -14,16 +14,14 @@ static NSString * const kSubject = @"BeeCloud自制白开水";
 static NSString * const kTraceID = @"jacky";
 static NSString * const kRefundReason = @"不好喝";
 
-static NSString * const kBCDateFormat = @"yyyy-MM-dd HH:mm:ss";
 
 @interface ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate, BCApiDelegate>
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *paySegment;
-@property (weak, nonatomic) IBOutlet UIButton *payButton;
-@property (weak, nonatomic) IBOutlet UIButton *listButton;
-@property (weak, nonatomic) IBOutlet UITableView *listTableView;
-@property (strong,nonatomic) NSMutableArray *payList;
-@property (weak, nonatomic) IBOutlet UILabel *listName;
+@property (strong, nonatomic) NSArray *payList;
+
+@property (strong, nonatomic) IBOutlet UITableView *channelTbView;
+
+@property  (assign, nonatomic) NSInteger actionType;//0:pay;1:query;
 
 @end
 

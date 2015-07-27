@@ -74,6 +74,10 @@
 		364BC6B71B5E458500EAFCCE /* WXApiObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 364BC67B1B5E458400EAFCCE /* WXApiObject.h */; };
 		364BC6BF1B5E830000EAFCCE /* BCPayCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 364BC6BD1B5E830000EAFCCE /* BCPayCache.h */; };
 		364BC6C01B5E830000EAFCCE /* BCPayCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 364BC6BE1B5E830000EAFCCE /* BCPayCache.m */; };
+		36732DD31B661C4300DE6227 /* GuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36732DCF1B661C4300DE6227 /* GuideViewController.m */; };
+		36732DD41B661C4300DE6227 /* QueryResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36732DD01B661C4300DE6227 /* QueryResultViewController.m */; };
+		36732DD51B661C4300DE6227 /* QueryResultViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 36732DD11B661C4300DE6227 /* QueryResultViewController.h */; };
+		36732DD61B661C4300DE6227 /* GuideViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 36732DD21B661C4300DE6227 /* GuideViewController.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -143,6 +147,10 @@
 		364BC7131B5F886800EAFCCE /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		364BC7151B5F887400EAFCCE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		364BC7171B5F888F00EAFCCE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		36732DCF1B661C4300DE6227 /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
+		36732DD01B661C4300DE6227 /* QueryResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryResultViewController.m; sourceTree = "<group>"; };
+		36732DD11B661C4300DE6227 /* QueryResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryResultViewController.h; sourceTree = "<group>"; };
+		36732DD21B661C4300DE6227 /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,12 +182,16 @@
 			children = (
 				3613DABE1B6232D9001871C2 /* AppDelegate.h */,
 				3613DABF1B6232D9001871C2 /* AppDelegate.m */,
-				3613DAC11B6232D9001871C2 /* ViewController.h */,
-				3613DAC21B6232D9001871C2 /* ViewController.mm */,
-				3613DB131B6240C9001871C2 /* Main.storyboard */,
+				36732DD21B661C4300DE6227 /* GuideViewController.h */,
+				36732DCF1B661C4300DE6227 /* GuideViewController.m */,
 				3613DAC71B6232D9001871C2 /* Images.xcassets */,
 				3613DAC91B6232D9001871C2 /* LaunchScreen.xib */,
+				3613DB131B6240C9001871C2 /* Main.storyboard */,
+				36732DD11B661C4300DE6227 /* QueryResultViewController.h */,
+				36732DD01B661C4300DE6227 /* QueryResultViewController.m */,
 				3613DABA1B6232D9001871C2 /* Supporting Files */,
+				3613DAC11B6232D9001871C2 /* ViewController.h */,
+				3613DAC21B6232D9001871C2 /* ViewController.mm */,
 			);
 			path = PayDemo;
 			sourceTree = "<group>";
@@ -332,6 +344,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36732DD61B661C4300DE6227 /* GuideViewController.h in Headers */,
+				36732DD51B661C4300DE6227 /* QueryResultViewController.h in Headers */,
 				3613DB031B6235A0001871C2 /* BCPayObject.h in Headers */,
 				3613DB041B6235A7001871C2 /* BCPaySDK.h in Headers */,
 			);
@@ -494,6 +508,8 @@
 				3613DAC31B6232D9001871C2 /* ViewController.mm in Sources */,
 				3613DAC01B6232D9001871C2 /* AppDelegate.m in Sources */,
 				3613DABD1B6232D9001871C2 /* main.m in Sources */,
+				36732DD31B661C4300DE6227 /* GuideViewController.m in Sources */,
+				36732DD41B661C4300DE6227 /* QueryResultViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,6 +740,7 @@
 				3613DADA1B6232DA001871C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		364BC5A41B5E32FD00EAFCCE /* Build configuration list for PBXProject "BCPaySDK" */ = {
 			isa = XCConfigurationList;
