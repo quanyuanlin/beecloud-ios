@@ -78,6 +78,22 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
     BCPayUrlAlipay
 };
 
+
+typedef NS_ENUM(NSInteger, PayChannel) {
+    None  = 0,
+    WX    = 1 << 0,
+    Ali   = 1 << 1,
+    Union = 1 << 2
+};
+
+enum  BCErrCode {
+    BCSuccess           = 0,    /**< 成功    */
+    BCErrCodeCommon     = -1,   /**< 参数错误类型    */
+    BCErrCodeUserCancel = -2,   /**< 用户点击取消并返回    */
+    BCErrCodeSentFail   = -3,   /**< 发送失败    */
+    BCErrCodeUnsupport  = -4,   /**< BeeCloud不支持 */
+};
+
 static NSString * const kBCDateFormat = @"yyyyMMddHHmm";
 
 #endif

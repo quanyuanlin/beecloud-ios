@@ -68,14 +68,14 @@
 - (NSDate *)stringToDate:(NSString *)string {
     if (string == nil || string.length == 0) return nil;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:kBCDateFormat];
+    [dateFormatter setDateFormat:kDateFormat];
     return [dateFormatter dateFromString:string];
 }
 
 - (NSString *)dateToString:(NSDate *)date {
     if (date == nil) return nil;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:kBCDateFormat];
+    [dateFormatter setDateFormat:kDateFormat];
     return [dateFormatter stringFromDate:date];
 }
 

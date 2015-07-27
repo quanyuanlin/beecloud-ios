@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString * const kBCDateFormat = @"yyyy-MM-dd HH:mm:ss";
+static NSString * const kDateFormat = @"yyyy-MM-dd HH:mm:ss";
 
 @interface QueryResultViewController : UITableViewController<UITableViewDataSource, UITableViewDelegate>
 

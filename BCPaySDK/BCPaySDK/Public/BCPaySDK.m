@@ -286,11 +286,10 @@
         } else if ((req.channel == Ali) && ![BCUtil isValidString:req.scheme]) {
             [self doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
             return NO;
-//        } else if ((req.channel == Union) && (req.viewController == nil)) {
-//            [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
-//            return NO;
-        }
-            else if (req.channel == WX && ![WXApi isWXAppInstalled]) {
+        } else if ((req.channel == Union) && (req.viewController == nil)) {
+            [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
+            return NO;
+        } else if (req.channel == WX && ![WXApi isWXAppInstalled]) {
             [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
             return NO;
         }
@@ -378,6 +377,7 @@
         BCBaseResp *resp = [[BCBaseResp alloc] init];
         resp.result_code = errcode;
         resp.result_msg = result;
+        resp.err_detail = result;
         if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
             [_deleagte doBCResp:resp];
         }
@@ -437,6 +437,7 @@
     BCBaseResp *resp = [[BCBaseResp alloc] init];
     resp.result_code = errcode;
     resp.result_msg = strMsg;
+    resp.err_detail = strMsg;
     if (_deleagte && [_deleagte respondsToSelector:@selector(doBCResp:)]) {
         [_deleagte doBCResp:resp];
     }

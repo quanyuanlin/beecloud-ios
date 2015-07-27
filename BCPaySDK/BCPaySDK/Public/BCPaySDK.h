@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BCPayObject.h"
+#import "BCPayObjects.h"
 
 @protocol BCApiDelegate <NSObject>
 @optional
