@@ -9,7 +9,7 @@
 #import "BCQueryReq.h"
 
 #pragma mark BCQRefundReq
-@interface BCQRefundReq : BCQueryReq
+@interface BCQRefundReq : BCQueryReq //type=103;
 
 @property (nonatomic, retain) NSString *refundno;
 

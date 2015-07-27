@@ -14,7 +14,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.type = 2;
+        self.type = BCObjsTypeQueryReq;
         self.skip = 0;
         self.limit = 10;
         self.starttime = @"";

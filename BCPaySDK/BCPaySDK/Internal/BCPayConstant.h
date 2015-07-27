@@ -68,6 +68,21 @@ enum  BCErrCode {
     BCErrCodeUnsupport  = -4,   /**< BeeCloud不支持 */
 };
 
+typedef NS_ENUM(NSInteger, BCObjsType) {
+    BCObjsTypeBaseReq = 100,
+    BCObjsTypePayReq,
+    BCObjsTypeQueryReq,
+    BCObjsTypeQRefundReq,
+    BCObjsTypeRefundStatusReq,
+    BCObjsTypeBaseResp = 200,
+    BCObjsTypePayResp,
+    BCObjsTypeQueryResp,
+    BCObjsTypeRefundStatusResp,
+    BCObjsTypeBaseResults = 300,
+    BCObjsTypeBillsResults,
+    BCObjsTypeRefundsResults
+};
+
 static NSString * const kBCDateFormat = @"yyyyMMddHHmm";
 
 #endif

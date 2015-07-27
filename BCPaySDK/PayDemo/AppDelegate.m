@@ -19,10 +19,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-//  [BCPaySDK initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
-    [BCPaySDK initWithAppID:@"c37d661d-7e61-49ea-96a5-68c34e83db3b" andAppSecret:@"c37d661d-7e61-49ea-96a5-68c34e83db3b"];
-  //  [BCPaySDK initWithAppID:@"b786692b-167d-4ccd-bfa5-01f1b07b91d4" andAppSecret:@"67f2e96a-dc8e-4e84-ac02-9a31aea7a37d"];
- //   [BCPaySDK initWeChatPay:@"wx931f62ac7a670935"];
+  [BCPaySDK initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+ //   [BCPaySDK initWithAppID:@"c37d661d-7e61-49ea-96a5-68c34e83db3b" andAppSecret:@"c37d661d-7e61-49ea-96a5-68c34e83db3b"];
+
     [BCPaySDK initWeChatPay:@"wxf1aa465362b4c8f1"];
     
     return YES;

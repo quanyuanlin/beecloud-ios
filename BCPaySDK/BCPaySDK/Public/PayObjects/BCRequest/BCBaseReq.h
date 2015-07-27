@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BCPayConstant.h"
 
 #pragma mark BCBaseReq
 /**
@@ -16,6 +17,6 @@
 /**
  *  //1:Pay;2:queryBills;3:queryRefunds;
  */
-@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, assign) BCObjsType type;//100
 
 @end

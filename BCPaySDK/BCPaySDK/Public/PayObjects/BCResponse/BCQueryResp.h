@@ -12,7 +12,7 @@
 /**
  *  queryBills 响应结构体
  */
-@interface BCQueryResp : BCBaseResp
+@interface BCQueryResp : BCBaseResp //type=202;
 /**
  *  查询到得结果数量
  */

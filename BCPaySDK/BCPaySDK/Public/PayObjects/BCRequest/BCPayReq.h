@@ -12,9 +12,9 @@
 
 #pragma mark BCPayReq
 /**
- *  Pay 请求结构体
+ *  Pay 请求结构体,type=11;
  */
-@interface BCPayReq : BCBaseReq
+@interface BCPayReq : BCBaseReq //type=101
 /**
  *  支付渠道(WX,Ali,Union)
  */

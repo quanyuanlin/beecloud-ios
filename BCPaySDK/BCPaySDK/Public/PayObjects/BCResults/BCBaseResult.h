@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BCPayConstant.h"
 
 #pragma mark BCBaseResult
 
 @interface BCBaseResult : NSObject
 
+@property (nonatomic, assign) BCObjsType type;
 @property (nonatomic, retain) NSString  *bill_no;
 @property (nonatomic, assign) NSNumber  *total_fee;//NSInteger
 @property (nonatomic, retain) NSString  *title;

@@ -14,7 +14,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.type = 1;
+        self.type = BCObjsTypePayReq;
     }
     return self;
 }

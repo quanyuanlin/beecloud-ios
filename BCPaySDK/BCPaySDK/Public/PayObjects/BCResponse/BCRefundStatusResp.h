@@ -8,7 +8,7 @@
 
 #import "BCBaseResp.h"
 
-@interface BCRefundStatusResp : BCBaseResp
+@interface BCRefundStatusResp : BCBaseResp //type=203;
 
 @property (nonatomic, retain) NSString *refundStatus;
 

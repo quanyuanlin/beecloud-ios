@@ -13,7 +13,7 @@
 /**
  *  queryBills 请求结构体
  */
-@interface BCQueryReq : BCBaseReq
+@interface BCQueryReq : BCBaseReq //type=102;
 
 @property (nonatomic, assign) PayChannel channel;
 @property (nonatomic, retain) NSString *billno;

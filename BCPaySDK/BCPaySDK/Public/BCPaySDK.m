@@ -76,14 +76,14 @@
 }
 
 + (void)sendBCReq:(BCBaseReq *)req {
-    if (req.type == 1) {
+    if (req.type == BCObjsTypePayReq) {
         [[BCPaySDK sharedInstance] reqPay:(BCPayReq *)req];
-    } else if (req.type == 2 ) {
+    } else if (req.type == BCObjsTypeQueryReq ) {
         [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryReq *)req];
-    } else if (req.type == 3) {
+    } else if (req.type == BCObjsTypeQRefundReq) {
         [[BCPaySDK sharedInstance] reqQueryOrder:(BCQRefundReq *)req];
-    } else if (req.type == 4) {
-        
+    } else if (req.type == BCObjsTypeRefundStatusReq) {
+        [[BCPaySDK sharedInstance] reqRefundState:(BCRefundStatusReq *)req];
     }
 }
 
@@ -163,7 +163,7 @@
     if ([BCUtil isValidString:req.endtime]) {
         parameters[@"end_time"] = [BCUtil getTimeStampFromString:req.endtime];
     }
-    if (req.type == 3) {
+    if (req.type == BCObjsTypeQRefundReq) {
         BCQRefundReq *refundReq = (BCQRefundReq *)req;
         if ([BCUtil isValidString:refundReq.refundno]) {
             parameters[@"refund_no"] = refundReq.refundno;
@@ -314,7 +314,7 @@
 }
 
 - (BOOL)checkParameters:(BCBaseReq *)request {
-    if (request.type == 1) {
+    if (request.type == BCObjsTypePayReq) {
         BCPayReq *req = (BCPayReq *)request;
         if (![BCUtil isValidString:req.title] || [BCUtil getBytes:req.title] > 32) {
             [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];

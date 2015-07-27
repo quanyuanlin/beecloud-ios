@@ -13,6 +13,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.type = BCObjsTypeRefundsResults;
         self.refund_no = @"";
         self.refund_fee = @0;
         self.result = @NO;

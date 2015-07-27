@@ -9,7 +9,7 @@
 #import "BCBaseReq.h"
 #import "BCPayConstant.h"
 
-@interface BCRefundStatusReq : BCBaseReq
+@interface BCRefundStatusReq : BCBaseReq //type=104;
 
 @property (nonatomic, retain) NSString *refundno;
 

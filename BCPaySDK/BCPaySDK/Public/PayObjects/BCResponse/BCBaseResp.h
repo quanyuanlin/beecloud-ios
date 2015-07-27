@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "BCPayConstant.h"
 #pragma mark BCBaseResp
 /**
  *  BCPay所有响应的基类
  */
 @interface BCBaseResp : NSObject
 
+@property (nonatomic, assign) BCObjsType type;//200;
 /** 响应码 */
 @property (nonatomic, assign) int result_code;
 /** 响应提示字符串 */

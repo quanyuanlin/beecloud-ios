@@ -23,27 +23,10 @@
     self.payList = @[@(WX), @(Ali), @(Union)];
 
     [BCPaySDK setBCApiDelegate:self];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [self setHideTableViewCell:self.channelTbView];
-}
-
-
-
-
-
-- (BOOL)isPureFloat:(NSString *)str {
-    NSScanner *scan = [NSScanner scannerWithString:str];
-    float val;
-    return [scan scanFloat:&val] && [scan isAtEnd];
-}
-
-- (NSString *)genRefundNo {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
-    return [formatter stringFromDate:[NSDate date]];
 }
 
 - (void)doPay:(PayChannel)channel {
@@ -97,14 +80,22 @@
 
 - (void)doQuery:(PayChannel)channel {
     //20150722164700237
-    BCQueryReq *req = [[BCQueryReq alloc] init];
-    req.channel = channel;
-    //  req.billno = @"20150722164700237";
-  //  req.starttime = @"201507210000";
-   // req.endtime = @"201507231200";
-    req.skip = 0;
-    req.limit = 20;
-    [BCPaySDK sendBCReq:req];
+    if (self.actionType == 1) {
+        BCQueryReq *req = [[BCQueryReq alloc] init];
+        req.channel = channel;
+        //  req.billno = @"20150722164700237";
+        //  req.starttime = @"201507210000";
+        // req.endtime = @"201507231200";
+        req.skip = 0;
+        req.limit = 20;
+        [BCPaySDK sendBCReq:req];
+    } else if (self.actionType == 2) {
+        BCQRefundReq *req = [[BCQRefundReq alloc] init];
+        req.channel = channel;
+        req.skip = 0;
+        req.limit = 20;
+        [BCPaySDK sendBCReq:req];
+    }
 }
 
 

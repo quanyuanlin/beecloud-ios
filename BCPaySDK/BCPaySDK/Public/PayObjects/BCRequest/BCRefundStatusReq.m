@@ -12,7 +12,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.type = 4;
+        self.type = BCObjsTypeRefundStatusReq;
         self.refundno = @"";
     }
     return self;

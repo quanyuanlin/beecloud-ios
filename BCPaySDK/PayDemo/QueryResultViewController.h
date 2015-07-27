@@ -16,4 +16,6 @@ static NSString * const kDateFormat = @"yyyy-MM-dd HH:mm:ss";
 
 @property (nonatomic, strong) NSArray *dataList;
 
+@property (nonatomic, assign) NSInteger resultType;
+
 @end

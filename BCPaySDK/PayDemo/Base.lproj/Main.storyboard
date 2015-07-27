@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bWb-n2-sYm">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -71,10 +72,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEI-LT-H2h">
-                                <rect key="frame" x="192" y="206" width="216" height="30"/>
+                                <rect key="frame" x="180" y="150" width="240" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="6xE-aL-IcI"/>
-                                    <constraint firstAttribute="width" constant="216" id="PBl-yK-Fbf"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="4ky-zu-oQt"/>
+                                    <constraint firstAttribute="height" constant="30" id="LIi-LI-pGF"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="wQJ-ss-0u4"/>
+                                    <constraint firstAttribute="width" constant="240" id="wRD-wB-cy9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="支付">
@@ -85,24 +88,73 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24I-1V-Aps">
-                                <rect key="frame" x="192" y="267" width="216" height="30"/>
+                                <rect key="frame" x="180" y="224" width="240" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="GY2-8w-Hsp"/>
+                                    <constraint firstAttribute="height" constant="30" id="iyk-Z7-S48"/>
+                                    <constraint firstAttribute="width" constant="240" id="wqz-jO-T4x"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="查询订单">
+                                <state key="normal" title="查询支付订单">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="doQuery" id="51c-63-t8J"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb3-s8-HdE">
+                                <rect key="frame" x="180" y="360" width="240" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0iG-Vj-hFT"/>
+                                    <constraint firstAttribute="width" constant="240" id="20K-kR-4uj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="查询微信退款状态">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onQueryWXRefund:" destination="ZZF-b9-bZT" eventType="touchUpInside" id="y5U-Tc-uYV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGX-x0-pDU">
+                                <rect key="frame" x="180" y="297" width="240" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="AU7-nJ-Lbl"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="VlS-eg-xVu"/>
+                                    <constraint firstAttribute="width" constant="240" id="aeZ-VS-MYu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="查询退款订单">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="eBF-4w-9GE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="24I-1V-Aps" firstAttribute="trailing" secondItem="PEI-LT-H2h" secondAttribute="trailing" id="JK7-bP-I3a"/>
-                            <constraint firstItem="PEI-LT-H2h" firstAttribute="top" secondItem="uvi-4h-iVK" secondAttribute="bottom" constant="142" id="TgN-Iv-2Jf"/>
-                            <constraint firstItem="PEI-LT-H2h" firstAttribute="centerX" secondItem="BPp-TD-kQt" secondAttribute="centerX" id="Tpy-h8-MhO"/>
-                            <constraint firstItem="24I-1V-Aps" firstAttribute="top" secondItem="PEI-LT-H2h" secondAttribute="bottom" constant="31" id="bYe-Te-gFg"/>
-                            <constraint firstItem="lID-vX-5Jh" firstAttribute="top" secondItem="24I-1V-Aps" secondAttribute="bottom" constant="303" id="c4w-z2-lfd"/>
-                            <constraint firstItem="PEI-LT-H2h" firstAttribute="leading" secondItem="24I-1V-Aps" secondAttribute="leading" id="fFk-1O-Lnt"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="trailing" secondItem="Fb3-s8-HdE" secondAttribute="trailing" id="0OE-8l-Jjr"/>
+                            <constraint firstItem="Fb3-s8-HdE" firstAttribute="top" secondItem="zGX-x0-pDU" secondAttribute="bottom" constant="33" id="43v-fn-jCO"/>
+                            <constraint firstItem="24I-1V-Aps" firstAttribute="trailing" secondItem="PEI-LT-H2h" secondAttribute="trailing" id="6r8-ug-940"/>
+                            <constraint firstItem="Fb3-s8-HdE" firstAttribute="leading" secondItem="zGX-x0-pDU" secondAttribute="leading" id="83H-WL-k3C"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="width" secondItem="PEI-LT-H2h" secondAttribute="width" id="BPU-8B-Jgu"/>
+                            <constraint firstItem="24I-1V-Aps" firstAttribute="leading" secondItem="PEI-LT-H2h" secondAttribute="leading" id="FdI-7L-Jee"/>
+                            <constraint firstItem="24I-1V-Aps" firstAttribute="leading" secondItem="zGX-x0-pDU" secondAttribute="leading" id="JMV-My-rJE"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="width" secondItem="24I-1V-Aps" secondAttribute="width" id="Lyc-FK-rpo"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="height" secondItem="PEI-LT-H2h" secondAttribute="height" id="X8S-JL-bdy"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="height" secondItem="Fb3-s8-HdE" secondAttribute="height" id="Xon-Rf-2PR"/>
+                            <constraint firstItem="PEI-LT-H2h" firstAttribute="top" secondItem="uvi-4h-iVK" secondAttribute="bottom" constant="86" id="Zcd-hq-Mrv"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="width" secondItem="Fb3-s8-HdE" secondAttribute="height" multiplier="8:1" id="eDt-GZ-11u"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="height" secondItem="24I-1V-Aps" secondAttribute="height" id="ehF-R2-qgP"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="width" secondItem="24I-1V-Aps" secondAttribute="height" multiplier="8:1" id="fZM-MG-CCf"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="top" secondItem="24I-1V-Aps" secondAttribute="bottom" constant="43" id="fn7-uj-Lgd"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="centerX" secondItem="BPp-TD-kQt" secondAttribute="centerX" id="lAI-Wb-5LQ"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="width" secondItem="PEI-LT-H2h" secondAttribute="height" multiplier="8:1" id="nhR-xg-UHS"/>
+                            <constraint firstItem="lID-vX-5Jh" firstAttribute="top" secondItem="Fb3-s8-HdE" secondAttribute="bottom" constant="210" id="pDl-o2-49X"/>
+                            <constraint firstItem="24I-1V-Aps" firstAttribute="top" secondItem="PEI-LT-H2h" secondAttribute="bottom" constant="44" id="vY9-E6-P8K"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="width" secondItem="Fb3-s8-HdE" secondAttribute="width" id="xnp-0a-MSO"/>
+                            <constraint firstItem="zGX-x0-pDU" firstAttribute="trailing" secondItem="24I-1V-Aps" secondAttribute="trailing" id="zaa-BK-B4N"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="BeeCloud支付" id="BRq-Rh-458"/>
@@ -120,37 +172,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderCell" rowHeight="125" id="DIp-h3-fr4">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderCell" rowHeight="140" id="DIp-h3-fr4">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DIp-h3-fr4" id="IdO-BZ-UPy">
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="订单标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3O-2g-vKp">
-                                            <rect key="frame" x="21" y="9" width="524" height="21"/>
-                                            <fontDescription key="fontDescription" type="italicSystem" pointSize="19"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="时间" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ex5-ej-94m">
-                                            <rect key="frame" x="21" y="38" width="524" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1003" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="订单号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X97-Th-2lI">
-                                            <rect key="frame" x="21" y="67" width="524" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="其他" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWw-91-I86">
-                                            <rect key="frame" x="21" y="96" width="524" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="refundCell" rowHeight="160" id="Hce-ou-YMa">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hce-ou-YMa" id="kGf-fb-ro1">
+                                    <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>

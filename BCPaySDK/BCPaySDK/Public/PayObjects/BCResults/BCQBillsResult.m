@@ -13,6 +13,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.type = BCObjsTypeBillsResults;
         self.spay_result = @NO;
     }
     return self;
