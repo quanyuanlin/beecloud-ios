@@ -32,33 +32,7 @@ static NSString * const kRestApiPay = @"%@/rest/bill";
 static NSString * const kRestApiRefund = @"%@/rest/refund";
 static NSString * const kRestApiQueryBills = @"%@/rest/bills";
 static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
-
-//wechat
-//API
-static NSString * const kApiPayWeChatNewPrepare = @"%@/pay/wxmp/prepare";
-static NSString * const kApiPayWeChatNewQueryOrder = @"%@/pay/wxmp/query";
-static NSString * const kApiPayWeChatNewStartRefund = @"%@/pay/wx/refund/startRefund";
-static NSString * const kApiPayWeChatNewQueryRefund = @"%@/pay/wx/refund/queryRefund";
-static NSString * const kApiPayWeChatConfirmRefund =  @"%@/pay/wx/refund/confirmRefund";
-//Tables
-static NSString * const kBCWeChatPayClassName = @"wechat_pay_result__";
-static NSString * const KBCWeChatRefundClassName = @"wx_pre_refund__";
-
-//alipay
-//API
-static NSString * const kApiPayAliPreSign = @"%@/pay/ali/sign";
-static NSString * const kApiPayAliStartRefund = @"%@/pay/ali/refund/startRefund";
-//Tables
-static NSString * const kBCAliPayClassName = @"ali_pay_result__";
-static NSString * const kBCAliRefundClassName = @"ali_pre_refund__";
-
-//unionPay
-//API
-static NSString * const kApiPayUnionPayGetTN = @"%@/pay/un/sign";
-static NSString * const kApiPayUnionPayRefund = @"%@/pay/un/refund/startRefund";
-//Table
-static NSString * const kBCUPPayClassName = @"un_pay_result__";
-static NSString * const kBCUPRefundClassName = @"un_pre_refund__";
+static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
 
 /**
  *  BCPay URL type for handling URLs.

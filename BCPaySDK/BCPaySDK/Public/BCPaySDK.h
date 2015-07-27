@@ -9,13 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "BCPayObjects.h"
 
+#pragma mark - BCApiDelegate
+
 @protocol BCApiDelegate <NSObject>
-@optional
-- (void)doBCResp:(BCBaseResp *)resp;
+@required
+/**
+ *  不同类型的请求，对应不同的响应
+ *
+ *  @param resp 响应体
+ */
+- (void)onBCApiResp:(BCBaseResp *)resp;
 
 @end
 
-
+#pragma mark - BCPaySDK
 @interface BCPaySDK : NSObject
 
 /**
@@ -76,6 +83,13 @@
 #pragma mark - Send BeeCloud Request
 /** @name send request function */
 
-+ (BOOL)sendBCReq:(BCBaseReq *)req;
+/**
+ *  发送BeeCloud Api请求
+ *
+ *  @param req 请求体
+ *
+ *  @return 发送请求是否成功
+ */
++ (void)sendBCReq:(BCBaseReq *)req;
 
 @end

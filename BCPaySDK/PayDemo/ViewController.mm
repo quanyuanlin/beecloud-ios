@@ -66,7 +66,7 @@
     vc.dataList = self.payList;
 }
 
-- (void)doBCResp:(BCBaseResp *)resp {
+- (void)onBCApiResp:(BCBaseResp *)resp {
     if ([resp isKindOfClass:[BCQueryResp class]]) {
         if (resp.result_code == 0) {
             BCQueryResp *tempResp = (BCQueryResp *)resp;

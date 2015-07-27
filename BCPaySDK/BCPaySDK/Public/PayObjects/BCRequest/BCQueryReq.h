@@ -17,8 +17,8 @@
 
 @property (nonatomic, assign) PayChannel channel;
 @property (nonatomic, retain) NSString *billno;
-@property (nonatomic, assign) NSString *starttime;
-@property (nonatomic, assign) NSString *endtime;
+@property (nonatomic, assign) NSString *starttime;//@"yyyyMMddHHmm"格式
+@property (nonatomic, assign) NSString *endtime;//@"yyyyMMddHHmm"格式
 @property (nonatomic, assign) NSInteger skip;
 @property (nonatomic, assign) NSInteger limit;
 
