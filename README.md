@@ -16,6 +16,8 @@
 
 2.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照上文的3个步骤导入相应文件进自己工程即可。
 
+3.CocoaPods coming soon
+
 ## 注册
 三个步骤，2分钟轻松搞定：
 1. 注册开发者：猛击[这里](http://www.beecloud.cn/register)注册成为BeeCloud开发者。
@@ -24,7 +26,7 @@
 
 ```.net
 //请替换成自己的BeeCloud账户中的AppID和AppSecret
-[BCPaySDK initWithAppID:@"c37d661d-7e61-49ea-96a5-68c34e83db3b" andAppSecret:@"c37d661d-7e61-49ea-96a5-68c34e83db3b"];
+[BCPaySDK initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
 
 //如果需要微信支付，请添加下面这行（自行替换微信APP ID）
 [BCPaySDK initWeChatPay:@"wxf1aa465362b4c8f1"];
@@ -33,15 +35,15 @@
 ## 使用方法
 >具体使用请参考项目中的`PayDemo`工程
 
-要调用以下方法，都需要实现接口`BCApiDelegate`， 本接口的目的在于使不同类型的请求获得对应的不同的响应。
+要调用以下方法，都需要实现接口`BCApiDelegate`， 实现本接口的方法使不同类型的请求获得对应的不同的响应。
 
-1.支付
+### 1.支付
 
-原型： 
+**原型：** 
  
 通过构造`BCPayReq`的实例，使用`[BCPaySDK sendBCReq:payReq]`方法发起支付请求。  
 
-调用：
+**调用：**
 
 ```objc
 - (void)doPay:(PayChannel)channel {
@@ -52,73 +54,73 @@
     payReq.channel = channel;
     payReq.title = kSubject;
     payReq.totalfee = @"1";
-    payReq.billno = @"2015072321064153";// outTradeNo;
-    payReq.scheme = @"payTestDemo";
+    payReq.billno = outTradeNo;
+    payReq.scheme = @"payDemo";
     payReq.viewController = self;
     payReq.optional = dict;
     [BCPaySDK sendBCReq:payReq];
 }
 ```
 
-2.查询
+### 2.查询
 
-* 查询支付订单
+* **查询支付订单**
 
-原型：
+**原型：**
 
-通过构造`BCQueryReq`的实例，使用`[BCPaySDK sendBCReq:req]`方法发起查询  
+通过构造`BCQueryReq`的实例，使用`[BCPaySDK sendBCReq:req]`方法发起支付查询  
 
-调用：
+**调用：**
 
-```.net
-BCPayQueryResult result = BCPay.BCPayQueryByCondition(BCUtil.GetTimeStamp("ALI", null, null, null, null, 50);
+```objc
+BCQueryReq *req = [[BCQueryReq alloc] init];
+req.channel = channel;
+//req.billno = @"20150722164700237";
+//req.starttime = @"201507210000";
+//req.endtime = @"201507231200";
+req.skip = 0;
+req.limit = 20;
+[BCPaySDK sendBCReq:req];
 ```
-* 查询退款订单
+* **查询退款订单**
 
-方法原型：
+**原型：**
 
-```.net
-public static BCRefundQuerytResult BCRefundQueryByCondition(string channel, string billNo, string refundNo, long? startTime, long? endTime, int? skip, int? limit);
+通过构造`BCQueryRefundReq`的实例，使用`[BCPaySDK sendBCReq:req]`方法发起退款查询
+
+**调用：**
+
+```objc
+BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
+req.channel = channel;
+req.skip = 0;
+req.limit = 20;
+[BCPaySDK sendBCReq:req];
 ```
-调用：
+* **查询退款状态（只支持微信）**
 
-```.net
-BCRefundQuerytResult result = BCPay.BCRefundQueryByCondition("ALI", null, null, null, null, null, 50);
-```
-* 查询退款状态（只支持微信）
+**原型：**
 
-方法原型：
+通过构造`BCRefundStatusReq`的实例，使用`[BCPaySDK sendBCReq:req]`方法发起退款查询
 
-```.net
-public static BCRefundStatusQueryResult BCRefundStatusQuery(string channel, string refundNo);
-```
-调用：
+**调用：**
 
-```.net
-BCRefundStatusQueryResult result = BCPay.BCRefundStatusQuery("WX", refundNo);
+```objc
+BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
+req.refundno = @"20150709173629127";
+[BCPaySDK sendBCReq:req];
 ```
 
 ## Demo
-项目中的`BeeCloudSDKDemo`工程为我们的demo  
-在demo工程中添加BeeCloud工程的dll引用，设置demo工程为启动项后F5即可运行调试
->每次修改过BeeCloud工程后请先build BeeCloud工程再运行demo调试
-
-- 关于支付宝的return_url
-
-请参考demo中的`return_ali_url.aspx`
-- 关于银联的return_url
-
-请参考demo中的`return_un_url.aspx`
-- 关于weekhook的接收
-
-请参考demo中的`notify.asxp`
-文档请阅读 [webhook](https://beecloud.cn/doc/java.php#webhook)
+项目中的`PayDemo`工程为我们的demo  
+将target设置为PayDemo之后可以直接运行（支付需要真机）
 
 ## 测试
 TODO
 
 ## 常见问题
-待补充
+- 关于weekhook的接收  
+文档请阅读 [webhook](https://beecloud.cn/doc/java.php#webhook)
 
 ## 代码贡献
 我们非常欢迎大家来贡献代码，我们会向贡献者致以最诚挚的敬意。
