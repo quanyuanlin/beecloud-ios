@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCQRefundReq.h"
+#import "BCQueryRefundReq.h"
 
 #pragma mark query refund request
-@implementation BCQRefundReq
+@implementation BCQueryRefundReq
 
 - (instancetype)init {
     self = [super init];

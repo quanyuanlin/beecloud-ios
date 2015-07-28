@@ -17,7 +17,7 @@
 
 #import "BCQueryReq.h"
 #import "BCQueryResp.h"
-#import "BCQRefundReq.h"
+#import "BCQueryRefundReq.h"
 
 #import "BCRefundStatusReq.h"
 #import "BCRefundStatusResp.h"

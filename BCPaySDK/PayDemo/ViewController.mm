@@ -84,7 +84,7 @@
         req.limit = 20;
         [BCPaySDK sendBCReq:req];
     } else if (self.actionType == 2) {
-        BCQRefundReq *req = [[BCQRefundReq alloc] init];
+        BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
         req.channel = channel;
         req.skip = 0;
         req.limit = 20;

@@ -81,7 +81,7 @@
     } else if (req.type == BCObjsTypeQueryReq ) {
         [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryReq *)req];
     } else if (req.type == BCObjsTypeQueryRefundReq) {
-        [[BCPaySDK sharedInstance] reqQueryOrder:(BCQRefundReq *)req];
+        [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryRefundReq *)req];
     } else if (req.type == BCObjsTypeRefundStatusReq) {
         [[BCPaySDK sharedInstance] reqRefundState:(BCRefundStatusReq *)req];
     }
@@ -164,7 +164,7 @@
         parameters[@"end_time"] = [BCUtil getTimeStampFromString:req.endtime];
     }
     if (req.type == BCObjsTypeQueryRefundReq) {
-        BCQRefundReq *refundReq = (BCQRefundReq *)req;
+        BCQueryRefundReq *refundReq = (BCQueryRefundReq *)req;
         if ([BCUtil isValidString:refundReq.refundno]) {
             parameters[@"refund_no"] = refundReq.refundno;
         }
