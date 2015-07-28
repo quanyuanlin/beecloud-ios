@@ -8,9 +8,9 @@
 
 #import "BCBaseResult.h"
 
-#pragma mark BCQBillsResult
+#pragma mark BCQueryBillResult
 
-@interface BCQBillsResult : BCBaseResult
+@interface BCQueryBillResult : BCBaseResult
 
 @property (nonatomic, assign) NSNumber  *spay_result;//BOOL
 

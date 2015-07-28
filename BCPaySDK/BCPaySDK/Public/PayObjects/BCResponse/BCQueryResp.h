@@ -16,8 +16,6 @@
 /**
  *  查询到得结果数量
  */
-@property (nonatomic, assign) NSInteger type;
-
 @property (nonatomic, assign) NSInteger count;
 
 @property (nonatomic, retain) NSMutableArray *results;

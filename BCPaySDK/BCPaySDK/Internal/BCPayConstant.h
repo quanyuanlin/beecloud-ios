@@ -54,10 +54,10 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
 
 
 typedef NS_ENUM(NSInteger, PayChannel) {
-    None  = 0,
-    WX    = 1 << 0,
-    Ali   = 1 << 1,
-    Union = 1 << 2
+    None = 0,
+    WX,
+    Ali,
+    Union
 };
 
 enum  BCErrCode {
@@ -72,15 +72,17 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeBaseReq = 100,
     BCObjsTypePayReq,
     BCObjsTypeQueryReq,
-    BCObjsTypeQRefundReq,
+    BCObjsTypeQueryRefundReq,
     BCObjsTypeRefundStatusReq,
+    
     BCObjsTypeBaseResp = 200,
     BCObjsTypePayResp,
     BCObjsTypeQueryResp,
     BCObjsTypeRefundStatusResp,
+    
     BCObjsTypeBaseResults = 300,
-    BCObjsTypeBillsResults,
-    BCObjsTypeRefundsResults
+    BCObjsTypeBillResults,
+    BCObjsTypeRefundResults
 };
 
 static NSString * const kBCDateFormat = @"yyyyMMddHHmm";

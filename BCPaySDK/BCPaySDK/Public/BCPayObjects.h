@@ -23,8 +23,8 @@
 #import "BCRefundStatusResp.h"
 
 #import "BCBaseResult.h"
-#import "BCQBillsResult.h"
-#import "BCQRefundResult.h"
+#import "BCQueryBillResult.h"
+#import "BCQueryRefundResult.h"
 
 
 #endif

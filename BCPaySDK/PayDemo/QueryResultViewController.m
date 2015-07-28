@@ -33,9 +33,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     BCBaseResult *result = (BCBaseResult *)[self.dataList objectAtIndex:indexPath.row];
-    if (result.type == BCObjsTypeRefundsResults) {
+    if (result.type == BCObjsTypeRefundResults) {
         return 180.0f;
-    } else if (result.type == BCObjsTypeBillsResults) {
+    } else if (result.type == BCObjsTypeBillResults) {
         return 160.0f;
     }
     return 100.0f;
@@ -48,18 +48,18 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     NSString *cellString = @"";
-    if ([[self.dataList objectAtIndex:indexPath.row] isKindOfClass:[BCQBillsResult class]]) {
+    if ([[self.dataList objectAtIndex:indexPath.row] isKindOfClass:[BCQueryBillResult class]]) {
         cell  = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         }
-        BCQBillsResult *result = (BCQBillsResult *)[self.dataList objectAtIndex:indexPath.row];
+        BCQueryBillResult *result = (BCQueryBillResult *)[self.dataList objectAtIndex:indexPath.row];
         
          cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@     金额:%@\n交易时间:%@\n交易订单号:%@\n交易状态:%@", result.title,result.channel, result.total_fee,[self getDateString:[result.created_time longLongValue]],result.bill_no,[result.spay_result boolValue]?@"成功":@"失败"];
         
-    } else if ([[self.dataList objectAtIndex:indexPath.row] isKindOfClass:[BCQRefundResult class]]) {
+    } else if ([[self.dataList objectAtIndex:indexPath.row] isKindOfClass:[BCQueryRefundResult class]]) {
        
-        BCQRefundResult *result = (BCQRefundResult *)[self.dataList objectAtIndex:indexPath.row];
+        BCQueryRefundResult *result = (BCQueryRefundResult *)[self.dataList objectAtIndex:indexPath.row];
         
         cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@     金额:%@\n交易时间:%@\n交易订单号:%@\n退款单号:%@\n退款是否成功状态:%@\n退款是否完成:%@", result.title,result.channel, result.total_fee,[self getDateString:[result.created_time longLongValue]],result.bill_no,result.refund_no, [result.result boolValue]?@"成功":@"失败",[result.finish boolValue]?@"完成":@"未完成"];
     }

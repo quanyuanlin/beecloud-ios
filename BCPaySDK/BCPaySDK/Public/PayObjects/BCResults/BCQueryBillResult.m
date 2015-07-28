@@ -6,14 +6,14 @@
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCQBillsResult.h"
+#import "BCQueryBillResult.h"
 
-@implementation BCQBillsResult
+@implementation BCQueryBillResult
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.type = BCObjsTypeBillsResults;
+        self.type = BCObjsTypeBillResults;
         self.spay_result = @NO;
     }
     return self;

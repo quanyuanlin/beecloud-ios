@@ -8,9 +8,9 @@
 
 #import "BCBaseResult.h"
 
-#pragma mark BCQRefundResult
+#pragma mark BCQueryRefundResult
 
-@interface BCQRefundResult : BCBaseResult
+@interface BCQueryRefundResult : BCBaseResult
 
 @property (nonatomic, retain) NSString *refund_no;
 @property (nonatomic, assign) NSNumber *refund_fee; //NSInteger

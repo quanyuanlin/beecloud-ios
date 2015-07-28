@@ -6,14 +6,14 @@
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCQRefundResult.h"
+#import "BCQueryRefundResult.h"
 
-@implementation BCQRefundResult
+@implementation BCQueryRefundResult
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.type = BCObjsTypeRefundsResults;
+        self.type = BCObjsTypeRefundResults;
         self.refund_no = @"";
         self.refund_fee = @0;
         self.result = @NO;

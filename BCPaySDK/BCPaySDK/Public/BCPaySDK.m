@@ -80,7 +80,7 @@
         [[BCPaySDK sharedInstance] reqPay:(BCPayReq *)req];
     } else if (req.type == BCObjsTypeQueryReq ) {
         [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryReq *)req];
-    } else if (req.type == BCObjsTypeQRefundReq) {
+    } else if (req.type == BCObjsTypeQueryRefundReq) {
         [[BCPaySDK sharedInstance] reqQueryOrder:(BCQRefundReq *)req];
     } else if (req.type == BCObjsTypeRefundStatusReq) {
         [[BCPaySDK sharedInstance] reqRefundState:(BCRefundStatusReq *)req];
@@ -163,7 +163,7 @@
     if ([BCUtil isValidString:req.endtime]) {
         parameters[@"end_time"] = [BCUtil getTimeStampFromString:req.endtime];
     }
-    if (req.type == BCObjsTypeQRefundReq) {
+    if (req.type == BCObjsTypeQueryRefundReq) {
         BCQRefundReq *refundReq = (BCQRefundReq *)req;
         if ([BCUtil isValidString:refundReq.refundno]) {
             parameters[@"refund_no"] = refundReq.refundno;
@@ -260,13 +260,13 @@
 - (BCBaseResult *)parseQueryResult:(NSDictionary *)dic {
     if (dic) {
         if ([[dic allKeys] containsObject:@"spay_result"]) {
-            BCQBillsResult *qResp = [[BCQBillsResult alloc] init];
+            BCQueryBillResult *qResp = [[BCQueryBillResult alloc] init];
             for (NSString *key in [dic allKeys]) {
                 [qResp setValue:[dic objectForKey:key] forKey:key];
             }
             return qResp;
         } else if ([[dic allKeys] containsObject:@"refund_no"]) {
-            BCQRefundResult *qResp = [[BCQRefundResult alloc] init];
+            BCQueryRefundResult *qResp = [[BCQueryRefundResult alloc] init];
             for (NSString *key in [dic allKeys]) {
                 [qResp setValue:[dic objectForKey:key] forKey:key];
             }
