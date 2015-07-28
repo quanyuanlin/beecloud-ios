@@ -17,17 +17,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.channelTbView.delegate = self ;
-    self.channelTbView.dataSource = self ;
-    self.payList = @[@(WX), @(Ali), @(Union)];
 
     [BCPaySDK setBCApiDelegate:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [self setHideTableViewCell:self.channelTbView];
-}
 
 - (void)doPay:(PayChannel)channel {
     NSString *outTradeNo = [self genOutTradeNo];
@@ -100,43 +93,19 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.payList.count;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80.0f;
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"channelCell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-    }
-    int channel = [[self.payList objectAtIndex:indexPath.row] intValue];
-    UIImageView *imgView = (UIImageView *)[cell viewWithTag:200];
-    UILabel *lab = (UILabel *)[cell viewWithTag:201];
-    
-    if (channel == WX) {
-        imgView.image = [UIImage imageNamed:@"wxPay"];
-        lab.text = @"微信支付";
-    } else if (channel == Ali) {
-        imgView.image = [UIImage imageNamed:@"aliPay"];
-        lab.text = @"支付宝";
-    } else if (channel == Union) {
-        imgView.image = [UIImage imageNamed:@"uPay"];
-        lab.text = @"银联在线";
-    }
 
-    return cell;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    int channel = [[self.payList objectAtIndex:indexPath.row] intValue];
     if (self.actionType == 0) {
-        [self doPay:(PayChannel)channel];
+        [self doPay:(PayChannel)indexPath.row];
     } else {
-        [self doQuery:(PayChannel)channel];
+        [self doQuery:(PayChannel)indexPath.row];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

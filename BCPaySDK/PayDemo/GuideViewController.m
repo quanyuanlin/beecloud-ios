@@ -46,13 +46,14 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    ViewController *vc = (ViewController *)segue.destinationViewController;
+    UINavigationController *navigationVC = (UINavigationController *)segue.destinationViewController;
+    ViewController *viewController = navigationVC.childViewControllers[0];
     if ([segue.identifier isEqualToString:@"doPay"]) {
-        vc.actionType = 0;
+        viewController.actionType = 0;
     } else if ([segue.identifier isEqualToString:@"doQuery"]){
-        vc.actionType = 1;
+        viewController.actionType = 1;
     } else {
-        vc.actionType = 2;
+        viewController.actionType = 2;
     }
 }
 

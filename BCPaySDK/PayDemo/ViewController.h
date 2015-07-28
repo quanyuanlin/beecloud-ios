@@ -11,11 +11,9 @@
 
 static NSString * const kSubject = @"BeeCloud自制白开水";
 
-@interface ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate, BCApiDelegate>
+@interface ViewController : UITableViewController<UIAlertViewDelegate, BCApiDelegate>
 
 @property (strong, nonatomic) NSArray *payList;
-
-@property (strong, nonatomic) IBOutlet UITableView *channelTbView;
 
 @property  (assign, nonatomic) NSInteger actionType;//0:pay;1:query;
 
