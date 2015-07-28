@@ -9,7 +9,7 @@
 #import "GuideViewController.h"
 #import "ViewController.h"
 
-@interface GuideViewController ()<BCApiDelegate>
+@interface GuideViewController ()
 
 @end
 
@@ -17,28 +17,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [BCPaySDK setBCApiDelegate:self];
     // Do any additional setup after loading the view.
 }
-- (IBAction)onQueryWXRefund:(id)sender {
-    BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
-    req.refundno = @"20150709173629127";
-    [BCPaySDK sendBCReq:req];
-}
 
-- (void)onBCApiResp:(BCBaseResp *)resp {
-    if ([resp isKindOfClass:[BCRefundStatusResp class]]) {
-        BCRefundStatusResp *tempResp = (BCRefundStatusResp *)resp;
-        NSString *msg = @"";
-        if (resp.result_code == 0) {
-            msg = tempResp.refundStatus;
-        } else {
-            msg = tempResp.err_detail;
-        }
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

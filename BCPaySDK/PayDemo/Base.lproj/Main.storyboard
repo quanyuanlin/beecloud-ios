@@ -21,7 +21,7 @@
             </objects>
             <point key="canvasLocation" x="-1106" y="81"/>
         </scene>
-        <!--BeeCloud支付-->
+        <!--方法目录-->
         <scene sceneID="Uxx-c0-MgI">
             <objects>
                 <viewController id="ZZF-b9-bZT" customClass="GuideViewController" sceneMemberID="viewController">
@@ -60,16 +60,6 @@
                                     <segue destination="HMO-i6-9Nb" kind="show" identifier="doQuery" id="bsB-Ni-cYe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb3-s8-HdE">
-                                <rect key="frame" x="180" y="360" width="240" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="查询微信退款状态">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onQueryWXRefund:" destination="ZZF-b9-bZT" eventType="touchUpInside" id="y5U-Tc-uYV"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGX-x0-pDU">
                                 <rect key="frame" x="180" y="297" width="240" height="30"/>
                                 <constraints>
@@ -87,20 +77,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="zGX-x0-pDU" firstAttribute="leading" secondItem="24I-1V-Aps" secondAttribute="leading" id="4Fi-Iy-SSw"/>
-                            <constraint firstItem="lID-vX-5Jh" firstAttribute="top" secondItem="Fb3-s8-HdE" secondAttribute="bottom" constant="210" id="EC5-5D-U2M"/>
                             <constraint firstItem="PEI-LT-H2h" firstAttribute="centerX" secondItem="BPp-TD-kQt" secondAttribute="centerX" id="JCn-js-qOO"/>
                             <constraint firstItem="PEI-LT-H2h" firstAttribute="leading" secondItem="24I-1V-Aps" secondAttribute="leading" id="SWi-1h-LBJ"/>
-                            <constraint firstItem="Fb3-s8-HdE" firstAttribute="top" secondItem="zGX-x0-pDU" secondAttribute="bottom" constant="33" id="WDq-pg-AQK"/>
                             <constraint firstItem="zGX-x0-pDU" firstAttribute="trailing" secondItem="24I-1V-Aps" secondAttribute="trailing" id="YRp-xI-DrV"/>
                             <constraint firstItem="PEI-LT-H2h" firstAttribute="trailing" secondItem="24I-1V-Aps" secondAttribute="trailing" id="aLB-r4-fse"/>
                             <constraint firstItem="zGX-x0-pDU" firstAttribute="top" secondItem="24I-1V-Aps" secondAttribute="bottom" constant="43" id="dxS-ht-vyk"/>
-                            <constraint firstItem="zGX-x0-pDU" firstAttribute="trailing" secondItem="Fb3-s8-HdE" secondAttribute="trailing" id="hYQ-o3-TEC"/>
                             <constraint firstItem="24I-1V-Aps" firstAttribute="top" secondItem="PEI-LT-H2h" secondAttribute="bottom" constant="44" id="kbg-c4-cCP"/>
-                            <constraint firstItem="Fb3-s8-HdE" firstAttribute="leading" secondItem="zGX-x0-pDU" secondAttribute="leading" id="osb-ex-Orc"/>
                             <constraint firstItem="PEI-LT-H2h" firstAttribute="top" secondItem="uvi-4h-iVK" secondAttribute="bottom" constant="86" id="sKP-af-ZyO"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="BeeCloud支付" id="BRq-Rh-458"/>
+                    <navigationItem key="navigationItem" title="方法目录" id="BRq-Rh-458"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VbA-ES-uO7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,15 +108,15 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IQ5-wx-Icf" id="lCW-xf-HFX">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="支付宝" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3WI-89-gSk">
-                                                    <rect key="frame" x="96" y="14" width="87" height="50.5"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wxPay" translatesAutoresizingMaskIntoConstraints="NO" id="TRl-v3-KE6">
+                                                    <rect key="frame" x="8" y="10" width="60" height="60"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="微信" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3WI-89-gSk">
+                                                    <rect key="frame" x="76" y="14" width="87" height="50.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="aliPay" translatesAutoresizingMaskIntoConstraints="NO" id="TRl-v3-KE6">
-                                                    <rect key="frame" x="8" y="10" width="60" height="60"/>
-                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -139,13 +125,13 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nb9-zd-ARE" id="IPP-hN-XKU">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="微信" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4k-vT-Ggu">
-                                                    <rect key="frame" x="96" y="14" width="92" height="50.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="支付宝" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4k-vT-Ggu">
+                                                    <rect key="frame" x="76" y="14" width="92" height="50.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wxPay" translatesAutoresizingMaskIntoConstraints="NO" id="v5x-Dx-9L5">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="aliPay" translatesAutoresizingMaskIntoConstraints="NO" id="v5x-Dx-9L5">
                                                     <rect key="frame" x="8" y="10" width="60" height="60"/>
                                                 </imageView>
                                             </subviews>
@@ -157,7 +143,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="银联" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axA-5X-3gs">
-                                                    <rect key="frame" x="96" y="11" width="101" height="56.5"/>
+                                                    <rect key="frame" x="76" y="11" width="101" height="57"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -178,7 +164,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="渠道分类" id="bt7-lC-34v"/>
                     <connections>
-                        <segue destination="FCz-V7-7eU" kind="showDetail" identifier="queryResult" id="3px-L3-j4h"/>
+                        <segue destination="FCz-V7-7eU" kind="show" identifier="queryResult" id="3px-L3-j4h"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e1j-6D-6hT" userLabel="First Responder" sceneMemberID="firstResponder"/>

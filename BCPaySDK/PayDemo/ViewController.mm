@@ -30,15 +30,16 @@
     payReq.channel = channel;
     payReq.title = kSubject;
     payReq.totalfee = @"1";
-    payReq.billno = @"2015072321064153";// outTradeNo;
-    payReq.scheme = @"payTestDemo";
+    payReq.billno = outTradeNo;
+    payReq.scheme = @"payDemo";
     payReq.viewController = self;
     payReq.optional = dict;
     [BCPaySDK sendBCReq:payReq];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    QueryResultViewController *vc = (QueryResultViewController *)segue.destinationViewController;
+    UINavigationController *navigationVC = (UINavigationController*)segue.destinationViewController;
+    QueryResultViewController *vc = (QueryResultViewController *)navigationVC.childViewControllers[0];
     vc.dataList = self.payList;
 }
 
@@ -103,9 +104,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.actionType == 0) {
-        [self doPay:(PayChannel)indexPath.row];
+        [self doPay:(PayChannel)(indexPath.row + 1)];
     } else {
-        [self doQuery:(PayChannel)indexPath.row];
+        [self doQuery:(PayChannel)(indexPath.row + 1)];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
