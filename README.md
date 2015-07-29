@@ -19,9 +19,9 @@
 3.CocoaPods coming soon
 
 ## 注册
-三个步骤，2分钟轻松搞定：
-1. 注册开发者：猛击[这里](http://www.beecloud.cn/register)注册成为BeeCloud开发者。
-2. 注册应用：使用注册的账号登陆[控制台](http://www.beecloud.cn/dashboard/)后，点击"+创建App"创建新应用
+三个步骤，2分钟轻松搞定：  
+1. 注册开发者：猛击[这里](http://www.beecloud.cn/register)注册成为BeeCloud开发者。  
+2. 注册应用：使用注册的账号登陆[控制台](http://www.beecloud.cn/dashboard/)后，点击"+创建App"创建新应用，并配置支付参数。  
 3. 在代码中注册：
 
 ```.net
