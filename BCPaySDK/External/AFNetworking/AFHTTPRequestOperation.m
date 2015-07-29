@@ -139,7 +139,6 @@ static dispatch_group_t http_request_operation_completion_group() {
                     }
                 }
             }
-
             if (self.completionGroup) {
                 dispatch_group_leave(self.completionGroup);
             }
