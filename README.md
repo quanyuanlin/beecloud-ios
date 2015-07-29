@@ -124,7 +124,7 @@ TODO
 
 ## 常见问题
 - 关于weekhook的接收  
-文档请阅读 [webhook](https://beecloud.cn/doc/java.php#webhook)
+文档请阅读 [webhook](https://github.com/beecloud/beecloud-webhook)
 
 ## 代码贡献
 我们非常欢迎大家来贡献代码，我们会向贡献者致以最诚挚的敬意。
