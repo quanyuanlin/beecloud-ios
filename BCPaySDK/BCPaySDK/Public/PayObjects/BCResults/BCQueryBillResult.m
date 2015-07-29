@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         self.type = BCObjsTypeBillResults;
-        self.spay_result = @NO;
+        self.spay_result = NO;
     }
     return self;
 }

@@ -18,9 +18,9 @@
 
 @property (nonatomic, assign) BCObjsType type;
 @property (nonatomic, retain) NSString  *bill_no;
-@property (nonatomic, assign) NSNumber  *total_fee;//NSInteger
+@property (nonatomic, assign) NSInteger  total_fee;//NSInteger
 @property (nonatomic, retain) NSString  *title;
-@property (nonatomic, retain) NSNumber  *created_time;//long long
+@property (nonatomic, assign) long long  created_time;//long long
 @property (nonatomic, retain) NSString  *channel;
 
 @end

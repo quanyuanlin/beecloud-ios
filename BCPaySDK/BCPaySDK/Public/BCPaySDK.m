@@ -205,18 +205,18 @@
     }
     NSString *reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryBills];
     
-    if ([BCUtil isValidString:req.billno]) {
+    if ([BCPayUtil isValidString:req.billno]) {
         parameters[@"bill_no"] = req.billno;
     }
-    if ([BCUtil isValidString:req.starttime]) {
-        parameters[@"start_time"] = [BCUtil getTimeStampFromString:req.starttime];
+    if ([BCPayUtil isValidString:req.starttime]) {
+        parameters[@"start_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.starttime]];
     }
-    if ([BCUtil isValidString:req.endtime]) {
-        parameters[@"end_time"] = [BCUtil getTimeStampFromString:req.endtime];
+    if ([BCPayUtil isValidString:req.endtime]) {
+        parameters[@"end_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.endtime]];
     }
     if (req.type == BCObjsTypeQueryRefundReq) {
         BCQueryRefundReq *refundReq = (BCQueryRefundReq *)req;
-        if ([BCUtil isValidString:refundReq.refundno]) {
+        if ([BCPayUtil isValidString:refundReq.refundno]) {
             parameters[@"refund_no"] = refundReq.refundno;
         }
         reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryRefunds];
@@ -300,7 +300,7 @@
         return;
     }
     
-    if ([BCUtil isValidString:req.refundno]) {
+    if ([BCPayUtil isValidString:req.refundno]) {
         parameters[@"refund_no"] = req.refundno;
     }
     parameters[@"channel"] = @"WX";
@@ -371,16 +371,16 @@
 - (BOOL)checkParameters:(BCBaseReq *)request {
     if (request.type == BCObjsTypePayReq) {
         BCPayReq *req = (BCPayReq *)request;
-        if (![BCUtil isValidString:req.title] || [BCUtil getBytes:req.title] > 32) {
+        if (![BCPayUtil isValidString:req.title] || [BCPayUtil getBytes:req.title] > 32) {
             [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
             return NO;
-        } else if (![BCUtil isValidString:req.totalfee] || ![BCUtil isPureInt:req.totalfee]) {
+        } else if (![BCPayUtil isValidString:req.totalfee] || ![BCPayUtil isPureInt:req.totalfee]) {
             [self doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
             return NO;
-        } else if (![BCUtil isValidString:req.billno] || (![BCUtil isValidTraceNo:req.billno]) || (req.billno.length < 8) || (req.billno.length > 32)) {
+        } else if (![BCPayUtil isValidString:req.billno] || (![BCPayUtil isValidTraceNo:req.billno]) || (req.billno.length < 8) || (req.billno.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
-        } else if ((req.channel == Ali) && ![BCUtil isValidString:req.scheme]) {
+        } else if ((req.channel == Ali) && ![BCPayUtil isValidString:req.scheme]) {
             [self doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
             return NO;
         } else if ((req.channel == Union) && (req.viewController == nil)) {
@@ -416,7 +416,7 @@
                 errcode = BCErrCodeSentFail;
                 break;
         }
-        NSString *result = [BCUtil isValidString:tempResp.errStr]?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
+        NSString *result = [BCPayUtil isValidString:tempResp.errStr]?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
         BCBaseResp *resp = [[BCBaseResp alloc] init];
         resp.result_code = errcode;
         resp.result_msg = result;

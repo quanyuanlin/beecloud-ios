@@ -21,7 +21,7 @@
             </objects>
             <point key="canvasLocation" x="-1106" y="81"/>
         </scene>
-        <!--方法目录-->
+        <!--首页-->
         <scene sceneID="Uxx-c0-MgI">
             <objects>
                 <viewController id="ZZF-b9-bZT" customClass="GuideViewController" sceneMemberID="viewController">
@@ -86,13 +86,13 @@
                             <constraint firstItem="PEI-LT-H2h" firstAttribute="top" secondItem="uvi-4h-iVK" secondAttribute="bottom" constant="86" id="sKP-af-ZyO"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="方法目录" id="BRq-Rh-458"/>
+                    <navigationItem key="navigationItem" title="首页" id="BRq-Rh-458"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VbA-ES-uO7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-353" y="81"/>
         </scene>
-        <!--渠道分类-->
+        <!--View Controller-->
         <scene sceneID="Jon-GA-0VR">
             <objects>
                 <tableViewController id="7Kq-JA-Y9q" customClass="ViewController" sceneMemberID="viewController">
@@ -162,7 +162,7 @@
                             <outlet property="delegate" destination="7Kq-JA-Y9q" id="vIg-HM-YSe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="渠道分类" id="bt7-lC-34v"/>
+                    <navigationItem key="navigationItem" id="bt7-lC-34v"/>
                     <connections>
                         <segue destination="FCz-V7-7eU" kind="show" identifier="queryResult" id="3px-L3-j4h"/>
                     </connections>

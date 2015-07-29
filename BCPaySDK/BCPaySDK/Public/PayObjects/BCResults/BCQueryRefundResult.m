@@ -15,9 +15,9 @@
     if (self) {
         self.type = BCObjsTypeRefundResults;
         self.refund_no = @"";
-        self.refund_fee = @0;
-        self.result = @NO;
-        self.finish = @NO;
+        self.refund_fee = 0;
+        self.result = NO;
+        self.finish = NO;
     }
     return self;
 }

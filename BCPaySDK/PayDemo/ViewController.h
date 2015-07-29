@@ -11,7 +11,7 @@
 
 @interface ViewController : UITableViewController<UIAlertViewDelegate, BCApiDelegate>
 
-@property (strong, nonatomic) NSArray *payList;
+@property (strong, nonatomic) NSMutableArray *payList;
 
 @property  (assign, nonatomic) NSInteger actionType;//0:pay;1:query;
 
