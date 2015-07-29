@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "BCPaySDK.h"
 
-static NSString * const kSubject = @"BeeCloud自制白开水";
-
 @interface ViewController : UITableViewController<UIAlertViewDelegate, BCApiDelegate>
 
 @property (strong, nonatomic) NSArray *payList;

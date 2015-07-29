@@ -21,14 +21,13 @@
     [BCPaySDK setBCApiDelegate:self];
 }
 
-
 - (void)doPay:(PayChannel)channel {
     NSString *outTradeNo = [self genOutTradeNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-    NSLog(@"traceno = %@", outTradeNo);
+
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel;
-    payReq.title = kSubject;
+    payReq.title = @"BeeCloud自制白开水";
     payReq.totalfee = @"1";
     payReq.billno = outTradeNo;
     payReq.scheme = @"payDemo";
@@ -86,6 +85,10 @@
     } else if (self.actionType == 2) {
         BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
         req.channel = channel;
+        //req.billno = @"20150722164700237";
+        //req.starttime = @"201507210000";
+        //req.endtime = @"201507231200";
+        //req.refundno = @"20150709173629127";
         req.skip = 0;
         req.limit = 20;
         [BCPaySDK sendBCReq:req];
