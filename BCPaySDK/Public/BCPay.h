@@ -23,7 +23,7 @@
 @end
 
 #pragma mark - BCPaySDK
-@interface BCPaySDK : NSObject
+@interface BCPay : NSObject
 
 /**
  *  全局初始化

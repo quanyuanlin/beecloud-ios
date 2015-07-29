@@ -7,7 +7,7 @@
 //
 
 #import "QueryResultViewController.h"
-#import "BCPaySDK.h"
+#import "BCPay.h"
 #import "BCPayUtil.h"
 
 @interface QueryResultViewController ()

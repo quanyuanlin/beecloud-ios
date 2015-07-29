@@ -6,14 +6,14 @@
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCPaySDK.h"
+#import "BCPay.h"
 
 #import "BCPayUtil.h"
 #import "WXApi.h"
 #import "AlipaySDK.h"
 #import "UPPayPlugin.h"
 
-@interface BCPaySDK ()<WXApiDelegate, UPPayPluginDelegate>
+@interface BCPay ()<WXApiDelegate, UPPayPluginDelegate>
 
 @property (nonatomic, assign) BOOL registerStatus;
 @property (nonatomic, weak) id<BCApiDelegate> deleagte;
@@ -21,13 +21,13 @@
 @end
 
 
-@implementation BCPaySDK
+@implementation BCPay
 
 + (instancetype)sharedInstance {
     static dispatch_once_t onceToken;
-    static BCPaySDK *instance = nil;
+    static BCPay *instance = nil;
     dispatch_once(&onceToken, ^{
-        instance = [[BCPaySDK alloc] init];
+        instance = [[BCPay alloc] init];
         instance.registerStatus = NO;
     });
     return instance;
@@ -40,17 +40,17 @@
 }
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
-    BCPaySDK *instance = [BCPaySDK sharedInstance];
+    BCPay *instance = [BCPay sharedInstance];
     instance.registerStatus =  [WXApi registerApp:wxAppID];
     return instance.registerStatus;
 }
 
 + (void)setBCApiDelegate:(id<BCApiDelegate>)delegate {
-    [BCPaySDK sharedInstance].deleagte = delegate;
+    [BCPay sharedInstance].deleagte = delegate;
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
-    BCPaySDK *instance = [BCPaySDK sharedInstance];
+    BCPay *instance = [BCPay sharedInstance];
     
     if (BCPayUrlWeChat == [BCPayUtil getUrlType:url]) {
         return [WXApi handleOpenURL:url delegate:instance];
@@ -77,13 +77,13 @@
 
 + (void)sendBCReq:(BCBaseReq *)req {
     if (req.type == BCObjsTypePayReq) {
-        [[BCPaySDK sharedInstance] reqPay:(BCPayReq *)req];
+        [[BCPay sharedInstance] reqPay:(BCPayReq *)req];
     } else if (req.type == BCObjsTypeQueryReq ) {
-        [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryReq *)req];
+        [[BCPay sharedInstance] reqQueryOrder:(BCQueryReq *)req];
     } else if (req.type == BCObjsTypeQueryRefundReq) {
-        [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryRefundReq *)req];
+        [[BCPay sharedInstance] reqQueryOrder:(BCQueryRefundReq *)req];
     } else if (req.type == BCObjsTypeRefundStatusReq) {
-        [[BCPaySDK sharedInstance] reqRefundStatus:(BCRefundStatusReq *)req];
+        [[BCPay sharedInstance] reqRefundStatus:(BCRefundStatusReq *)req];
     }
 }
 
@@ -92,7 +92,7 @@
 #pragma mark Pay Request
 
 - (void)reqPay:(BCPayReq *)req {
-    if (![[BCPaySDK sharedInstance] checkParameters:req]) return;
+    if (![[BCPay sharedInstance] checkParameters:req]) return;
     
     NSString *cType = [self getChannelString:req.channel];
     
@@ -184,7 +184,7 @@
     NSString *tn = [dic objectForKey:@"tn"];
     BCPayLog(@"Union Pay Start %@", dic);
     dispatch_async(dispatch_get_main_queue(), ^{
-        [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCPaySDK sharedInstance]];
+        [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCPay sharedInstance]];
     });
 }
 
@@ -196,7 +196,7 @@
         return;
     }
     
-    NSString *cType = [[BCPaySDK sharedInstance] getChannelString:req.channel];
+    NSString *cType = [[BCPay sharedInstance] getChannelString:req.channel];
     
     NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
     if (parameters == nil) {

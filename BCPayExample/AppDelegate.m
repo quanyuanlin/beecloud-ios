@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "BCPaySDK.h"
+#import "BCPay.h"
 
 
 @interface AppDelegate ()
@@ -19,19 +19,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [BCPaySDK initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+    [BCPay initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
     
-    [BCPaySDK initWeChatPay:@"wxf1aa465362b4c8f1"];
+    [BCPay initWeChatPay:@"wxf1aa465362b4c8f1"];
     
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [BCPaySDK handleOpenUrl:url];
+    return [BCPay handleOpenUrl:url];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [BCPaySDK handleOpenUrl:url];
+    return [BCPay handleOpenUrl:url];
 }
 
 

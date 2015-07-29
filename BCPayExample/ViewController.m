@@ -27,7 +27,7 @@
     }
     
     self.payList = [NSMutableArray arrayWithCapacity:10];
-    [BCPaySDK setBCApiDelegate:self];
+    [BCPay setBCApiDelegate:self];
     
 }
 
@@ -43,7 +43,7 @@
     payReq.scheme = @"payDemo";
     payReq.viewController = self;
     payReq.optional = dict;
-    [BCPaySDK sendBCReq:payReq];
+    [BCPay sendBCReq:payReq];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -91,7 +91,7 @@
      //   req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
         req.limit = 50;
-        [BCPaySDK sendBCReq:req];
+        [BCPay sendBCReq:req];
     } else if (self.actionType == 2) {
         BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
         req.channel = channel;
@@ -101,7 +101,7 @@
         //req.refundno = @"20150709173629127";
         req.skip = 0;
         req.limit = 20;
-        [BCPaySDK sendBCReq:req];
+        [BCPay sendBCReq:req];
     }
 }
 

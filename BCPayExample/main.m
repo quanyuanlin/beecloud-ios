@@ -1,8 +1,8 @@
 //
 //  main.m
-//  PayDemo
+//  BCPayExample
 //
-//  Created by Ewenlong03 on 15/7/24.
+//  Created by Ewenlong03 on 15/7/29.
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
