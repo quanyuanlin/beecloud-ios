@@ -14,7 +14,7 @@
 >2. iOS SDK使用了第三方Http请求库AFNetworking，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。
 >3. 最后加入系统framework: `CoreTelephony.framework`以及系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
 
-2.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照上文的3个步骤导入相应文件进自己工程即可。
+2.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照上文的3个步骤导入相应文件进自己工程即可。(推荐)
 
 3.CocoaPods coming soon
 
@@ -26,10 +26,10 @@
 
 ```.net
 //请替换成自己的BeeCloud账户中的AppID和AppSecret
-[BCPaySDK initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+[BCPay initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
 
 //如果需要微信支付，请添加下面这行（自行替换微信APP ID）
-[BCPaySDK initWeChatPay:@"wxf1aa465362b4c8f1"];
+[BCPay initWeChatPay:@"wxf1aa465362b4c8f1"];
 ```
 
 ## 使用方法
@@ -41,7 +41,7 @@
 
 **原型：** 
  
-通过构造`BCPayReq`的实例，使用`[BCPaySDK sendBCReq:payReq]`方法发起支付请求。  
+通过构造`BCPayReq`的实例，使用`[BCPay sendBCReq:payReq]`方法发起支付请求。  
 
 **调用：**
 
@@ -58,7 +58,7 @@
     payReq.scheme = @"payDemo";
     payReq.viewController = self;
     payReq.optional = dict;
-    [BCPaySDK sendBCReq:payReq];
+    [BCPay sendBCReq:payReq];
 }
 ```
 
@@ -68,7 +68,7 @@
 
 **原型：**
 
-通过构造`BCQueryReq`的实例，使用`[BCPaySDK sendBCReq:req]`方法发起支付查询  
+通过构造`BCQueryReq`的实例，使用`[BCPay sendBCReq:req]`方法发起支付查询  
 
 **调用：**
 
@@ -80,13 +80,13 @@
    //req.endtime = @"2015-07-23 12:00";
    req.skip = 0;
    req.limit = 20;
-   [BCPaySDK sendBCReq:req];
+   [BCPay sendBCReq:req];
 ```
 * **查询退款订单**
 
 **原型：**
 
-通过构造`BCQueryRefundReq`的实例，使用`[BCPaySDK sendBCReq:req]`方法发起退款查询
+通过构造`BCQueryRefundReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
 
 **调用：**
 
@@ -99,20 +99,20 @@
    //req.refundno = @"20150709173629127";
    req.skip = 0;
    req.limit = 20;
-   [BCPaySDK sendBCReq:req];
+   [BCPay sendBCReq:req];
 ```
 * **查询退款状态（只支持微信）**
 
 **原型：**
 
-通过构造`BCRefundStatusReq`的实例，使用`[BCPaySDK sendBCReq:req]`方法发起退款查询
+通过构造`BCRefundStatusReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
 
 **调用：**
 
 ```objc
 BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
 req.refundno = @"20150709173629127";
-[BCPaySDK sendBCReq:req];
+[BCPay sendBCReq:req];
 ```
 
 ## Demo
