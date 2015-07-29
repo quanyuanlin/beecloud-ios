@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BCPaySDK.h"
+#import "BCPay.h"
 
 @interface ViewController : UITableViewController<UIAlertViewDelegate, BCApiDelegate>
 
