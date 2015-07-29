@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-static NSString * const kDateFormat = @"yyyy-MM-dd HH:mm:ss";
-
 @interface QueryResultViewController : UITableViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *resultTableView;

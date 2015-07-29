@@ -17,8 +17,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    if (self.actionType == 0) {
+        self.title = @"支付";
+    } else if (self.actionType == 1) {
+        self.title = @"查询支付订单";
+    } else if (self.actionType == 2) {
+        self.title = @"查询退款订单";
+    }
+    
+    self.payList = [NSMutableArray arrayWithCapacity:10];
     [BCPaySDK setBCApiDelegate:self];
+    
 }
 
 - (void)doPay:(PayChannel)channel {
@@ -72,22 +82,22 @@
 #pragma mark - 订单查询
 
 - (void)doQuery:(PayChannel)channel {
-    //20150722164700237
+    
     if (self.actionType == 1) {
         BCQueryReq *req = [[BCQueryReq alloc] init];
         req.channel = channel;
-        //  req.billno = @"20150722164700237";
-        //  req.starttime = @"201507210000";
-        // req.endtime = @"201507231200";
+        req.billno = @"b0331675ac6a4d3fa36a8062c0f719ba";//@"20150722164700237";
+       // req.starttime = @"2015-07-23 00:00";
+     //   req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
-        req.limit = 20;
+        req.limit = 50;
         [BCPaySDK sendBCReq:req];
     } else if (self.actionType == 2) {
         BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
         req.channel = channel;
-        //req.billno = @"20150722164700237";
-        //req.starttime = @"201507210000";
-        //req.endtime = @"201507231200";
+        //  req.billno = @"20150722164700237";
+        //  req.starttime = @"2015-07-21 00:00";
+        // req.endtime = @"2015-07-23 12:00";
         //req.refundno = @"20150709173629127";
         req.skip = 0;
         req.limit = 20;

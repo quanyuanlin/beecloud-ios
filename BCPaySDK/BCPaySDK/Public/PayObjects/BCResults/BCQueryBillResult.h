@@ -15,6 +15,6 @@
  */
 @interface BCQueryBillResult : BCBaseResult
 
-@property (nonatomic, assign) NSNumber  *spay_result;//BOOL
+@property (nonatomic, assign) BOOL spay_result;
 
 @end

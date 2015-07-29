@@ -76,8 +76,8 @@
    BCQueryReq *req = [[BCQueryReq alloc] init];
    req.channel = channel;
    //req.billno = @"20150722164700237";
-   //req.starttime = @"201507210000";
-   //req.endtime = @"201507231200";
+   //req.starttime = @"2015-07-21 00:00";
+   //req.endtime = @"2015-07-23 12:00";
    req.skip = 0;
    req.limit = 20;
    [BCPaySDK sendBCReq:req];
@@ -94,8 +94,8 @@
    BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
    req.channel = channel;
    //req.billno = @"20150722164700237";
-   //req.starttime = @"201507210000";
-   //req.endtime = @"201507231200";
+   //req.starttime = @"2015-07-21 00:00";
+   //req.endtime = @"2015-07-23 12:00";
    //req.refundno = @"20150709173629127";
    req.skip = 0;
    req.limit = 20;

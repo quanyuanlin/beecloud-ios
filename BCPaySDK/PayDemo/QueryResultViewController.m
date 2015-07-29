@@ -8,6 +8,7 @@
 
 #import "QueryResultViewController.h"
 #import "BCPaySDK.h"
+#import "BCPayUtil.h"
 
 @interface QueryResultViewController ()
 
@@ -55,38 +56,18 @@
         }
         BCQueryBillResult *result = (BCQueryBillResult *)[self.dataList objectAtIndex:indexPath.row];
         
-         cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@     金额:%@\n交易时间:%@\n交易订单号:%@\n交易状态:%@", result.title,result.channel, result.total_fee,[self getDateString:[result.created_time longLongValue]],result.bill_no,[result.spay_result boolValue]?@"成功":@"失败"];
+        cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@     金额:%ld\n交易时间:%@\n交易订单号:%@\n交易状态:%@", result.title, result.channel, (long)result.total_fee,[BCPayUtil millisecondToDateString:result.created_time],result.bill_no,result.spay_result?@"成功":@"失败"];
         
     } else if ([[self.dataList objectAtIndex:indexPath.row] isKindOfClass:[BCQueryRefundResult class]]) {
        
         BCQueryRefundResult *result = (BCQueryRefundResult *)[self.dataList objectAtIndex:indexPath.row];
         
-        cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@     金额:%@\n交易时间:%@\n交易订单号:%@\n退款单号:%@\n退款是否成功状态:%@\n退款是否完成:%@", result.title,result.channel, result.total_fee,[self getDateString:[result.created_time longLongValue]],result.bill_no,result.refund_no, [result.result boolValue]?@"成功":@"失败",[result.finish boolValue]?@"完成":@"未完成"];
+        cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@\n总金额:%ld 退款金额:%ld\n交易时间:%@\n交易订单号:%@\n退款单号:%@\n退款是否成功状态:%@\n退款是否完成:%@", result.title,result.channel, (long)result.total_fee,result.refund_fee,[BCPayUtil millisecondToDateString:result.created_time],result.bill_no,result.refund_no, result.result?@"成功":@"失败",result.finish?@"完成":@"未完成"];
     }
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = cellString;
     
     return cell;
-}
-
-- (NSString *)getDateString:(long long)timeStamp {
-    NSLog(@"%lld", timeStamp);
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp/1000];
-    return [self dateToString:date];
-}
-
-- (NSDate *)stringToDate:(NSString *)string {
-    if (string == nil || string.length == 0) return nil;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:kDateFormat];
-    return [dateFormatter dateFromString:string];
-}
-
-- (NSString *)dateToString:(NSDate *)date {
-    if (date == nil) return nil;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:kDateFormat];
-    return [dateFormatter stringFromDate:date];
 }
 
 @end

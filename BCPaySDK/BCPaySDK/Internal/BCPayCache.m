@@ -8,7 +8,6 @@
 
 #import "BCPayCache.h"
 
-#import "BCUtil.h"
 #import "BCPayConstant.h"
 
 @implementation BCPayCache

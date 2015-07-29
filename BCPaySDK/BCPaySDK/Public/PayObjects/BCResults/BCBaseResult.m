@@ -17,8 +17,8 @@
         self.channel = @"";
         self.bill_no = @"";
         self.title = @"";
-        self.created_time = @0;
-        self.total_fee = @0;
+        self.created_time = 0;
+        self.total_fee = 0;
     }
     return self;
 }
