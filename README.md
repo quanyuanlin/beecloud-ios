@@ -35,7 +35,7 @@
 ## 使用方法
 >具体使用请参考项目中的`PayDemo`工程
 
-要调用以下方法，都需要实现接口`BCApiDelegate`， 实现本接口的方法使不同类型的请求获得对应的不同的响应。
+要调用以下方法，都需要实现接口`BCApiDelegate`， 实现本接口的方法使不同类型的请求获得对应的响应。
 
 ### 1.支付
 
@@ -49,10 +49,10 @@
 - (void)doPay:(PayChannel)channel {
     NSString *outTradeNo = [self genOutTradeNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-    NSLog(@"traceno = %@", outTradeNo);
+
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel;
-    payReq.title = kSubject;
+    payReq.title = @"BeeCloud自制白开水";
     payReq.totalfee = @"1";
     payReq.billno = outTradeNo;
     payReq.scheme = @"payDemo";
@@ -73,14 +73,14 @@
 **调用：**
 
 ```objc
-BCQueryReq *req = [[BCQueryReq alloc] init];
-req.channel = channel;
-//req.billno = @"20150722164700237";
-//req.starttime = @"201507210000";
-//req.endtime = @"201507231200";
-req.skip = 0;
-req.limit = 20;
-[BCPaySDK sendBCReq:req];
+   BCQueryReq *req = [[BCQueryReq alloc] init];
+   req.channel = channel;
+   //req.billno = @"20150722164700237";
+   //req.starttime = @"201507210000";
+   //req.endtime = @"201507231200";
+   req.skip = 0;
+   req.limit = 20;
+   [BCPaySDK sendBCReq:req];
 ```
 * **查询退款订单**
 
@@ -91,11 +91,15 @@ req.limit = 20;
 **调用：**
 
 ```objc
-BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
-req.channel = channel;
-req.skip = 0;
-req.limit = 20;
-[BCPaySDK sendBCReq:req];
+   BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
+   req.channel = channel;
+   //req.billno = @"20150722164700237";
+   //req.starttime = @"201507210000";
+   //req.endtime = @"201507231200";
+   //req.refundno = @"20150709173629127";
+   req.skip = 0;
+   req.limit = 20;
+   [BCPaySDK sendBCReq:req];
 ```
 * **查询退款状态（只支持微信）**
 
