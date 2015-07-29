@@ -11,6 +11,9 @@
 
 #pragma mark BCBaseResult
 
+/**
+ *  订单查询结果的基类
+ */
 @interface BCBaseResult : NSObject
 
 @property (nonatomic, assign) BCObjsType type;

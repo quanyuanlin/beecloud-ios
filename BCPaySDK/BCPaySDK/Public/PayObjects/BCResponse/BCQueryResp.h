@@ -10,9 +10,9 @@
 
 #pragma mark BCQueryResp
 /**
- *  queryBills 响应结构体
+ *  查询订单的响应，包括支付、退款订单
  */
-@interface BCQueryResp : BCBaseResp //type=202;
+@interface BCQueryResp : BCBaseResp 
 /**
  *  查询到得结果数量
  */

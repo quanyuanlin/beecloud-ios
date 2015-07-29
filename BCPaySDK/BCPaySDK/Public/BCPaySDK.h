@@ -81,7 +81,6 @@
 + (void)setNetworkTimeout:(NSTimeInterval)time;
 
 #pragma mark - Send BeeCloud Request
-/** @name send request function */
 
 /**
  *  发送BeeCloud Api请求

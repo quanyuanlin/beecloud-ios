@@ -8,7 +8,10 @@
 
 #import "BCBaseResp.h"
 
-@interface BCRefundStatusResp : BCBaseResp //type=203;
+/**
+ *  查询退款订单状态的响应
+ */
+@interface BCRefundStatusResp : BCBaseResp
 
 @property (nonatomic, retain) NSString *refundStatus;
 

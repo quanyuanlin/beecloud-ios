@@ -10,7 +10,7 @@
 #import "BCPayConstant.h"
 #pragma mark BCBaseResp
 /**
- *  BCPay所有响应的基类
+ *  BeeCloud所有响应的基类
  */
 @interface BCBaseResp : NSObject
 

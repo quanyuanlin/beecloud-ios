@@ -10,6 +10,9 @@
 
 #pragma mark BCQueryRefundResult
 
+/**
+ *  退款订单查询结果
+ */
 @interface BCQueryRefundResult : BCBaseResult
 
 @property (nonatomic, retain) NSString *refund_no;

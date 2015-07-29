@@ -83,13 +83,14 @@
     } else if (req.type == BCObjsTypeQueryRefundReq) {
         [[BCPaySDK sharedInstance] reqQueryOrder:(BCQueryRefundReq *)req];
     } else if (req.type == BCObjsTypeRefundStatusReq) {
-        [[BCPaySDK sharedInstance] reqRefundState:(BCRefundStatusReq *)req];
+        [[BCPaySDK sharedInstance] reqRefundStatus:(BCRefundStatusReq *)req];
     }
 }
 
 #pragma mark private class functions
 
-#pragma mark pay
+#pragma mark Pay Request
+
 - (void)reqPay:(BCPayReq *)req {
     if (![[BCPaySDK sharedInstance] checkParameters:req]) return;
     
@@ -137,7 +138,57 @@
           }];
 }
 
-#pragma mark query bills/refunds
+#pragma mark Do pay action
+
+- (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
+    if (dic) {
+        switch (channel) {
+            case WX:
+                [self doWXPay:dic];
+                break;
+            case Ali:
+                [self doAliPay:dic];
+                break;
+            case Union:
+                [self doUnionPay:dic];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+- (void)doWXPay:(NSMutableDictionary *)dic {
+    BCPayLog(@"WeChat pay prepayid = %@", [dic objectForKey:@"prepay_id"]);
+    PayReq *request = [[PayReq alloc] init];
+    request.partnerId = [dic objectForKey:@"partner_id"];
+    request.prepayId = [dic objectForKey:@"prepay_id"];
+    request.package = [dic objectForKey:@"package"];
+    request.nonceStr = [dic objectForKey:@"nonce_str"];
+    NSMutableString *time = [dic objectForKey:@"timestamp"];
+    request.timeStamp = time.intValue;
+    request.sign = [dic objectForKey:@"pay_sign"];
+    [WXApi sendReq:request];
+}
+
+- (void)doAliPay:(NSMutableDictionary *)dic {
+    BCPayLog(@"Ali Pay Start");
+    NSString *orderString = [dic objectForKey:@"order_string"];
+    [[AlipaySDK defaultService] payOrder:orderString fromScheme:dic[@"scheme"]
+                                callback:^(NSDictionary *resultDic) {
+                                    [self processOrderForAliPay:resultDic];
+                                }];
+}
+
+- (void)doUnionPay:(NSMutableDictionary *)dic {
+    NSString *tn = [dic objectForKey:@"tn"];
+    BCPayLog(@"Union Pay Start %@", dic);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCPaySDK sharedInstance]];
+    });
+}
+
+#pragma mark Query Bills/Refunds
 
 - (void)reqQueryOrder:(BCQueryReq *)req {
     if (req == nil) {
@@ -190,47 +241,6 @@
          }];
 }
 
-- (void)reqRefundState:(BCRefundStatusReq *)req {
-    if (req == nil) {
-        [self doErrorResponse:@"请求结构体不合法"];
-        return;
-    }
-    
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
-    if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
-        return;
-    }
-    
-    if ([BCUtil isValidString:req.refundno]) {
-        parameters[@"refund_no"] = req.refundno;
-    }
-    parameters[@"channel"] = @"WX";
-    
-    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
-    
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
-    [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara
-         success:^(AFHTTPRequestOperation *operation, id response) {
-             [self doQueryRefundStatus:(NSDictionary *)response];
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self doErrorResponse:kNetWorkError];
-         }];
-}
-
-- (void)doQueryRefundStatus:(NSDictionary *)dic {
-    BCRefundStatusResp *resp = [[BCRefundStatusResp alloc] init];
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
-    resp.refundStatus = [dic objectForKey:@"refund_status"];
-
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-        [_deleagte onBCApiResp:resp];
-    }
-}
-
 - (void)doQueryResponse:(NSDictionary *)dic {
     BCQueryResp *resp = [[BCQueryResp alloc] init];
     resp.result_code = [dic[kKeyResponseResultCode] intValue];
@@ -275,6 +285,51 @@
     }
     return nil;
 }
+
+#pragma mark Refund Status
+
+- (void)reqRefundStatus:(BCRefundStatusReq *)req {
+    if (req == nil) {
+        [self doErrorResponse:@"请求结构体不合法"];
+        return;
+    }
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    
+    if ([BCUtil isValidString:req.refundno]) {
+        parameters[@"refund_no"] = req.refundno;
+    }
+    parameters[@"channel"] = @"WX";
+    
+    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    
+    [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara
+         success:^(AFHTTPRequestOperation *operation, id response) {
+             [self doQueryRefundStatus:(NSDictionary *)response];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self doErrorResponse:kNetWorkError];
+         }];
+}
+
+- (void)doQueryRefundStatus:(NSDictionary *)dic {
+    BCRefundStatusResp *resp = [[BCRefundStatusResp alloc] init];
+    resp.result_code = [dic[kKeyResponseResultCode] intValue];
+    resp.result_msg = dic[kKeyResponseResultMsg];
+    resp.err_detail = dic[kKeyResponseErrDetail];
+    resp.refundStatus = [dic objectForKey:@"refund_status"];
+
+    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
+        [_deleagte onBCApiResp:resp];
+    }
+}
+
+#pragma mark Util Function
 
 - (NSString *)getChannelString:(PayChannel)channel {
     NSString *cType = @"";
@@ -339,61 +394,7 @@
     return YES ;
 }
 
-#pragma mark WXPay
-- (void)doWXPay:(NSMutableDictionary *)dic {
-    BCPayLog(@"WeChat pay prepayid = %@", [dic objectForKey:@"prepay_id"]);
-    PayReq *request = [[PayReq alloc] init];
-    request.partnerId = [dic objectForKey:@"partner_id"];
-    request.prepayId = [dic objectForKey:@"prepay_id"];
-    request.package = [dic objectForKey:@"package"];
-    request.nonceStr = [dic objectForKey:@"nonce_str"];
-    NSMutableString *time = [dic objectForKey:@"timestamp"];
-    request.timeStamp = time.intValue;
-    request.sign = [dic objectForKey:@"pay_sign"];
-    [WXApi sendReq:request];
-}
-
-#pragma mark AliPay
-- (void)doAliPay:(NSMutableDictionary *)dic {
-    BCPayLog(@"Ali Pay Start");
-    NSString *orderString = [dic objectForKey:@"order_string"];
-    [[AlipaySDK defaultService] payOrder:orderString fromScheme:dic[@"scheme"]
-                                callback:^(NSDictionary *resultDic) {
-                                    [self processOrderForAliPay:resultDic];
-                                }];
-}
-
-#pragma mark UnionPay
-
-- (void)doUnionPay:(NSMutableDictionary *)dic {
-    NSString *tn = [dic objectForKey:@"tn"];
-    BCPayLog(@"Union Pay Start %@", dic);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCPaySDK sharedInstance]];
-    });
-}
-
-#pragma mark do pay
-- (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
-    if (dic) {
-        switch (channel) {
-            case WX:
-                [self doWXPay:dic];
-                break;
-            case Ali:
-                [self doAliPay:dic];
-                break;
-            case Union:
-                [self doUnionPay:dic];
-                break;
-            default:
-                break;
-        }
-    }
-}
-
 #pragma mark - Implementation WXApiDelegate
-/** @name  WxApiDelegate_onResp*/
 
 - (void)onResp:(BaseResp *)resp {
     
@@ -427,7 +428,6 @@
 }
 
 #pragma mark - Implementation AliPayDelegate
-/** @name  AliPayDelegate*/
 
 - (void)processOrderForAliPay:(NSDictionary *)resultDic {
     int status = [resultDic[@"resultStatus"] intValue];
@@ -463,7 +463,6 @@
 }
 
 #pragma mark - Implementation UnionPayDelegate
-/** @name  UnionPayDelegate*/
 
 - (void)UPPayPluginResult:(NSString *)result {
     int errcode = BCErrCodeSentFail;

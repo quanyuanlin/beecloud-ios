@@ -14,6 +14,7 @@
 				364BC62A1B5E402800EAFCCE /* ShellScript */,
 			);
 			dependencies = (
+				36B9E3B81B686CFA00A875B5 /* PBXTargetDependency */,
 			);
 			name = payLib;
 			productName = payLib;
@@ -110,7 +111,18 @@
 		36732E351B66384000DE6227 /* BCRefundStatusResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 36732E331B66384000DE6227 /* BCRefundStatusResp.m */; };
 		36732E361B663A5600DE6227 /* BCRefundStatusResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 36732E331B66384000DE6227 /* BCRefundStatusResp.m */; };
 		36732E371B663A5600DE6227 /* BCRefundStatusReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 36732E2F1B66311D00DE6227 /* BCRefundStatusReq.m */; };
+		36B9E3B61B686C7400A875B5 /* BCPayObjects.h in Headers */ = {isa = PBXBuildFile; fileRef = 36732E031B662AC800DE6227 /* BCPayObjects.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		36B9E3B71B686CFA00A875B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 364BC5A11B5E32FD00EAFCCE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 364BC5A81B5E32FD00EAFCCE;
+			remoteInfo = BCPaySDK;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		364BC5A71B5E32FD00EAFCCE /* CopyFiles */ = {
@@ -239,14 +251,14 @@
 				3613DABF1B6232D9001871C2 /* AppDelegate.m */,
 				36732DD21B661C4300DE6227 /* GuideViewController.h */,
 				36732DCF1B661C4300DE6227 /* GuideViewController.m */,
+				3613DAC11B6232D9001871C2 /* ViewController.h */,
+				3613DAC21B6232D9001871C2 /* ViewController.mm */,
+				36732DD11B661C4300DE6227 /* QueryResultViewController.h */,
+				36732DD01B661C4300DE6227 /* QueryResultViewController.m */,
 				3613DAC71B6232D9001871C2 /* Images.xcassets */,
 				3613DAC91B6232D9001871C2 /* LaunchScreen.xib */,
 				3613DB131B6240C9001871C2 /* Main.storyboard */,
-				36732DD11B661C4300DE6227 /* QueryResultViewController.h */,
-				36732DD01B661C4300DE6227 /* QueryResultViewController.m */,
 				3613DABA1B6232D9001871C2 /* Supporting Files */,
-				3613DAC11B6232D9001871C2 /* ViewController.h */,
-				3613DAC21B6232D9001871C2 /* ViewController.mm */,
 			);
 			path = PayDemo;
 			sourceTree = "<group>";
@@ -465,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36732E0B1B662C5F00DE6227 /* BCQueryResp.h in Headers */,
+				36B9E3B61B686C7400A875B5 /* BCPayObjects.h in Headers */,
 				364BC69A1B5E458400EAFCCE /* BCPaySDK.h in Headers */,
 				364BC6AD1B5E458400EAFCCE /* AFURLSessionManager.h in Headers */,
 				364BC6921B5E458400EAFCCE /* BCPayUtil.h in Headers */,
@@ -668,6 +681,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		36B9E3B81B686CFA00A875B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 364BC5A81B5E32FD00EAFCCE /* BCPaySDK */;
+			targetProxy = 36B9E3B71B686CFA00A875B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3613DAC91B6232D9001871C2 /* LaunchScreen.xib */ = {

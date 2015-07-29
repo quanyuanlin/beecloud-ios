@@ -9,7 +9,7 @@
 
 #pragma mark BCPayResp
 /**
- *  Pay 响应结构体
+ *  支付请求的响应
  */
 @interface BCPayResp : BCBaseResp  //type=201;
 

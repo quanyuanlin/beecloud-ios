@@ -10,6 +10,9 @@
 
 #pragma mark BCQueryBillResult
 
+/**
+ *  支付订单查询结果
+ */
 @interface BCQueryBillResult : BCBaseResult
 
 @property (nonatomic, assign) NSNumber  *spay_result;//BOOL

@@ -12,7 +12,7 @@
 
 #pragma mark BCPayReq
 /**
- *  Pay 请求结构体,type=11;
+ *  Pay Request请求结构体
  */
 @interface BCPayReq : BCBaseReq //type=101
 /**

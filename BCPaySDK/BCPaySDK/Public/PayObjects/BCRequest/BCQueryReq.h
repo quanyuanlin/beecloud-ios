@@ -11,9 +11,9 @@
 
 #pragma mark BCQueryReq
 /**
- *  queryBills 请求结构体
+ *  根据条件查询请求支付订单记录
  */
-@interface BCQueryReq : BCBaseReq //type=102;
+@interface BCQueryReq : BCBaseReq 
 
 @property (nonatomic, assign) PayChannel channel;
 @property (nonatomic, retain) NSString *billno;

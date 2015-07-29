@@ -9,7 +9,10 @@
 #import "BCBaseReq.h"
 #import "BCPayConstant.h"
 
-@interface BCRefundStatusReq : BCBaseReq //type=104;
+/**
+ *  查询一笔退款的订单的状态，目前仅支持“WX”渠道
+ */
+@interface BCRefundStatusReq : BCBaseReq
 
 @property (nonatomic, retain) NSString *refundno;
 
