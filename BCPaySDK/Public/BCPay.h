@@ -18,7 +18,7 @@
  *
  *  @param resp 响应体
  */
-- (void)onBCApiResp:(BCBaseResp *)resp;
+- (void)onBCPayResp:(BCBaseResp *)resp;
 
 @end
 
