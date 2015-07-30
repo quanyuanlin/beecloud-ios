@@ -330,10 +330,10 @@
 		369750221B68C659009FAEDB /* BCPayExample */ = {
 			isa = PBXGroup;
 			children = (
-				369750471B68C6D5009FAEDB /* QueryResultViewController.m */,
-				369750481B68C6D5009FAEDB /* GuideViewController.m */,
 				369750491B68C6D5009FAEDB /* QueryResultViewController.h */,
+				369750471B68C6D5009FAEDB /* QueryResultViewController.m */,
 				3697504A1B68C6D5009FAEDB /* GuideViewController.h */,
+				369750481B68C6D5009FAEDB /* GuideViewController.m */,
 				369750271B68C659009FAEDB /* AppDelegate.h */,
 				369750281B68C659009FAEDB /* AppDelegate.m */,
 				3697502A1B68C659009FAEDB /* ViewController.h */,
@@ -580,6 +580,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Debug;
 		};
@@ -602,6 +603,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
 			name = Release;
 		};
