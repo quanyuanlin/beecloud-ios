@@ -8,15 +8,19 @@
 ![pic](http://7xavqo.com1.z0.glb.clouddn.com/UML.png)
 
 ## 安装
-1.从BeeCloud [release](https://github.com/beecloud/beecloud-ios/releases)中下载压缩包,然后将其中的`libBCPaySDK.a`及相关头文件导入自己工程。
 
->1. 下载的`External`文件夹下的`AliPaySDK`, `UnionPaySDK`, `WeChatSDK`文件夹分别对应`支付宝`, `银联`, `微信`的原生SDK，请按需导入进自己的项目。  
+1.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
+>1. 下载的`External`文件夹下的`AlipaySDK.framework`, `libUPPayPlugin.a`, `libWeChatSDK.a`文件夹分别对应`支付宝`, `银联`, `微信`的原生SDK，请按需导入进自己的项目。  
 >2. iOS SDK使用了第三方Http请求库AFNetworking，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。
->3. 最后加入系统framework: `CoreTelephony.framework`以及系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
+>3. 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
 
-2.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照上文的3个步骤导入相应文件进自己工程即可。(推荐)
+2.使用CocoaPods:  
+在podfile中加入
 
-3.CocoaPods coming soon
+```
+pod 'BeeCloud'
+```
+
 
 ## 注册
 三个步骤，2分钟轻松搞定：  
