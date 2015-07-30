@@ -119,8 +119,8 @@
               BCPayLog(@"wechat end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
               BCBaseResp *resp = [self getErrorInResponse:response];
               if (resp.result_code != 0) {
-                  if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-                      [_deleagte onBCApiResp:resp];
+                  if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+                      [_deleagte onBCPayResp:resp];
                   }
               } else {
                   NSLog(@"channel=%@,resp=%@", cType, response);
@@ -248,8 +248,8 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-        [_deleagte onBCApiResp:resp];
+    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+        [_deleagte onBCPayResp:resp];
     }
 }
 
@@ -324,8 +324,8 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
 
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-        [_deleagte onBCApiResp:resp];
+    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+        [_deleagte onBCPayResp:resp];
     }
 }
 
@@ -354,8 +354,8 @@
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-        [_deleagte onBCApiResp:resp];
+    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+        [_deleagte onBCPayResp:resp];
     }
 }
 
@@ -421,8 +421,8 @@
         resp.result_code = errcode;
         resp.result_msg = result;
         resp.err_detail = result;
-        if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-            [_deleagte onBCApiResp:resp];
+        if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+            [_deleagte onBCPayResp:resp];
         }
     }
 }
@@ -457,8 +457,8 @@
     resp.result_msg = strMsg;
     resp.err_detail = strMsg;
     resp.paySource = resultDic;
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-        [_deleagte onBCApiResp:resp];
+    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+        [_deleagte onBCPayResp:resp];
     }
 }
 
@@ -479,8 +479,8 @@
     resp.result_code = errcode;
     resp.result_msg = strMsg;
     resp.err_detail = strMsg;
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCApiResp:)]) {
-        [_deleagte onBCApiResp:resp];
+    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+        [_deleagte onBCPayResp:resp];
     }
 }
 
