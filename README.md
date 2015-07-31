@@ -43,11 +43,11 @@ pod 'BeeCloud'
 
 ### 1.支付
 
-**原型：** 
+原型：
  
 通过构造`BCPayReq`的实例，使用`[BCPay sendBCReq:payReq]`方法发起支付请求。  
 
-**调用：**
+调用：
 
 ```objc
 - (void)doPay:(PayChannel)channel {
@@ -68,13 +68,13 @@ pod 'BeeCloud'
 
 ### 2.查询
 
-* **查询支付订单**
+* 查询支付订单
 
-**原型：**
+原型：
 
 通过构造`BCQueryReq`的实例，使用`[BCPay sendBCReq:req]`方法发起支付查询  
 
-**调用：**
+调用：
 
 ```objc
    BCQueryReq *req = [[BCQueryReq alloc] init];
@@ -86,13 +86,13 @@ pod 'BeeCloud'
    req.limit = 20;
    [BCPay sendBCReq:req];
 ```
-* **查询退款订单**
+* 查询退款订单
 
-**原型：**
+原型：
 
 通过构造`BCQueryRefundReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
 
-**调用：**
+调用：
 
 ```objc
    BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
@@ -105,13 +105,13 @@ pod 'BeeCloud'
    req.limit = 20;
    [BCPay sendBCReq:req];
 ```
-* **查询退款状态（只支持微信）**
+* 查询退款状态（只支持微信）
 
-**原型：**
+原型：
 
 通过构造`BCRefundStatusReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
 
-**调用：**
+调用：
 
 ```objc
 BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
