@@ -1,4 +1,4 @@
-#BeeCloud iOS SDK (Open Source)
+## BeeCloud iOS SDK (Open Source)
 
 ![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.0.0-blue.svg)
 
@@ -43,11 +43,11 @@ pod 'BeeCloud'
 
 ### 1.支付
 
-**原型：** 
+原型：
  
 通过构造`BCPayReq`的实例，使用`[BCPay sendBCReq:payReq]`方法发起支付请求。  
 
-**调用：**
+调用：
 
 ```objc
 - (void)doPay:(PayChannel)channel {
@@ -68,13 +68,13 @@ pod 'BeeCloud'
 
 ### 2.查询
 
-* **查询支付订单**
+* 查询支付订单
 
-**原型：**
+原型：
 
 通过构造`BCQueryReq`的实例，使用`[BCPay sendBCReq:req]`方法发起支付查询  
 
-**调用：**
+调用：
 
 ```objc
    BCQueryReq *req = [[BCQueryReq alloc] init];
@@ -86,13 +86,13 @@ pod 'BeeCloud'
    req.limit = 20;
    [BCPay sendBCReq:req];
 ```
-* **查询退款订单**
+* 查询退款订单
 
-**原型：**
+原型：
 
 通过构造`BCQueryRefundReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
 
-**调用：**
+调用：
 
 ```objc
    BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
@@ -105,13 +105,13 @@ pod 'BeeCloud'
    req.limit = 20;
    [BCPay sendBCReq:req];
 ```
-* **查询退款状态（只支持微信）**
+* 查询退款状态（只支持微信）
 
-**原型：**
+原型：
 
 通过构造`BCRefundStatusReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
 
-**调用：**
+调用：
 
 ```objc
 BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
@@ -153,7 +153,7 @@ Pull Request要求
 
 ## 联系我们
 - 如果有什么问题，可以到QQ群-**321545822**`BeeCloud开发者大联盟`提问
-- 更详细的文档，见源代码的注释以及[官方文档](https://beecloud.cn/doc/net.php)
+- 更详细的文档，见源代码的注释以及[官方文档](https://beecloud.cn/doc/?index=1)
 - 如果发现了bug，欢迎提交[issue](https://github.com/beecloud/beecloud-dotnet-sdk/issues)
 - 如果有新的需求，欢迎提交[issue](https://github.com/beecloud/beecloud-dotnet-sdk/issues)
 
