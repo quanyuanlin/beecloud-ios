@@ -37,7 +37,7 @@ pod 'BeeCloud'
 ```
 
 ## 使用方法
->具体使用请参考项目中的`PayDemo`工程
+>具体使用请参考项目中的`BCPayExample`工程
 
 要调用以下方法，都需要实现接口`BCApiDelegate`， 实现本接口的方法使不同类型的请求获得对应的响应。
 
@@ -55,13 +55,13 @@ pod 'BeeCloud'
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
 
     BCPayReq *payReq = [[BCPayReq alloc] init];
-    payReq.channel = channel;
-    payReq.title = @"BeeCloud自制白开水";
-    payReq.totalfee = @"1";
-    payReq.billno = outTradeNo;
-    payReq.scheme = @"payDemo";
-    payReq.viewController = self;
-    payReq.optional = dict;
+    payReq.channel = channel;//渠道
+    payReq.title = @"BeeCloud自制白开水";//订单标题
+    payReq.totalfee = @"1";//订单金额
+    payReq.billno = outTradeNo;//商户自定义订单号，必须保证唯一性
+    payReq.scheme = @"payDemo";//url scheme,"AliPay"必须参数
+    payReq.viewController = self;//"UnionPay"必须参数
+    payReq.optional = dict;//商户业务扩展参数
     [BCPay sendBCReq:payReq];
 }
 ```
@@ -120,8 +120,8 @@ req.refundno = @"20150709173629127";
 ```
 
 ## Demo
-项目中的`PayDemo`工程为我们的demo  
-将target设置为PayDemo之后可以直接运行（支付需要真机）
+项目中的`BCPayExample`文件夹为我们的demo文件  
+在真机上运行`BCPayExample`target，体验真实支付场景
 
 ## 测试
 TODO
@@ -129,6 +129,12 @@ TODO
 ## 常见问题
 - 关于weekhook的接收  
 文档请阅读 [webhook](https://github.com/beecloud/beecloud-webhook)
+
+- 支付宝支付时，提示“ALI69”，“ALI64”？
+一般是因为RSA公钥不正确或未上传导致的。解决方法：在[支付宝商家服务平台](https://b.alipay.com/order/serviceIndex.htm)检查RSA公钥是否生成错误或者没上传。
+
+- 在iPhone上未安装支付宝钱包客户端的情况下，APP内发起支付宝支付，会是怎么样的？
+正常情况下，会跳到支付宝网页收银台。如果你是从webview发起的支付请求，有可能会出现不跳转的情况。
 
 ## 代码贡献
 我们非常欢迎大家来贡献代码，我们会向贡献者致以最诚挚的敬意。
