@@ -94,7 +94,7 @@
 - (void)reqPay:(BCPayReq *)req {
     if (![[BCPay sharedInstance] checkParameters:req]) return;
     
-    NSString *cType = [self getChannelString:req.channel];
+    NSString *cType = [BCPayUtil getChannelString:req.channel];
     
     NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
     if (parameters == nil) {
@@ -112,11 +112,9 @@
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     
-    __block NSTimeInterval tStart = [NSDate timeIntervalSinceReferenceDate];
-    
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              BCPayLog(@"wechat end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
+           
               BCBaseResp *resp = [self getErrorInResponse:response];
               if (resp.result_code != 0) {
                   if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
@@ -126,9 +124,9 @@
                   NSLog(@"channel=%@,resp=%@", cType, response);
                   NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                               (NSDictionary *)response];
-                  if (req.channel == Ali) {
+                  if (req.channel == PayChannelAliApp) {
                      [dic setObject:req.scheme forKey:@"scheme"];
-                  } else if (req.channel == Union) {
+                  } else if (req.channel == PayChannelUnApp) {
                      [dic setObject:req.viewController forKey:@"viewController"];
                   }
                   [self doPayAction:req.channel source:dic];
@@ -142,14 +140,15 @@
 
 - (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
     if (dic) {
+        
         switch (channel) {
-            case WX:
+            case PayChannelWxApp:
                 [self doWXPay:dic];
                 break;
-            case Ali:
+            case PayChannelAliApp:
                 [self doAliPay:dic];
                 break;
-            case Union:
+            case PayChannelUnApp:
                 [self doUnionPay:dic];
                 break;
             default:
@@ -196,7 +195,7 @@
         return;
     }
     
-    NSString *cType = [[BCPay sharedInstance] getChannelString:req.channel];
+    NSString *cType = [BCPayUtil getChannelString:req.channel];
     
     NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
     if (parameters == nil) {
@@ -221,7 +220,9 @@
         }
         reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryRefunds];
     }
-    parameters[@"channel"] = [[cType componentsSeparatedByString:@"_"] firstObject];
+    if ([BCPayUtil isValidString:cType]) {
+        parameters[@"channel"] = cType;
+    }
     parameters[@"skip"] = [NSNumber numberWithInteger:req.skip];
     parameters[@"limit"] = [NSNumber numberWithInteger:req.limit];
     
@@ -331,24 +332,6 @@
 
 #pragma mark Util Function
 
-- (NSString *)getChannelString:(PayChannel)channel {
-    NSString *cType = @"";
-    switch (channel) {
-        case WX:
-            cType = @"WX_APP";
-            break;
-        case Ali:
-            cType = @"ALI_APP";
-            break;
-        case Union:
-            cType = @"UN_APP";
-            break;
-        default:
-            break;
-    }
-    return cType;
-}
-
 - (void)doErrorResponse:(NSString *)errMsg {
     BCBaseResp *resp = [[BCBaseResp alloc] init];
     resp.result_code = BCErrCodeCommon;
@@ -380,13 +363,13 @@
         } else if (![BCPayUtil isValidString:req.billno] || (![BCPayUtil isValidTraceNo:req.billno]) || (req.billno.length < 8) || (req.billno.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
-        } else if ((req.channel == Ali) && ![BCPayUtil isValidString:req.scheme]) {
+        } else if ((req.channel == PayChannelAliApp) && ![BCPayUtil isValidString:req.scheme]) {
             [self doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
             return NO;
-        } else if ((req.channel == Union) && (req.viewController == nil)) {
+        } else if ((req.channel == PayChannelUnApp) && (req.viewController == nil)) {
             [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
             return NO;
-        } else if (req.channel == WX && ![WXApi isWXAppInstalled]) {
+        } else if (req.channel == PayChannelWxApp && ![WXApi isWXAppInstalled]) {
             [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
             return NO;
         }

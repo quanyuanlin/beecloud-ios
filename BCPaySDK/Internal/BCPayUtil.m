@@ -74,6 +74,54 @@
     return [NSString stringWithFormat:format, verHost];
 }
 
++ (NSString *)getChannelString:(PayChannel)channel {
+    NSString *cType = @"";
+    switch (channel) {
+        case PayChannelWx:
+            cType = @"WX";
+            break;
+        case PayChannelWxApp:
+            cType = @"WX_APP";
+            break;
+        case PayChannelWxNative:
+            cType = @"WX_NATIVE";
+            break;
+        case PayChannelWxJsApi:
+            cType = @"WX_JSAPI";
+            break;
+        case PayChannelAli:
+            cType = @"ALI";
+            break;
+        case PayChannelAliApp:
+            cType = @"ALI_APP";
+            break;
+        case PayChannelAliWeb:
+            cType = @"ALI_WEB";
+            break;
+        case PayChannelAliWap:
+            cType = @"ALI_WAP";
+            break;
+        case PayChannelAliQrCode:
+            cType = @"ALI_QRCODE";
+            break;
+        case PayChannelAliOfflineQrCode:
+            cType = @"ALI_OFFLINE_QRCODE";
+            break;
+        case PayChannelUn:
+            cType = @"UN";
+            break;
+        case PayChannelUnApp:
+            cType = @"UN_APP";
+            break;
+        case PayChannelUnWeb:
+            cType = @"UN_WEB";
+            break;
+            default:
+            break;
+    }
+    return cType;
+}
+
 + (NSString *)generateRandomUUID {
     return [[NSUUID UUID] UUIDString].lowercaseString;
 }
@@ -191,7 +239,6 @@
     int val;
     return [scan scanInt:&val] && [scan isAtEnd];
 }
-
 
 + (BOOL)isPureFloat:(NSString *)str {
     NSScanner *scan = [NSScanner scannerWithString:str];

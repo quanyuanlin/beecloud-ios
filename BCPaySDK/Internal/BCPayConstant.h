@@ -54,10 +54,21 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
 
 
 typedef NS_ENUM(NSInteger, PayChannel) {
-    None = 0,
-    WX,
-    Ali,
-    Union
+    PayChannelWx = 10, //微信
+    PayChannelWxApp,//微信APP
+    PayChannelWxNative,//微信扫码
+    PayChannelWxJsApi,//微信JSAPI(H5)
+    
+    PayChannelAli = 20,//支付宝
+    PayChannelAliApp,//支付宝APP
+    PayChannelAliWeb,//支付宝网页即时到账
+    PayChannelAliWap,//支付宝手机网页
+    PayChannelAliQrCode,//支付宝扫码即时到帐
+    PayChannelAliOfflineQrCode,//支付宝线下扫码
+    
+    PayChannelUn = 30,//银联
+    PayChannelUnApp,//银联APP
+    PayChannelUnWeb//银联网页
 };
 
 enum  BCErrCode {

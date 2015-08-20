@@ -117,9 +117,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.actionType == 0) {
-        [self doPay:(PayChannel)(indexPath.row + 1)];
+        [self doPay:(PayChannel)((indexPath.row + 1)*10+1)];
     } else {
-        [self doQuery:(PayChannel)(indexPath.row + 1)];
+        [self doQuery:(PayChannel)((indexPath.row + 1)*10)];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

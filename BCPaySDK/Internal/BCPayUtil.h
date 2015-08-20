@@ -11,7 +11,7 @@
 #import "AFNetworking.h"
 #import "BCPayConstant.h"
 #import "BCPayCache.h"
-
+#import "BCPayObjects.h"
 
 
 @interface BCPayUtil : NSObject
@@ -58,6 +58,15 @@
  *  @return url
  */
 + (NSString *)getBestHostWithFormat:(NSString *)format;
+
+/**
+ *  get Channel String
+ *
+ *  @param channel enum PayChannel
+ *
+ *  @return Channel String
+ */
++ (NSString *)getChannelString:(PayChannel)channel;
 
 #pragma mark Util Functions
 /**
