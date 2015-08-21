@@ -158,7 +158,7 @@ Pull Request要求
 - 清晰的commit历史 - 保证你的pull请求的每次commit操作都是有意义的。如果你开发中需要执行多次的即时commit操作，那么请把它们放到一起再提交pull请求。
 
 ## 联系我们
-- 如果有什么问题，可以到QQ群-**321545822**`BeeCloud开发者大联盟`提问
+- 如果有什么问题，可以到BeeCloud开发者1群:**321545822** 或 BeeCloud开发者2群:**427128840** 提问
 - 更详细的文档，见源代码的注释以及[官方文档](https://beecloud.cn/doc/?index=1)
 - 如果发现了bug，欢迎提交[issue](https://github.com/beecloud/beecloud-dotnet-sdk/issues)
 - 如果有新的需求，欢迎提交[issue](https://github.com/beecloud/beecloud-dotnet-sdk/issues)
