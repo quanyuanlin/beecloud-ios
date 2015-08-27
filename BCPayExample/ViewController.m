@@ -9,7 +9,9 @@
 #import "ViewController.h"
 #import "QueryResultViewController.h"
 
-@interface ViewController ()<BCApiDelegate>
+@interface ViewController ()<BCApiDelegate, PayPalPaymentDelegate> {
+    PayPalConfiguration * _payPalConfig;
+}
 
 @end
 
@@ -44,6 +46,57 @@
     payReq.viewController = self;
     payReq.optional = dict;
     [BCPay sendBCReq:payReq];
+}
+
+- (void)doPayPal {
+    BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
+    
+    _payPalConfig = [[PayPalConfiguration alloc] init];
+    _payPalConfig.acceptCreditCards = YES;
+    _payPalConfig.merchantName = @"Awesome Shirts, Inc.";
+    _payPalConfig.merchantPrivacyPolicyURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/privacy-full"];
+    _payPalConfig.merchantUserAgreementURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/useragreement-full"];
+    
+    _payPalConfig.languageOrLocale = [NSLocale preferredLanguages][0];
+    
+    _payPalConfig.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
+    
+    PayPalItem *item1 = [PayPalItem itemWithName:@"Old jeans with holes"
+                                    withQuantity:2
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"84.99"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00037"];
+    
+    PayPalItem *item2 = [PayPalItem itemWithName:@"Free rainbow patch"
+                                    withQuantity:1
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"0.00"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00066"];
+    
+    PayPalItem *item3 = [PayPalItem itemWithName:@"Long-sleeve plaid shirt (mustache not included)"
+                                    withQuantity:1
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"37.99"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00291"];
+    
+    payReq.items = @[item1, item2, item3];
+    payReq.shipping = @"5.00";
+    payReq.tax = @"2.50";
+    payReq.shortDesc = @"paypal test";
+    payReq.viewController = self;
+    payReq.payConfig = _payPalConfig;
+    
+    [BCPay sendBCReq:payReq];
+    
+}
+
+- (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
+    NSLog(@"PayPal Payment Success! %@", completedPayment.description);
+//    self.resultText = [completedPayment description];
+//    [self showSuccess];
+    
+//    [self sendCompletedPaymentToServer:completedPayment]; // Payment was processed successfully; send to server for verification and fulfillment
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -107,7 +160,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,7 +170,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.actionType == 0) {
-        [self doPay:(PayChannel)((indexPath.row + 1)*10+1)];
+        if (indexPath.row == 3) {
+            [self doPayPal];
+        } else {
+            [self doPay:(PayChannel)((indexPath.row + 1)*10+1)];
+        }
     } else {
         [self doQuery:(PayChannel)((indexPath.row + 1)*10)];
     }

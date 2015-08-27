@@ -45,6 +45,23 @@
     return instance.registerStatus;
 }
 
++ (void)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
+    if([BCPayUtil isValidString:clientID] && [BCPayUtil isValidString:secret]) {
+        BCPayCache *instance = [BCPayCache sharedInstance];
+        instance.payPalClientID = clientID;
+        instance.payPalSecret = secret;
+        instance.isPayPalSandBox = isSandBox;
+        
+        if (isSandBox) {
+            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_PRODUCTION_CLIENT_ID",
+                                                                   PayPalEnvironmentSandbox : clientID}];
+        } else {
+            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : clientID,
+                                                                   PayPalEnvironmentSandbox : @"YOUR_SANDBOX_CLIENT_ID"}];
+        }
+    }
+}
+
 + (void)setBCApiDelegate:(id<BCApiDelegate>)delegate {
     [BCPay sharedInstance].deleagte = delegate;
 }
@@ -76,20 +93,57 @@
 }
 
 + (void)sendBCReq:(BCBaseReq *)req {
+    BCPay *instance = [BCPay sharedInstance];
     if (req.type == BCObjsTypePayReq) {
-        [[BCPay sharedInstance] reqPay:(BCPayReq *)req];
+        [instance reqPay:(BCPayReq *)req];
     } else if (req.type == BCObjsTypeQueryReq ) {
-        [[BCPay sharedInstance] reqQueryOrder:(BCQueryReq *)req];
+        [instance reqQueryOrder:(BCQueryReq *)req];
     } else if (req.type == BCObjsTypeQueryRefundReq) {
-        [[BCPay sharedInstance] reqQueryOrder:(BCQueryRefundReq *)req];
+        [instance reqQueryOrder:(BCQueryRefundReq *)req];
     } else if (req.type == BCObjsTypeRefundStatusReq) {
-        [[BCPay sharedInstance] reqRefundStatus:(BCRefundStatusReq *)req];
+        [instance reqRefundStatus:(BCRefundStatusReq *)req];
+    } else if (req.type == BCObjsTypePayPal) {
+        [instance  reqPayPal:(BCPayPalReq *)req];
     }
 }
 
 #pragma mark private class functions
 
 #pragma mark Pay Request
+
+- (void)reqPayPal:(BCPayPalReq *)req {
+    
+    NSDecimalNumber *subtotal = [PayPalItem totalPriceForItems:req.items];
+    
+    // Optional: include payment details
+    NSDecimalNumber *dShipping = [[NSDecimalNumber alloc] initWithString:req.shipping];
+    NSDecimalNumber *dTax = [[NSDecimalNumber alloc] initWithString:req.tax];
+    PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails paymentDetailsWithSubtotal:subtotal
+                                                                               withShipping:dShipping
+                                                                                    withTax:dTax];
+    
+    NSDecimalNumber *total = [[subtotal decimalNumberByAdding:dShipping] decimalNumberByAdding:dTax];
+    
+    PayPalPayment *payment = [[PayPalPayment alloc] init];
+    payment.amount = total;
+    payment.currencyCode = ((PayPalItem *)req.items.lastObject).currency;
+    payment.shortDescription = req.shortDesc;
+    payment.items = req.items;  // if not including multiple items, then leave payment.items as nil
+    payment.paymentDetails = paymentDetails; // if not including payment details, then leave payment.paymentDetails as nil
+    
+    if (!payment.processable) {
+        // This particular payment will always be processable. If, for
+        // example, the amount was negative or the shortDescription was
+        // empty, this payment wouldn't be processable, and you'd want
+        // to handle that here.
+    }
+    
+    PayPalPaymentViewController *paymentViewController = [[PayPalPaymentViewController alloc] initWithPayment:payment
+                                                                                                configuration:req.payConfig
+                                                                                                     delegate:req.viewController];
+    [(UIViewController *)req.viewController presentViewController:paymentViewController animated:YES completion:nil];
+    
+}
 
 - (void)reqPay:(BCPayReq *)req {
     if (![[BCPay sharedInstance] checkParameters:req]) return;

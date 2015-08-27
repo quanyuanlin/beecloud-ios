@@ -26,4 +26,6 @@
 #import "BCQueryBillResult.h"
 #import "BCQueryRefundResult.h"
 
+#import "BCPayPalReq.h"
+
 #endif
