@@ -51,7 +51,7 @@
 		364BC7131B5F886800EAFCCE /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		364BC7151B5F887400EAFCCE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		364BC7171B5F888F00EAFCCE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		369750211B68C659009FAEDB /* BCPayExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCPayExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		369750211B68C659009FAEDB /* BCPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		369750241B68C659009FAEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		369750251B68C659009FAEDB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		369750271B68C659009FAEDB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 		364BC5AA1B5E32FD00EAFCCE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				369750211B68C659009FAEDB /* BCPayExample.app */,
+				369750211B68C659009FAEDB /* BCPay.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -372,7 +372,7 @@
 			);
 			name = BCPayExample;
 			productName = BCPayExample;
-			productReference = 369750211B68C659009FAEDB /* BCPayExample.app */;
+			productReference = 369750211B68C659009FAEDB /* BCPay.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -577,7 +577,7 @@
 					"$(PROJECT_DIR)/External",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BCPay;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};
@@ -599,7 +599,7 @@
 					"$(PROJECT_DIR)/External",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = BCPay;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
 			};

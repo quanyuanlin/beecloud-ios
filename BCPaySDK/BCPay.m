@@ -121,7 +121,7 @@
                       [_deleagte onBCPayResp:resp];
                   }
               } else {
-                  NSLog(@"channel=%@,resp=%@", cType, response);
+                  BCPayLog(@"channel=%@,resp=%@", cType, response);
                   NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                               (NSDictionary *)response];
                   if (req.channel == PayChannelAliApp) {
@@ -230,12 +230,9 @@
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     
-    __block NSTimeInterval tStart = [NSDate timeIntervalSinceReferenceDate];
-    
     [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
-             BCPayLog(@"query end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
-             NSLog(@"channel=%@, resp=%@", cType, response);
+             BCPayLog(@"resp=%@", response);
              [self doQueryResponse:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [self doErrorResponse:kNetWorkError];
