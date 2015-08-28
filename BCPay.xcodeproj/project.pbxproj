@@ -54,6 +54,8 @@
 		36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4111B8F4A78004BB25E /* MessageUI.framework */; };
 		36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4131B8F4A93004BB25E /* CoreLocation.framework */; };
 		36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */; };
+		36DCE4191B900635004BB25E /* BCPayPalVerifyReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DCE4181B900635004BB25E /* BCPayPalVerifyReq.m */; };
+		36DCE41C1B903AE7004BB25E /* NSString+IsValid.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DCE41B1B903AE7004BB25E /* NSString+IsValid.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,7 +106,6 @@
 		36B697B81B6A1283005195E5 /* BCPayCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayCache.h; sourceTree = "<group>"; };
 		36B697B91B6A1283005195E5 /* BCPayCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayCache.m; sourceTree = "<group>"; };
 		36B697BA1B6A1283005195E5 /* BCPayConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayConstant.h; sourceTree = "<group>"; };
-		36B697BB1B6A1283005195E5 /* BCPayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayUtil.h; sourceTree = "<group>"; };
 		36B697BC1B6A1283005195E5 /* BCPayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayUtil.m; sourceTree = "<group>"; };
 		36B697BF1B6A1283005195E5 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		36B697C01B6A1283005195E5 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -151,6 +152,11 @@
 		36DCE4111B8F4A78004BB25E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		36DCE4131B8F4A93004BB25E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		36DCE4171B900635004BB25E /* BCPayPalVerifyReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayPalVerifyReq.h; sourceTree = "<group>"; };
+		36DCE4181B900635004BB25E /* BCPayPalVerifyReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayPalVerifyReq.m; sourceTree = "<group>"; };
+		36DCE41A1B903AE7004BB25E /* NSString+IsValid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IsValid.h"; sourceTree = "<group>"; };
+		36DCE41B1B903AE7004BB25E /* NSString+IsValid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IsValid.m"; sourceTree = "<group>"; };
+		36DCE41D1B90400B004BB25E /* BCPayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayUtil.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +287,8 @@
 				36B697A61B6A1283005195E5 /* BCRefundStatusReq.m */,
 				36DCE4031B8F46E9004BB25E /* BCPayPalReq.h */,
 				36DCE4041B8F46E9004BB25E /* BCPayPalReq.m */,
+				36DCE4171B900635004BB25E /* BCPayPalVerifyReq.h */,
+				36DCE4181B900635004BB25E /* BCPayPalVerifyReq.m */,
 			);
 			path = BCRequest;
 			sourceTree = "<group>";
@@ -319,8 +327,10 @@
 				36B697B81B6A1283005195E5 /* BCPayCache.h */,
 				36B697B91B6A1283005195E5 /* BCPayCache.m */,
 				36B697BA1B6A1283005195E5 /* BCPayConstant.h */,
-				36B697BB1B6A1283005195E5 /* BCPayUtil.h */,
 				36B697BC1B6A1283005195E5 /* BCPayUtil.m */,
+				36DCE41D1B90400B004BB25E /* BCPayUtil.h */,
+				36DCE41A1B903AE7004BB25E /* NSString+IsValid.h */,
+				36DCE41B1B903AE7004BB25E /* NSString+IsValid.m */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -500,6 +510,7 @@
 				36B697D91B6A1283005195E5 /* BCQueryReq.m in Sources */,
 				36B697DB1B6A1283005195E5 /* BCBaseResp.m in Sources */,
 				36B697DF1B6A1283005195E5 /* BCBaseResult.m in Sources */,
+				36DCE4191B900635004BB25E /* BCPayPalVerifyReq.m in Sources */,
 				36B697D71B6A1283005195E5 /* BCPayReq.m in Sources */,
 				36B697D51B6A1283005195E5 /* BCPay.m in Sources */,
 				36B697E61B6A1283005195E5 /* AFHTTPSessionManager.m in Sources */,
@@ -511,6 +522,7 @@
 				36B697E01B6A1283005195E5 /* BCQueryBillResult.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
 				36B697D81B6A1283005195E5 /* BCQueryRefundReq.m in Sources */,
+				36DCE41C1B903AE7004BB25E /* NSString+IsValid.m in Sources */,
 				36B697E71B6A1283005195E5 /* AFNetworkReachabilityManager.m in Sources */,
 				36B697EB1B6A1283005195E5 /* AFURLResponseSerialization.m in Sources */,
 				36B697E21B6A1283005195E5 /* BCPayCache.m in Sources */,

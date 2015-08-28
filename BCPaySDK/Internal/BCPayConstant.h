@@ -95,7 +95,8 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeBillResults,
     BCObjsTypeRefundResults,
     
-    BCObjsTypePayPal = 400
+    BCObjsTypePayPal = 400,
+    BCObjsTypePayPalVerify
 };
 
 static NSString * const kBCDateFormat = @"yyyy-MM-dd HH:mm";

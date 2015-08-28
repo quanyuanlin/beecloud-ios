@@ -8,9 +8,11 @@
 
 #import "ViewController.h"
 #import "QueryResultViewController.h"
+#import "AFNetworking.h"
 
 @interface ViewController ()<BCApiDelegate, PayPalPaymentDelegate> {
     PayPalConfiguration * _payPalConfig;
+    PayPalPayment *_completedPayment;
 }
 
 @end
@@ -90,12 +92,22 @@
     
 }
 
+- (void)doPayPalVerify {
+    BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
+    req.payment = _completedPayment;
+    [BCPay sendBCReq:req];
+}
+
 - (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
     NSLog(@"PayPal Payment Success! %@", completedPayment.description);
-//    self.resultText = [completedPayment description];
-//    [self showSuccess];
     
-//    [self sendCompletedPaymentToServer:completedPayment]; // Payment was processed successfully; send to server for verification and fulfillment
+    _completedPayment = completedPayment;
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
+   
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -160,7 +172,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -172,6 +184,8 @@
     if (self.actionType == 0) {
         if (indexPath.row == 3) {
             [self doPayPal];
+        } else if (indexPath.row == 4) {
+            [self doPayPalVerify];
         } else {
             [self doPay:(PayChannel)((indexPath.row + 1)*10+1)];
         }
