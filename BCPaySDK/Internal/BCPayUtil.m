@@ -45,7 +45,7 @@
     NSString *appid = [BCPayCache sharedInstance].appId;
     NSString *appsecret = [BCPayCache sharedInstance].appSecret;
     
-    if (![BCPayUtil isValidString:appid] || ![BCPayUtil isValidString:appsecret])
+    if (!appid.isValid || !appsecret.isValid)
         return nil;
     
     NSString *input = [appid stringByAppendingString:timeStamp];
@@ -190,64 +190,8 @@
     return (BOOL)(ch >= '0' && ch <= '9');
 }
 
-+ (BOOL)isValidIdentifier:(NSString *)str {
-    if (str == nil || str.length == 0) return NO;
-    // First letter not a letter.
-    if (![BCPayUtil isLetter:[str characterAtIndex:0]]) return NO;
-    for (NSUInteger i = 1; i < str.length; i++) {
-        unichar ch = [str characterAtIndex:i];
-        // Invalid character.
-        if (![BCPayUtil isLetter:ch] && ![BCPayUtil isDigit:ch] && ch != '_') return NO;
-    }
-    // Identifier ending with "__" is reserved.
-    if ([str hasSuffix:@"__"]) return NO;
-    return YES;
-}
-
-+ (BOOL)isValidUUID:(NSString *)uuid {
-    if (uuid == nil || uuid.length != 36) return NO;
-    for (NSUInteger i = 0; i < uuid.length; i++) {
-        unichar ch = [uuid characterAtIndex:i];
-        if (i == 8 || i == 13 || i == 18 || i == 23) {
-            if (ch != '-')
-                return NO;
-        } else {
-            if (!([BCPayUtil isDigit:ch] || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F')))
-                return NO;
-        }
-    }
-    return YES;
-}
-
-+ (BOOL)isValidTraceNo:(NSString *)str {
-    if (![BCPayUtil isValidString:str]) return NO;
-    for (NSUInteger i = 0; i < str.length; i++) {
-        unichar ch = [str characterAtIndex:i];
-        // Invalid character.
-        if (![BCPayUtil isLetter:ch] && ![BCPayUtil isDigit:ch]) return NO;
-    }
-    return YES;
-}
-
-+ (BOOL)isValidString:(NSString *)str {
-    if (str == nil || (NSNull *)str == [NSNull null] || str.length == 0 ) return NO;
-    return YES;
-}
-
-+ (BOOL)isPureInt:(NSString *)str {
-    NSScanner *scan = [NSScanner scannerWithString:str];
-    int val;
-    return [scan scanInt:&val] && [scan isAtEnd];
-}
-
-+ (BOOL)isPureFloat:(NSString *)str {
-    NSScanner *scan = [NSScanner scannerWithString:str];
-    float val;
-    return [scan scanFloat:&val] && [scan isAtEnd];
-}
-
 + (NSUInteger)getBytes:(NSString *)str {
-    if (![BCPayUtil isValidString:str]) {
+    if (!str.isValid) {
         return 0;
     } else {
         NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);

@@ -34,6 +34,10 @@ static NSString * const kRestApiQueryBills = @"%@/rest/bills";
 static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
 static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
 
+//paypal accesstoken
+static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
+static NSString * const kPayPalAccessTokenSandBox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
+
 /**
  *  BCPay URL type for handling URLs.
  */
@@ -93,7 +97,10 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     
     BCObjsTypeBaseResults = 300,
     BCObjsTypeBillResults,
-    BCObjsTypeRefundResults
+    BCObjsTypeRefundResults,
+    
+    BCObjsTypePayPal = 400,
+    BCObjsTypePayPalVerify
 };
 
 static NSString * const kBCDateFormat = @"yyyy-MM-dd HH:mm";
