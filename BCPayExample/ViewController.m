@@ -150,8 +150,8 @@
     
     if (self.actionType == 1) {
         BCQueryReq *req = [[BCQueryReq alloc] init];
-        req.channel = channel;
-        req.billno = @"b0331675ac6a4d3fa36a8062c0f719ba";//@"20150722164700237";
+      //  req.channel = channel;
+        req.billno = @"20150901104138656";
        // req.starttime = @"2015-07-23 00:00";
      //   req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
@@ -159,7 +159,7 @@
         [BCPay sendBCReq:req];
     } else if (self.actionType == 2) {
         BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
-        req.channel = channel;
+       // req.channel = channel;
         //  req.billno = @"20150722164700237";
         //  req.starttime = @"2015-07-21 00:00";
         // req.endtime = @"2015-07-23 12:00";

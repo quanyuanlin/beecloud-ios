@@ -33,20 +33,21 @@
 		36B697E11B6A1283005195E5 /* BCQueryRefundResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697B61B6A1283005195E5 /* BCQueryRefundResult.m */; };
 		36B697E21B6A1283005195E5 /* BCPayCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697B91B6A1283005195E5 /* BCPayCache.m */; };
 		36B697E31B6A1283005195E5 /* BCPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697BC1B6A1283005195E5 /* BCPayUtil.m */; };
-		36B697E41B6A1283005195E5 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697C01B6A1283005195E5 /* AFHTTPRequestOperation.m */; };
-		36B697E51B6A1283005195E5 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697C21B6A1283005195E5 /* AFHTTPRequestOperationManager.m */; };
-		36B697E61B6A1283005195E5 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697C41B6A1283005195E5 /* AFHTTPSessionManager.m */; };
-		36B697E71B6A1283005195E5 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697C71B6A1283005195E5 /* AFNetworkReachabilityManager.m */; };
-		36B697E81B6A1283005195E5 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697C91B6A1283005195E5 /* AFSecurityPolicy.m */; };
-		36B697E91B6A1283005195E5 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697CB1B6A1283005195E5 /* AFURLConnectionOperation.m */; };
-		36B697EA1B6A1283005195E5 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697CD1B6A1283005195E5 /* AFURLRequestSerialization.m */; };
-		36B697EB1B6A1283005195E5 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697CF1B6A1283005195E5 /* AFURLResponseSerialization.m */; };
-		36B697EC1B6A1283005195E5 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36B697D11B6A1283005195E5 /* AFURLSessionManager.m */; };
-		36B697ED1B6A1283005195E5 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B697D21B6A1283005195E5 /* AlipaySDK.framework */; };
-		36B697EE1B6A1283005195E5 /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B697D31B6A1283005195E5 /* libUPPayPlugin.a */; };
+		36CC9D4B1B95502500664BF3 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D241B95502500664BF3 /* AFHTTPRequestOperation.m */; };
+		36CC9D4C1B95502500664BF3 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D261B95502500664BF3 /* AFHTTPRequestOperationManager.m */; };
+		36CC9D4D1B95502500664BF3 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D281B95502500664BF3 /* AFHTTPSessionManager.m */; };
+		36CC9D4E1B95502500664BF3 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D2B1B95502500664BF3 /* AFNetworkReachabilityManager.m */; };
+		36CC9D4F1B95502500664BF3 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D2D1B95502500664BF3 /* AFSecurityPolicy.m */; };
+		36CC9D501B95502500664BF3 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D2F1B95502500664BF3 /* AFURLConnectionOperation.m */; };
+		36CC9D511B95502500664BF3 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D311B95502500664BF3 /* AFURLRequestSerialization.m */; };
+		36CC9D521B95502500664BF3 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D331B95502500664BF3 /* AFURLResponseSerialization.m */; };
+		36CC9D531B95502500664BF3 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CC9D351B95502500664BF3 /* AFURLSessionManager.m */; };
+		36CC9D541B95502500664BF3 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CC9D371B95502500664BF3 /* AlipaySDK.framework */; };
+		36CC9D551B95502500664BF3 /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CC9D3B1B95502500664BF3 /* libPayPalMobile.a */; };
+		36CC9D561B95502500664BF3 /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CC9D441B95502500664BF3 /* libUPPayPlugin.a */; };
+		36CC9D571B95502500664BF3 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CC9D481B95502500664BF3 /* libWeChatSDK.a */; };
 		36DCE4051B8F46E9004BB25E /* BCPayPalReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 36DCE4041B8F46E9004BB25E /* BCPayPalReq.m */; };
 		36DCE4071B8F49F9004BB25E /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4061B8F49F9004BB25E /* libPayPalMobile.a */; };
-		36DCE4081B8F4A08004BB25E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B697D41B6A1283005195E5 /* libWeChatSDK.a */; };
 		36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4091B8F4A19004BB25E /* Accelerate.framework */; };
 		36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */; };
 		36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE40D1B8F4A5E004BB25E /* CoreMedia.framework */; };
@@ -107,41 +108,42 @@
 		36B697B91B6A1283005195E5 /* BCPayCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayCache.m; sourceTree = "<group>"; };
 		36B697BA1B6A1283005195E5 /* BCPayConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayConstant.h; sourceTree = "<group>"; };
 		36B697BC1B6A1283005195E5 /* BCPayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayUtil.m; sourceTree = "<group>"; };
-		36B697BF1B6A1283005195E5 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
-		36B697C01B6A1283005195E5 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
-		36B697C11B6A1283005195E5 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
-		36B697C21B6A1283005195E5 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
-		36B697C31B6A1283005195E5 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		36B697C41B6A1283005195E5 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		36B697C51B6A1283005195E5 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		36B697C61B6A1283005195E5 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		36B697C71B6A1283005195E5 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		36B697C81B6A1283005195E5 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
-		36B697C91B6A1283005195E5 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
-		36B697CA1B6A1283005195E5 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
-		36B697CB1B6A1283005195E5 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
-		36B697CC1B6A1283005195E5 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		36B697CD1B6A1283005195E5 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		36B697CE1B6A1283005195E5 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		36B697CF1B6A1283005195E5 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		36B697D01B6A1283005195E5 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
-		36B697D11B6A1283005195E5 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		36B697D21B6A1283005195E5 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		36B697D31B6A1283005195E5 /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
-		36B697D41B6A1283005195E5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		36B697F21B6A1307005195E5 /* AlipaySDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipaySDK.h; sourceTree = "<group>"; };
-		36B697F31B6A1307005195E5 /* APayAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APayAuthInfo.h; sourceTree = "<group>"; };
-		36B697F51B6A1307005195E5 /* UPPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPlugin.h; sourceTree = "<group>"; };
-		36B697F61B6A1307005195E5 /* UPPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPluginDelegate.h; sourceTree = "<group>"; };
-		36B697F81B6A1307005195E5 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		36B697F91B6A1307005195E5 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
-		36DCE3FB1B8F40C0004BB25E /* PayPalConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalConfiguration.h; sourceTree = "<group>"; };
-		36DCE3FC1B8F40C0004BB25E /* PayPalFuturePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalFuturePaymentViewController.h; sourceTree = "<group>"; };
-		36DCE3FD1B8F40C0004BB25E /* PayPalMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalMobile.h; sourceTree = "<group>"; };
-		36DCE3FE1B8F40C0004BB25E /* PayPalOAuthScopes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalOAuthScopes.h; sourceTree = "<group>"; };
-		36DCE3FF1B8F40C0004BB25E /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
-		36DCE4001B8F40C0004BB25E /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
-		36DCE4011B8F40C0004BB25E /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
+		36CC9D231B95502500664BF3 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		36CC9D241B95502500664BF3 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		36CC9D251B95502500664BF3 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
+		36CC9D261B95502500664BF3 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
+		36CC9D271B95502500664BF3 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		36CC9D281B95502500664BF3 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		36CC9D291B95502500664BF3 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		36CC9D2A1B95502500664BF3 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		36CC9D2B1B95502500664BF3 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		36CC9D2C1B95502500664BF3 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		36CC9D2D1B95502500664BF3 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		36CC9D2E1B95502500664BF3 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		36CC9D2F1B95502500664BF3 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		36CC9D301B95502500664BF3 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		36CC9D311B95502500664BF3 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		36CC9D321B95502500664BF3 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		36CC9D331B95502500664BF3 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		36CC9D341B95502500664BF3 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		36CC9D351B95502500664BF3 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		36CC9D371B95502500664BF3 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		36CC9D381B95502500664BF3 /* AlipaySDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipaySDK.h; sourceTree = "<group>"; };
+		36CC9D391B95502500664BF3 /* APayAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APayAuthInfo.h; sourceTree = "<group>"; };
+		36CC9D3B1B95502500664BF3 /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPayPalMobile.a; sourceTree = "<group>"; };
+		36CC9D3C1B95502500664BF3 /* PayPalConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalConfiguration.h; sourceTree = "<group>"; };
+		36CC9D3D1B95502500664BF3 /* PayPalFuturePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalFuturePaymentViewController.h; sourceTree = "<group>"; };
+		36CC9D3E1B95502500664BF3 /* PayPalMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalMobile.h; sourceTree = "<group>"; };
+		36CC9D3F1B95502500664BF3 /* PayPalOAuthScopes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalOAuthScopes.h; sourceTree = "<group>"; };
+		36CC9D401B95502500664BF3 /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
+		36CC9D411B95502500664BF3 /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
+		36CC9D421B95502500664BF3 /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
+		36CC9D441B95502500664BF3 /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
+		36CC9D451B95502500664BF3 /* UPPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPlugin.h; sourceTree = "<group>"; };
+		36CC9D461B95502500664BF3 /* UPPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPluginDelegate.h; sourceTree = "<group>"; };
+		36CC9D481B95502500664BF3 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		36CC9D491B95502500664BF3 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		36CC9D4A1B95502500664BF3 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		36DCE4031B8F46E9004BB25E /* BCPayPalReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayPalReq.h; sourceTree = "<group>"; };
 		36DCE4041B8F46E9004BB25E /* BCPayPalReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayPalReq.m; sourceTree = "<group>"; };
 		36DCE4061B8F49F9004BB25E /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPayPalMobile.a; path = External/PayPal/libPayPalMobile.a; sourceTree = "<group>"; };
@@ -165,19 +167,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */,
+				36CC9D551B95502500664BF3 /* libPayPalMobile.a in Frameworks */,
 				36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */,
 				36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */,
 				36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */,
 				36DCE4101B8F4A5E004BB25E /* CoreVideo.framework in Frameworks */,
+				36CC9D541B95502500664BF3 /* AlipaySDK.framework in Frameworks */,
 				36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */,
 				36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */,
-				36DCE4081B8F4A08004BB25E /* libWeChatSDK.a in Frameworks */,
 				36DCE4071B8F49F9004BB25E /* libPayPalMobile.a in Frameworks */,
+				36CC9D561B95502500664BF3 /* libUPPayPlugin.a in Frameworks */,
 				3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */,
-				36B697ED1B6A1283005195E5 /* AlipaySDK.framework in Frameworks */,
-				36B697EE1B6A1283005195E5 /* libUPPayPlugin.a in Frameworks */,
 				369750691B68C7F9009FAEDB /* libz.dylib in Frameworks */,
 				369750681B68C7F2009FAEDB /* libc++.dylib in Frameworks */,
+				36CC9D571B95502500664BF3 /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,9 +190,9 @@
 		364BC5A01B5E32FD00EAFCCE = {
 			isa = PBXGroup;
 			children = (
+				36CC9D211B95502500664BF3 /* External */,
 				369750221B68C659009FAEDB /* BCPayExample */,
 				36B6978D1B6A1283005195E5 /* BCPaySDK */,
-				36B697BD1B6A1283005195E5 /* External */,
 				364BC6E81B5F2AE700EAFCCE /* Frameworks */,
 				364BC5AA1B5E32FD00EAFCCE /* Products */,
 			);
@@ -255,7 +258,6 @@
 				36B6978E1B6A1283005195E5 /* BCPay.h */,
 				36B6978F1B6A1283005195E5 /* BCPay.m */,
 				36B697901B6A1283005195E5 /* BCPayObjects.h */,
-				36B697F01B6A1307005195E5 /* ChannelHeaders */,
 				36B6979B1B6A1283005195E5 /* Classes */,
 				36B697B71B6A1283005195E5 /* Internal */,
 			);
@@ -335,93 +337,87 @@
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		36B697BD1B6A1283005195E5 /* External */ = {
+		36CC9D211B95502500664BF3 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				36DCE3F91B8F40C0004BB25E /* PayPal */,
-				36B697BE1B6A1283005195E5 /* AFNetworking */,
-				36B697D21B6A1283005195E5 /* AlipaySDK.framework */,
-				36B697D31B6A1283005195E5 /* libUPPayPlugin.a */,
-				36B697D41B6A1283005195E5 /* libWeChatSDK.a */,
+				36CC9D221B95502500664BF3 /* AFNetworking */,
+				36CC9D361B95502500664BF3 /* AliPay */,
+				36CC9D3A1B95502500664BF3 /* PayPal */,
+				36CC9D431B95502500664BF3 /* UnionPay */,
+				36CC9D471B95502500664BF3 /* WXPay */,
 			);
 			path = External;
 			sourceTree = "<group>";
 		};
-		36B697BE1B6A1283005195E5 /* AFNetworking */ = {
+		36CC9D221B95502500664BF3 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				36B697BF1B6A1283005195E5 /* AFHTTPRequestOperation.h */,
-				36B697C01B6A1283005195E5 /* AFHTTPRequestOperation.m */,
-				36B697C11B6A1283005195E5 /* AFHTTPRequestOperationManager.h */,
-				36B697C21B6A1283005195E5 /* AFHTTPRequestOperationManager.m */,
-				36B697C31B6A1283005195E5 /* AFHTTPSessionManager.h */,
-				36B697C41B6A1283005195E5 /* AFHTTPSessionManager.m */,
-				36B697C51B6A1283005195E5 /* AFNetworking.h */,
-				36B697C61B6A1283005195E5 /* AFNetworkReachabilityManager.h */,
-				36B697C71B6A1283005195E5 /* AFNetworkReachabilityManager.m */,
-				36B697C81B6A1283005195E5 /* AFSecurityPolicy.h */,
-				36B697C91B6A1283005195E5 /* AFSecurityPolicy.m */,
-				36B697CA1B6A1283005195E5 /* AFURLConnectionOperation.h */,
-				36B697CB1B6A1283005195E5 /* AFURLConnectionOperation.m */,
-				36B697CC1B6A1283005195E5 /* AFURLRequestSerialization.h */,
-				36B697CD1B6A1283005195E5 /* AFURLRequestSerialization.m */,
-				36B697CE1B6A1283005195E5 /* AFURLResponseSerialization.h */,
-				36B697CF1B6A1283005195E5 /* AFURLResponseSerialization.m */,
-				36B697D01B6A1283005195E5 /* AFURLSessionManager.h */,
-				36B697D11B6A1283005195E5 /* AFURLSessionManager.m */,
+				36CC9D231B95502500664BF3 /* AFHTTPRequestOperation.h */,
+				36CC9D241B95502500664BF3 /* AFHTTPRequestOperation.m */,
+				36CC9D251B95502500664BF3 /* AFHTTPRequestOperationManager.h */,
+				36CC9D261B95502500664BF3 /* AFHTTPRequestOperationManager.m */,
+				36CC9D271B95502500664BF3 /* AFHTTPSessionManager.h */,
+				36CC9D281B95502500664BF3 /* AFHTTPSessionManager.m */,
+				36CC9D291B95502500664BF3 /* AFNetworking.h */,
+				36CC9D2A1B95502500664BF3 /* AFNetworkReachabilityManager.h */,
+				36CC9D2B1B95502500664BF3 /* AFNetworkReachabilityManager.m */,
+				36CC9D2C1B95502500664BF3 /* AFSecurityPolicy.h */,
+				36CC9D2D1B95502500664BF3 /* AFSecurityPolicy.m */,
+				36CC9D2E1B95502500664BF3 /* AFURLConnectionOperation.h */,
+				36CC9D2F1B95502500664BF3 /* AFURLConnectionOperation.m */,
+				36CC9D301B95502500664BF3 /* AFURLRequestSerialization.h */,
+				36CC9D311B95502500664BF3 /* AFURLRequestSerialization.m */,
+				36CC9D321B95502500664BF3 /* AFURLResponseSerialization.h */,
+				36CC9D331B95502500664BF3 /* AFURLResponseSerialization.m */,
+				36CC9D341B95502500664BF3 /* AFURLSessionManager.h */,
+				36CC9D351B95502500664BF3 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		36B697F01B6A1307005195E5 /* ChannelHeaders */ = {
+		36CC9D361B95502500664BF3 /* AliPay */ = {
 			isa = PBXGroup;
 			children = (
-				36B697F11B6A1307005195E5 /* AliPay */,
-				36B697F41B6A1307005195E5 /* UnionPay */,
-				36B697F71B6A1307005195E5 /* WXPay */,
-			);
-			path = ChannelHeaders;
-			sourceTree = "<group>";
-		};
-		36B697F11B6A1307005195E5 /* AliPay */ = {
-			isa = PBXGroup;
-			children = (
-				36B697F21B6A1307005195E5 /* AlipaySDK.h */,
-				36B697F31B6A1307005195E5 /* APayAuthInfo.h */,
+				36CC9D371B95502500664BF3 /* AlipaySDK.framework */,
+				36CC9D381B95502500664BF3 /* AlipaySDK.h */,
+				36CC9D391B95502500664BF3 /* APayAuthInfo.h */,
 			);
 			path = AliPay;
 			sourceTree = "<group>";
 		};
-		36B697F41B6A1307005195E5 /* UnionPay */ = {
+		36CC9D3A1B95502500664BF3 /* PayPal */ = {
 			isa = PBXGroup;
 			children = (
-				36B697F51B6A1307005195E5 /* UPPayPlugin.h */,
-				36B697F61B6A1307005195E5 /* UPPayPluginDelegate.h */,
+				36CC9D3B1B95502500664BF3 /* libPayPalMobile.a */,
+				36CC9D3C1B95502500664BF3 /* PayPalConfiguration.h */,
+				36CC9D3D1B95502500664BF3 /* PayPalFuturePaymentViewController.h */,
+				36CC9D3E1B95502500664BF3 /* PayPalMobile.h */,
+				36CC9D3F1B95502500664BF3 /* PayPalOAuthScopes.h */,
+				36CC9D401B95502500664BF3 /* PayPalPayment.h */,
+				36CC9D411B95502500664BF3 /* PayPalPaymentViewController.h */,
+				36CC9D421B95502500664BF3 /* PayPalProfileSharingViewController.h */,
+			);
+			path = PayPal;
+			sourceTree = "<group>";
+		};
+		36CC9D431B95502500664BF3 /* UnionPay */ = {
+			isa = PBXGroup;
+			children = (
+				36CC9D441B95502500664BF3 /* libUPPayPlugin.a */,
+				36CC9D451B95502500664BF3 /* UPPayPlugin.h */,
+				36CC9D461B95502500664BF3 /* UPPayPluginDelegate.h */,
 			);
 			path = UnionPay;
 			sourceTree = "<group>";
 		};
-		36B697F71B6A1307005195E5 /* WXPay */ = {
+		36CC9D471B95502500664BF3 /* WXPay */ = {
 			isa = PBXGroup;
 			children = (
-				36B697F81B6A1307005195E5 /* WXApi.h */,
-				36B697F91B6A1307005195E5 /* WXApiObject.h */,
+				36CC9D481B95502500664BF3 /* libWeChatSDK.a */,
+				36CC9D491B95502500664BF3 /* WXApi.h */,
+				36CC9D4A1B95502500664BF3 /* WXApiObject.h */,
 			);
 			path = WXPay;
-			sourceTree = "<group>";
-		};
-		36DCE3F91B8F40C0004BB25E /* PayPal */ = {
-			isa = PBXGroup;
-			children = (
-				36DCE3FB1B8F40C0004BB25E /* PayPalConfiguration.h */,
-				36DCE3FC1B8F40C0004BB25E /* PayPalFuturePaymentViewController.h */,
-				36DCE3FD1B8F40C0004BB25E /* PayPalMobile.h */,
-				36DCE3FE1B8F40C0004BB25E /* PayPalOAuthScopes.h */,
-				36DCE3FF1B8F40C0004BB25E /* PayPalPayment.h */,
-				36DCE4001B8F40C0004BB25E /* PayPalPaymentViewController.h */,
-				36DCE4011B8F40C0004BB25E /* PayPalProfileSharingViewController.h */,
-			);
-			path = PayPal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,38 +490,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36B697EA1B6A1283005195E5 /* AFURLRequestSerialization.m in Sources */,
-				36B697E91B6A1283005195E5 /* AFURLConnectionOperation.m in Sources */,
+				36CC9D4F1B95502500664BF3 /* AFSecurityPolicy.m in Sources */,
 				36B697DC1B6A1283005195E5 /* BCPayResp.m in Sources */,
 				3697502C1B68C659009FAEDB /* ViewController.m in Sources */,
 				369750291B68C659009FAEDB /* AppDelegate.m in Sources */,
-				36B697EC1B6A1283005195E5 /* AFURLSessionManager.m in Sources */,
 				36B697E31B6A1283005195E5 /* BCPayUtil.m in Sources */,
+				36CC9D501B95502500664BF3 /* AFURLConnectionOperation.m in Sources */,
 				36B697DD1B6A1283005195E5 /* BCQueryResp.m in Sources */,
 				36DCE4051B8F46E9004BB25E /* BCPayPalReq.m in Sources */,
 				3697504C1B68C6D5009FAEDB /* GuideViewController.m in Sources */,
-				36B697E81B6A1283005195E5 /* AFSecurityPolicy.m in Sources */,
-				36B697E41B6A1283005195E5 /* AFHTTPRequestOperation.m in Sources */,
+				36CC9D531B95502500664BF3 /* AFURLSessionManager.m in Sources */,
 				36B697D61B6A1283005195E5 /* BCBaseReq.m in Sources */,
 				36B697D91B6A1283005195E5 /* BCQueryReq.m in Sources */,
 				36B697DB1B6A1283005195E5 /* BCBaseResp.m in Sources */,
 				36B697DF1B6A1283005195E5 /* BCBaseResult.m in Sources */,
 				36DCE4191B900635004BB25E /* BCPayPalVerifyReq.m in Sources */,
+				36CC9D521B95502500664BF3 /* AFURLResponseSerialization.m in Sources */,
+				36CC9D4C1B95502500664BF3 /* AFHTTPRequestOperationManager.m in Sources */,
+				36CC9D4B1B95502500664BF3 /* AFHTTPRequestOperation.m in Sources */,
 				36B697D71B6A1283005195E5 /* BCPayReq.m in Sources */,
 				36B697D51B6A1283005195E5 /* BCPay.m in Sources */,
-				36B697E61B6A1283005195E5 /* AFHTTPSessionManager.m in Sources */,
 				3697504B1B68C6D5009FAEDB /* QueryResultViewController.m in Sources */,
 				36B697DA1B6A1283005195E5 /* BCRefundStatusReq.m in Sources */,
 				36B697DE1B6A1283005195E5 /* BCRefundStatusResp.m in Sources */,
-				36B697E51B6A1283005195E5 /* AFHTTPRequestOperationManager.m in Sources */,
+				36CC9D4E1B95502500664BF3 /* AFNetworkReachabilityManager.m in Sources */,
 				36B697E11B6A1283005195E5 /* BCQueryRefundResult.m in Sources */,
 				36B697E01B6A1283005195E5 /* BCQueryBillResult.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
 				36B697D81B6A1283005195E5 /* BCQueryRefundReq.m in Sources */,
 				36DCE41C1B903AE7004BB25E /* NSString+IsValid.m in Sources */,
-				36B697E71B6A1283005195E5 /* AFNetworkReachabilityManager.m in Sources */,
-				36B697EB1B6A1283005195E5 /* AFURLResponseSerialization.m in Sources */,
+				36CC9D511B95502500664BF3 /* AFURLRequestSerialization.m in Sources */,
 				36B697E21B6A1283005195E5 /* BCPayCache.m in Sources */,
+				36CC9D4D1B95502500664BF3 /* AFHTTPSessionManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +633,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/External",
+					"$(PROJECT_DIR)/External/AliPay",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -648,6 +645,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/External",
 					"$(PROJECT_DIR)/External/PayPal",
+					"$(PROJECT_DIR)/External/UnionPay",
+					"$(PROJECT_DIR)/External/WXPay",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = BCPay;
@@ -664,6 +663,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/External",
+					"$(PROJECT_DIR)/External/AliPay",
 				);
 				INFOPLIST_FILE = BCPayExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -671,6 +671,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/External",
 					"$(PROJECT_DIR)/External/PayPal",
+					"$(PROJECT_DIR)/External/UnionPay",
+					"$(PROJECT_DIR)/External/WXPay",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = BCPay;
