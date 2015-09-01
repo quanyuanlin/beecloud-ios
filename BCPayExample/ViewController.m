@@ -205,6 +205,7 @@
                 break;
             case 2:
                 [self doUnionPay];
+                break;
             case 3:
                 [self doPayPal];
                 break;

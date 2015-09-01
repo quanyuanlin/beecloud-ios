@@ -284,6 +284,10 @@
 
 - (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
     
+    if (req == nil || req.payment == nil) {
+        [self doErrorResponse:@"请求参数格式不合法"];
+        return ;
+    }
     NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
     if (parameters == nil) {
         [self doErrorResponse:@"请检查是否全局初始化"];
