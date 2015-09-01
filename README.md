@@ -10,7 +10,7 @@
 ## 安装
 
 1.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
->1. 下载的`External`文件夹下的`AlipaySDK.framework`, `libUPPayPlugin.a`, `libWeChatSDK.a`文件夹分别对应`支付宝`, `银联`, `微信`的原生SDK，请按需导入进自己的项目。  
+>1. 下载的`External`文件夹下的`AliPay`, `UnionPay`, `WXPay`, `PayPal`文件夹分别对应`支付宝`, `银联`, `微信`, `PayPal`的原生SDK，请按需导入进自己的项目。  
 >2. iOS SDK使用了第三方Http请求库AFNetworking，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。
 >3. 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
 
@@ -28,18 +28,27 @@ pod 'BeeCloud'
 2. 注册应用：使用注册的账号登陆[控制台](http://www.beecloud.cn/dashboard/)后，点击"+创建App"创建新应用，并配置支付参数。  
 3. 在代码中注册：
 
-```.net
+```objc
 //请替换成自己的BeeCloud账户中的AppID和AppSecret
 [BCPay initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
 
 //如果需要微信支付，请添加下面这行（自行替换微信APP ID）
 [BCPay initWeChatPay:@"wxf1aa465362b4c8f1"];
+
+//如果需要PayPal，请添加下面这行
+ [BCPay initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sanBox:YES];
 ```
 
 ## 使用方法
 >具体使用请参考项目中的`BCPayExample`工程
 
-要调用以下方法，都需要实现接口`BCApiDelegate`， 实现本接口的方法使不同类型的请求获得对应的响应。
+要调用以下方法，都需要实现接口`BCApiDelegate`， 实现本接口的方法使不同类型的请求获得对应的响应。  
+
+*  使用以下方法设置delegate:
+
+```objc
+[BCPay setBCApiDelegate:self];
+```
 
 ### 1.支付
 
@@ -50,6 +59,7 @@ pod 'BeeCloud'
 调用：
 
 ```objc
+//微信、支付宝、银联
 - (void)doPay:(PayChannel)channel {
     NSString *outTradeNo = [self genOutTradeNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
@@ -64,7 +74,81 @@ pod 'BeeCloud'
     payReq.optional = dict;//商户业务扩展参数
     [BCPay sendBCReq:payReq];
 }
+
 ```
+
+#### PayPal
+##### 支付
+ 
+ ```objc
+ //PayPal Pay
+- (void)doPayPal {
+    BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
+    
+    _payPalConfig = [[PayPalConfiguration alloc] init];
+    _payPalConfig.acceptCreditCards = YES;
+    _payPalConfig.merchantName = @"Awesome Shirts, Inc.";
+    _payPalConfig.merchantPrivacyPolicyURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/privacy-full"];
+    _payPalConfig.merchantUserAgreementURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/useragreement-full"];
+    
+    _payPalConfig.languageOrLocale = [NSLocale preferredLanguages][0];
+    
+    _payPalConfig.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
+    
+    PayPalItem *item1 = [PayPalItem itemWithName:@"Old jeans with holes"
+                                    withQuantity:2
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"84.99"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00037"];
+    
+    PayPalItem *item2 = [PayPalItem itemWithName:@"Free rainbow patch"
+                                    withQuantity:1
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"0.00"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00066"];
+    
+    PayPalItem *item3 = [PayPalItem itemWithName:@"Long-sleeve plaid shirt (mustache not included)"
+                                    withQuantity:1
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"37.99"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00291"];
+    
+    payReq.items = @[item1, item2, item3];
+    payReq.shipping = @"5.00";
+    payReq.tax = @"2.50";
+    payReq.shortDesc = @"paypal test";
+    payReq.viewController = self;
+    payReq.payConfig = _payPalConfig;
+    
+    [BCPay sendBCReq:payReq]; 
+}
+ ```
+##### 实现`PayPalPaymentDelegate`
+
+支付完成
+
+```objc
+- (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
+
+	//使用`completedPayment`完成Payment Verify操作
+	BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
+   req.payment = _completedPayment;
+   [BCPay sendBCReq:req];
+   
+   [self dismissViewControllerAnimated:YES completion:nil];
+}
+```
+
+支付取消
+
+```objc
+
+- (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
+   
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+```
+
 
 ### 2.查询
 
@@ -77,14 +161,14 @@ pod 'BeeCloud'
 调用：
 
 ```objc
-   BCQueryReq *req = [[BCQueryReq alloc] init];
-   req.channel = channel;
-   //req.billno = @"20150722164700237";
-   //req.starttime = @"2015-07-21 00:00";
-   //req.endtime = @"2015-07-23 12:00";
-   req.skip = 0;
-   req.limit = 20;
-   [BCPay sendBCReq:req];
+BCQueryReq *req = [[BCQueryReq alloc] init];
+//req.channel = channel;
+req.billno = @"20150722164700237";
+//req.starttime = @"2015-07-21 00:00";
+//req.endtime = @"2015-07-23 12:00";
+req.skip = 0;
+req.limit = 20;
+[BCPay sendBCReq:req];
 ```
 * 查询退款订单
 
@@ -96,8 +180,8 @@ pod 'BeeCloud'
 
 ```objc
    BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
-   req.channel = channel;
-   //req.billno = @"20150722164700237";
+   //req.channel = channel;
+   req.billno = @"20150722164700237";
    //req.starttime = @"2015-07-21 00:00";
    //req.endtime = @"2015-07-23 12:00";
    //req.refundno = @"20150709173629127";

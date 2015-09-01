@@ -170,7 +170,7 @@
           }];
 }
 
-#pragma mark Do pay action
+#pragma mark - Pay Action
 
 - (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
     if (dic) {

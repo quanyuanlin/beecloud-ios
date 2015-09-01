@@ -31,9 +31,26 @@
     }
     
     self.payList = [NSMutableArray arrayWithCapacity:10];
+#pragma mark - 设置delegate
     [BCPay setBCApiDelegate:self];
     
 }
+
+#pragma mark - 微信支付
+- (void)doWxPay {
+    [self doPay:PayChannelWxApp];
+}
+
+#pragma mark - 支付宝
+- (void)doAliPay {
+    [self doPay:PayChannelAliApp];
+}
+
+#pragma mark - 银联在线
+- (void)doUnionPay {
+    [self doPay:PayChannelUnApp];
+}
+
 
 - (void)doPay:(PayChannel)channel {
     NSString *outTradeNo = [self genOutTradeNo];
@@ -50,6 +67,7 @@
     [BCPay sendBCReq:payReq];
 }
 
+#pragma mark - PayPal Pay
 - (void)doPayPal {
     BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
     
@@ -92,11 +110,14 @@
     
 }
 
+#pragma mark - PayPal Verify
 - (void)doPayPalVerify {
     BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
     req.payment = _completedPayment;
     [BCPay sendBCReq:req];
 }
+
+#pragma mark - PayPalPaymentDelegate
 
 - (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
     NSLog(@"PayPal Payment Success! %@", completedPayment.description);
@@ -111,11 +132,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationVC = (UINavigationController*)segue.destinationViewController;
-    QueryResultViewController *vc = (QueryResultViewController *)navigationVC.childViewControllers[0];
-    vc.dataList = self.payList;
-}
+#pragma mark - BCPay回调
 
 - (void)onBCPayResp:(BCBaseResp *)resp {
     if ([resp isKindOfClass:[BCQueryResp class]]) {
@@ -137,8 +154,6 @@
     }
 }
 
-#pragma mark - 银联支付
-
 - (void)showAlertView:(NSString *)msg {
     UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"提示" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
@@ -146,14 +161,14 @@
 
 #pragma mark - 订单查询
 
-- (void)doQuery:(PayChannel)channel {
+- (void)doQuery{
     
     if (self.actionType == 1) {
         BCQueryReq *req = [[BCQueryReq alloc] init];
       //  req.channel = channel;
         req.billno = @"20150901104138656";
        // req.starttime = @"2015-07-23 00:00";
-     //   req.endtime = @"2015-07-23 12:00";
+       // req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
         req.limit = 50;
         [BCPay sendBCReq:req];
@@ -170,7 +185,7 @@
     }
 }
 
-
+#pragma maek tableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 5;
 }
@@ -179,24 +194,35 @@
     return 80.0f;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.actionType == 0) {
-        if (indexPath.row == 3) {
-            [self doPayPal];
-        } else if (indexPath.row == 4) {
-            [self doPayPalVerify];
-        } else {
-            [self doPay:(PayChannel)((indexPath.row + 1)*10+1)];
+        switch (indexPath.row) {
+            case 0:
+                [self doWxPay];
+                break;
+            case 1:
+                [self doAliPay];
+                break;
+            case 2:
+                [self doUnionPay];
+            case 3:
+                [self doPayPal];
+                break;
+            case 4:
+                [self doPayPalVerify];
+                break;
+            default:
+                break;
         }
     } else {
-        [self doQuery:(PayChannel)((indexPath.row + 1)*10)];
+        [self doQuery];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
+#pragma mark - 生成订单号
 - (NSString *)genOutTradeNo {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
