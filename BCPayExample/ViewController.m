@@ -41,7 +41,7 @@
 
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel;
-    payReq.title = @"BeeCloud自制白开水";
+    payReq.title = @"20150901-PayPal-Release";
     payReq.totalfee = @"1";
     payReq.billno = outTradeNo;
     payReq.scheme = @"payDemo";

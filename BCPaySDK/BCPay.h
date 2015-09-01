@@ -47,8 +47,9 @@
 /**
  *  init PayPal
  *
- *  @param clientID Client ID
- *  @param secret   Secret
+ *  @param clientID paypal clientId
+ *  @param secret   paypal secret
+ *  @param isSandBox 是否是sanbox环境
  */
 + (void)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox;
 

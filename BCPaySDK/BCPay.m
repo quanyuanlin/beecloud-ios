@@ -125,99 +125,6 @@
 
 #pragma mark Pay Request
 
-- (void)reqPayPal:(BCPayPalReq *)req {
-    
-    if (![self checkParameters:req]) return;
-    
-    NSDecimalNumber *subtotal = [PayPalItem totalPriceForItems:req.items];
-    
-    // Optional: include payment details
-    NSDecimalNumber *dShipping = [[NSDecimalNumber alloc] initWithString:req.shipping];
-    NSDecimalNumber *dTax = [[NSDecimalNumber alloc] initWithString:req.tax];
-    PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails paymentDetailsWithSubtotal:subtotal
-                                                                               withShipping:dShipping
-                                                                                    withTax:dTax];
-    
-    NSDecimalNumber *total = [[subtotal decimalNumberByAdding:dShipping] decimalNumberByAdding:dTax];
-    
-    PayPalPayment *payment = [[PayPalPayment alloc] init];
-    payment.amount = total;
-    payment.currencyCode = ((PayPalItem *)req.items.lastObject).currency;
-    payment.shortDescription = req.shortDesc;
-    payment.items = req.items;  // if not including multiple items, then leave payment.items as nil
-    payment.paymentDetails = paymentDetails; // if not including payment details, then leave payment.paymentDetails as nil
-    
-    if (!payment.processable) {
-        // This particular payment will always be processable. If, for
-        // example, the amount was negative or the shortDescription was
-        // empty, this payment wouldn't be processable, and you'd want
-        // to handle that here.
-    }
-    
-    PayPalPaymentViewController *paymentViewController = [[PayPalPaymentViewController alloc] initWithPayment:payment
-                                                                                                configuration:req.payConfig
-                                                                                                     delegate:req.viewController];
-    [(UIViewController *)req.viewController presentViewController:paymentViewController animated:YES completion:nil];
-    
-}
-
-- (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
-    [self reqPayPalAccessToken:req];
-}
-
-- (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.securityPolicy.allowInvalidCertificates = NO;
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-
-    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:[BCPayCache sharedInstance].payPalClientID password:[BCPayCache sharedInstance].payPalSecret];
-    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
-    
-    [manager POST:@"https://api.sandbox.paypal.com/v1/oauth2/token" parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
-        NSLog(@"token %@", response);
-        NSDictionary *dic = (NSDictionary *)response;
-        [self doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
-    }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"token failed %@", error);
-    }];
-}
-
-- (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
-    if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
-        return;
-    }
-    if ([BCPayCache sharedInstance].isPayPalSandBox) {
-        parameters[@"channel"] = @"PAYPAL_SANDBOX";
-    } else {
-        parameters[@"channel"] = @"PAYPAL";
-    }
-    parameters[@"title"] = @"PayPal Verify Payment";
-    parameters[@"total_fee"] = @((int)([req.payment.amount floatValue] * 100));
-    parameters[@"currency"] = req.payment.currencyCode;
-    parameters[@"bill_no"] = [[req.payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];
-    parameters[@"access_token"] = accessToken;
-    
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
-    //[BCPayUtil getBestHostWithFormat:kRestApiPay]
-    
-    [manager POST:@"https://apigk2.beecloud.cn/1/rest/bill" parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
-              
-              BCBaseResp *resp = [self getErrorInResponse:response];
-              if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-                  [_deleagte onBCPayResp:resp];
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
-          }];
-}
-
 - (void)reqPay:(BCPayReq *)req {
     if (![[BCPay sharedInstance] checkParameters:req]) return;
     
@@ -313,6 +220,99 @@
     });
 }
 
+#pragma mark PayPal
+
+- (void)reqPayPal:(BCPayPalReq *)req {
+    
+    if (![self checkParameters:req]) return;
+    
+    NSDecimalNumber *subtotal = [PayPalItem totalPriceForItems:req.items];
+    
+    // Optional: include payment details
+    NSDecimalNumber *dShipping = [[NSDecimalNumber alloc] initWithString:req.shipping];
+    NSDecimalNumber *dTax = [[NSDecimalNumber alloc] initWithString:req.tax];
+    PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails paymentDetailsWithSubtotal:subtotal
+                                                                               withShipping:dShipping
+                                                                                    withTax:dTax];
+    
+    NSDecimalNumber *total = [[subtotal decimalNumberByAdding:dShipping] decimalNumberByAdding:dTax];
+    
+    PayPalPayment *payment = [[PayPalPayment alloc] init];
+    payment.amount = total;
+    payment.currencyCode = ((PayPalItem *)req.items.lastObject).currency;
+    payment.shortDescription = req.shortDesc;
+    payment.items = req.items;
+    payment.paymentDetails = paymentDetails;
+    
+    if (!payment.processable) {
+        // This particular payment will always be processable. If, for
+        // example, the amount was negative or the shortDescription was
+        // empty, this payment wouldn't be processable, and you'd want
+        // to handle that here.
+    }
+    
+    PayPalPaymentViewController *paymentViewController = [[PayPalPaymentViewController alloc] initWithPayment:payment
+                                                                                                configuration:req.payConfig
+                                                                                                     delegate:req.viewController];
+    [(UIViewController *)req.viewController presentViewController:paymentViewController animated:YES completion:nil];
+    
+}
+
+- (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
+    [self reqPayPalAccessToken:req];
+}
+
+- (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = NO;
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:[BCPayCache sharedInstance].payPalClientID password:[BCPayCache sharedInstance].payPalSecret];
+    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
+    
+    [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
+        BCPayLog(@"token %@", response);
+        NSDictionary *dic = (NSDictionary *)response;
+        [self doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
+    }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self doErrorResponse:kNetWorkError];
+    }];
+}
+
+- (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    if ([BCPayCache sharedInstance].isPayPalSandBox) {
+        parameters[@"channel"] = @"PAYPAL_SANDBOX";
+    } else {
+        parameters[@"channel"] = @"PAYPAL";
+    }
+    parameters[@"title"] = @"PayPal Verify Payment";
+    parameters[@"total_fee"] = @((int)([req.payment.amount floatValue] * 100));
+    parameters[@"currency"] = req.payment.currencyCode;
+    parameters[@"bill_no"] = [[req.payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];
+    parameters[@"access_token"] = accessToken;
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              BCBaseResp *resp = [self getErrorInResponse:response];
+              if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+                  [_deleagte onBCPayResp:resp];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [self doErrorResponse:kNetWorkError];
+          }];
+}
+
 #pragma mark Query Bills/Refunds
 
 - (void)reqQueryOrder:(BCQueryReq *)req {
@@ -358,7 +358,7 @@
     
     [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
-             BCPayLog(@"resp=%@", response);
+             BCPayLog(@"resp = %@", response);
              [self doQueryResponse:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [self doErrorResponse:kNetWorkError];
@@ -476,7 +476,7 @@
 
 - (BOOL)checkParameters:(BCBaseReq *)request {
     
-    if (request == nil)  {
+    if (request == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
     } else if (request.type == BCObjsTypePayReq) {
         BCPayReq *req = (BCPayReq *)request;
@@ -514,7 +514,7 @@
         } else if (req.payConfig == nil) {
             [self doErrorResponse:@"payConfig 格式不合法"];
             return NO;
-        } else if (!req.viewController) {
+        } else if (req.viewController == nil) {
             [self doErrorResponse:@"viewController 格式不合法"];
             return NO;
         }
