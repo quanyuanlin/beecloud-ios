@@ -123,6 +123,8 @@
     NSLog(@"PayPal Payment Success! %@", completedPayment.description);
     
     _completedPayment = completedPayment;
+    
+    [self doPayPalVerify];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -187,7 +189,7 @@
 
 #pragma maek tableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -208,9 +210,6 @@
                 break;
             case 3:
                 [self doPayPal];
-                break;
-            case 4:
-                [self doPayPalVerify];
                 break;
             default:
                 break;
