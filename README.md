@@ -1,6 +1,6 @@
 ## BeeCloud iOS SDK (Open Source)
 
-![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.0.0-blue.svg)
+![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.1.0-blue.svg)
 
 本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
 
@@ -214,14 +214,14 @@ TODO
 - 关于weekhook的接收  
 文档请阅读 [webhook](https://github.com/beecloud/beecloud-webhook)
 
-- 支付宝支付时，提示“ALI69”，“ALI64”？
+- 支付宝支付时，提示“ALI69”，“ALI64”？  
 一般是因为RSA公钥不正确或未上传导致的。解决方法：在[支付宝商家服务平台](https://b.alipay.com/order/serviceIndex.htm)检查RSA公钥是否生成错误或者没上传。
 
-- BCPayExample中支付宝支付，跳转到支付后提示“系统繁忙”？  
-由于支付宝对企业账号监控严格，故不再提供支付宝支付的测试功能，请在BeeCloud平台配置正确参数后，使用自行创建的APP的appID和appSecret。给您带来的不便，敬请谅解。
+- BCPayExample中支付宝支付，跳转到支付后提示“系统繁忙”？    
+由于支付宝政策原因，故不再提供支付宝支付的测试功能，请在BeeCloud平台配置正确参数后，使用自行创建的APP的appID和appSecret。给您带来的不便，敬请谅解。
 
-- 在iPhone上未安装支付宝钱包客户端的情况下，APP内发起支付宝支付，会是怎么样的？
-正常情况下，会跳到支付宝网页收银台。如果你是从webview发起的支付请求，有可能会出现不跳转的情况。
+- 在iPhone上未安装支付宝钱包客户端的情况下，APP内发起支付宝支付，会是怎么样的？  
+正常情况下，会跳到支付宝网页收银台。如果你是从webview发起的支付请求，则不会跳转，请提示用户当前手机没安装APP。
 
 ## 代码贡献
 我们非常欢迎大家来贡献代码，我们会向贡献者致以最诚挚的敬意。

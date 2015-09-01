@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = '3.1.0'
+	s.version      = 'v3.1.0'
 	s.summary      = 'BeeCloud云服务 致力加速App开发'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 	s.platform     = :ios, '7.0'
 	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => s.version}
 	s.requires_arc = true
-	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay", "PayPal"
+	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
 	
 	s.subspec 'Core' do |core|
 		core.source_files = 'BCPaySDK/**/*.{h,m}'
