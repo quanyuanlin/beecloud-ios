@@ -7,9 +7,9 @@ Pod::Spec.new do |s|
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
 	s.platform     = :ios, '7.0'
-	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.0.0'}
+	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.1.0'}
 	s.requires_arc = true
-	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
+	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay", "PayPal"
 	
 	s.subspec 'Core' do |core|
 		core.source_files = 'BCPaySDK/**/*.{h,m}'
@@ -26,13 +26,19 @@ Pod::Spec.new do |s|
 
 	s.subspec 'Wx' do |wx|
 		wx.vendored_libraries = 'External/libWeChatSDK.a'
-		wx.ios.library = 'sqlite3'
+		wx.ios.library = 'sqlite3'		
 		wx.dependency 'BeeCloud/Core'
 	end
 
 	s.subspec 'UnionPay' do |unionpay|
 		unionpay.vendored_libraries = 'External/libUPPayPlugin.a'
 		unionpay.dependency 'BeeCloud/Core'
+	end
+
+	s.subspec 'PayPal' do |paypal|
+		paypal.frameworks = 'AudioToolbox','CoreLocation','MessageUI','CoreMedia','CoreVideo','Accelerate','AVFoundation'
+		paypal.vendored_libraries = 'External/libPayPalMobile.a'
+		paypal.dependency 'BeeCloud/Core'
 	end
 	
 end
