@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.0";//api版本号
+static NSString * const kApiVersion = @"3.1.0";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kKeyResponseResultCode = @"result_code";
@@ -34,6 +34,10 @@ static NSString * const kRestApiQueryBills = @"%@/rest/bills";
 static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
 static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
 
+//paypal accesstoken
+static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
+static NSString * const kPayPalAccessTokenSandBox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
+
 /**
  *  BCPay URL type for handling URLs.
  */
@@ -54,10 +58,21 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
 
 
 typedef NS_ENUM(NSInteger, PayChannel) {
-    None = 0,
-    WX,
-    Ali,
-    Union
+    PayChannelWx = 10, //微信
+    PayChannelWxApp,//微信APP
+    PayChannelWxNative,//微信扫码
+    PayChannelWxJsApi,//微信JSAPI(H5)
+    
+    PayChannelAli = 20,//支付宝
+    PayChannelAliApp,//支付宝APP
+    PayChannelAliWeb,//支付宝网页即时到账
+    PayChannelAliWap,//支付宝手机网页
+    PayChannelAliQrCode,//支付宝扫码即时到帐
+    PayChannelAliOfflineQrCode,//支付宝线下扫码
+    
+    PayChannelUn = 30,//银联
+    PayChannelUnApp,//银联APP
+    PayChannelUnWeb//银联网页
 };
 
 enum  BCErrCode {
@@ -82,7 +97,10 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     
     BCObjsTypeBaseResults = 300,
     BCObjsTypeBillResults,
-    BCObjsTypeRefundResults
+    BCObjsTypeRefundResults,
+    
+    BCObjsTypePayPal = 400,
+    BCObjsTypePayPalVerify
 };
 
 static NSString * const kBCDateFormat = @"yyyy-MM-dd HH:mm";

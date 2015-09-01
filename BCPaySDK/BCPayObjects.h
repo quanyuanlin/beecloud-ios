@@ -26,4 +26,9 @@
 #import "BCQueryBillResult.h"
 #import "BCQueryRefundResult.h"
 
+#import "BCPayPalReq.h"
+#import "BCPayPalVerifyReq.h"
+
+#import "NSString+IsValid.h"
+
 #endif

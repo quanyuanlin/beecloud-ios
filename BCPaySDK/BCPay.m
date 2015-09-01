@@ -45,6 +45,26 @@
     return instance.registerStatus;
 }
 
++ (void)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
+    if(clientID.isValid && secret.isValid) {
+        BCPayCache *instance = [BCPayCache sharedInstance];
+        instance.payPalClientID = clientID;
+        instance.payPalSecret = secret;
+        instance.isPayPalSandBox = isSandBox;
+        
+        if (isSandBox) {
+            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_PRODUCTION_CLIENT_ID",
+                                                                   PayPalEnvironmentSandbox : clientID}];
+             [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentSandbox];
+        } else {
+            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : clientID,
+                                                                   PayPalEnvironmentSandbox : @"YOUR_SANDBOX_CLIENT_ID"}];
+            [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentProduction];
+        }
+       
+    }
+}
+
 + (void)setBCApiDelegate:(id<BCApiDelegate>)delegate {
     [BCPay sharedInstance].deleagte = delegate;
 }
@@ -76,14 +96,28 @@
 }
 
 + (void)sendBCReq:(BCBaseReq *)req {
-    if (req.type == BCObjsTypePayReq) {
-        [[BCPay sharedInstance] reqPay:(BCPayReq *)req];
-    } else if (req.type == BCObjsTypeQueryReq ) {
-        [[BCPay sharedInstance] reqQueryOrder:(BCQueryReq *)req];
-    } else if (req.type == BCObjsTypeQueryRefundReq) {
-        [[BCPay sharedInstance] reqQueryOrder:(BCQueryRefundReq *)req];
-    } else if (req.type == BCObjsTypeRefundStatusReq) {
-        [[BCPay sharedInstance] reqRefundStatus:(BCRefundStatusReq *)req];
+    BCPay *instance = [BCPay sharedInstance];
+    switch (req.type) {
+        case BCObjsTypePayReq:
+            [instance reqPay:(BCPayReq *)req];
+            break;
+        case BCObjsTypeQueryReq:
+            [instance reqQueryOrder:(BCQueryReq *)req];
+            break;
+        case BCObjsTypeQueryRefundReq:
+            [instance reqQueryOrder:(BCQueryRefundReq *)req];
+            break;
+        case BCObjsTypeRefundStatusReq:
+            [instance reqRefundStatus:(BCRefundStatusReq *)req];
+            break;
+        case BCObjsTypePayPal:
+            [instance  reqPayPal:(BCPayPalReq *)req];
+            break;
+        case BCObjsTypePayPalVerify:
+            [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
+            break;
+        default:
+            break;
     }
 }
 
@@ -94,7 +128,7 @@
 - (void)reqPay:(BCPayReq *)req {
     if (![[BCPay sharedInstance] checkParameters:req]) return;
     
-    NSString *cType = [self getChannelString:req.channel];
+    NSString *cType = [BCPayUtil getChannelString:req.channel];
     
     NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
     if (parameters == nil) {
@@ -112,23 +146,21 @@
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     
-    __block NSTimeInterval tStart = [NSDate timeIntervalSinceReferenceDate];
-    
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              BCPayLog(@"wechat end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
+           
               BCBaseResp *resp = [self getErrorInResponse:response];
               if (resp.result_code != 0) {
                   if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
                       [_deleagte onBCPayResp:resp];
                   }
               } else {
-                  NSLog(@"channel=%@,resp=%@", cType, response);
+                  BCPayLog(@"channel=%@,resp=%@", cType, response);
                   NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                               (NSDictionary *)response];
-                  if (req.channel == Ali) {
+                  if (req.channel == PayChannelAliApp) {
                      [dic setObject:req.scheme forKey:@"scheme"];
-                  } else if (req.channel == Union) {
+                  } else if (req.channel == PayChannelUnApp) {
                      [dic setObject:req.viewController forKey:@"viewController"];
                   }
                   [self doPayAction:req.channel source:dic];
@@ -138,18 +170,18 @@
           }];
 }
 
-#pragma mark Do pay action
+#pragma mark - Pay Action
 
 - (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
     if (dic) {
         switch (channel) {
-            case WX:
+            case PayChannelWxApp:
                 [self doWXPay:dic];
                 break;
-            case Ali:
+            case PayChannelAliApp:
                 [self doAliPay:dic];
                 break;
-            case Union:
+            case PayChannelUnApp:
                 [self doUnionPay:dic];
                 break;
             default:
@@ -188,6 +220,103 @@
     });
 }
 
+#pragma mark PayPal
+
+- (void)reqPayPal:(BCPayPalReq *)req {
+    
+    if (![self checkParameters:req]) return;
+    
+    NSDecimalNumber *subtotal = [PayPalItem totalPriceForItems:req.items];
+    
+    // Optional: include payment details
+    NSDecimalNumber *dShipping = [[NSDecimalNumber alloc] initWithString:req.shipping];
+    NSDecimalNumber *dTax = [[NSDecimalNumber alloc] initWithString:req.tax];
+    PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails paymentDetailsWithSubtotal:subtotal
+                                                                               withShipping:dShipping
+                                                                                    withTax:dTax];
+    
+    NSDecimalNumber *total = [[subtotal decimalNumberByAdding:dShipping] decimalNumberByAdding:dTax];
+    
+    PayPalPayment *payment = [[PayPalPayment alloc] init];
+    payment.amount = total;
+    payment.currencyCode = ((PayPalItem *)req.items.lastObject).currency;
+    payment.shortDescription = req.shortDesc;
+    payment.items = req.items;
+    payment.paymentDetails = paymentDetails;
+    
+    if (!payment.processable) {
+        // This particular payment will always be processable. If, for
+        // example, the amount was negative or the shortDescription was
+        // empty, this payment wouldn't be processable, and you'd want
+        // to handle that here.
+    }
+    
+    PayPalPaymentViewController *paymentViewController = [[PayPalPaymentViewController alloc] initWithPayment:payment
+                                                                                                configuration:req.payConfig
+                                                                                                     delegate:req.viewController];
+    [(UIViewController *)req.viewController presentViewController:paymentViewController animated:YES completion:nil];
+    
+}
+
+- (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
+    [self reqPayPalAccessToken:req];
+}
+
+- (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = NO;
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:[BCPayCache sharedInstance].payPalClientID password:[BCPayCache sharedInstance].payPalSecret];
+    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
+    
+    [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
+        BCPayLog(@"token %@", response);
+        NSDictionary *dic = (NSDictionary *)response;
+        [self doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
+    }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self doErrorResponse:kNetWorkError];
+    }];
+}
+
+- (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
+    
+    if (req == nil || req.payment == nil) {
+        [self doErrorResponse:@"请求参数格式不合法"];
+        return ;
+    }
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    if ([BCPayCache sharedInstance].isPayPalSandBox) {
+        parameters[@"channel"] = @"PAYPAL_SANDBOX";
+    } else {
+        parameters[@"channel"] = @"PAYPAL";
+    }
+    parameters[@"title"] = @"PayPal Verify Payment";
+    parameters[@"total_fee"] = @((int)([req.payment.amount floatValue] * 100));
+    parameters[@"currency"] = req.payment.currencyCode;
+    parameters[@"bill_no"] = [[req.payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];
+    parameters[@"access_token"] = accessToken;
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              BCBaseResp *resp = [self getErrorInResponse:response];
+              if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
+                  [_deleagte onBCPayResp:resp];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [self doErrorResponse:kNetWorkError];
+          }];
+}
+
 #pragma mark Query Bills/Refunds
 
 - (void)reqQueryOrder:(BCQueryReq *)req {
@@ -196,7 +325,7 @@
         return;
     }
     
-    NSString *cType = [[BCPay sharedInstance] getChannelString:req.channel];
+    NSString *cType = [BCPayUtil getChannelString:req.channel];
     
     NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
     if (parameters == nil) {
@@ -205,23 +334,25 @@
     }
     NSString *reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryBills];
     
-    if ([BCPayUtil isValidString:req.billno]) {
+    if (req.billno.isValid) {
         parameters[@"bill_no"] = req.billno;
     }
-    if ([BCPayUtil isValidString:req.starttime]) {
+    if (req.starttime.isValid) {
         parameters[@"start_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.starttime]];
     }
-    if ([BCPayUtil isValidString:req.endtime]) {
+    if (req.endtime.isValid) {
         parameters[@"end_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.endtime]];
     }
     if (req.type == BCObjsTypeQueryRefundReq) {
         BCQueryRefundReq *refundReq = (BCQueryRefundReq *)req;
-        if ([BCPayUtil isValidString:refundReq.refundno]) {
+        if (refundReq.refundno.isValid) {
             parameters[@"refund_no"] = refundReq.refundno;
         }
         reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryRefunds];
     }
-    parameters[@"channel"] = [[cType componentsSeparatedByString:@"_"] firstObject];
+    if (cType.isValid) {
+        parameters[@"channel"] = cType;
+    }
     parameters[@"skip"] = [NSNumber numberWithInteger:req.skip];
     parameters[@"limit"] = [NSNumber numberWithInteger:req.limit];
     
@@ -229,12 +360,9 @@
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     
-    __block NSTimeInterval tStart = [NSDate timeIntervalSinceReferenceDate];
-    
     [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
-             BCPayLog(@"query end time = %f", [NSDate timeIntervalSinceReferenceDate] - tStart);
-             NSLog(@"channel=%@, resp=%@", cType, response);
+             BCPayLog(@"resp = %@", response);
              [self doQueryResponse:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [self doErrorResponse:kNetWorkError];
@@ -300,7 +428,7 @@
         return;
     }
     
-    if ([BCPayUtil isValidString:req.refundno]) {
+    if (req.refundno.isValid) {
         parameters[@"refund_no"] = req.refundno;
     }
     parameters[@"channel"] = @"WX";
@@ -331,24 +459,6 @@
 
 #pragma mark Util Function
 
-- (NSString *)getChannelString:(PayChannel)channel {
-    NSString *cType = @"";
-    switch (channel) {
-        case WX:
-            cType = @"WX_APP";
-            break;
-        case Ali:
-            cType = @"ALI_APP";
-            break;
-        case Union:
-            cType = @"UN_APP";
-            break;
-        default:
-            break;
-    }
-    return cType;
-}
-
 - (void)doErrorResponse:(NSString *)errMsg {
     BCBaseResp *resp = [[BCBaseResp alloc] init];
     resp.result_code = BCErrCodeCommon;
@@ -369,29 +479,52 @@
 }
 
 - (BOOL)checkParameters:(BCBaseReq *)request {
-    if (request.type == BCObjsTypePayReq) {
+    
+    if (request == nil) {
+        [self doErrorResponse:@"请求结构体不合法"];
+    } else if (request.type == BCObjsTypePayReq) {
         BCPayReq *req = (BCPayReq *)request;
-        if (![BCPayUtil isValidString:req.title] || [BCPayUtil getBytes:req.title] > 32) {
+        if (!req.title.isValid || [BCPayUtil getBytes:req.title] > 32) {
             [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
             return NO;
-        } else if (![BCPayUtil isValidString:req.totalfee] || ![BCPayUtil isPureInt:req.totalfee]) {
+        } else if (!req.totalfee.isValid || !req.totalfee.isPureInt) {
             [self doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
             return NO;
-        } else if (![BCPayUtil isValidString:req.billno] || (![BCPayUtil isValidTraceNo:req.billno]) || (req.billno.length < 8) || (req.billno.length > 32)) {
+        } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
-        } else if ((req.channel == Ali) && ![BCPayUtil isValidString:req.scheme]) {
+        } else if ((req.channel == PayChannelAliApp) && !req.scheme.isValid) {
             [self doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
             return NO;
-        } else if ((req.channel == Union) && (req.viewController == nil)) {
+        } else if ((req.channel == PayChannelUnApp) && (req.viewController == nil)) {
             [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
             return NO;
-        } else if (req.channel == WX && ![WXApi isWXAppInstalled]) {
+        } else if (req.channel == PayChannelWxApp && ![WXApi isWXAppInstalled]) {
             [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
             return NO;
         }
+        return YES;
+    } else if (request.type == BCObjsTypePayPal) {
+        BCPayPalReq *req = (BCPayPalReq *)request;
+        if (req.items == nil || req.items.count == 0) {
+            [self doErrorResponse:@"payitem 格式不合法"];
+            return NO;
+        } else if (!req.shipping.isValid) {
+            [self doErrorResponse:@"shipping 格式不合法"];
+             return NO;
+        }  else if (!req.tax.isValid) {
+            [self doErrorResponse:@"tax 格式不合法"];
+             return NO;
+        } else if (req.payConfig == nil) {
+            [self doErrorResponse:@"payConfig 格式不合法"];
+            return NO;
+        } else if (req.viewController == nil) {
+            [self doErrorResponse:@"viewController 格式不合法"];
+            return NO;
+        }
+        return YES;
     }
-    return YES ;
+    return NO ;
 }
 
 #pragma mark - Implementation WXApiDelegate
@@ -416,7 +549,7 @@
                 errcode = BCErrCodeSentFail;
                 break;
         }
-        NSString *result = [BCPayUtil isValidString:tempResp.errStr]?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
+        NSString *result = tempResp.errStr.isValid?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
         BCBaseResp *resp = [[BCBaseResp alloc] init];
         resp.result_code = errcode;
         resp.result_msg = result;

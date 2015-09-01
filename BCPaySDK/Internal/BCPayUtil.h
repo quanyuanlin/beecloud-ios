@@ -11,8 +11,7 @@
 #import "AFNetworking.h"
 #import "BCPayConstant.h"
 #import "BCPayCache.h"
-
-
+#import "BCPayObjects.h"
 
 @interface BCPayUtil : NSObject
 
@@ -58,6 +57,15 @@
  *  @return url
  */
 + (NSString *)getBestHostWithFormat:(NSString *)format;
+
+/**
+ *  get Channel String
+ *
+ *  @param channel enum PayChannel
+ *
+ *  @return Channel String
+ */
++ (NSString *)getChannelString:(PayChannel)channel;
 
 #pragma mark Util Functions
 /**
@@ -166,62 +174,6 @@
  *  @return YES if is a digit; NO otherwise.
  */
 + (BOOL)isDigit:(unichar)ch;
-
-/**
- *  Check the validness of an identifier. A valid identifier is a letter followed by any sequence of letters, digits, or
- *  the underscore (_). The identifier ending with two underscores, such as "class__" are reserved for internal uses and
- *  are not permitted.
- *
- *  @param str String identifier to be checked.
- *
- *  @return YES if it is an valid identifier; NO otherwise, such as str == nil, "chass__", "1table", etc.
- */
-+ (BOOL)isValidIdentifier:(NSString *)str;
-
-/**
- *  Check the validness of a UUID string, which should be in the format of "550e8400-e29b-41d4-a716-446655440000".
- *
- *  @param uuid uuid to be check.
- *
- *  @return YES if uuid format is valid, or NO if format is invalid or when uuid is nil.
- */
-+ (BOOL)isValidUUID:(NSString *)uuid;
-
-/**
- *  Check whether the string is made up of some digits or letters.
- *
- *  @param str string to be check
- *
- *  @return YES if the String is made up of some digits or letters.
- */
-+ (BOOL)isValidTraceNo:(NSString *)str;
-
-/**
- *  Check the validness of a String
- *
- *  @param str string to be check
- *
- *  @return YES if the String is not nil ,the string'length is not 0.
- */
-+ (BOOL)isValidString:(NSString *)str;
-
-/**
- *  Check whether the string is pure Numbers
- *
- *  @param str Str
- *
- *  @return YES if the string is pure Numbers.
- */
-+ (BOOL)isPureInt:(NSString *)str;
-
-/**
- *  Check whether the string is pure float
- *
- *  @param str Str
- *
- *  @return YES if the string is pure float.
- */
-+ (BOOL)isPureFloat:(NSString *)str;
 
 /**
  *  A string's bytes
