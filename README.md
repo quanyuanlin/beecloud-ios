@@ -4,7 +4,9 @@
 
 ## 简介
 
-本项目的官方GitHub地址是 [https://github.com/beecloud/beecloud-ios](https://github.com/beecloud/beecloud-ios)。目前已经包含微信、支付宝、银联在线、PayPal支付功能，以及支付订单和退款订单的查询功能。本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
+本项目的官方GitHub地址是 [https://github.com/beecloud/beecloud-ios](https://github.com/beecloud/beecloud-ios)
+
+目前已经包含微信、支付宝、银联在线、PayPal支付功能，以及支付订单和退款订单的查询功能。本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
 
 ##流程
 ![pic](http://7xavqo.com1.z0.glb.clouddn.com/UML.png)
