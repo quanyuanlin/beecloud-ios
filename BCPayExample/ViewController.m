@@ -162,13 +162,28 @@
 }
 
 #pragma mark - 订单查询
+- (void)doQueryWX {
+    [self doQuery:PayChannelWx];
+}
 
-- (void)doQuery{
+- (void)doQueryAli {
+    [self doQuery:PayChannelAli];
+}
+
+- (void)doQueryUN {
+    [self doQuery:PayChannelUn];
+}
+
+- (void)doQueryPayPal {
+    [self doQuery:PayChannelPayPal];
+}
+
+- (void)doQuery:(PayChannel)channel {
     
     if (self.actionType == 1) {
         BCQueryReq *req = [[BCQueryReq alloc] init];
-      //  req.channel = channel;
-        req.billno = @"20150901104138656";
+        req.channel = channel;
+     //   req.billno = @"20150901104138656";
        // req.starttime = @"2015-07-23 00:00";
        // req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
@@ -176,7 +191,7 @@
         [BCPay sendBCReq:req];
     } else if (self.actionType == 2) {
         BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
-       // req.channel = channel;
+        req.channel = channel;
         //  req.billno = @"20150722164700237";
         //  req.starttime = @"2015-07-21 00:00";
         // req.endtime = @"2015-07-23 12:00";
@@ -215,11 +230,35 @@
                 break;
         }
     } else {
-        [self doQuery];
+        switch (indexPath.row) {
+            case 0:
+                [self doQueryWX];
+                break;
+            case 1:
+                [self doQueryAli];
+                break;
+            case 2:
+                [self doQueryUN];
+                break;
+            case 3:
+                [self doQueryPayPal];
+                break;
+            default:
+                break;
+        }
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+}
+
+#pragma mark - prepare segue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *navigationVC = (UINavigationController *)segue.destinationViewController;
+    QueryResultViewController *viewController = (QueryResultViewController *)navigationVC.childViewControllers[0];
+    if([segue.identifier isEqualToString:@"queryResult"]) {
+        viewController.dataList = self.payList;
+    }
 }
 
 #pragma mark - 生成订单号

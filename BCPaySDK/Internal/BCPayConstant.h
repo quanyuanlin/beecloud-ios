@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.1.0";//api版本号
+static NSString * const kApiVersion = @"3.1.1";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kKeyResponseResultCode = @"result_code";
@@ -72,7 +72,10 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     
     PayChannelUn = 30,//银联
     PayChannelUnApp,//银联APP
-    PayChannelUnWeb//银联网页
+    PayChannelUnWeb,//银联网页
+    
+    PayChannelPayPal = 40,
+    PayChannelPayPalSanBox
 };
 
 enum  BCErrCode {
