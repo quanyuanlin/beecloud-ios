@@ -116,7 +116,13 @@
         case PayChannelUnWeb:
             cType = @"UN_WEB";
             break;
-            default:
+        case PayChannelPayPal:
+            cType = @"PAYPAL";
+            break;
+        case PayChannelPayPalSanBox:
+            cType = @"PAYPAL_SANDBOX";
+            break;
+        default:
             break;
     }
     return cType;

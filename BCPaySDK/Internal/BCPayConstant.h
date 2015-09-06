@@ -72,7 +72,10 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     
     PayChannelUn = 30,//银联
     PayChannelUnApp,//银联APP
-    PayChannelUnWeb//银联网页
+    PayChannelUnWeb,//银联网页
+    
+    PayChannelPayPal = 40,
+    PayChannelPayPalSanBox
 };
 
 enum  BCErrCode {
