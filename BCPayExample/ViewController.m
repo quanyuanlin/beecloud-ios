@@ -10,7 +10,7 @@
 #import "QueryResultViewController.h"
 #import "AFNetworking.h"
 
-@interface ViewController ()<BCApiDelegate, PayPalPaymentDelegate> {
+@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate> {
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
 }
@@ -32,7 +32,7 @@
     
     self.payList = [NSMutableArray arrayWithCapacity:10];
 #pragma mark - 设置delegate
-    [BCPay setBCApiDelegate:self];
+    [BeeCloud setBCApiDelegate:self];
     
 }
 
@@ -64,7 +64,7 @@
     payReq.scheme = @"payDemo";
     payReq.viewController = self;
     payReq.optional = dict;
-    [BCPay sendBCReq:payReq];
+    [BeeCloud sendBCReq:payReq];
 }
 
 #pragma mark - PayPal Pay
@@ -106,7 +106,7 @@
     payReq.viewController = self;
     payReq.payConfig = _payPalConfig;
     
-    [BCPay sendBCReq:payReq];
+    [BeeCloud sendBCReq:payReq];
     
 }
 
@@ -114,7 +114,7 @@
 - (void)doPayPalVerify {
     BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
     req.payment = _completedPayment;
-    [BCPay sendBCReq:req];
+    [BeeCloud sendBCReq:req];
 }
 
 #pragma mark - PayPalPaymentDelegate
@@ -188,7 +188,7 @@
        // req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
         req.limit = 50;
-        [BCPay sendBCReq:req];
+        [BeeCloud sendBCReq:req];
     } else if (self.actionType == 2) {
         BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
         req.channel = channel;
@@ -198,7 +198,7 @@
         //req.refundno = @"20150709173629127";
         req.skip = 0;
         req.limit = 20;
-        [BCPay sendBCReq:req];
+        [BeeCloud sendBCReq:req];
     }
 }
 

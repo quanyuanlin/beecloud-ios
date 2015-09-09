@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BCPay.h"
+#import "BeeCloud.h"
 
-@interface ViewController : UITableViewController<UIAlertViewDelegate, BCApiDelegate>
+@interface ViewController : UITableViewController<UIAlertViewDelegate, BeeCloudDelegate>
 
 @property (strong, nonatomic) NSMutableArray *payList;
 
