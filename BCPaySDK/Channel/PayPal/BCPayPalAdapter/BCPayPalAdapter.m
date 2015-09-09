@@ -21,9 +21,17 @@
 
 @implementation BCPayPalAdapter
 
++ (instancetype)sharedInstance {
+    static dispatch_once_t onceToken;
+    static BCPayPalAdapter *instance = nil;
+    dispatch_once(&onceToken, ^{
+        instance = [[BCPayPalAdapter alloc] init];
+    });
+    return instance;
+}
+
 - (void)registerPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
     if(clientID.isValid && secret.isValid) {
-        _isSandBox = isSandBox;
         
         if (isSandBox) {
             [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_PRODUCTION_CLIENT_ID",
@@ -39,7 +47,7 @@
 }
 
 - (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    _payPalAdapterDelegate = delegate;
+    [BCPayPalAdapter sharedInstance].payPalAdapterDelegate = delegate;
 }
 
 - (void)payPal:(NSMutableDictionary *)dic {
@@ -91,10 +99,10 @@
         [self doErrorResponse:@"请检查是否全局初始化"];
         return;
     }
-    if (_isSandBox) {
+    if ([BCPayCache sharedInstance].isPayPalSandBox) {
         parameters[@"channel"] = @"PAYPAL_SANDBOX";
     } else {
-        parameters[@"channel"] = @"PAYPAL";
+        parameters[@"channel"] = @"PAYPAL_LIVE";
     }
     PayPalPayment *payment = (PayPalPayment *)req.payment;
     parameters[@"title"] = @"PayPal Verify Payment";
@@ -108,8 +116,8 @@
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               BCBaseResp *resp = [self getErrorInResponse:response];
-              if (_payPalAdapterDelegate && [_payPalAdapterDelegate respondsToSelector:@selector(onBCPayResp:)]) {
-                  [_payPalAdapterDelegate onBCPayResp:resp];
+              if ([BCPayPalAdapter sharedInstance].payPalAdapterDelegate && [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate respondsToSelector:@selector(onBCPayResp:)]) {
+                  [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate onBCPayResp:resp];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [self doErrorResponse:kNetWorkError];
