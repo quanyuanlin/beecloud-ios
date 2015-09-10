@@ -35,8 +35,6 @@
 		3602F9361BA031E800A28ADC /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8F61BA031E800A28ADC /* AFURLRequestSerialization.m */; };
 		3602F9371BA031E800A28ADC /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8F81BA031E800A28ADC /* AFURLResponseSerialization.m */; };
 		3602F9381BA031E800A28ADC /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8FA1BA031E800A28ADC /* AFURLSessionManager.m */; };
-		3602F93B1BA031E800A28ADC /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F9051BA031E800A28ADC /* BCPayPalAdapter.m */; };
-		3602F93C1BA031E800A28ADC /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9061BA031E800A28ADC /* libPayPalMobile.a */; };
 		3602F93D1BA031E800A28ADC /* BCUnionPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F9111BA031E800A28ADC /* BCUnionPayAdapter.m */; };
 		3602F93E1BA031E800A28ADC /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9121BA031E800A28ADC /* libUPPayPlugin.a */; };
 		3602F94F1BA07C3000A28ADC /* BCWXPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F9441BA07C3000A28ADC /* BCWXPayAdapter.m */; };
@@ -54,6 +52,8 @@
 		369750681B68C7F2009FAEDB /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7131B5F886800EAFCCE /* libc++.dylib */; };
 		369750691B68C7F9009FAEDB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7171B5F888F00EAFCCE /* libz.dylib */; };
 		3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7151B5F887400EAFCCE /* libsqlite3.dylib */; };
+		36CAEF3B1BA17644002AB286 /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CAEF321BA17644002AB286 /* BCPayPalAdapter.m */; };
+		36CAEF3C1BA17644002AB286 /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CAEF331BA17644002AB286 /* libPayPalMobile.a */; };
 		36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4091B8F4A19004BB25E /* Accelerate.framework */; };
 		36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */; };
 		36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE40D1B8F4A5E004BB25E /* CoreMedia.framework */; };
@@ -124,16 +124,6 @@
 		3602F8F81BA031E800A28ADC /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		3602F8F91BA031E800A28ADC /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		3602F8FA1BA031E800A28ADC /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		3602F9041BA031E800A28ADC /* BCPayPalAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayPalAdapter.h; sourceTree = "<group>"; };
-		3602F9051BA031E800A28ADC /* BCPayPalAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayPalAdapter.m; sourceTree = "<group>"; };
-		3602F9061BA031E800A28ADC /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPayPalMobile.a; sourceTree = "<group>"; };
-		3602F9071BA031E800A28ADC /* PayPalConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalConfiguration.h; sourceTree = "<group>"; };
-		3602F9081BA031E800A28ADC /* PayPalFuturePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalFuturePaymentViewController.h; sourceTree = "<group>"; };
-		3602F9091BA031E800A28ADC /* PayPalMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalMobile.h; sourceTree = "<group>"; };
-		3602F90A1BA031E800A28ADC /* PayPalOAuthScopes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalOAuthScopes.h; sourceTree = "<group>"; };
-		3602F90B1BA031E800A28ADC /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
-		3602F90C1BA031E800A28ADC /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
-		3602F90D1BA031E800A28ADC /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
 		3602F9101BA031E800A28ADC /* BCUnionPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCUnionPayAdapter.h; sourceTree = "<group>"; };
 		3602F9111BA031E800A28ADC /* BCUnionPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCUnionPayAdapter.m; sourceTree = "<group>"; };
 		3602F9121BA031E800A28ADC /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
@@ -166,6 +156,16 @@
 		369750481B68C6D5009FAEDB /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
 		369750491B68C6D5009FAEDB /* QueryResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryResultViewController.h; sourceTree = "<group>"; };
 		3697504A1B68C6D5009FAEDB /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
+		36CAEF311BA17644002AB286 /* BCPayPalAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayPalAdapter.h; sourceTree = "<group>"; };
+		36CAEF321BA17644002AB286 /* BCPayPalAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayPalAdapter.m; sourceTree = "<group>"; };
+		36CAEF331BA17644002AB286 /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPayPalMobile.a; sourceTree = "<group>"; };
+		36CAEF341BA17644002AB286 /* PayPalConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalConfiguration.h; sourceTree = "<group>"; };
+		36CAEF351BA17644002AB286 /* PayPalFuturePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalFuturePaymentViewController.h; sourceTree = "<group>"; };
+		36CAEF361BA17644002AB286 /* PayPalMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalMobile.h; sourceTree = "<group>"; };
+		36CAEF371BA17644002AB286 /* PayPalOAuthScopes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalOAuthScopes.h; sourceTree = "<group>"; };
+		36CAEF381BA17644002AB286 /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
+		36CAEF391BA17644002AB286 /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
+		36CAEF3A1BA17644002AB286 /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
 		36DCE4061B8F49F9004BB25E /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPayPalMobile.a; path = External/PayPal/libPayPalMobile.a; sourceTree = "<group>"; };
 		36DCE4091B8F4A19004BB25E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -185,11 +185,11 @@
 				36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */,
 				36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */,
 				36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */,
+				36CAEF3C1BA17644002AB286 /* libPayPalMobile.a in Frameworks */,
 				3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */,
 				36DCE4101B8F4A5E004BB25E /* CoreVideo.framework in Frameworks */,
 				36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */,
 				3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */,
-				3602F93C1BA031E800A28ADC /* libPayPalMobile.a in Frameworks */,
 				36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */,
 				3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */,
 				3602F93E1BA031E800A28ADC /* libUPPayPlugin.a in Frameworks */,
@@ -317,10 +317,10 @@
 		3602F8E61BA031E800A28ADC /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				36CAEF2F1BA17644002AB286 /* PayPal */,
 				3602F9411BA07C3000A28ADC /* WXPay */,
 				3602F9481BA07C3000A28ADC /* AliPay */,
 				3602F8E71BA031E800A28ADC /* AFNetworking */,
-				3602F9021BA031E800A28ADC /* PayPal */,
 				3602F90E1BA031E800A28ADC /* UnionPay */,
 			);
 			path = Channel;
@@ -350,31 +350,6 @@
 				3602F8FA1BA031E800A28ADC /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
-			sourceTree = "<group>";
-		};
-		3602F9021BA031E800A28ADC /* PayPal */ = {
-			isa = PBXGroup;
-			children = (
-				3602F9031BA031E800A28ADC /* BCPayPalAdapter */,
-				3602F9061BA031E800A28ADC /* libPayPalMobile.a */,
-				3602F9071BA031E800A28ADC /* PayPalConfiguration.h */,
-				3602F9081BA031E800A28ADC /* PayPalFuturePaymentViewController.h */,
-				3602F9091BA031E800A28ADC /* PayPalMobile.h */,
-				3602F90A1BA031E800A28ADC /* PayPalOAuthScopes.h */,
-				3602F90B1BA031E800A28ADC /* PayPalPayment.h */,
-				3602F90C1BA031E800A28ADC /* PayPalPaymentViewController.h */,
-				3602F90D1BA031E800A28ADC /* PayPalProfileSharingViewController.h */,
-			);
-			path = PayPal;
-			sourceTree = "<group>";
-		};
-		3602F9031BA031E800A28ADC /* BCPayPalAdapter */ = {
-			isa = PBXGroup;
-			children = (
-				3602F9041BA031E800A28ADC /* BCPayPalAdapter.h */,
-				3602F9051BA031E800A28ADC /* BCPayPalAdapter.m */,
-			);
-			path = BCPayPalAdapter;
 			sourceTree = "<group>";
 		};
 		3602F90E1BA031E800A28ADC /* UnionPay */ = {
@@ -501,6 +476,31 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		36CAEF2F1BA17644002AB286 /* PayPal */ = {
+			isa = PBXGroup;
+			children = (
+				36CAEF301BA17644002AB286 /* BCPayPalAdapter */,
+				36CAEF331BA17644002AB286 /* libPayPalMobile.a */,
+				36CAEF341BA17644002AB286 /* PayPalConfiguration.h */,
+				36CAEF351BA17644002AB286 /* PayPalFuturePaymentViewController.h */,
+				36CAEF361BA17644002AB286 /* PayPalMobile.h */,
+				36CAEF371BA17644002AB286 /* PayPalOAuthScopes.h */,
+				36CAEF381BA17644002AB286 /* PayPalPayment.h */,
+				36CAEF391BA17644002AB286 /* PayPalPaymentViewController.h */,
+				36CAEF3A1BA17644002AB286 /* PayPalProfileSharingViewController.h */,
+			);
+			path = PayPal;
+			sourceTree = "<group>";
+		};
+		36CAEF301BA17644002AB286 /* BCPayPalAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				36CAEF311BA17644002AB286 /* BCPayPalAdapter.h */,
+				36CAEF321BA17644002AB286 /* BCPayPalAdapter.m */,
+			);
+			path = BCPayPalAdapter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -572,7 +572,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3602F9301BA031E800A28ADC /* AFHTTPRequestOperation.m in Sources */,
-				3602F93B1BA031E800A28ADC /* BCPayPalAdapter.m in Sources */,
 				3697502C1B68C659009FAEDB /* ViewController.m in Sources */,
 				3602F9231BA031E800A28ADC /* BCBaseResp.m in Sources */,
 				369750291B68C659009FAEDB /* AppDelegate.m in Sources */,
@@ -605,6 +604,7 @@
 				369750261B68C659009FAEDB /* main.m in Sources */,
 				3602F9291BA031E800A28ADC /* BCQueryRefundResult.m in Sources */,
 				3602F91F1BA031E800A28ADC /* BCPayReq.m in Sources */,
+				36CAEF3B1BA17644002AB286 /* BCPayPalAdapter.m in Sources */,
 				3602F91E1BA031E800A28ADC /* BCPayPalVerifyReq.m in Sources */,
 				3602F9211BA031E800A28ADC /* BCQueryReq.m in Sources */,
 				3602F9221BA031E800A28ADC /* BCRefundStatusReq.m in Sources */,

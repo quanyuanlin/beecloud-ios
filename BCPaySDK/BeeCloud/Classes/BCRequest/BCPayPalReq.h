@@ -7,7 +7,8 @@
 //
 
 #import "BCBaseReq.h"
-#import "PayPalMobile.h"
+
+#pragma mark  BCPayPalReq
 
 @interface BCPayPalReq : BCBaseReq
 
@@ -15,7 +16,7 @@
 @property (nonatomic, strong) NSString *shipping;
 @property (nonatomic, strong) NSString *tax;
 @property (nonatomic, strong) NSString *shortDesc;
-@property (nonatomic, strong) PayPalConfiguration *payConfig;
-@property (nonatomic, strong) id<PayPalPaymentDelegate> viewController;
+@property (nonatomic, strong) id payConfig;
+@property (nonatomic, strong) id viewController;
 
 @end

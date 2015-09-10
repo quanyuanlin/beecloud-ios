@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "QueryResultViewController.h"
 #import "AFNetworking.h"
+#import "PayPalMobile.h"
 
 @interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate> {
     PayPalConfiguration * _payPalConfig;
