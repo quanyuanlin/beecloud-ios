@@ -1,30 +1,37 @@
 //
-//  BCPay.h
-//  BCPay
+//  BeeCloud.h
+//  BeeCloud
 //
-//  Created by Ewenlong03 on 15/7/9.
+//  Created by Ewenlong03 on 15/9/7.
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "BCPayObjects.h"
-#import "PayPalMobile.h"
+#import "BCPayConstant.h"
 
-#pragma mark - BCApiDelegate
+#pragma mark - BeeCloudDelegate
 
-@protocol BCApiDelegate <NSObject>
+@protocol BeeCloudDelegate <NSObject>
 @required
 /**
  *  不同类型的请求，对应不同的响应
  *
  *  @param resp 响应体
  */
-- (void)onBCPayResp:(BCBaseResp *)resp;
+- (void)onBeeCloudResp:(BCBaseResp *)resp;
 
 @end
 
-#pragma mark - BCPaySDK
-@interface BCPay : NSObject
+#pragma mark - BeeCloud
+@interface BeeCloud : NSObject
+
+/**
+ *  SharedInstance
+ *
+ *  @return SharedInstance
+ */
++ (instancetype)sharedInstance;
 
 /**
  *  全局初始化
@@ -67,7 +74,7 @@
  *
  *  @param delegate BCApiDelegate对象，用来接收BeeCloud触发的消息。
  */
-+ (void)setBCApiDelegate:(id<BCApiDelegate>)delegate;
++ (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate;
 
 /**
  *  获取API版本号

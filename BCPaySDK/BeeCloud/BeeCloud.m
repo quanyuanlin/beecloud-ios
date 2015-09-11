@@ -1,34 +1,31 @@
 //
-//  BCPay.m
-//  BCPay
+//  BeeCloud.m
+//  BeeCloud
 //
-//  Created by Ewenlong03 on 15/7/9.
+//  Created by Ewenlong03 on 15/9/7.
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
-
-#import "BCPay.h"
+#import "BeeCloud.h"
 
 #import "BCPayUtil.h"
-#import "WXApi.h"
-#import "AlipaySDK.h"
-#import "UPPayPlugin.h"
+#import "BCPayCache.h"
+#import "BeeCloudAdapter.h"
 
-@interface BCPay ()<WXApiDelegate, UPPayPluginDelegate>
+@interface BeeCloud ()
 
 @property (nonatomic, assign) BOOL registerStatus;
-@property (nonatomic, weak) id<BCApiDelegate> deleagte;
+@property (nonatomic, weak) id<BeeCloudDelegate> delegate;
 
 @end
 
 
-@implementation BCPay
+@implementation BeeCloud
 
 + (instancetype)sharedInstance {
     static dispatch_once_t onceToken;
-    static BCPay *instance = nil;
+    static BeeCloud *instance = nil;
     dispatch_once(&onceToken, ^{
-        instance = [[BCPay alloc] init];
-        instance.registerStatus = NO;
+        instance = [[BeeCloud alloc] init];
     });
     return instance;
 }
@@ -40,45 +37,34 @@
 }
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
-    BCPay *instance = [BCPay sharedInstance];
-    instance.registerStatus =  [WXApi registerApp:wxAppID];
-    return instance.registerStatus;
+    return [BeeCloudAdapter beeCloudRegisterWeChat:wxAppID];
 }
 
 + (void)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
+    
     if(clientID.isValid && secret.isValid) {
         BCPayCache *instance = [BCPayCache sharedInstance];
         instance.payPalClientID = clientID;
         instance.payPalSecret = secret;
         instance.isPayPalSandBox = isSandBox;
         
-        if (isSandBox) {
-            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_PRODUCTION_CLIENT_ID",
-                                                                   PayPalEnvironmentSandbox : clientID}];
-             [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentSandbox];
-        } else {
-            [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : clientID,
-                                                                   PayPalEnvironmentSandbox : @"YOUR_SANDBOX_CLIENT_ID"}];
-            [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentProduction];
-        }
-       
+        [BeeCloudAdapter beeCloudRegisterPayPal:clientID secret:secret sanBox:isSandBox];
     }
 }
 
-+ (void)setBCApiDelegate:(id<BCApiDelegate>)delegate {
-    [BCPay sharedInstance].deleagte = delegate;
++ (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
+    [BeeCloud sharedInstance].delegate = delegate;
+    [BeeCloudAdapter beeCloud:kAdapterWXPay doSetDelegate:delegate];
+    [BeeCloudAdapter beeCloud:kAdapterAliPay doSetDelegate:delegate];
+    [BeeCloudAdapter beeCloud:kAdapterUnionPay doSetDelegate:delegate];
+    [BeeCloudAdapter beeCloud:kAdapterPayPal doSetDelegate:delegate];
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
-    BCPay *instance = [BCPay sharedInstance];
-    
     if (BCPayUrlWeChat == [BCPayUtil getUrlType:url]) {
-        return [WXApi handleOpenURL:url delegate:instance];
+        return [BeeCloudAdapter beeCloud:kAdapterWXPay handleOpenUrl:url];
     } else if (BCPayUrlAlipay == [BCPayUtil getUrlType:url]) {
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            [instance processOrderForAliPay:resultDic];
-        }];
-        return YES;
+        return [BeeCloudAdapter beeCloud:kAdapterAliPay handleOpenUrl:url];
     }
     return NO;
 }
@@ -96,7 +82,7 @@
 }
 
 + (void)sendBCReq:(BCBaseReq *)req {
-    BCPay *instance = [BCPay sharedInstance];
+    BeeCloud *instance = [BeeCloud sharedInstance];
     switch (req.type) {
         case BCObjsTypePayReq:
             [instance reqPay:(BCPayReq *)req];
@@ -126,7 +112,7 @@
 #pragma mark Pay Request
 
 - (void)reqPay:(BCPayReq *)req {
-    if (![[BCPay sharedInstance] checkParameters:req]) return;
+    if (![[BeeCloud sharedInstance] checkParameters:req]) return;
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
     
@@ -148,20 +134,20 @@
     
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-           
+              
               BCBaseResp *resp = [self getErrorInResponse:response];
               if (resp.result_code != 0) {
-                  if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-                      [_deleagte onBCPayResp:resp];
+                  if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+                      [_delegate onBeeCloudResp:resp];
                   }
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
                   NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                               (NSDictionary *)response];
                   if (req.channel == PayChannelAliApp) {
-                     [dic setObject:req.scheme forKey:@"scheme"];
+                      [dic setObject:req.scheme forKey:@"scheme"];
                   } else if (req.channel == PayChannelUnApp) {
-                     [dic setObject:req.viewController forKey:@"viewController"];
+                      [dic setObject:req.viewController forKey:@"viewController"];
                   }
                   [self doPayAction:req.channel source:dic];
               }
@@ -174,15 +160,16 @@
 
 - (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
     if (dic) {
+        BCPayLog(@"payment====%@", dic);
         switch (channel) {
             case PayChannelWxApp:
-                [self doWXPay:dic];
+                [BeeCloudAdapter beeCloudWXPay:dic];
                 break;
             case PayChannelAliApp:
-                [self doAliPay:dic];
+                [BeeCloudAdapter beeCloudAliPay:dic];
                 break;
             case PayChannelUnApp:
-                [self doUnionPay:dic];
+                [BeeCloudAdapter beeCloudUnionPay:dic];
                 break;
             default:
                 break;
@@ -190,72 +177,10 @@
     }
 }
 
-- (void)doWXPay:(NSMutableDictionary *)dic {
-    BCPayLog(@"WeChat pay prepayid = %@", [dic objectForKey:@"prepay_id"]);
-    PayReq *request = [[PayReq alloc] init];
-    request.partnerId = [dic objectForKey:@"partner_id"];
-    request.prepayId = [dic objectForKey:@"prepay_id"];
-    request.package = [dic objectForKey:@"package"];
-    request.nonceStr = [dic objectForKey:@"nonce_str"];
-    NSMutableString *time = [dic objectForKey:@"timestamp"];
-    request.timeStamp = time.intValue;
-    request.sign = [dic objectForKey:@"pay_sign"];
-    [WXApi sendReq:request];
-}
-
-- (void)doAliPay:(NSMutableDictionary *)dic {
-    BCPayLog(@"Ali Pay Start");
-    NSString *orderString = [dic objectForKey:@"order_string"];
-    [[AlipaySDK defaultService] payOrder:orderString fromScheme:dic[@"scheme"]
-                                callback:^(NSDictionary *resultDic) {
-                                    [self processOrderForAliPay:resultDic];
-                                }];
-}
-
-- (void)doUnionPay:(NSMutableDictionary *)dic {
-    NSString *tn = [dic objectForKey:@"tn"];
-    BCPayLog(@"Union Pay Start %@", dic);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCPay sharedInstance]];
-    });
-}
-
 #pragma mark PayPal
 
 - (void)reqPayPal:(BCPayPalReq *)req {
-    
-    if (![self checkParameters:req]) return;
-    
-    NSDecimalNumber *subtotal = [PayPalItem totalPriceForItems:req.items];
-    
-    // Optional: include payment details
-    NSDecimalNumber *dShipping = [[NSDecimalNumber alloc] initWithString:req.shipping];
-    NSDecimalNumber *dTax = [[NSDecimalNumber alloc] initWithString:req.tax];
-    PayPalPaymentDetails *paymentDetails = [PayPalPaymentDetails paymentDetailsWithSubtotal:subtotal
-                                                                               withShipping:dShipping
-                                                                                    withTax:dTax];
-    
-    NSDecimalNumber *total = [[subtotal decimalNumberByAdding:dShipping] decimalNumberByAdding:dTax];
-    
-    PayPalPayment *payment = [[PayPalPayment alloc] init];
-    payment.amount = total;
-    payment.currencyCode = ((PayPalItem *)req.items.lastObject).currency;
-    payment.shortDescription = req.shortDesc;
-    payment.items = req.items;
-    payment.paymentDetails = paymentDetails;
-    
-    if (!payment.processable) {
-        // This particular payment will always be processable. If, for
-        // example, the amount was negative or the shortDescription was
-        // empty, this payment wouldn't be processable, and you'd want
-        // to handle that here.
-    }
-    
-    PayPalPaymentViewController *paymentViewController = [[PayPalPaymentViewController alloc] initWithPayment:payment
-                                                                                                configuration:req.payConfig
-                                                                                                     delegate:req.viewController];
-    [(UIViewController *)req.viewController presentViewController:paymentViewController animated:YES completion:nil];
-    
+    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, @"PayPal",nil]];
 }
 
 - (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
@@ -284,37 +209,7 @@
 
 - (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
     
-    if (req == nil || req.payment == nil) {
-        [self doErrorResponse:@"请求参数格式不合法"];
-        return ;
-    }
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
-    if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
-        return;
-    }
-    if ([BCPayCache sharedInstance].isPayPalSandBox) {
-        parameters[@"channel"] = @"PAYPAL_SANDBOX";
-    } else {
-        parameters[@"channel"] = @"PAYPAL";
-    }
-    parameters[@"title"] = @"PayPal Verify Payment";
-    parameters[@"total_fee"] = @((int)([req.payment.amount floatValue] * 100));
-    parameters[@"currency"] = req.payment.currencyCode;
-    parameters[@"bill_no"] = [[req.payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];
-    parameters[@"access_token"] = accessToken;
-    
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
-              BCBaseResp *resp = [self getErrorInResponse:response];
-              if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-                  [_deleagte onBCPayResp:resp];
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
-          }];
+    [BeeCloudAdapter beeCloudPayPalVerify:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,@"PayPalVerify",accessToken, @"access_token",nil]];
 }
 
 #pragma mark Query Bills/Refunds
@@ -376,8 +271,8 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-        [_deleagte onBCPayResp:resp];
+    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_delegate onBeeCloudResp:resp];
     }
 }
 
@@ -451,9 +346,9 @@
     resp.result_msg = dic[kKeyResponseResultMsg];
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
-
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-        [_deleagte onBCPayResp:resp];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_delegate onBeeCloudResp:resp];
     }
 }
 
@@ -464,8 +359,8 @@
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-        [_deleagte onBCPayResp:resp];
+    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_delegate onBeeCloudResp:resp];
     }
 }
 
@@ -499,122 +394,13 @@
         } else if ((req.channel == PayChannelUnApp) && (req.viewController == nil)) {
             [self doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
             return NO;
-        } else if (req.channel == PayChannelWxApp && ![WXApi isWXAppInstalled]) {
+        } else if (req.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
             [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
-            return NO;
-        }
-        return YES;
-    } else if (request.type == BCObjsTypePayPal) {
-        BCPayPalReq *req = (BCPayPalReq *)request;
-        if (req.items == nil || req.items.count == 0) {
-            [self doErrorResponse:@"payitem 格式不合法"];
-            return NO;
-        } else if (!req.shipping.isValid) {
-            [self doErrorResponse:@"shipping 格式不合法"];
-             return NO;
-        }  else if (!req.tax.isValid) {
-            [self doErrorResponse:@"tax 格式不合法"];
-             return NO;
-        } else if (req.payConfig == nil) {
-            [self doErrorResponse:@"payConfig 格式不合法"];
-            return NO;
-        } else if (req.viewController == nil) {
-            [self doErrorResponse:@"viewController 格式不合法"];
             return NO;
         }
         return YES;
     }
     return NO ;
-}
-
-#pragma mark - Implementation WXApiDelegate
-
-- (void)onResp:(BaseResp *)resp {
-    
-    if ([resp isKindOfClass:[PayResp class]]) {
-        PayResp *tempResp = (PayResp *)resp;
-        NSString *strMsg = nil;
-        int errcode = 0;
-        switch (tempResp.errCode) {
-            case WXSuccess:
-                strMsg = @"支付成功";
-                errcode = BCSuccess;
-                break;
-            case WXErrCodeUserCancel:
-                strMsg = @"支付取消";
-                errcode = BCErrCodeUserCancel;
-                break;
-            default:
-                strMsg = @"支付失败";
-                errcode = BCErrCodeSentFail;
-                break;
-        }
-        NSString *result = tempResp.errStr.isValid?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
-        BCBaseResp *resp = [[BCBaseResp alloc] init];
-        resp.result_code = errcode;
-        resp.result_msg = result;
-        resp.err_detail = result;
-        if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-            [_deleagte onBCPayResp:resp];
-        }
-    }
-}
-
-#pragma mark - Implementation AliPayDelegate
-
-- (void)processOrderForAliPay:(NSDictionary *)resultDic {
-    int status = [resultDic[@"resultStatus"] intValue];
-    NSString *strMsg;
-    int errcode = 0;
-    switch (status) {
-        case 9000:
-            strMsg = @"支付成功";
-            errcode = BCSuccess;
-            break;
-        case 4000:
-        case 6002:
-            strMsg = @"支付失败";
-            errcode = BCErrCodeSentFail;
-            break;
-        case 6001:
-            strMsg = @"支付取消";
-            errcode = BCErrCodeUserCancel;
-            break;
-        default:
-            strMsg = @"未知错误";
-            errcode = BCErrCodeUnsupport;
-            break;
-    }
-    BCPayResp *resp = [[BCPayResp alloc] init];
-    resp.result_code = errcode;
-    resp.result_msg = strMsg;
-    resp.err_detail = strMsg;
-    resp.paySource = resultDic;
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-        [_deleagte onBCPayResp:resp];
-    }
-}
-
-#pragma mark - Implementation UnionPayDelegate
-
-- (void)UPPayPluginResult:(NSString *)result {
-    int errcode = BCErrCodeSentFail;
-    NSString *strMsg = @"支付失败";
-    if ([result isEqualToString:@"success"]) {
-        errcode = BCSuccess;
-        strMsg = @"支付成功";
-    } else if ([result isEqualToString:@"cancel"]) {
-        errcode = BCErrCodeUserCancel;
-        strMsg = @"支付取消";
-    }
-    
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
-    resp.result_code = errcode;
-    resp.result_msg = strMsg;
-    resp.err_detail = strMsg;
-    if (_deleagte && [_deleagte respondsToSelector:@selector(onBCPayResp:)]) {
-        [_deleagte onBCPayResp:resp];
-    }
 }
 
 @end

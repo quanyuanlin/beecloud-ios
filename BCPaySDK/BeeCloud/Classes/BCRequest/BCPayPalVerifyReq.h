@@ -7,10 +7,11 @@
 //
 
 #import "BCBaseReq.h"
-#import "PayPalPayment.h"
+
+#pragma mark BCPayPalVerifyReq
 
 @interface BCPayPalVerifyReq : BCBaseReq
 
-@property (nonatomic, strong) PayPalPayment *payment;
+@property (nonatomic, strong) id payment;
 
 @end

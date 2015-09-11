@@ -1,6 +1,6 @@
 ## BeeCloud iOS SDK (Open Source)
 
-![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.1.1-blue.svg)
+![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.1.2-blue.svg)
 
 ## 简介
 
@@ -14,16 +14,29 @@
 ## 安装
 
 1.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
->1. 下载的`External`文件夹下的`AliPay`, `UnionPay`, `WXPay`, `PayPal`文件夹分别对应`支付宝`, `银联`, `微信`, `PayPal`的原生SDK，请按需导入进自己的项目。  
+>1. 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`的原生SDK，请按需删除自己不需要的渠道，都保留也没有问题。  
 >2. iOS SDK使用了第三方Http请求库AFNetworking，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。
 >3. 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
+>4. 使用PayPal支付，需要添加以下系统库：
+>`AudioToolbox.framework`
+`CoreLocation.framework`
+`MessageUI.framework`
+`CoreMedia.framework`
+`CoreVideo.framework`
+`Accelerate.framework`
+`AVFoundation.framework`
 
 2.使用CocoaPods:  
 在podfile中加入
 
 ```
-pod 'BeeCloud'
+pod 'BeeCloud' //包含支付宝微信银联三个渠道
+pod 'BeeCloud/Alipay' //只包含支付宝
+pod 'BeeCloud/Wx' //只包括微信
+pod 'BeeCloud/UnionPay' //只包括银联
+pod 'BeeCloud/PayPal' //只包括paypal
 ```
+
 
 
 ## 注册
@@ -34,31 +47,56 @@ pod 'BeeCloud'
 
 ```objc
 //请替换成自己的BeeCloud账户中的AppID和AppSecret
-[BCPay initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+[BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
 
 //如果需要微信支付，请添加下面这行（自行替换微信APP ID）
-[BCPay initWeChatPay:@"wxf1aa465362b4c8f1"];
+[BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
 
 //如果需要PayPal，请添加下面这行
- [BCPay initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sanBox:YES];
+ [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sanBox:YES];
 ```
 
 ## 使用方法
 >具体使用请参考项目中的`BCPayExample`工程
 
-要调用以下方法，都需要实现接口`BCApiDelegate`， 实现本接口的方法使不同类型的请求获得对应的响应。  
+要调用以下方法，都需要实现接口`BeeCloudDelegate`， 实现本接口的方法使不同类型的请求获得对应的响应。  
 
 *  使用以下方法设置delegate:
 
 ```objc
-[BCPay setBCApiDelegate:self];
+[BeeCloud setBeeCloudDelegate:self];
 ```
+
+*  实现BeeCloudDelegate:
+
+```objc
+- (void)onBeeCloudResp:(BCBaseResp *)resp {
+    if ([resp isKindOfClass:[BCQueryResp class]]) {
+        if (resp.result_code == 0) {
+            BCQueryResp *tempResp = (BCQueryResp *)resp;
+            if (tempResp.count == 0) {
+                [self showAlertView:@"未找到相关订单信息"];
+            } else {
+                self.payList = tempResp.results;
+                [self performSegueWithIdentifier:@"queryResult" sender:self];
+            }
+        }
+    } else if ([resp isKindOfClass:[BCPayResp class]]){
+        if (resp.result_code == 0) {
+             [self showAlertView:resp.result_msg];
+        } else {
+             [self showAlertView:resp.err_detail];
+        }
+    }
+}
+```
+
 
 ### 1.支付
 
 原型：
  
-通过构造`BCPayReq`的实例，使用`[BCPay sendBCReq:payReq]`方法发起支付请求。  
+通过构造`BCPayReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。  
 
 调用：
 
@@ -76,7 +114,7 @@ pod 'BeeCloud'
     payReq.scheme = @"payDemo";//url scheme,"AliPay"必须参数
     payReq.viewController = self;//"UnionPay"必须参数
     payReq.optional = dict;//商户业务扩展参数
-    [BCPay sendBCReq:payReq];
+    [BeeCloud sendBCReq:payReq];
 }
 
 ```
@@ -124,7 +162,7 @@ pod 'BeeCloud'
     payReq.viewController = self;
     payReq.payConfig = _payPalConfig;
     
-    [BCPay sendBCReq:payReq]; 
+    [BeeCloud sendBCReq:payReq]; 
 }
  ```
 ##### 实现`PayPalPaymentDelegate`
@@ -137,7 +175,7 @@ pod 'BeeCloud'
 	//使用`completedPayment`完成Payment Verify操作
 	BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
    req.payment = _completedPayment;
-   [BCPay sendBCReq:req];
+   [BeeCloud sendBCReq:req];
    
    [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -160,7 +198,7 @@ pod 'BeeCloud'
 
 原型：
 
-通过构造`BCQueryReq`的实例，使用`[BCPay sendBCReq:req]`方法发起支付查询  
+通过构造`BCQueryReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付查询  
 
 调用：
 
@@ -172,13 +210,13 @@ req.billno = @"20150722164700237";
 //req.endtime = @"2015-07-23 12:00";
 req.skip = 0;
 req.limit = 20;
-[BCPay sendBCReq:req];
+[BeeCloud sendBCReq:req];
 ```
 * 查询退款订单
 
 原型：
 
-通过构造`BCQueryRefundReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
+通过构造`BCQueryRefundReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询
 
 调用：
 
@@ -191,20 +229,20 @@ req.limit = 20;
    //req.refundno = @"20150709173629127";
    req.skip = 0;
    req.limit = 20;
-   [BCPay sendBCReq:req];
+   [BeeCloud sendBCReq:req];
 ```
 * 查询退款状态（只支持微信）
 
 原型：
 
-通过构造`BCRefundStatusReq`的实例，使用`[BCPay sendBCReq:req]`方法发起退款查询
+通过构造`BCRefundStatusReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询
 
 调用：
 
 ```objc
 BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
 req.refundno = @"20150709173629127";
-[BCPay sendBCReq:req];
+[BeeCloud sendBCReq:req];
 ```
 
 ## Demo

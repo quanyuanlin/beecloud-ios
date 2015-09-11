@@ -7,7 +7,7 @@
 //
 
 #import "QueryResultViewController.h"
-#import "BCPay.h"
+#import "BeeCloud.h"
 #import "BCPayUtil.h"
 
 @interface QueryResultViewController ()

@@ -38,6 +38,12 @@ static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
 static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
 static NSString * const kPayPalAccessTokenSandBox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
 
+//Adapter
+static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
+static NSString * const kAdapterAliPay = @"BCAliPayAdapter";
+static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
+static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
+
 /**
  *  BCPay URL type for handling URLs.
  */
