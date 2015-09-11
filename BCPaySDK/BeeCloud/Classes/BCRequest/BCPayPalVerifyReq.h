@@ -13,5 +13,6 @@
 @interface BCPayPalVerifyReq : BCBaseReq
 
 @property (nonatomic, strong) id payment;
+@property (nonatomic, strong) NSDictionary *optional;
 
 @end

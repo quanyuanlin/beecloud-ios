@@ -15,6 +15,7 @@
     if (self) {
         self.type = BCObjsTypePayPalVerify;
         self.payment = nil;
+        self.optional = nil;
     }
     return self;
 }
