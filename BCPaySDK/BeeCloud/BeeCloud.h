@@ -19,7 +19,7 @@
  *
  *  @param resp 响应体
  */
-- (void)onBCPayResp:(BCBaseResp *)resp;
+- (void)onBeeCloudResp:(BCBaseResp *)resp;
 
 @end
 
@@ -74,7 +74,7 @@
  *
  *  @param delegate BCApiDelegate对象，用来接收BeeCloud触发的消息。
  */
-+ (void)setBCApiDelegate:(id<BeeCloudDelegate>)delegate;
++ (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate;
 
 /**
  *  获取API版本号

@@ -52,7 +52,7 @@
     }
 }
 
-+ (void)setBCApiDelegate:(id<BeeCloudDelegate>)delegate {
++ (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
     [BeeCloud sharedInstance].delegate = delegate;
     [BeeCloudAdapter beeCloud:kAdapterWXPay doSetDelegate:delegate];
     [BeeCloudAdapter beeCloud:kAdapterAliPay doSetDelegate:delegate];
@@ -137,8 +137,8 @@
               
               BCBaseResp *resp = [self getErrorInResponse:response];
               if (resp.result_code != 0) {
-                  if (_delegate && [_delegate respondsToSelector:@selector(onBCPayResp:)]) {
-                      [_delegate onBCPayResp:resp];
+                  if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+                      [_delegate onBeeCloudResp:resp];
                   }
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
@@ -271,8 +271,8 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
-    if (_delegate && [_delegate respondsToSelector:@selector(onBCPayResp:)]) {
-        [_delegate onBCPayResp:resp];
+    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_delegate onBeeCloudResp:resp];
     }
 }
 
@@ -347,8 +347,8 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(onBCPayResp:)]) {
-        [_delegate onBCPayResp:resp];
+    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_delegate onBeeCloudResp:resp];
     }
 }
 
@@ -359,8 +359,8 @@
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if (_delegate && [_delegate respondsToSelector:@selector(onBCPayResp:)]) {
-        [_delegate onBCPayResp:resp];
+    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_delegate onBeeCloudResp:resp];
     }
 }
 

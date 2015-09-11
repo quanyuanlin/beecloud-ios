@@ -83,8 +83,8 @@
         resp.result_code = errcode;
         resp.result_msg = result;
         resp.err_detail = result;
-        if (_wxBeeCloudDelegate && [_wxBeeCloudDelegate respondsToSelector:@selector(onBCPayResp:)]) {
-            [_wxBeeCloudDelegate onBCPayResp:resp];
+        if (_wxBeeCloudDelegate && [_wxBeeCloudDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+            [_wxBeeCloudDelegate onBeeCloudResp:resp];
         }
     }
 }

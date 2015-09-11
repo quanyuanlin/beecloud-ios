@@ -55,8 +55,8 @@
     resp.result_code = errcode;
     resp.result_msg = strMsg;
     resp.err_detail = strMsg;
-    if (_unionAdapterDelegate && [_unionAdapterDelegate respondsToSelector:@selector(onBCPayResp:)]) {
-        [_unionAdapterDelegate onBCPayResp:resp];
+    if (_unionAdapterDelegate && [_unionAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_unionAdapterDelegate onBeeCloudResp:resp];
     }
 }
 

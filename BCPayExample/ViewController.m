@@ -33,7 +33,7 @@
     
     self.payList = [NSMutableArray arrayWithCapacity:10];
 #pragma mark - 设置delegate
-    [BeeCloud setBCApiDelegate:self];
+    [BeeCloud setBeeCloudDelegate:self];
     
 }
 
@@ -137,7 +137,7 @@
 
 #pragma mark - BCPay回调
 
-- (void)onBCPayResp:(BCBaseResp *)resp {
+- (void)onBeeCloudResp:(BCBaseResp *)resp {
     if ([resp isKindOfClass:[BCQueryResp class]]) {
         if (resp.result_code == 0) {
             BCQueryResp *tempResp = (BCQueryResp *)resp;

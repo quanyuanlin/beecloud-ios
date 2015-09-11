@@ -116,8 +116,8 @@
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               BCBaseResp *resp = [self getErrorInResponse:response];
-              if ([BCPayPalAdapter sharedInstance].payPalAdapterDelegate && [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate respondsToSelector:@selector(onBCPayResp:)]) {
-                  [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate onBCPayResp:resp];
+              if ([BCPayPalAdapter sharedInstance].payPalAdapterDelegate && [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+                  [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate onBeeCloudResp:resp];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [self doErrorResponse:kNetWorkError];
@@ -156,8 +156,8 @@
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if (_payPalAdapterDelegate && [_payPalAdapterDelegate respondsToSelector:@selector(onBCPayResp:)]) {
-        [_payPalAdapterDelegate onBCPayResp:resp];
+    if (_payPalAdapterDelegate && [_payPalAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_payPalAdapterDelegate onBeeCloudResp:resp];
     }
 }
 

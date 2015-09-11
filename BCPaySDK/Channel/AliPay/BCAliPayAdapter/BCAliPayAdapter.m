@@ -75,8 +75,8 @@
     resp.result_msg = strMsg;
     resp.err_detail = strMsg;
     resp.paySource = resultDic;
-    if (_aliBeeCloudDelegate && [_aliBeeCloudDelegate respondsToSelector:@selector(onBCPayResp:)]) {
-        [_aliBeeCloudDelegate onBCPayResp:resp];
+    if (_aliBeeCloudDelegate && [_aliBeeCloudDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
+        [_aliBeeCloudDelegate onBeeCloudResp:resp];
     }
 }
 

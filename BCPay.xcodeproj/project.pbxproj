@@ -25,7 +25,6 @@
 		3602F92B1BA031E800A28ADC /* BCPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D51BA031E800A28ADC /* BCPayUtil.m */; };
 		3602F92C1BA031E800A28ADC /* NSString+IsValid.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D71BA031E800A28ADC /* NSString+IsValid.m */; };
 		3602F92D1BA031E800A28ADC /* BeeCloudAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8DA1BA031E800A28ADC /* BeeCloudAdapter.m */; };
-		3602F92F1BA031E800A28ADC /* BeeCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8E01BA031E800A28ADC /* BeeCloud.m */; };
 		3602F9301BA031E800A28ADC /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8E91BA031E800A28ADC /* AFHTTPRequestOperation.m */; };
 		3602F9311BA031E800A28ADC /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8EB1BA031E800A28ADC /* AFHTTPRequestOperationManager.m */; };
 		3602F9321BA031E800A28ADC /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8ED1BA031E800A28ADC /* AFHTTPSessionManager.m */; };
@@ -54,6 +53,7 @@
 		3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7151B5F887400EAFCCE /* libsqlite3.dylib */; };
 		36CAEF3B1BA17644002AB286 /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CAEF321BA17644002AB286 /* BCPayPalAdapter.m */; };
 		36CAEF3C1BA17644002AB286 /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CAEF331BA17644002AB286 /* libPayPalMobile.a */; };
+		36CAEF531BA275DA002AB286 /* BeeCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CAEF501BA275DA002AB286 /* BeeCloud.m */; };
 		36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4091B8F4A19004BB25E /* Accelerate.framework */; };
 		36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */; };
 		36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE40D1B8F4A5E004BB25E /* CoreMedia.framework */; };
@@ -101,10 +101,6 @@
 		3602F8D71BA031E800A28ADC /* NSString+IsValid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IsValid.m"; sourceTree = "<group>"; };
 		3602F8D91BA031E800A28ADC /* BeeCloudAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCloudAdapter.h; sourceTree = "<group>"; };
 		3602F8DA1BA031E800A28ADC /* BeeCloudAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCloudAdapter.m; sourceTree = "<group>"; };
-		3602F8DE1BA031E800A28ADC /* BCPayObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayObjects.h; sourceTree = "<group>"; };
-		3602F8DF1BA031E800A28ADC /* BeeCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCloud.h; sourceTree = "<group>"; };
-		3602F8E01BA031E800A28ADC /* BeeCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCloud.m; sourceTree = "<group>"; };
-		3602F8E11BA031E800A28ADC /* BeeCloudAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCloudAdapterProtocol.h; sourceTree = "<group>"; };
 		3602F8E81BA031E800A28ADC /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		3602F8E91BA031E800A28ADC /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		3602F8EA1BA031E800A28ADC /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -166,6 +162,10 @@
 		36CAEF381BA17644002AB286 /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
 		36CAEF391BA17644002AB286 /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
 		36CAEF3A1BA17644002AB286 /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
+		36CAEF4F1BA275DA002AB286 /* BeeCloudAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeCloudAdapterProtocol.h; path = BeeCloud/BeeCloudAdapterProtocol.h; sourceTree = "<group>"; };
+		36CAEF501BA275DA002AB286 /* BeeCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeeCloud.m; path = BeeCloud/BeeCloud.m; sourceTree = "<group>"; };
+		36CAEF511BA275DA002AB286 /* BeeCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeCloud.h; path = BeeCloud/BeeCloud.h; sourceTree = "<group>"; };
+		36CAEF521BA275DA002AB286 /* BCPayObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCPayObjects.h; path = BeeCloud/BCPayObjects.h; sourceTree = "<group>"; };
 		36DCE4061B8F49F9004BB25E /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPayPalMobile.a; path = External/PayPal/libPayPalMobile.a; sourceTree = "<group>"; };
 		36DCE4091B8F4A19004BB25E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -204,6 +204,10 @@
 		3602F8AE1BA031E800A28ADC /* BCPaySDK */ = {
 			isa = PBXGroup;
 			children = (
+				36CAEF4F1BA275DA002AB286 /* BeeCloudAdapterProtocol.h */,
+				36CAEF501BA275DA002AB286 /* BeeCloud.m */,
+				36CAEF511BA275DA002AB286 /* BeeCloud.h */,
+				36CAEF521BA275DA002AB286 /* BCPayObjects.h */,
 				3602F8AF1BA031E800A28ADC /* BeeCloud */,
 				3602F8E61BA031E800A28ADC /* Channel */,
 			);
@@ -216,7 +220,6 @@
 				3602F8B01BA031E800A28ADC /* Classes */,
 				3602F8D01BA031E800A28ADC /* Internal */,
 				3602F8D81BA031E800A28ADC /* Protocol */,
-				3602F8DB1BA031E800A28ADC /* public */,
 			);
 			path = BeeCloud;
 			sourceTree = "<group>";
@@ -301,17 +304,6 @@
 				3602F8DA1BA031E800A28ADC /* BeeCloudAdapter.m */,
 			);
 			path = Protocol;
-			sourceTree = "<group>";
-		};
-		3602F8DB1BA031E800A28ADC /* public */ = {
-			isa = PBXGroup;
-			children = (
-				3602F8DE1BA031E800A28ADC /* BCPayObjects.h */,
-				3602F8DF1BA031E800A28ADC /* BeeCloud.h */,
-				3602F8E01BA031E800A28ADC /* BeeCloud.m */,
-				3602F8E11BA031E800A28ADC /* BeeCloudAdapterProtocol.h */,
-			);
-			path = public;
 			sourceTree = "<group>";
 		};
 		3602F8E61BA031E800A28ADC /* Channel */ = {
@@ -599,9 +591,9 @@
 				3602F9201BA031E800A28ADC /* BCQueryRefundReq.m in Sources */,
 				3602F9321BA031E800A28ADC /* AFHTTPSessionManager.m in Sources */,
 				3602F9361BA031E800A28ADC /* AFURLRequestSerialization.m in Sources */,
-				3602F92F1BA031E800A28ADC /* BeeCloud.m in Sources */,
 				3602F92B1BA031E800A28ADC /* BCPayUtil.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
+				36CAEF531BA275DA002AB286 /* BeeCloud.m in Sources */,
 				3602F9291BA031E800A28ADC /* BCQueryRefundResult.m in Sources */,
 				3602F91F1BA031E800A28ADC /* BCPayReq.m in Sources */,
 				36CAEF3B1BA17644002AB286 /* BCPayPalAdapter.m in Sources */,
@@ -718,7 +710,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/External",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/AliPay",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -729,7 +720,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/External",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/PayPal",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/UnionPay",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/WXPay",
@@ -748,14 +738,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/External",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/AliPay",
 				);
 				INFOPLIST_FILE = BCPayExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/External",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/PayPal",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/UnionPay",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/WXPay",
