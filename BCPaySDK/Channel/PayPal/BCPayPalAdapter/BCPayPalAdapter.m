@@ -104,8 +104,11 @@
     } else {
         parameters[@"channel"] = @"PAYPAL_LIVE";
     }
+    if (req.optional) {
+        parameters[@"optional"] = req.optional;
+    }
     PayPalPayment *payment = (PayPalPayment *)req.payment;
-    parameters[@"title"] = @"PayPal Verify Payment";
+    parameters[@"title"] = payment.shortDescription;
     parameters[@"total_fee"] = @((int)([payment.amount floatValue] * 100));
     parameters[@"currency"] = payment.currencyCode;
     parameters[@"bill_no"] = [[payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];

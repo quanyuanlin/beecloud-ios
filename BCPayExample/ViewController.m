@@ -115,6 +115,7 @@
 - (void)doPayPalVerify {
     BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
     req.payment = _completedPayment;
+    req.optional = @{@"key1":@"value1"};
     [BeeCloud sendBCReq:req];
 }
 
