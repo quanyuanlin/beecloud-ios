@@ -1,6 +1,6 @@
 ## BeeCloud iOS SDK (Open Source)
 
-![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.1.1-blue.svg)
+![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.1.2-blue.svg)
 
 ## 简介
 
@@ -14,7 +14,7 @@
 ## 安装
 
 1.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
->1. 下载的`External`文件夹下的`AliPay`, `UnionPay`, `WXPay`, `PayPal`文件夹分别对应`支付宝`, `银联`, `微信`, `PayPal`的原生SDK，请按需导入进自己的项目。  
+>1. 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`的原生SDK，请按需删除自己不需要的渠道，都保留也没有问题。  
 >2. iOS SDK使用了第三方Http请求库AFNetworking，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。
 >3. 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
 
@@ -22,8 +22,13 @@
 在podfile中加入
 
 ```
-pod 'BeeCloud'
+pod 'BeeCloud' //包含支付宝微信银联三个渠道
+pod 'BeeCloud/Alipay' //只包含支付宝
+pod 'BeeCloud/Wx' //只包括微信
+pod 'BeeCloud/UnionPay' //只包括银联
+pod 'BeeCloud/PayPal' //只包括paypal
 ```
+
 
 
 ## 注册
