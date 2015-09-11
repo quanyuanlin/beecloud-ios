@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = 'v3.2.0'
+	s.version      = '3.2.0'
 	s.summary      = 'BeeCloud云服务 致力加速App开发'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
