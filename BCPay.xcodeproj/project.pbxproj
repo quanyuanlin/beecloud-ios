@@ -166,7 +166,6 @@
 		36CAEF501BA275DA002AB286 /* BeeCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeeCloud.m; path = BeeCloud/BeeCloud.m; sourceTree = "<group>"; };
 		36CAEF511BA275DA002AB286 /* BeeCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeCloud.h; path = BeeCloud/BeeCloud.h; sourceTree = "<group>"; };
 		36CAEF521BA275DA002AB286 /* BCPayObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCPayObjects.h; path = BeeCloud/BCPayObjects.h; sourceTree = "<group>"; };
-		36DCE4061B8F49F9004BB25E /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPayPalMobile.a; path = External/PayPal/libPayPalMobile.a; sourceTree = "<group>"; };
 		36DCE4091B8F4A19004BB25E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		36DCE40D1B8F4A5E004BB25E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -432,7 +431,6 @@
 				36DCE40E1B8F4A5E004BB25E /* CoreVideo.framework */,
 				36DCE4091B8F4A19004BB25E /* Accelerate.framework */,
 				36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */,
-				36DCE4061B8F49F9004BB25E /* libPayPalMobile.a */,
 				364BC7171B5F888F00EAFCCE /* libz.dylib */,
 				364BC7151B5F887400EAFCCE /* libsqlite3.dylib */,
 				364BC7131B5F886800EAFCCE /* libc++.dylib */,
