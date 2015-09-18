@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 		core.source_files = 'BCPaySDK/BeeCloud/**/*.{h,m}'
 		core.requires_arc = true
 		core.ios.library = 'c++', 'z'
-		core.dependency 'AFNetworking', '~> 2.5.4'
+		core.dependency 'AFNetworking'
 		core.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
 	end
 

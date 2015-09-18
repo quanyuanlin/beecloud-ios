@@ -10,10 +10,15 @@
 #import "QueryResultViewController.h"
 #import "AFNetworking.h"
 #import "PayPalMobile.h"
+#import "GenQrCode.h"
+#import "QRCodeViewController.h"
+#import "ScanViewController.h"
 
-@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate> {
+@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate> {
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
+    PayChannel currentChannel;
+    
 }
 
 @end
@@ -38,12 +43,12 @@
 }
 
 #pragma mark - 微信支付
-- (void)doWxPay {
+- (void)doWXAppPay {
     [self doPay:PayChannelWxApp];
 }
 
 #pragma mark - 支付宝
-- (void)doAliPay {
+- (void)doAliAppPay {
     [self doPay:PayChannelAliApp];
 }
 
@@ -51,7 +56,6 @@
 - (void)doUnionPay {
     [self doPay:PayChannelUnApp];
 }
-
 
 - (void)doPay:(PayChannel)channel {
     NSString *outTradeNo = [self genOutTradeNo];
@@ -64,6 +68,22 @@
     payReq.billno = outTradeNo;
     payReq.scheme = @"payDemo";
     payReq.viewController = self;
+    payReq.optional = dict;
+    [BeeCloud sendBCReq:payReq];
+}
+
+- (void)doOfflinePay:(PayChannel)channel authCode:(NSString *)authcode {
+    NSString *outTradeNo = [self genOutTradeNo];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
+    
+    BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
+    payReq.channel = channel;
+    payReq.title = @"Offline Pay";
+    payReq.totalfee = @"1";
+    payReq.billno = outTradeNo;
+    payReq.authcode = authcode;
+    payReq.terminalid = @"BeeCloud617";
+    payReq.storeid = @"BeeCloud618";
     payReq.optional = dict;
     [BeeCloud sendBCReq:payReq];
 }
@@ -149,7 +169,18 @@
                 [self performSegueWithIdentifier:@"queryResult" sender:self];
             }
         }
-    } else {
+    } else if ([resp isKindOfClass:[BCOfflinePayResp class]]) {
+        if (resp.result_code == 0) {
+            BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
+            if (tempResp.codeurl.isValid) {
+                QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
+                qrCodeView.codeUrl = tempResp.codeurl;
+                self.modalPresentationStyle = UIModalPresentationCurrentContext;
+                qrCodeView.view.backgroundColor = [UIColor whiteColor];
+                [self presentViewController:qrCodeView animated:YES completion:nil];
+            }
+        }
+    }  else {
         if (resp.result_code == 0) {
              [self showAlertView:resp.result_msg];
         } else {
@@ -206,26 +237,39 @@
 
 #pragma maek tableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 8;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80.0f;
+    return 60.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.actionType == 0) {
         switch (indexPath.row) {
             case 0:
-                [self doWxPay];
+                [self doWXAppPay];
                 break;
             case 1:
-                [self doAliPay];
+                [self doOfflinePay:PayChannelWxNative authCode:@""];
                 break;
             case 2:
-                [self doUnionPay];
+                currentChannel = PayChannelWxSCan;
+                [self showScanViewController];
                 break;
             case 3:
+                [self doAliAppPay];
+                break;
+            case 4:
+                [self doOfflinePay:PayChannelAliOfflineQrCode authCode:@""];
+                break;
+            case 5:
+                currentChannel = PayChannelAliScan;
+                [self showScanViewController];
+            case 6:
+                [self doUnionPay];
+                break;
+            case 7:
                 [self doPayPal];
                 break;
             default:
@@ -234,15 +278,19 @@
     } else {
         switch (indexPath.row) {
             case 0:
+            case 1:
+            case 2:
                 [self doQueryWX];
                 break;
-            case 1:
+            case 3:
+            case 4:
+            case 5:
                 [self doQueryAli];
                 break;
-            case 2:
+            case 6:
                 [self doQueryUN];
                 break;
-            case 3:
+            case 7:
                 [self doQueryPayPal];
                 break;
             default:
@@ -252,6 +300,16 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+}
+
+- (void)showScanViewController {
+    ScanViewController *scanView = [[ScanViewController alloc] init];
+    scanView.delegate = self;
+    [self presentViewController:scanView animated:YES completion:nil];
+}
+
+- (void)scanWithAuthCode:(NSString *)authCode {
+    [self doOfflinePay:currentChannel authCode:authCode];
 }
 
 #pragma mark - prepare segue

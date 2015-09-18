@@ -102,6 +102,9 @@
         case BCObjsTypePayPalVerify:
             [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
             break;
+        case BCObjsTypeOfflinePayReq:
+            [instance reqOfflinePay:(BCOfflinePayReq *)req];
+            break;
         default:
             break;
     }
@@ -112,7 +115,7 @@
 #pragma mark Pay Request
 
 - (void)reqPay:(BCPayReq *)req {
-    if (![[BeeCloud sharedInstance] checkParameters:req]) return;
+    if (![self checkParameters:req]) return;
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
     
@@ -175,6 +178,171 @@
                 break;
         }
     }
+}
+
+#pragma mark - Offline Pay
+
+- (void)reqOfflinePay:(BCOfflinePayReq *)req {
+    
+    if (![self checkParameters:req]) return;
+    
+    NSString *cType = [BCPayUtil getChannelString:req.channel];
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    
+    parameters[@"channel"] = cType;
+    parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
+    parameters[@"bill_no"] = req.billno;
+    parameters[@"title"] = req.title;
+    if (req.channel == PayChannelWxSCan || req.channel == PayChannelAliScan) {
+        parameters[@"auth_code"] = req.authcode;
+    }
+    if (req.channel == PayChannelAliScan) {
+        if (req.terminalid.isValid) {
+            parameters[@"terminal_id"] = req.terminalid;
+        }
+        if (req.storeid.isValid) {
+            parameters[@"store_id"] = req.storeid;
+        }
+    }
+    if (req.optional) {
+        parameters[@"optional"] = req.optional;
+    }
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflinePay] parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              
+              BCBaseResp *resp = [self getErrorInResponse:response];
+              if (resp.result_code != 0) {
+                  [self doBeeCloudResp:resp];
+              } else {
+                  BCPayLog(@"channel=%@,resp=%@", cType, response);
+                  [self doOfflinePayResp:req.channel source:(NSDictionary *)response];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [self doErrorResponse:kNetWorkError];
+          }];
+}
+
+- (void)doOfflinePayResp:(PayChannel)channel source:(NSDictionary *)source {
+    switch (channel) {
+        case PayChannelWxNative:
+        case PayChannelAliOfflineQrCode:
+        {
+            BCOfflinePayResp *resp = [[BCOfflinePayResp alloc] init];
+            resp.result_code = [[source objectForKey:kKeyResponseResultCode] intValue];
+            resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
+            resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
+            resp.codeurl = [source objectForKey:kKeyResponseCodeUrl];
+            [self doBeeCloudResp:resp];
+        }
+            break;
+        default:
+        {
+            BCBaseResp *resp = [[BCBaseResp alloc] init];
+            resp.result_code = [[source objectForKey:kKeyResponseResultCode] intValue];
+            resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
+            resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
+            [self doBeeCloudResp:resp];
+        }
+            break;
+    }
+}
+
+#pragma mark - OffLine BillStatus
+
+- (void)reqOfflineBillStatus:(BCOfflineStatusReq *)req {
+    if (req == nil) {
+        [self doErrorResponse:@"请求结构体不合法"];
+        return;
+    } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
+        [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
+        return;
+    }
+    
+    NSString *cType = [BCPayUtil getChannelString:req.channel];
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    
+    parameters[@"channel"] = cType;
+    parameters[@"bill_no"] = req.billno;
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillStatus] parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              
+              BCBaseResp *resp = [self getErrorInResponse:response];
+              if (resp.result_code != 0) {
+                  [self doBeeCloudResp:resp];
+              } else {
+                  BCPayLog(@"channel=%@,resp=%@", cType, response);
+                  BCOfflineStatusResp *resp = [[BCOfflineStatusResp alloc] init];
+                  resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
+                  resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
+                  resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
+                  resp.payResult = [[response objectForKey:KKeyResponsePayResult] boolValue];
+                  resp.channel = req.channel;
+                  [self doBeeCloudResp:resp];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [self doErrorResponse:kNetWorkError];
+          }];
+}
+
+#pragma mark - OffLine BillRevert
+
+- (void)reqOfflineBillRevert:(BCOfflineRevertReq *)req {
+    if (req == nil) {
+        [self doErrorResponse:@"请求结构体不合法"];
+        return;
+    } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
+        [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
+        return;
+    }
+    
+    NSString *cType = [BCPayUtil getChannelString:req.channel];
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    
+    parameters[@"channel"] = cType;
+    parameters[@"method"] = @"REVERT";
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    
+    [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billno] parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              
+              BCBaseResp *resp = [self getErrorInResponse:response];
+              if (resp.result_code != 0) {
+                  [self doBeeCloudResp:resp];
+              } else {
+                  BCPayLog(@"channel=%@,resp=%@", cType, response);
+                  BCOfflineRevertResp *resp = [[BCOfflineRevertResp alloc] init];
+                  resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
+                  resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
+                  resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
+                  resp.revertResult = [[response objectForKey:kKeyResponseRevertResult] boolValue];
+                  resp.channel = req.channel;
+                  [self doBeeCloudResp:resp];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [self doErrorResponse:kNetWorkError];
+          }];
 }
 
 #pragma mark PayPal
@@ -271,9 +439,7 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
-    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_delegate onBeeCloudResp:resp];
-    }
+    [self doBeeCloudResp:resp];
 }
 
 - (NSMutableArray *)parseResults:(NSDictionary *)dic {
@@ -346,22 +512,23 @@
     resp.result_msg = dic[kKeyResponseResultMsg];
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
-    
+    [self doBeeCloudResp:resp];
+}
+
+#pragma mark Util Function
+
+- (void)doBeeCloudResp:(BCBaseResp *)resp {
     if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
         [_delegate onBeeCloudResp:resp];
     }
 }
-
-#pragma mark Util Function
 
 - (void)doErrorResponse:(NSString *)errMsg {
     BCBaseResp *resp = [[BCBaseResp alloc] init];
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_delegate onBeeCloudResp:resp];
-    }
+    [self doBeeCloudResp:resp];
 }
 
 - (BCBaseResp *)getErrorInResponse:(id)response {
@@ -396,6 +563,25 @@
             return NO;
         } else if (req.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
             [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
+            return NO;
+        }
+        return YES;
+    } else if (request.type == BCObjsTypeOfflinePayReq) {
+        BCOfflinePayReq *req = (BCOfflinePayReq *)request;
+        if (!req.title.isValid || [BCPayUtil getBytes:req.title] > 32) {
+            [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
+            return NO;
+        } else if (!req.totalfee.isValid || !req.totalfee.isPureInt) {
+            [self doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
+            return NO;
+        } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
+            [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
+            return NO;
+        } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxSCan) && !req.authcode.isValid) {
+            [self doErrorResponse:@"authcode 不是合法的字符串"];
+            return NO;
+        } else if ((req.channel == PayChannelAliScan) && (!req.terminalid.isValid || !req.storeid.isValid)) {
+            [self doErrorResponse:@"terminalid或storeid 不是合法的字符串"];
             return NO;
         }
         return YES;

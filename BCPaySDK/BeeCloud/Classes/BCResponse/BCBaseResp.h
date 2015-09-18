@@ -22,4 +22,6 @@
 /** 错误详情 */
 @property (nonatomic, retain) NSString *err_detail;
 
+@property (nonatomic, assign) PayChannel channel;
+
 @end

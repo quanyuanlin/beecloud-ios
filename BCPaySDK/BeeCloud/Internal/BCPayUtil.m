@@ -71,12 +71,14 @@
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
     NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],reqApiVersion]; //2015.07.28
+    verHost = @"https://58.211.191.122/1";
     return [NSString stringWithFormat:format, verHost];
 }
 
 + (NSString *)getChannelString:(PayChannel)channel {
     NSString *cType = @"";
     switch (channel) {
+#pragma mark PayChannel_WX
         case PayChannelWx:
             cType = @"WX";
             break;
@@ -89,6 +91,10 @@
         case PayChannelWxJsApi:
             cType = @"WX_JSAPI";
             break;
+        case PayChannelWxSCan:
+            cType = @"WX_SCAN";
+            break;
+#pragma mark PayChannel_ALI
         case PayChannelAli:
             cType = @"ALI";
             break;
@@ -107,6 +113,10 @@
         case PayChannelAliOfflineQrCode:
             cType = @"ALI_OFFLINE_QRCODE";
             break;
+        case PayChannelAliScan:
+            cType = @"ALI_SCAN";
+            break;
+#pragma mark PayChannel_UN
         case PayChannelUn:
             cType = @"UN";
             break;
