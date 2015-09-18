@@ -1,12 +1,13 @@
 ## BeeCloud iOS SDK (Open Source)
 
-![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.2.0-blue.svg)
+![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.2.3-blue.svg)
 
 ## 简介
 
 本项目的官方GitHub地址是 [https://github.com/beecloud/beecloud-ios](https://github.com/beecloud/beecloud-ios)
 
-目前已经包含微信、支付宝、银联在线、PayPal支付功能，以及支付订单和退款订单的查询功能。本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
+目前已经包含微信APP、支付宝APP、银联在线APP、PayPal APP支付功能，以及支付订单和退款订单的查询功能。还包含了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，以及订单状态的查询与订单撤销。  
+本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
 
 ##流程
 ![pic](http://7xavqo.com1.z0.glb.clouddn.com/UML.png)
@@ -14,7 +15,7 @@
 ## 安装
 
 1.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
->1. 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`的原生SDK，请按需删除自己不需要的渠道，都保留也没有问题。  
+>1. 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`,`OfflinePay`的原生SDK，请按需删除自己不需要的渠道，都保留也没有问题。  
 >2. iOS SDK使用了第三方Http请求库AFNetworking，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。
 >3. 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
 >4. 使用PayPal支付，需要添加以下系统库：
@@ -35,6 +36,7 @@ pod 'BeeCloud/Alipay' //只包含支付宝
 pod 'BeeCloud/Wx' //只包括微信
 pod 'BeeCloud/UnionPay' //只包括银联
 pod 'BeeCloud/PayPal' //只包括paypal
+pod 'BeeCloud/Offline' //只包括线下收款
 ```
 
 
