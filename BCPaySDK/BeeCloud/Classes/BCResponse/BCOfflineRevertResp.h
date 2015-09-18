@@ -7,9 +7,11 @@
 //
 
 #import "BCBaseResp.h"
+#import "BCOfflineRevertReq.h"
 
 @interface BCOfflineRevertResp : BCBaseResp
 
-@property (nonatomic, assign) BOOL revertResult;
+@property (nonatomic, assign) BOOL revertStatus;
+@property (nonatomic, retain) BCOfflineRevertReq *request;
 
 @end

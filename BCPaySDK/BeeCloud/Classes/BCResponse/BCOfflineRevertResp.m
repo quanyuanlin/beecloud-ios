@@ -14,6 +14,7 @@
     self = [super init];
     if (self) {
         self.type = BCObjsTypeOfflineRevertResp;
+        self.revertStatus = NO;
     }
     return self;
 }

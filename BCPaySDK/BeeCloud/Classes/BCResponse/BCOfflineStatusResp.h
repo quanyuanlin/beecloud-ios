@@ -7,7 +7,9 @@
 //
 
 #import "BCBaseResp.h"
+#import "BCOfflineStatusReq.h"
 
 @interface BCOfflineStatusResp : BCBaseResp
 @property (nonatomic, assign) BOOL payResult;
+@property (nonatomic, retain) BCOfflineStatusReq *request;
 @end

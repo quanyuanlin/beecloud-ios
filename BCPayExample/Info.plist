@@ -8,11 +8,9 @@
 		<true/>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
-	<array/>
-	<key>wx</key>
-	<string>weixin</string>
-	<key>ali</key>
-	<string>alipay</string>
+	<array>
+		<string>weixin</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>

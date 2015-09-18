@@ -20,7 +20,7 @@ static NSString * const kKeyResponseErrDetail = @"err_detail";
 
 static NSString * const kKeyResponseCodeUrl = @"code_url";
 static NSString * const KKeyResponsePayResult = @"pay_result";
-static NSString * const kKeyResponseRevertResult = @"revert_result";
+static NSString * const kKeyResponseRevertResult = @"revert_status";
 
 static NSUInteger const kBCHostCount = 4;
 static NSString * const kBCHosts[] = {@"https://apisz.beecloud.cn",

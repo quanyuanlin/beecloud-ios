@@ -14,11 +14,10 @@
 #import "QRCodeViewController.h"
 #import "ScanViewController.h"
 
-@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate> {
+@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate, QRCodeDelegate> {
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
     PayChannel currentChannel;
-    
 }
 
 @end
@@ -159,33 +158,88 @@
 #pragma mark - BCPay回调
 
 - (void)onBeeCloudResp:(BCBaseResp *)resp {
-    if ([resp isKindOfClass:[BCQueryResp class]]) {
-        if (resp.result_code == 0) {
-            BCQueryResp *tempResp = (BCQueryResp *)resp;
-            if (tempResp.count == 0) {
-                [self showAlertView:@"未找到相关订单信息"];
+    
+    switch (resp.type) {
+        case BCObjsTypeQueryResp:
+        {
+            if (resp.result_code == 0) {
+                BCQueryResp *tempResp = (BCQueryResp *)resp;
+                if (tempResp.count == 0) {
+                    [self showAlertView:@"未找到相关订单信息"];
+                } else {
+                    self.payList = tempResp.results;
+                    [self performSegueWithIdentifier:@"queryResult" sender:self];
+                }
+            }
+        }
+            break;
+        case BCObjsTypeOfflinePayResp:
+        {
+            if (resp.result_code == 0) {
+                BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
+                switch (tempResp.request.channel) {
+                    case PayChannelAliOfflineQrCode:
+                    case PayChannelWxNative:
+                        if (tempResp.codeurl.isValid) {
+                            QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
+                            qrCodeView.resp = tempResp;
+                            qrCodeView.delegate = self;
+                            self.modalPresentationStyle = UIModalPresentationCurrentContext;
+                            qrCodeView.view.backgroundColor = [UIColor whiteColor];
+                            [self presentViewController:qrCodeView animated:YES completion:nil];
+                        }
+                        break;
+                    case PayChannelAliScan:
+                    case PayChannelWxSCan:
+                    {
+                        BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
+                        req.channel = tempResp.request.channel;
+                        req.billno = tempResp.request.billno;
+                        [BeeCloud sendBCReq:req];
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+            break;
+        case BCObjsTypeOfflineBillStatusResp:
+        {
+            static int queryTimes = 1;
+            BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
+            if (!tempResp.payResult && queryTimes < 5) {
+                queryTimes++;
+                [BeeCloud sendBCReq:tempResp.request];
             } else {
-                self.payList = tempResp.results;
-                [self performSegueWithIdentifier:@"queryResult" sender:self];
+                [self showAlertView:tempResp.result_msg];
+//                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
+//                req.channel = tempResp.request.channel;
+//                req.billno = tempResp.request.billno;
+//                [BeeCloud sendBCReq:req];
+                queryTimes = 1;
             }
         }
-    } else if ([resp isKindOfClass:[BCOfflinePayResp class]]) {
-        if (resp.result_code == 0) {
-            BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
-            if (tempResp.codeurl.isValid) {
-                QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
-                qrCodeView.codeUrl = tempResp.codeurl;
-                self.modalPresentationStyle = UIModalPresentationCurrentContext;
-                qrCodeView.view.backgroundColor = [UIColor whiteColor];
-                [self presentViewController:qrCodeView animated:YES completion:nil];
+            break;
+        case BCObjsTypeOfflineRevertResp:
+        {
+            BCOfflineRevertResp *tempResp = (BCOfflineRevertResp *)resp;
+            if (resp.result_code == 0) {
+                [self showAlertView:tempResp.revertStatus?@"撤销成功":@"撤销失败"];
+            } else {
+                [self showAlertView:tempResp.err_detail];
             }
         }
-    }  else {
-        if (resp.result_code == 0) {
-             [self showAlertView:resp.result_msg];
-        } else {
-             [self showAlertView:resp.err_detail];
+            break;
+        default:
+        {
+            if (resp.result_code == 0) {
+                [self showAlertView:resp.result_msg];
+            } else {
+                [self showAlertView:resp.err_detail];
+            }
         }
+            break;
     }
 }
 
@@ -310,6 +364,13 @@
 
 - (void)scanWithAuthCode:(NSString *)authCode {
     [self doOfflinePay:currentChannel authCode:authCode];
+}
+
+- (void)qrCodeBeScaned:(BCOfflinePayResp *)resp {
+    BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
+    req.channel = resp.request.channel;
+    req.billno = resp.request.billno;
+    [BeeCloud sendBCReq:req];
 }
 
 #pragma mark - prepare segue

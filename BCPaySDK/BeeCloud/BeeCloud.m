@@ -105,6 +105,12 @@
         case BCObjsTypeOfflinePayReq:
             [instance reqOfflinePay:(BCOfflinePayReq *)req];
             break;
+        case BCObjsTypeOfflineBillStatusReq:
+            [instance reqOfflineBillStatus:(BCOfflineStatusReq *)req];
+            break;
+        case BCObjsTypeOfflineRevertReq:
+            [instance reqOfflineBillRevert:(BCOfflineRevertReq *)req];
+            break;
         default:
             break;
     }
@@ -134,11 +140,11 @@
     }
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               
-              BCBaseResp *resp = [self getErrorInResponse:response];
+              BCBaseResp *resp = [weakSelf getErrorInResponse:response];
               if (resp.result_code != 0) {
                   if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
                       [_delegate onBeeCloudResp:resp];
@@ -152,10 +158,10 @@
                   } else if (req.channel == PayChannelUnApp) {
                       [dic setObject:req.viewController forKey:@"viewController"];
                   }
-                  [self doPayAction:req.channel source:dic];
+                  [weakSelf doPayAction:req.channel source:dic];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
+              [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
@@ -214,24 +220,24 @@
     }
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflinePay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               
               BCBaseResp *resp = [self getErrorInResponse:response];
               if (resp.result_code != 0) {
-                  [self doBeeCloudResp:resp];
+                  [weakSelf doBeeCloudResp:resp];
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
-                  [self doOfflinePayResp:req.channel source:(NSDictionary *)response];
+                  [weakSelf doOfflinePayResp:req source:(NSDictionary *)response];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
+              [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
-- (void)doOfflinePayResp:(PayChannel)channel source:(NSDictionary *)source {
-    switch (channel) {
+- (void)doOfflinePayResp:(BCOfflinePayReq *)req source:(NSDictionary *)source {
+    switch (req.channel) {
         case PayChannelWxNative:
         case PayChannelAliOfflineQrCode:
         {
@@ -240,6 +246,7 @@
             resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
             resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
             resp.codeurl = [source objectForKey:kKeyResponseCodeUrl];
+            resp.request = req;
             [self doBeeCloudResp:resp];
         }
             break;
@@ -278,13 +285,13 @@
     parameters[@"bill_no"] = req.billno;
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillStatus] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               
               BCBaseResp *resp = [self getErrorInResponse:response];
               if (resp.result_code != 0) {
-                  [self doBeeCloudResp:resp];
+                  [weakSelf doBeeCloudResp:resp];
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
                   BCOfflineStatusResp *resp = [[BCOfflineStatusResp alloc] init];
@@ -292,11 +299,11 @@
                   resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
                   resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
                   resp.payResult = [[response objectForKey:KKeyResponsePayResult] boolValue];
-                  resp.channel = req.channel;
-                  [self doBeeCloudResp:resp];
+                  resp.request = req;
+                  [weakSelf doBeeCloudResp:resp];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
+              [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
@@ -323,25 +330,25 @@
     parameters[@"method"] = @"REVERT";
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billno] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               
-              BCBaseResp *resp = [self getErrorInResponse:response];
+              BCBaseResp *resp = [weakSelf getErrorInResponse:response];
               if (resp.result_code != 0) {
-                  [self doBeeCloudResp:resp];
+                  [weakSelf doBeeCloudResp:resp];
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
                   BCOfflineRevertResp *resp = [[BCOfflineRevertResp alloc] init];
                   resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
                   resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
                   resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
-                  resp.revertResult = [[response objectForKey:kKeyResponseRevertResult] boolValue];
-                  resp.channel = req.channel;
-                  [self doBeeCloudResp:resp];
+                  resp.revertStatus = [[response objectForKey:kKeyResponseRevertResult] boolValue];
+                  resp.request = req;
+                  [weakSelf doBeeCloudResp:resp];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
+              [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
@@ -365,13 +372,13 @@
     [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         BCPayLog(@"token %@", response);
         NSDictionary *dic = (NSDictionary *)response;
-        [self doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
+        [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
     }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self doErrorResponse:kNetWorkError];
+        [weakSelf doErrorResponse:kNetWorkError];
     }];
 }
 
@@ -422,13 +429,13 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"resp = %@", response);
-             [self doQueryResponse:(NSDictionary *)response];
+             [weakSelf doQueryResponse:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self doErrorResponse:kNetWorkError];
+             [weakSelf doErrorResponse:kNetWorkError];
          }];
 }
 
@@ -497,12 +504,12 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
-             [self doQueryRefundStatus:(NSDictionary *)response];
+             [weakSelf doQueryRefundStatus:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self doErrorResponse:kNetWorkError];
+             [weakSelf doErrorResponse:kNetWorkError];
          }];
 }
 

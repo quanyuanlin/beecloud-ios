@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BCOfflinePayResp.h"
+
+@protocol QRCodeDelegate <NSObject>
+
+- (void)qrCodeBeScaned:(BCOfflinePayResp *)resp;
+
+@end
 
 @interface QRCodeViewController : UIViewController
 
-@property (nonatomic, strong) NSString *codeUrl;
-
+@property (nonatomic, strong) BCOfflinePayResp *resp;
+@property (nonatomic, weak) id<QRCodeDelegate> delegate;
 @end
