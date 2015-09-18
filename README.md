@@ -193,6 +193,43 @@ pod 'BeeCloud/Offline' //只包括线下收款
 }
 ```
 
+#### OfflinePay
+##### 支付
+
+```objc
+- (void)doOfflinePay:(PayChannel)channel authCode:(NSString *)authcode {
+    NSString *outTradeNo = [self genOutTradeNo];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
+    
+    BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
+    payReq.channel = channel;
+    payReq.title = @"Offline Pay";
+    payReq.totalfee = @"1";
+    payReq.billno = outTradeNo;
+    payReq.authcode = authcode;
+    payReq.terminalid = @"BeeCloud617"; 
+    payReq.storeid = @"BeeCloud618";
+    payReq.optional = dict;
+    [BeeCloud sendBCReq:payReq];
+}
+```
+##### 订单状态查询
+
+```objc
+BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
+req.channel = PayChannelWxScan;
+req.billno = @"2015091821320048";
+[BeeCloud sendBCReq:req];               
+```
+
+##### 订单撤销
+
+```objc
+BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
+req.channel = PayChannelWxScan;
+req.billno = @"2015091821320048";
+[BeeCloud sendBCReq:req];
+```
 
 ### 2.查询
 
