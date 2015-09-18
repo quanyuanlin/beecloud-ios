@@ -10,7 +10,6 @@
 #import "BeeCloudAdapterProtocol.h"
 #import "BCPayCache.h"
 
-
 @implementation BeeCloudAdapter
 
 + (void)beeCloud:(NSString *)object doSetDelegate:(id<BeeCloudDelegate>)delegate {
@@ -83,6 +82,27 @@
     id adapter = [[NSClassFromString(kAdapterPayPal) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(payPalVerify:)]) {
         [adapter payPalVerify:dic];
+    }
+}
+
++ (void)beeCloudOfflinePay:(NSMutableDictionary *)dic {
+    id adapter = [[NSClassFromString(kAdapterOffline) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(offlinePay:)]) {
+        [adapter offlinePay:dic];
+    }
+}
+
++ (void)beeCloudOfflineStatus:(NSMutableDictionary *)dic {
+    id adapter = [[NSClassFromString(kAdapterOffline) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(offlineStatus:)]) {
+        [adapter offlineStatus:dic];
+    }
+}
+
++ (void)beeCloudOfflineRevert:(NSMutableDictionary *)dic {
+    id adapter = [[NSClassFromString(kAdapterOffline) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(offlineRevert:)]) {
+        [adapter offlineRevert:dic];
     }
 }
 

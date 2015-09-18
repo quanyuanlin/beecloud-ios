@@ -58,6 +58,7 @@
     [BeeCloudAdapter beeCloud:kAdapterAliPay doSetDelegate:delegate];
     [BeeCloudAdapter beeCloud:kAdapterUnionPay doSetDelegate:delegate];
     [BeeCloudAdapter beeCloud:kAdapterPayPal doSetDelegate:delegate];
+    [BeeCloudAdapter beeCloud:kAdapterOffline doSetDelegate:delegate];
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
@@ -103,13 +104,13 @@
             [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
             break;
         case BCObjsTypeOfflinePayReq:
-            [instance reqOfflinePay:(BCOfflinePayReq *)req];
+            [instance reqOfflinePay:req];
             break;
         case BCObjsTypeOfflineBillStatusReq:
-            [instance reqOfflineBillStatus:(BCOfflineStatusReq *)req];
+            [instance reqOfflineBillStatus:req];
             break;
         case BCObjsTypeOfflineRevertReq:
-            [instance reqOfflineBillRevert:(BCOfflineRevertReq *)req];
+            [instance reqOfflineBillRevert:req];
             break;
         default:
             break;
@@ -188,203 +189,30 @@
 
 #pragma mark - Offline Pay
 
-- (void)reqOfflinePay:(BCOfflinePayReq *)req {
-    
-    if (![self checkParameters:req]) return;
-    
-    NSString *cType = [BCPayUtil getChannelString:req.channel];
-    
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
-    if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
-        return;
-    }
-    
-    parameters[@"channel"] = cType;
-    parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
-    parameters[@"bill_no"] = req.billno;
-    parameters[@"title"] = req.title;
-    if (req.channel == PayChannelWxSCan || req.channel == PayChannelAliScan) {
-        parameters[@"auth_code"] = req.authcode;
-    }
-    if (req.channel == PayChannelAliScan) {
-        if (req.terminalid.isValid) {
-            parameters[@"terminal_id"] = req.terminalid;
-        }
-        if (req.storeid.isValid) {
-            parameters[@"store_id"] = req.storeid;
-        }
-    }
-    if (req.optional) {
-        parameters[@"optional"] = req.optional;
-    }
-    
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflinePay] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
-              
-              BCBaseResp *resp = [self getErrorInResponse:response];
-              if (resp.result_code != 0) {
-                  [weakSelf doBeeCloudResp:resp];
-              } else {
-                  BCPayLog(@"channel=%@,resp=%@", cType, response);
-                  [weakSelf doOfflinePayResp:req source:(NSDictionary *)response];
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [weakSelf doErrorResponse:kNetWorkError];
-          }];
-}
-
-- (void)doOfflinePayResp:(BCOfflinePayReq *)req source:(NSDictionary *)source {
-    switch (req.channel) {
-        case PayChannelWxNative:
-        case PayChannelAliOfflineQrCode:
-        {
-            BCOfflinePayResp *resp = [[BCOfflinePayResp alloc] init];
-            resp.result_code = [[source objectForKey:kKeyResponseResultCode] intValue];
-            resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
-            resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
-            resp.codeurl = [source objectForKey:kKeyResponseCodeUrl];
-            resp.request = req;
-            [self doBeeCloudResp:resp];
-        }
-            break;
-        default:
-        {
-            BCBaseResp *resp = [[BCBaseResp alloc] init];
-            resp.result_code = [[source objectForKey:kKeyResponseResultCode] intValue];
-            resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
-            resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
-            [self doBeeCloudResp:resp];
-        }
-            break;
-    }
+- (void)reqOfflinePay:(id)req {
+    [BeeCloudAdapter beeCloudOfflinePay:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterOffline, nil]];
 }
 
 #pragma mark - OffLine BillStatus
 
-- (void)reqOfflineBillStatus:(BCOfflineStatusReq *)req {
-    if (req == nil) {
-        [self doErrorResponse:@"请求结构体不合法"];
-        return;
-    } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
-        [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
-        return;
-    }
-    
-    NSString *cType = [BCPayUtil getChannelString:req.channel];
-    
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
-    if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
-        return;
-    }
-    
-    parameters[@"channel"] = cType;
-    parameters[@"bill_no"] = req.billno;
-    
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillStatus] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
-              
-              BCBaseResp *resp = [self getErrorInResponse:response];
-              if (resp.result_code != 0) {
-                  [weakSelf doBeeCloudResp:resp];
-              } else {
-                  BCPayLog(@"channel=%@,resp=%@", cType, response);
-                  BCOfflineStatusResp *resp = [[BCOfflineStatusResp alloc] init];
-                  resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
-                  resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
-                  resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
-                  resp.payResult = [[response objectForKey:KKeyResponsePayResult] boolValue];
-                  resp.request = req;
-                  [weakSelf doBeeCloudResp:resp];
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [weakSelf doErrorResponse:kNetWorkError];
-          }];
+- (void)reqOfflineBillStatus:(id)req {
+    [BeeCloudAdapter beeCloudOfflineStatus:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterOffline, nil]];
 }
 
 #pragma mark - OffLine BillRevert
 
-- (void)reqOfflineBillRevert:(BCOfflineRevertReq *)req {
-    if (req == nil) {
-        [self doErrorResponse:@"请求结构体不合法"];
-        return;
-    } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
-        [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
-        return;
-    }
-    
-    NSString *cType = [BCPayUtil getChannelString:req.channel];
-    
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
-    if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
-        return;
-    }
-    
-    parameters[@"channel"] = cType;
-    parameters[@"method"] = @"REVERT";
-    
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
-    [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billno] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
-              
-              BCBaseResp *resp = [weakSelf getErrorInResponse:response];
-              if (resp.result_code != 0) {
-                  [weakSelf doBeeCloudResp:resp];
-              } else {
-                  BCPayLog(@"channel=%@,resp=%@", cType, response);
-                  BCOfflineRevertResp *resp = [[BCOfflineRevertResp alloc] init];
-                  resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
-                  resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
-                  resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
-                  resp.revertStatus = [[response objectForKey:kKeyResponseRevertResult] boolValue];
-                  resp.request = req;
-                  [weakSelf doBeeCloudResp:resp];
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [weakSelf doErrorResponse:kNetWorkError];
-          }];
+- (void)reqOfflineBillRevert:(id)req {
+    [BeeCloudAdapter beeCloudOfflineRevert:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterOffline, nil]];
 }
 
 #pragma mark PayPal
 
 - (void)reqPayPal:(BCPayPalReq *)req {
-    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, @"PayPal",nil]];
+    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterPayPal,nil]];
 }
 
 - (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
-    [self reqPayPalAccessToken:req];
-}
-
-- (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.securityPolicy.allowInvalidCertificates = NO;
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:[BCPayCache sharedInstance].payPalClientID password:[BCPayCache sharedInstance].payPalSecret];
-    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
-    __weak BeeCloud *weakSelf = self;
-    [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
-        BCPayLog(@"token %@", response);
-        NSDictionary *dic = (NSDictionary *)response;
-        [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
-    }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [weakSelf doErrorResponse:kNetWorkError];
-    }];
-}
-
-- (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
-    
-    [BeeCloudAdapter beeCloudPayPalVerify:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,@"PayPalVerify",accessToken, @"access_token",nil]];
+    [BeeCloudAdapter beeCloudPayPalVerify:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterPayPal, nil]];
 }
 
 #pragma mark Query Bills/Refunds
@@ -570,25 +398,6 @@
             return NO;
         } else if (req.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
             [self doErrorResponse:@"未找到微信客户端，请先下载安装"];
-            return NO;
-        }
-        return YES;
-    } else if (request.type == BCObjsTypeOfflinePayReq) {
-        BCOfflinePayReq *req = (BCOfflinePayReq *)request;
-        if (!req.title.isValid || [BCPayUtil getBytes:req.title] > 32) {
-            [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
-            return NO;
-        } else if (!req.totalfee.isValid || !req.totalfee.isPureInt) {
-            [self doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
-            return NO;
-        } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
-            [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
-            return NO;
-        } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxSCan) && !req.authcode.isValid) {
-            [self doErrorResponse:@"authcode 不是合法的字符串"];
-            return NO;
-        } else if ((req.channel == PayChannelAliScan) && (!req.terminalid.isValid || !req.storeid.isValid)) {
-            [self doErrorResponse:@"terminalid或storeid 不是合法的字符串"];
             return NO;
         }
         return YES;

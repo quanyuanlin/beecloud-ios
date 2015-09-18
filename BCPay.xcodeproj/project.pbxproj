@@ -40,15 +40,18 @@
 		3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9451BA07C3000A28ADC /* libWeChatSDK.a */; };
 		3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9491BA07C3000A28ADC /* AlipaySDK.framework */; };
 		3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */; };
-		362640001BAAC4EE0079D9F8 /* BCOfflineStatusReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 36263FFF1BAAC4EE0079D9F8 /* BCOfflineStatusReq.m */; settings = {ASSET_TAGS = (); }; };
-		362640031BAAC6560079D9F8 /* BCOfflineStatusResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 362640021BAAC6560079D9F8 /* BCOfflineStatusResp.m */; settings = {ASSET_TAGS = (); }; };
-		362640061BAACA0F0079D9F8 /* BCOfflineRevertReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 362640051BAACA0F0079D9F8 /* BCOfflineRevertReq.m */; settings = {ASSET_TAGS = (); }; };
-		362640091BAACB8B0079D9F8 /* BCOfflineRevertResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 362640081BAACB8B0079D9F8 /* BCOfflineRevertResp.m */; settings = {ASSET_TAGS = (); }; };
+		365C6D9E1BAC128300C49719 /* BCOfflineAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D8F1BAC128300C49719 /* BCOfflineAdapter.m */; };
+		365C6D9F1BAC128300C49719 /* BCOfflinePayReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D921BAC128300C49719 /* BCOfflinePayReq.m */; };
+		365C6DA01BAC128300C49719 /* BCOfflineRevertReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D941BAC128300C49719 /* BCOfflineRevertReq.m */; };
+		365C6DA11BAC128300C49719 /* BCOfflineStatusReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D961BAC128300C49719 /* BCOfflineStatusReq.m */; };
+		365C6DA21BAC128300C49719 /* BCOfflinePayResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D991BAC128300C49719 /* BCOfflinePayResp.m */; };
+		365C6DA31BAC128300C49719 /* BCOfflineRevertResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D9B1BAC128300C49719 /* BCOfflineRevertResp.m */; };
+		365C6DA41BAC128300C49719 /* BCOfflineStatusResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D9D1BAC128300C49719 /* BCOfflineStatusResp.m */; };
 		367267DC1BAA63BC007D7C64 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 367267D81BAA63BC007D7C64 /* ScanViewController.m */; };
 		367267DD1BAA63BC007D7C64 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */; };
 		367267DE1BAA63BC007D7C64 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367267DB1BAA63BC007D7C64 /* line@2x.png */; };
-		367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 367F66821BAAB48900B3466F /* BCPayPalAdapter.m */; settings = {ASSET_TAGS = (); }; };
-		367F668C1BAAB48900B3466F /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 367F66831BAAB48900B3466F /* libPayPalMobile.a */; settings = {ASSET_TAGS = (); }; };
+		367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 367F66821BAAB48900B3466F /* BCPayPalAdapter.m */; };
+		367F668C1BAAB48900B3466F /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 367F66831BAAB48900B3466F /* libPayPalMobile.a */; };
 		369750261B68C659009FAEDB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 369750251B68C659009FAEDB /* main.m */; };
 		369750291B68C659009FAEDB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 369750281B68C659009FAEDB /* AppDelegate.m */; };
 		3697502C1B68C659009FAEDB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3697502B1B68C659009FAEDB /* ViewController.m */; };
@@ -60,8 +63,6 @@
 		369750681B68C7F2009FAEDB /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7131B5F886800EAFCCE /* libc++.dylib */; };
 		369750691B68C7F9009FAEDB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7171B5F888F00EAFCCE /* libz.dylib */; };
 		3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7151B5F887400EAFCCE /* libsqlite3.dylib */; };
-		369B3A131BA931DE00051CCE /* BCOfflinePayReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A121BA931DE00051CCE /* BCOfflinePayReq.m */; };
-		369B3A161BA9549D00051CCE /* BCOfflinePayResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A151BA9549D00051CCE /* BCOfflinePayResp.m */; };
 		369B3A191BA95CB300051CCE /* GenQrCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A181BA95CB300051CCE /* GenQrCode.m */; };
 		369B3A1C1BA9646300051CCE /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A1B1BA9646200051CCE /* QRCodeViewController.m */; };
 		36CAEF531BA275DA002AB286 /* BeeCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CAEF501BA275DA002AB286 /* BeeCloud.m */; };
@@ -146,17 +147,24 @@
 		3602F94B1BA07C3000A28ADC /* APayAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APayAuthInfo.h; sourceTree = "<group>"; };
 		3602F94D1BA07C3000A28ADC /* BCAliPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCAliPayAdapter.h; sourceTree = "<group>"; };
 		3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCAliPayAdapter.m; sourceTree = "<group>"; };
-		36263FFE1BAAC4EE0079D9F8 /* BCOfflineStatusReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineStatusReq.h; sourceTree = "<group>"; };
-		36263FFF1BAAC4EE0079D9F8 /* BCOfflineStatusReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineStatusReq.m; sourceTree = "<group>"; };
-		362640011BAAC6560079D9F8 /* BCOfflineStatusResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineStatusResp.h; sourceTree = "<group>"; };
-		362640021BAAC6560079D9F8 /* BCOfflineStatusResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineStatusResp.m; sourceTree = "<group>"; };
-		362640041BAACA0F0079D9F8 /* BCOfflineRevertReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineRevertReq.h; sourceTree = "<group>"; };
-		362640051BAACA0F0079D9F8 /* BCOfflineRevertReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineRevertReq.m; sourceTree = "<group>"; };
-		362640071BAACB8B0079D9F8 /* BCOfflineRevertResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineRevertResp.h; sourceTree = "<group>"; };
-		362640081BAACB8B0079D9F8 /* BCOfflineRevertResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineRevertResp.m; sourceTree = "<group>"; };
 		364BC7131B5F886800EAFCCE /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		364BC7151B5F887400EAFCCE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		364BC7171B5F888F00EAFCCE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		365C6D8E1BAC128300C49719 /* BCOfflineAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineAdapter.h; sourceTree = "<group>"; };
+		365C6D8F1BAC128300C49719 /* BCOfflineAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineAdapter.m; sourceTree = "<group>"; };
+		365C6D911BAC128300C49719 /* BCOfflinePayReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflinePayReq.h; sourceTree = "<group>"; };
+		365C6D921BAC128300C49719 /* BCOfflinePayReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflinePayReq.m; sourceTree = "<group>"; };
+		365C6D931BAC128300C49719 /* BCOfflineRevertReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineRevertReq.h; sourceTree = "<group>"; };
+		365C6D941BAC128300C49719 /* BCOfflineRevertReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineRevertReq.m; sourceTree = "<group>"; };
+		365C6D951BAC128300C49719 /* BCOfflineStatusReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineStatusReq.h; sourceTree = "<group>"; };
+		365C6D961BAC128300C49719 /* BCOfflineStatusReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineStatusReq.m; sourceTree = "<group>"; };
+		365C6D981BAC128300C49719 /* BCOfflinePayResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflinePayResp.h; sourceTree = "<group>"; };
+		365C6D991BAC128300C49719 /* BCOfflinePayResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflinePayResp.m; sourceTree = "<group>"; };
+		365C6D9A1BAC128300C49719 /* BCOfflineRevertResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineRevertResp.h; sourceTree = "<group>"; };
+		365C6D9B1BAC128300C49719 /* BCOfflineRevertResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineRevertResp.m; sourceTree = "<group>"; };
+		365C6D9C1BAC128300C49719 /* BCOfflineStatusResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineStatusResp.h; sourceTree = "<group>"; };
+		365C6D9D1BAC128300C49719 /* BCOfflineStatusResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineStatusResp.m; sourceTree = "<group>"; };
+		365C6DA51BAC12BA00C49719 /* BCOffinePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCOffinePay.h; sourceTree = "<group>"; };
 		367267D81BAA63BC007D7C64 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		367267D91BAA63BC007D7C64 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
 		367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
@@ -185,10 +193,6 @@
 		369750481B68C6D5009FAEDB /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
 		369750491B68C6D5009FAEDB /* QueryResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryResultViewController.h; sourceTree = "<group>"; };
 		3697504A1B68C6D5009FAEDB /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
-		369B3A111BA931DE00051CCE /* BCOfflinePayReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflinePayReq.h; sourceTree = "<group>"; };
-		369B3A121BA931DE00051CCE /* BCOfflinePayReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflinePayReq.m; sourceTree = "<group>"; };
-		369B3A141BA9549D00051CCE /* BCOfflinePayResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflinePayResp.h; sourceTree = "<group>"; };
-		369B3A151BA9549D00051CCE /* BCOfflinePayResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflinePayResp.m; sourceTree = "<group>"; };
 		369B3A171BA95CB300051CCE /* GenQrCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenQrCode.h; sourceTree = "<group>"; };
 		369B3A181BA95CB300051CCE /* GenQrCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenQrCode.m; sourceTree = "<group>"; };
 		369B3A1A1BA9646200051CCE /* QRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
@@ -281,12 +285,6 @@
 				3602F8BD1BA031E800A28ADC /* BCQueryReq.m */,
 				3602F8BE1BA031E800A28ADC /* BCRefundStatusReq.h */,
 				3602F8BF1BA031E800A28ADC /* BCRefundStatusReq.m */,
-				369B3A111BA931DE00051CCE /* BCOfflinePayReq.h */,
-				369B3A121BA931DE00051CCE /* BCOfflinePayReq.m */,
-				36263FFE1BAAC4EE0079D9F8 /* BCOfflineStatusReq.h */,
-				36263FFF1BAAC4EE0079D9F8 /* BCOfflineStatusReq.m */,
-				362640041BAACA0F0079D9F8 /* BCOfflineRevertReq.h */,
-				362640051BAACA0F0079D9F8 /* BCOfflineRevertReq.m */,
 			);
 			path = BCRequest;
 			sourceTree = "<group>";
@@ -302,12 +300,6 @@
 				3602F8C61BA031E800A28ADC /* BCQueryResp.m */,
 				3602F8C71BA031E800A28ADC /* BCRefundStatusResp.h */,
 				3602F8C81BA031E800A28ADC /* BCRefundStatusResp.m */,
-				369B3A141BA9549D00051CCE /* BCOfflinePayResp.h */,
-				369B3A151BA9549D00051CCE /* BCOfflinePayResp.m */,
-				362640011BAAC6560079D9F8 /* BCOfflineStatusResp.h */,
-				362640021BAAC6560079D9F8 /* BCOfflineStatusResp.m */,
-				362640071BAACB8B0079D9F8 /* BCOfflineRevertResp.h */,
-				362640081BAACB8B0079D9F8 /* BCOfflineRevertResp.m */,
 			);
 			path = BCResponse;
 			sourceTree = "<group>";
@@ -351,6 +343,7 @@
 		3602F8E61BA031E800A28ADC /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				365C6D8D1BAC128300C49719 /* OfflinePay */,
 				367F667F1BAAB48900B3466F /* PayPal */,
 				3602F9411BA07C3000A28ADC /* WXPay */,
 				3602F9481BA07C3000A28ADC /* AliPay */,
@@ -479,6 +472,44 @@
 				364BC7131B5F886800EAFCCE /* libc++.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		365C6D8D1BAC128300C49719 /* OfflinePay */ = {
+			isa = PBXGroup;
+			children = (
+				365C6D8E1BAC128300C49719 /* BCOfflineAdapter.h */,
+				365C6D8F1BAC128300C49719 /* BCOfflineAdapter.m */,
+				365C6D901BAC128300C49719 /* Request */,
+				365C6D971BAC128300C49719 /* Response */,
+				365C6DA51BAC12BA00C49719 /* BCOffinePay.h */,
+			);
+			path = OfflinePay;
+			sourceTree = "<group>";
+		};
+		365C6D901BAC128300C49719 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				365C6D911BAC128300C49719 /* BCOfflinePayReq.h */,
+				365C6D921BAC128300C49719 /* BCOfflinePayReq.m */,
+				365C6D931BAC128300C49719 /* BCOfflineRevertReq.h */,
+				365C6D941BAC128300C49719 /* BCOfflineRevertReq.m */,
+				365C6D951BAC128300C49719 /* BCOfflineStatusReq.h */,
+				365C6D961BAC128300C49719 /* BCOfflineStatusReq.m */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		365C6D971BAC128300C49719 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				365C6D981BAC128300C49719 /* BCOfflinePayResp.h */,
+				365C6D991BAC128300C49719 /* BCOfflinePayResp.m */,
+				365C6D9A1BAC128300C49719 /* BCOfflineRevertResp.h */,
+				365C6D9B1BAC128300C49719 /* BCOfflineRevertResp.m */,
+				365C6D9C1BAC128300C49719 /* BCOfflineStatusResp.h */,
+				365C6D9D1BAC128300C49719 /* BCOfflineStatusResp.m */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		367F667F1BAAB48900B3466F /* PayPal */ = {
@@ -628,30 +659,31 @@
 				3602F9311BA031E800A28ADC /* AFHTTPRequestOperationManager.m in Sources */,
 				3602F92A1BA031E800A28ADC /* BCPayCache.m in Sources */,
 				3697504C1B68C6D5009FAEDB /* GuideViewController.m in Sources */,
+				365C6DA21BAC128300C49719 /* BCOfflinePayResp.m in Sources */,
 				3602F9261BA031E800A28ADC /* BCRefundStatusResp.m in Sources */,
+				365C6D9F1BAC128300C49719 /* BCOfflinePayReq.m in Sources */,
 				3602F91D1BA031E800A28ADC /* BCPayPalReq.m in Sources */,
 				3602F93D1BA031E800A28ADC /* BCUnionPayAdapter.m in Sources */,
 				3602F92D1BA031E800A28ADC /* BeeCloudAdapter.m in Sources */,
 				3602F9381BA031E800A28ADC /* AFURLSessionManager.m in Sources */,
 				3602F9271BA031E800A28ADC /* BCBaseResult.m in Sources */,
 				367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */,
+				365C6DA31BAC128300C49719 /* BCOfflineRevertResp.m in Sources */,
 				3602F9341BA031E800A28ADC /* AFSecurityPolicy.m in Sources */,
 				3697504B1B68C6D5009FAEDB /* QueryResultViewController.m in Sources */,
-				362640091BAACB8B0079D9F8 /* BCOfflineRevertResp.m in Sources */,
+				365C6DA01BAC128300C49719 /* BCOfflineRevertReq.m in Sources */,
 				3602F94F1BA07C3000A28ADC /* BCWXPayAdapter.m in Sources */,
-				362640061BAACA0F0079D9F8 /* BCOfflineRevertReq.m in Sources */,
 				3602F91C1BA031E800A28ADC /* BCBaseReq.m in Sources */,
 				3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */,
+				365C6DA11BAC128300C49719 /* BCOfflineStatusReq.m in Sources */,
 				3602F9331BA031E800A28ADC /* AFNetworkReachabilityManager.m in Sources */,
-				362640031BAAC6560079D9F8 /* BCOfflineStatusResp.m in Sources */,
 				367267DC1BAA63BC007D7C64 /* ScanViewController.m in Sources */,
-				362640001BAAC4EE0079D9F8 /* BCOfflineStatusReq.m in Sources */,
 				3602F9201BA031E800A28ADC /* BCQueryRefundReq.m in Sources */,
-				369B3A131BA931DE00051CCE /* BCOfflinePayReq.m in Sources */,
 				3602F9321BA031E800A28ADC /* AFHTTPSessionManager.m in Sources */,
-				369B3A161BA9549D00051CCE /* BCOfflinePayResp.m in Sources */,
 				369B3A1C1BA9646300051CCE /* QRCodeViewController.m in Sources */,
 				3602F9361BA031E800A28ADC /* AFURLRequestSerialization.m in Sources */,
+				365C6D9E1BAC128300C49719 /* BCOfflineAdapter.m in Sources */,
+				365C6DA41BAC128300C49719 /* BCOfflineStatusResp.m in Sources */,
 				369B3A191BA95CB300051CCE /* GenQrCode.m in Sources */,
 				3602F92B1BA031E800A28ADC /* BCPayUtil.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,

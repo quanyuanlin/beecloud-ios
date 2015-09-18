@@ -10,6 +10,7 @@
 #import "QueryResultViewController.h"
 #import "AFNetworking.h"
 #import "PayPalMobile.h"
+#import "BCOffinePay.h"
 #import "GenQrCode.h"
 #import "QRCodeViewController.h"
 #import "ScanViewController.h"
@@ -212,7 +213,7 @@
                 queryTimes++;
                 [BeeCloud sendBCReq:tempResp.request];
             } else {
-                [self showAlertView:tempResp.result_msg];
+                [self showAlertView:tempResp.payResult?@"支付成功":@"支付失败"];
 //                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
 //                req.channel = tempResp.request.channel;
 //                req.billno = tempResp.request.billno;

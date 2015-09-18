@@ -51,7 +51,7 @@
 }
 
 - (void)payPal:(NSMutableDictionary *)dic {
-    BCPayPalReq *req = (BCPayPalReq *)[dic objectForKey:@"PayPal"];
+    BCPayPalReq *req = (BCPayPalReq *)[dic objectForKey:kAdapterPayPal];
     
     if (![self checkParameters:req]) return;
     
@@ -87,8 +87,31 @@
 }
 
 - (void)payPalVerify:(NSMutableDictionary *)dic {
+    BCPayPalVerifyReq *req = (BCPayPalVerifyReq *)[dic objectForKey:kAdapterPayPal];
+    [self reqPayPalAccessToken:req];
+}
+
+- (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
     
-    BCPayPalVerifyReq *req = (BCPayPalVerifyReq *)[dic objectForKey:@"PayPalVerify"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy.allowInvalidCertificates = NO;
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:[BCPayCache sharedInstance].payPalClientID password:[BCPayCache sharedInstance].payPalSecret];
+    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
+    __weak BCPayPalAdapter *weakSelf = self;
+    [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
+        BCPayLog(@"token %@", response);
+        NSDictionary *dic = (NSDictionary *)response;
+        [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
+    }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [weakSelf doErrorResponse:kNetWorkError];
+    }];
+}
+
+- (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
     
     if (req == nil || req.payment == nil) {
         [self doErrorResponse:@"请求参数格式不合法"];
@@ -112,7 +135,7 @@
     parameters[@"total_fee"] = @((int)([payment.amount floatValue] * 100));
     parameters[@"currency"] = payment.currencyCode;
     parameters[@"bill_no"] = [[payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];
-    parameters[@"access_token"] = [dic objectForKey:@"access_token"];
+    parameters[@"access_token"] = accessToken;
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     
@@ -126,6 +149,7 @@
               [self doErrorResponse:kNetWorkError];
           }];
 }
+
 
 - (BOOL)checkParameters:(BCBaseReq *)request {
     

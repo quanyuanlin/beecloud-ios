@@ -15,15 +15,6 @@
 #import "BCPayReq.h"
 #import "BCPayResp.h"
 
-#import "BCOfflinePayReq.h"
-#import "BCOfflinePayResp.h"
-
-#import "BCOfflineStatusReq.h"
-#import "BCOfflineStatusResp.h"
-
-#import "BCOfflineRevertReq.h"
-#import "BCOfflineRevertResp.h"
-
 #import "BCQueryReq.h"
 #import "BCQueryResp.h"
 #import "BCQueryRefundReq.h"

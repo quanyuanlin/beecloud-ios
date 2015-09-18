@@ -26,6 +26,9 @@
 - (void)unionPay:(NSMutableDictionary *)dic;
 - (void)payPal:(NSMutableDictionary *)dic;
 - (void)payPalVerify:(NSMutableDictionary *)dic;
+- (void)offlinePay:(NSMutableDictionary *)dic;
+- (void)offlineStatus:(NSMutableDictionary *)dic;
+- (void)offlineRevert:(NSMutableDictionary *)dic;
 
 @end
 

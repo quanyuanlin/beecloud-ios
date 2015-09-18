@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.2.1";//api版本号
+static NSString * const kApiVersion = @"3.2.2";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kKeyResponseResultCode = @"result_code";
@@ -51,6 +51,7 @@ static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
 static NSString * const kAdapterAliPay = @"BCAliPayAdapter";
 static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
+static NSString * const kAdapterOffline = @"BCOfflineAdapter";
 
 /**
  *  BCPay URL type for handling URLs.
