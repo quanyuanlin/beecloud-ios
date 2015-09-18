@@ -40,6 +40,18 @@
 		3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9451BA07C3000A28ADC /* libWeChatSDK.a */; };
 		3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9491BA07C3000A28ADC /* AlipaySDK.framework */; };
 		3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */; };
+		365C6D9E1BAC128300C49719 /* BCOfflineAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D8F1BAC128300C49719 /* BCOfflineAdapter.m */; };
+		365C6D9F1BAC128300C49719 /* BCOfflinePayReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D921BAC128300C49719 /* BCOfflinePayReq.m */; };
+		365C6DA01BAC128300C49719 /* BCOfflineRevertReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D941BAC128300C49719 /* BCOfflineRevertReq.m */; };
+		365C6DA11BAC128300C49719 /* BCOfflineStatusReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D961BAC128300C49719 /* BCOfflineStatusReq.m */; };
+		365C6DA21BAC128300C49719 /* BCOfflinePayResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D991BAC128300C49719 /* BCOfflinePayResp.m */; };
+		365C6DA31BAC128300C49719 /* BCOfflineRevertResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D9B1BAC128300C49719 /* BCOfflineRevertResp.m */; };
+		365C6DA41BAC128300C49719 /* BCOfflineStatusResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 365C6D9D1BAC128300C49719 /* BCOfflineStatusResp.m */; };
+		367267DC1BAA63BC007D7C64 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 367267D81BAA63BC007D7C64 /* ScanViewController.m */; };
+		367267DD1BAA63BC007D7C64 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */; };
+		367267DE1BAA63BC007D7C64 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367267DB1BAA63BC007D7C64 /* line@2x.png */; };
+		367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 367F66821BAAB48900B3466F /* BCPayPalAdapter.m */; };
+		367F668C1BAAB48900B3466F /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 367F66831BAAB48900B3466F /* libPayPalMobile.a */; };
 		369750261B68C659009FAEDB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 369750251B68C659009FAEDB /* main.m */; };
 		369750291B68C659009FAEDB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 369750281B68C659009FAEDB /* AppDelegate.m */; };
 		3697502C1B68C659009FAEDB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3697502B1B68C659009FAEDB /* ViewController.m */; };
@@ -51,8 +63,8 @@
 		369750681B68C7F2009FAEDB /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7131B5F886800EAFCCE /* libc++.dylib */; };
 		369750691B68C7F9009FAEDB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7171B5F888F00EAFCCE /* libz.dylib */; };
 		3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7151B5F887400EAFCCE /* libsqlite3.dylib */; };
-		36CAEF3B1BA17644002AB286 /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CAEF321BA17644002AB286 /* BCPayPalAdapter.m */; };
-		36CAEF3C1BA17644002AB286 /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CAEF331BA17644002AB286 /* libPayPalMobile.a */; };
+		369B3A191BA95CB300051CCE /* GenQrCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A181BA95CB300051CCE /* GenQrCode.m */; };
+		369B3A1C1BA9646300051CCE /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A1B1BA9646200051CCE /* QRCodeViewController.m */; };
 		36CAEF531BA275DA002AB286 /* BeeCloud.m in Sources */ = {isa = PBXBuildFile; fileRef = 36CAEF501BA275DA002AB286 /* BeeCloud.m */; };
 		36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4091B8F4A19004BB25E /* Accelerate.framework */; };
 		36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */; };
@@ -138,6 +150,35 @@
 		364BC7131B5F886800EAFCCE /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		364BC7151B5F887400EAFCCE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		364BC7171B5F888F00EAFCCE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		365C6D8E1BAC128300C49719 /* BCOfflineAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineAdapter.h; sourceTree = "<group>"; };
+		365C6D8F1BAC128300C49719 /* BCOfflineAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineAdapter.m; sourceTree = "<group>"; };
+		365C6D911BAC128300C49719 /* BCOfflinePayReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflinePayReq.h; sourceTree = "<group>"; };
+		365C6D921BAC128300C49719 /* BCOfflinePayReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflinePayReq.m; sourceTree = "<group>"; };
+		365C6D931BAC128300C49719 /* BCOfflineRevertReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineRevertReq.h; sourceTree = "<group>"; };
+		365C6D941BAC128300C49719 /* BCOfflineRevertReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineRevertReq.m; sourceTree = "<group>"; };
+		365C6D951BAC128300C49719 /* BCOfflineStatusReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineStatusReq.h; sourceTree = "<group>"; };
+		365C6D961BAC128300C49719 /* BCOfflineStatusReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineStatusReq.m; sourceTree = "<group>"; };
+		365C6D981BAC128300C49719 /* BCOfflinePayResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflinePayResp.h; sourceTree = "<group>"; };
+		365C6D991BAC128300C49719 /* BCOfflinePayResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflinePayResp.m; sourceTree = "<group>"; };
+		365C6D9A1BAC128300C49719 /* BCOfflineRevertResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineRevertResp.h; sourceTree = "<group>"; };
+		365C6D9B1BAC128300C49719 /* BCOfflineRevertResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineRevertResp.m; sourceTree = "<group>"; };
+		365C6D9C1BAC128300C49719 /* BCOfflineStatusResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineStatusResp.h; sourceTree = "<group>"; };
+		365C6D9D1BAC128300C49719 /* BCOfflineStatusResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineStatusResp.m; sourceTree = "<group>"; };
+		365C6DA51BAC12BA00C49719 /* BCOffinePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCOffinePay.h; sourceTree = "<group>"; };
+		367267D81BAA63BC007D7C64 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		367267D91BAA63BC007D7C64 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
+		367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
+		367267DB1BAA63BC007D7C64 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
+		367F66811BAAB48900B3466F /* BCPayPalAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayPalAdapter.h; sourceTree = "<group>"; };
+		367F66821BAAB48900B3466F /* BCPayPalAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayPalAdapter.m; sourceTree = "<group>"; };
+		367F66831BAAB48900B3466F /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPayPalMobile.a; sourceTree = "<group>"; };
+		367F66841BAAB48900B3466F /* PayPalConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalConfiguration.h; sourceTree = "<group>"; };
+		367F66851BAAB48900B3466F /* PayPalFuturePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalFuturePaymentViewController.h; sourceTree = "<group>"; };
+		367F66861BAAB48900B3466F /* PayPalMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalMobile.h; sourceTree = "<group>"; };
+		367F66871BAAB48900B3466F /* PayPalOAuthScopes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalOAuthScopes.h; sourceTree = "<group>"; };
+		367F66881BAAB48900B3466F /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
+		367F66891BAAB48900B3466F /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
+		367F668A1BAAB48900B3466F /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
 		369750211B68C659009FAEDB /* BCPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BCPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		369750241B68C659009FAEDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		369750251B68C659009FAEDB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -152,16 +193,10 @@
 		369750481B68C6D5009FAEDB /* GuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideViewController.m; sourceTree = "<group>"; };
 		369750491B68C6D5009FAEDB /* QueryResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryResultViewController.h; sourceTree = "<group>"; };
 		3697504A1B68C6D5009FAEDB /* GuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideViewController.h; sourceTree = "<group>"; };
-		36CAEF311BA17644002AB286 /* BCPayPalAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayPalAdapter.h; sourceTree = "<group>"; };
-		36CAEF321BA17644002AB286 /* BCPayPalAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayPalAdapter.m; sourceTree = "<group>"; };
-		36CAEF331BA17644002AB286 /* libPayPalMobile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPayPalMobile.a; sourceTree = "<group>"; };
-		36CAEF341BA17644002AB286 /* PayPalConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalConfiguration.h; sourceTree = "<group>"; };
-		36CAEF351BA17644002AB286 /* PayPalFuturePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalFuturePaymentViewController.h; sourceTree = "<group>"; };
-		36CAEF361BA17644002AB286 /* PayPalMobile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalMobile.h; sourceTree = "<group>"; };
-		36CAEF371BA17644002AB286 /* PayPalOAuthScopes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalOAuthScopes.h; sourceTree = "<group>"; };
-		36CAEF381BA17644002AB286 /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
-		36CAEF391BA17644002AB286 /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
-		36CAEF3A1BA17644002AB286 /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
+		369B3A171BA95CB300051CCE /* GenQrCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenQrCode.h; sourceTree = "<group>"; };
+		369B3A181BA95CB300051CCE /* GenQrCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenQrCode.m; sourceTree = "<group>"; };
+		369B3A1A1BA9646200051CCE /* QRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewController.h; sourceTree = "<group>"; };
+		369B3A1B1BA9646200051CCE /* QRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewController.m; sourceTree = "<group>"; };
 		36CAEF4F1BA275DA002AB286 /* BeeCloudAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeCloudAdapterProtocol.h; path = BeeCloud/BeeCloudAdapterProtocol.h; sourceTree = "<group>"; };
 		36CAEF501BA275DA002AB286 /* BeeCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeeCloud.m; path = BeeCloud/BeeCloud.m; sourceTree = "<group>"; };
 		36CAEF511BA275DA002AB286 /* BeeCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeCloud.h; path = BeeCloud/BeeCloud.h; sourceTree = "<group>"; };
@@ -184,7 +219,7 @@
 				36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */,
 				36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */,
 				36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */,
-				36CAEF3C1BA17644002AB286 /* libPayPalMobile.a in Frameworks */,
+				367F668C1BAAB48900B3466F /* libPayPalMobile.a in Frameworks */,
 				3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */,
 				36DCE4101B8F4A5E004BB25E /* CoreVideo.framework in Frameworks */,
 				36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */,
@@ -308,7 +343,8 @@
 		3602F8E61BA031E800A28ADC /* Channel */ = {
 			isa = PBXGroup;
 			children = (
-				36CAEF2F1BA17644002AB286 /* PayPal */,
+				365C6D8D1BAC128300C49719 /* OfflinePay */,
+				367F667F1BAAB48900B3466F /* PayPal */,
 				3602F9411BA07C3000A28ADC /* WXPay */,
 				3602F9481BA07C3000A28ADC /* AliPay */,
 				3602F8E71BA031E800A28ADC /* AFNetworking */,
@@ -438,9 +474,76 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		365C6D8D1BAC128300C49719 /* OfflinePay */ = {
+			isa = PBXGroup;
+			children = (
+				365C6D8E1BAC128300C49719 /* BCOfflineAdapter.h */,
+				365C6D8F1BAC128300C49719 /* BCOfflineAdapter.m */,
+				365C6D901BAC128300C49719 /* Request */,
+				365C6D971BAC128300C49719 /* Response */,
+				365C6DA51BAC12BA00C49719 /* BCOffinePay.h */,
+			);
+			path = OfflinePay;
+			sourceTree = "<group>";
+		};
+		365C6D901BAC128300C49719 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				365C6D911BAC128300C49719 /* BCOfflinePayReq.h */,
+				365C6D921BAC128300C49719 /* BCOfflinePayReq.m */,
+				365C6D931BAC128300C49719 /* BCOfflineRevertReq.h */,
+				365C6D941BAC128300C49719 /* BCOfflineRevertReq.m */,
+				365C6D951BAC128300C49719 /* BCOfflineStatusReq.h */,
+				365C6D961BAC128300C49719 /* BCOfflineStatusReq.m */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		365C6D971BAC128300C49719 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				365C6D981BAC128300C49719 /* BCOfflinePayResp.h */,
+				365C6D991BAC128300C49719 /* BCOfflinePayResp.m */,
+				365C6D9A1BAC128300C49719 /* BCOfflineRevertResp.h */,
+				365C6D9B1BAC128300C49719 /* BCOfflineRevertResp.m */,
+				365C6D9C1BAC128300C49719 /* BCOfflineStatusResp.h */,
+				365C6D9D1BAC128300C49719 /* BCOfflineStatusResp.m */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		367F667F1BAAB48900B3466F /* PayPal */ = {
+			isa = PBXGroup;
+			children = (
+				367F66801BAAB48900B3466F /* BCPayPalAdapter */,
+				367F66831BAAB48900B3466F /* libPayPalMobile.a */,
+				367F66841BAAB48900B3466F /* PayPalConfiguration.h */,
+				367F66851BAAB48900B3466F /* PayPalFuturePaymentViewController.h */,
+				367F66861BAAB48900B3466F /* PayPalMobile.h */,
+				367F66871BAAB48900B3466F /* PayPalOAuthScopes.h */,
+				367F66881BAAB48900B3466F /* PayPalPayment.h */,
+				367F66891BAAB48900B3466F /* PayPalPaymentViewController.h */,
+				367F668A1BAAB48900B3466F /* PayPalProfileSharingViewController.h */,
+			);
+			path = PayPal;
+			sourceTree = "<group>";
+		};
+		367F66801BAAB48900B3466F /* BCPayPalAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				367F66811BAAB48900B3466F /* BCPayPalAdapter.h */,
+				367F66821BAAB48900B3466F /* BCPayPalAdapter.m */,
+			);
+			path = BCPayPalAdapter;
+			sourceTree = "<group>";
+		};
 		369750221B68C659009FAEDB /* BCPayExample */ = {
 			isa = PBXGroup;
 			children = (
+				367267D81BAA63BC007D7C64 /* ScanViewController.m */,
+				367267D91BAA63BC007D7C64 /* ScanViewController.h */,
+				367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */,
+				367267DB1BAA63BC007D7C64 /* line@2x.png */,
 				369750491B68C6D5009FAEDB /* QueryResultViewController.h */,
 				369750471B68C6D5009FAEDB /* QueryResultViewController.m */,
 				3697504A1B68C6D5009FAEDB /* GuideViewController.h */,
@@ -449,6 +552,10 @@
 				369750281B68C659009FAEDB /* AppDelegate.m */,
 				3697502A1B68C659009FAEDB /* ViewController.h */,
 				3697502B1B68C659009FAEDB /* ViewController.m */,
+				369B3A1A1BA9646200051CCE /* QRCodeViewController.h */,
+				369B3A1B1BA9646200051CCE /* QRCodeViewController.m */,
+				369B3A171BA95CB300051CCE /* GenQrCode.h */,
+				369B3A181BA95CB300051CCE /* GenQrCode.m */,
 				3697502D1B68C659009FAEDB /* Main.storyboard */,
 				369750301B68C659009FAEDB /* Images.xcassets */,
 				369750321B68C659009FAEDB /* LaunchScreen.xib */,
@@ -464,31 +571,6 @@
 				369750251B68C659009FAEDB /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		36CAEF2F1BA17644002AB286 /* PayPal */ = {
-			isa = PBXGroup;
-			children = (
-				36CAEF301BA17644002AB286 /* BCPayPalAdapter */,
-				36CAEF331BA17644002AB286 /* libPayPalMobile.a */,
-				36CAEF341BA17644002AB286 /* PayPalConfiguration.h */,
-				36CAEF351BA17644002AB286 /* PayPalFuturePaymentViewController.h */,
-				36CAEF361BA17644002AB286 /* PayPalMobile.h */,
-				36CAEF371BA17644002AB286 /* PayPalOAuthScopes.h */,
-				36CAEF381BA17644002AB286 /* PayPalPayment.h */,
-				36CAEF391BA17644002AB286 /* PayPalPaymentViewController.h */,
-				36CAEF3A1BA17644002AB286 /* PayPalProfileSharingViewController.h */,
-			);
-			path = PayPal;
-			sourceTree = "<group>";
-		};
-		36CAEF301BA17644002AB286 /* BCPayPalAdapter */ = {
-			isa = PBXGroup;
-			children = (
-				36CAEF311BA17644002AB286 /* BCPayPalAdapter.h */,
-				36CAEF321BA17644002AB286 /* BCPayPalAdapter.m */,
-			);
-			path = BCPayPalAdapter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,7 +599,7 @@
 		364BC5A11B5E32FD00EAFCCE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = BeeCloud;
 				TargetAttributes = {
 					369750201B68C659009FAEDB = {
@@ -550,7 +632,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3697502F1B68C659009FAEDB /* Main.storyboard in Resources */,
+				367267DE1BAA63BC007D7C64 /* line@2x.png in Resources */,
 				369750341B68C659009FAEDB /* LaunchScreen.xib in Resources */,
+				367267DD1BAA63BC007D7C64 /* pick_bg@2x.png in Resources */,
 				369750311B68C659009FAEDB /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -575,27 +659,37 @@
 				3602F9311BA031E800A28ADC /* AFHTTPRequestOperationManager.m in Sources */,
 				3602F92A1BA031E800A28ADC /* BCPayCache.m in Sources */,
 				3697504C1B68C6D5009FAEDB /* GuideViewController.m in Sources */,
+				365C6DA21BAC128300C49719 /* BCOfflinePayResp.m in Sources */,
 				3602F9261BA031E800A28ADC /* BCRefundStatusResp.m in Sources */,
+				365C6D9F1BAC128300C49719 /* BCOfflinePayReq.m in Sources */,
 				3602F91D1BA031E800A28ADC /* BCPayPalReq.m in Sources */,
 				3602F93D1BA031E800A28ADC /* BCUnionPayAdapter.m in Sources */,
 				3602F92D1BA031E800A28ADC /* BeeCloudAdapter.m in Sources */,
 				3602F9381BA031E800A28ADC /* AFURLSessionManager.m in Sources */,
 				3602F9271BA031E800A28ADC /* BCBaseResult.m in Sources */,
+				367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */,
+				365C6DA31BAC128300C49719 /* BCOfflineRevertResp.m in Sources */,
 				3602F9341BA031E800A28ADC /* AFSecurityPolicy.m in Sources */,
 				3697504B1B68C6D5009FAEDB /* QueryResultViewController.m in Sources */,
+				365C6DA01BAC128300C49719 /* BCOfflineRevertReq.m in Sources */,
 				3602F94F1BA07C3000A28ADC /* BCWXPayAdapter.m in Sources */,
 				3602F91C1BA031E800A28ADC /* BCBaseReq.m in Sources */,
 				3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */,
+				365C6DA11BAC128300C49719 /* BCOfflineStatusReq.m in Sources */,
 				3602F9331BA031E800A28ADC /* AFNetworkReachabilityManager.m in Sources */,
+				367267DC1BAA63BC007D7C64 /* ScanViewController.m in Sources */,
 				3602F9201BA031E800A28ADC /* BCQueryRefundReq.m in Sources */,
 				3602F9321BA031E800A28ADC /* AFHTTPSessionManager.m in Sources */,
+				369B3A1C1BA9646300051CCE /* QRCodeViewController.m in Sources */,
 				3602F9361BA031E800A28ADC /* AFURLRequestSerialization.m in Sources */,
+				365C6D9E1BAC128300C49719 /* BCOfflineAdapter.m in Sources */,
+				365C6DA41BAC128300C49719 /* BCOfflineStatusResp.m in Sources */,
+				369B3A191BA95CB300051CCE /* GenQrCode.m in Sources */,
 				3602F92B1BA031E800A28ADC /* BCPayUtil.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
 				36CAEF531BA275DA002AB286 /* BeeCloud.m in Sources */,
 				3602F9291BA031E800A28ADC /* BCQueryRefundResult.m in Sources */,
 				3602F91F1BA031E800A28ADC /* BCPayReq.m in Sources */,
-				36CAEF3B1BA17644002AB286 /* BCPayPalAdapter.m in Sources */,
 				3602F91E1BA031E800A28ADC /* BCPayPalVerifyReq.m in Sources */,
 				3602F9211BA031E800A28ADC /* BCQueryReq.m in Sources */,
 				3602F9221BA031E800A28ADC /* BCRefundStatusReq.m in Sources */,
@@ -644,6 +738,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -706,8 +801,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/AliPay",
@@ -726,6 +823,7 @@
 					"$(PROJECT_DIR)/BCPaySDK/Channel/WXPay",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.beecloud.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = BCPay;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -737,8 +835,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/AliPay",
@@ -753,6 +853,7 @@
 					"$(PROJECT_DIR)/BCPaySDK/Channel/WXPay",
 				);
 				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "cn.beecloud.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = BCPay;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -58,6 +58,7 @@
     [BeeCloudAdapter beeCloud:kAdapterAliPay doSetDelegate:delegate];
     [BeeCloudAdapter beeCloud:kAdapterUnionPay doSetDelegate:delegate];
     [BeeCloudAdapter beeCloud:kAdapterPayPal doSetDelegate:delegate];
+    [BeeCloudAdapter beeCloud:kAdapterOffline doSetDelegate:delegate];
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
@@ -102,6 +103,15 @@
         case BCObjsTypePayPalVerify:
             [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
             break;
+        case BCObjsTypeOfflinePayReq:
+            [instance reqOfflinePay:req];
+            break;
+        case BCObjsTypeOfflineBillStatusReq:
+            [instance reqOfflineBillStatus:req];
+            break;
+        case BCObjsTypeOfflineRevertReq:
+            [instance reqOfflineBillRevert:req];
+            break;
         default:
             break;
     }
@@ -112,7 +122,7 @@
 #pragma mark Pay Request
 
 - (void)reqPay:(BCPayReq *)req {
-    if (![[BeeCloud sharedInstance] checkParameters:req]) return;
+    if (![self checkParameters:req]) return;
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
     
@@ -131,11 +141,11 @@
     }
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               
-              BCBaseResp *resp = [self getErrorInResponse:response];
+              BCBaseResp *resp = [weakSelf getErrorInResponse:response];
               if (resp.result_code != 0) {
                   if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
                       [_delegate onBeeCloudResp:resp];
@@ -149,10 +159,10 @@
                   } else if (req.channel == PayChannelUnApp) {
                       [dic setObject:req.viewController forKey:@"viewController"];
                   }
-                  [self doPayAction:req.channel source:dic];
+                  [weakSelf doPayAction:req.channel source:dic];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
+              [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
@@ -177,39 +187,32 @@
     }
 }
 
+#pragma mark - Offline Pay
+
+- (void)reqOfflinePay:(id)req {
+    [BeeCloudAdapter beeCloudOfflinePay:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterOffline, nil]];
+}
+
+#pragma mark - OffLine BillStatus
+
+- (void)reqOfflineBillStatus:(id)req {
+    [BeeCloudAdapter beeCloudOfflineStatus:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterOffline, nil]];
+}
+
+#pragma mark - OffLine BillRevert
+
+- (void)reqOfflineBillRevert:(id)req {
+    [BeeCloudAdapter beeCloudOfflineRevert:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterOffline, nil]];
+}
+
 #pragma mark PayPal
 
 - (void)reqPayPal:(BCPayPalReq *)req {
-    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, @"PayPal",nil]];
+    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterPayPal,nil]];
 }
 
 - (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
-    [self reqPayPalAccessToken:req];
-}
-
-- (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.securityPolicy.allowInvalidCertificates = NO;
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:[BCPayCache sharedInstance].payPalClientID password:[BCPayCache sharedInstance].payPalSecret];
-    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
-    
-    [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
-        BCPayLog(@"token %@", response);
-        NSDictionary *dic = (NSDictionary *)response;
-        [self doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
-    }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self doErrorResponse:kNetWorkError];
-    }];
-}
-
-- (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
-    
-    [BeeCloudAdapter beeCloudPayPalVerify:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,@"PayPalVerify",accessToken, @"access_token",nil]];
+    [BeeCloudAdapter beeCloudPayPalVerify:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterPayPal, nil]];
 }
 
 #pragma mark Query Bills/Refunds
@@ -254,13 +257,13 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"resp = %@", response);
-             [self doQueryResponse:(NSDictionary *)response];
+             [weakSelf doQueryResponse:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self doErrorResponse:kNetWorkError];
+             [weakSelf doErrorResponse:kNetWorkError];
          }];
 }
 
@@ -271,9 +274,7 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
-    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_delegate onBeeCloudResp:resp];
-    }
+    [self doBeeCloudResp:resp];
 }
 
 - (NSMutableArray *)parseResults:(NSDictionary *)dic {
@@ -331,12 +332,12 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BeeCloud *weakSelf = self;
     [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
-             [self doQueryRefundStatus:(NSDictionary *)response];
+             [weakSelf doQueryRefundStatus:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self doErrorResponse:kNetWorkError];
+             [weakSelf doErrorResponse:kNetWorkError];
          }];
 }
 
@@ -346,22 +347,23 @@
     resp.result_msg = dic[kKeyResponseResultMsg];
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
-    
+    [self doBeeCloudResp:resp];
+}
+
+#pragma mark Util Function
+
+- (void)doBeeCloudResp:(BCBaseResp *)resp {
     if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
         [_delegate onBeeCloudResp:resp];
     }
 }
-
-#pragma mark Util Function
 
 - (void)doErrorResponse:(NSString *)errMsg {
     BCBaseResp *resp = [[BCBaseResp alloc] init];
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_delegate onBeeCloudResp:resp];
-    }
+    [self doBeeCloudResp:resp];
 }
 
 - (BCBaseResp *)getErrorInResponse:(id)response {

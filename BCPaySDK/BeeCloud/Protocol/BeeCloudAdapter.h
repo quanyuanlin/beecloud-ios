@@ -23,5 +23,8 @@
 + (void)beeCloudUnionPay:(NSMutableDictionary *)dic;
 + (void)beeCloudPayPal:(NSMutableDictionary *)dic;
 + (void)beeCloudPayPalVerify:(NSMutableDictionary *)dic;
++ (void)beeCloudOfflinePay:(NSMutableDictionary *)dic;
++ (void)beeCloudOfflineStatus:(NSMutableDictionary *)dic;
++ (void)beeCloudOfflineRevert:(NSMutableDictionary *)dic;
 
 @end
