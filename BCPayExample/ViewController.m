@@ -38,8 +38,7 @@
     
     self.payList = [NSMutableArray arrayWithCapacity:10];
 #pragma mark - 设置delegate
-    [BeeCloud setBeeCloudDelegate:self];
-    
+    [BeeCloud setBeeCloudDelegate:self];    
 }
 
 #pragma mark - 微信支付
@@ -63,7 +62,7 @@
 
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel;
-    payReq.title = @"20150901-PayPal-Release";
+    payReq.title = billTitle;
     payReq.totalfee = @"1";
     payReq.billno = outTradeNo;
     payReq.scheme = @"payDemo";
@@ -78,7 +77,7 @@
     
     BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
     payReq.channel = channel;
-    payReq.title = @"Offline Pay";
+    payReq.title = billTitle;
     payReq.totalfee = @"1";
     payReq.billno = outTradeNo;
     payReq.authcode = authcode;
@@ -123,7 +122,7 @@
     payReq.items = @[item1, item2, item3];
     payReq.shipping = @"5.00";
     payReq.tax = @"2.50";
-    payReq.shortDesc = @"paypal test";
+    payReq.shortDesc = billTitle;
     payReq.viewController = self;
     payReq.payConfig = _payPalConfig;
     
@@ -209,7 +208,7 @@
         {
             static int queryTimes = 1;
             BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
-            if (!tempResp.payResult && queryTimes < 5) {
+            if (!tempResp.payResult && queryTimes < 3) {
                 queryTimes++;
                 [BeeCloud sendBCReq:tempResp.request];
             } else {
