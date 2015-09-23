@@ -52,6 +52,7 @@ static NSString * const kAdapterAliPay = @"BCAliPayAdapter";
 static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
 static NSString * const kAdapterOffline = @"BCOfflineAdapter";
+static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
 
 /**
  *  BCPay URL type for handling URLs.
@@ -92,7 +93,12 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelUnWeb,//银联网页
     
     PayChannelPayPal = 40,
-    PayChannelPayPalSanBox
+    PayChannelPayPalSanBox,
+    
+    PayChannelBaidu = 50,
+    PayChannelBaiduApp,
+    PayChannelBaiduWeb,
+    PayChannelBaiduWap
 };
 
 enum  BCErrCode {

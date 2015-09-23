@@ -29,6 +29,7 @@
 - (void)offlinePay:(NSMutableDictionary *)dic;
 - (void)offlineStatus:(NSMutableDictionary *)dic;
 - (void)offlineRevert:(NSMutableDictionary *)dic;
+-(void)baiduPay:(NSMutableDictionary *)dic;
 
 @end
 

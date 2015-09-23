@@ -131,6 +131,19 @@
         case PayChannelPayPalSanBox:
             cType = @"PAYPAL_SANDBOX";
             break;
+#pragma mark PayChannel_Baidu
+        case PayChannelBaidu:
+            cType = @"BD";
+            break;
+        case PayChannelBaiduApp:
+            cType = @"BD_APP";
+            break;
+        case PayChannelBaiduWap:
+            cType = @"BD_WAP";
+            break;
+        case PayChannelBaiduWeb:
+            cType = @"BD_WEB";
+            break;
         default:
             break;
     }

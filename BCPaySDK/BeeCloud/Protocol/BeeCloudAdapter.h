@@ -26,5 +26,6 @@
 + (void)beeCloudOfflinePay:(NSMutableDictionary *)dic;
 + (void)beeCloudOfflineStatus:(NSMutableDictionary *)dic;
 + (void)beeCloudOfflineRevert:(NSMutableDictionary *)dic;
++ (void)beeCloudBaiduPay:(NSMutableDictionary *)dic;
 
 @end

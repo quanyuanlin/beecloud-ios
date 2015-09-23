@@ -59,6 +59,7 @@
     [BeeCloudAdapter beeCloud:kAdapterUnionPay doSetDelegate:delegate];
     [BeeCloudAdapter beeCloud:kAdapterPayPal doSetDelegate:delegate];
     [BeeCloudAdapter beeCloud:kAdapterOffline doSetDelegate:delegate];
+    [BeeCloudAdapter beeCloud:kAdapterBaidu doSetDelegate:delegate];
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
@@ -180,6 +181,9 @@
                 break;
             case PayChannelUnApp:
                 [BeeCloudAdapter beeCloudUnionPay:dic];
+                break;
+            case PayChannelBaiduApp:
+                [BeeCloudAdapter beeCloudBaiduPay:dic];
                 break;
             default:
                 break;

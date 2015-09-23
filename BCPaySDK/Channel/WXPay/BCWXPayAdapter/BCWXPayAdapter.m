@@ -35,7 +35,6 @@
 }
 
 - (BOOL)handleOpenUrl:(NSURL *)url {
-    
     return [WXApi handleOpenURL:url delegate:[BCWXPayAdapter sharedInstance]];
 }
 

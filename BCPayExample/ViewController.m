@@ -14,11 +14,13 @@
 #import "GenQrCode.h"
 #import "QRCodeViewController.h"
 #import "ScanViewController.h"
+#import "PayChannelCell.h"
 
 @interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate, QRCodeDelegate> {
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
     PayChannel currentChannel;
+    NSArray *channelList;
 }
 
 @end
@@ -35,10 +37,23 @@
     } else if (self.actionType == 2) {
         self.title = @"查询退款订单";
     }
-    
+    channelList = @[@{@"channel":@"微信",@"img":@"wxPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelWxApp),@"title":@"微信APP支付"},
+                                      @{@"sub":@(PayChannelWxNative),@"title":@"微信扫码支付"},
+                                      @{@"sub":@(PayChannelWxSCan),@"title":@"微信刷卡支付"}]},
+                    @{@"channel":@"支付宝",@"img":@"aliPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelAliApp),@"title":@"支付宝APP支付"},
+                                      @{@"sub":@(PayChannelAliOfflineQrCode),@"title":@"支付宝扫码支付"},
+                                      @{@"sub":@(PayChannelAliScan),@"title":@"支付宝条码支付"}]},
+                    @{@"channel":@"银联在线",@"img":@"uPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelUnApp),@"title":@"银联在线"}]},
+                    @{@"channel":@"PayPal",@"img":@"wxPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelPayPal),@"title":@"PayPal"}]},
+                    @{@"channel":@"Baidu",@"img":@"wxPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
     self.payList = [NSMutableArray arrayWithCapacity:10];
 #pragma mark - 设置delegate
-    [BeeCloud setBeeCloudDelegate:self];    
+    [BeeCloud setBeeCloudDelegate:self];
 }
 
 #pragma mark - 微信支付
@@ -59,7 +74,7 @@
 - (void)doPay:(PayChannel)channel {
     NSString *outTradeNo = [self genOutTradeNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-
+    
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel;
     payReq.title = billTitle;
@@ -146,12 +161,12 @@
     _completedPayment = completedPayment;
     
     [self doPayPalVerify];
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
-   
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -213,10 +228,10 @@
                 [BeeCloud sendBCReq:tempResp.request];
             } else {
                 [self showAlertView:tempResp.payResult?@"支付成功":@"支付失败"];
-//                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
-//                req.channel = tempResp.request.channel;
-//                req.billno = tempResp.request.billno;
-//                [BeeCloud sendBCReq:req];
+                //                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
+                //                req.channel = tempResp.request.channel;
+                //                req.billno = tempResp.request.billno;
+                //                [BeeCloud sendBCReq:req];
                 queryTimes = 1;
             }
         }
@@ -270,9 +285,9 @@
     if (self.actionType == 1) {
         BCQueryReq *req = [[BCQueryReq alloc] init];
         req.channel = channel;
-     //   req.billno = @"20150901104138656";
-       // req.starttime = @"2015-07-23 00:00";
-       // req.endtime = @"2015-07-23 12:00";
+        //   req.billno = @"20150901104138656";
+        // req.starttime = @"2015-07-23 00:00";
+        // req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
         req.limit = 50;
         [BeeCloud sendBCReq:req];
@@ -290,66 +305,72 @@
 }
 
 #pragma maek tableView Delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return channelList.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 8;
+    NSArray *sub = channelList[section][@"subChannel"];
+    return sub.count;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return  channelList[section][@"channel"];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60.0f;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *simpleTableIdentifier = @"payChannelCell";
+    
+    PayChannelCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
+    if (cell == nil) {
+        cell = [[PayChannelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+    NSDictionary *row = channelList[indexPath.section][@"subChannel"][indexPath.row];
+    cell.cImg.image = [UIImage imageNamed:channelList[indexPath.section][@"img"]];
+    cell.title.text = row[@"title"];
+    
+    return cell;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *row = channelList[indexPath.section][@"subChannel"];
+    PayChannel channel = [row[indexPath.row][@"sub"] integerValue];
     if (self.actionType == 0) {
-        switch (indexPath.row) {
-            case 0:
-                [self doWXAppPay];
+        switch (channel) {
+            case PayChannelWxApp:
+            case PayChannelAliApp:
+            case PayChannelUnApp:
+            case PayChannelBaiduApp:
+                [self doPay:channel];
                 break;
-            case 1:
-                [self doOfflinePay:PayChannelWxNative authCode:@""];
+            case PayChannelWxNative:
+            case PayChannelAliOfflineQrCode:
+                [self doOfflinePay:channel authCode:@""];
                 break;
-            case 2:
-                currentChannel = PayChannelWxSCan;
+            case PayChannelWxSCan:
+            case PayChannelAliScan:
+                currentChannel = channel;
                 [self showScanViewController];
                 break;
-            case 3:
-                [self doAliAppPay];
-                break;
-            case 4:
-                [self doOfflinePay:PayChannelAliOfflineQrCode authCode:@""];
-                break;
-            case 5:
-                currentChannel = PayChannelAliScan;
-                [self showScanViewController];
-            case 6:
-                [self doUnionPay];
-                break;
-            case 7:
+            case PayChannelPayPal:
+            case PayChannelPayPalSanBox:
                 [self doPayPal];
                 break;
             default:
                 break;
         }
     } else {
-        switch (indexPath.row) {
-            case 0:
-            case 1:
-            case 2:
-                [self doQueryWX];
-                break;
-            case 3:
-            case 4:
-            case 5:
-                [self doQueryAli];
-                break;
-            case 6:
-                [self doQueryUN];
-                break;
-            case 7:
-                [self doQueryPayPal];
-                break;
-            default:
-                break;
-        }
+        [self doQuery:channel];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -375,8 +396,7 @@
 
 #pragma mark - prepare segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationVC = (UINavigationController *)segue.destinationViewController;
-    QueryResultViewController *viewController = (QueryResultViewController *)navigationVC.childViewControllers[0];
+    QueryResultViewController *viewController = (QueryResultViewController *)segue.destinationViewController;
     if([segue.identifier isEqualToString:@"queryResult"]) {
         viewController.dataList = self.payList;
     }

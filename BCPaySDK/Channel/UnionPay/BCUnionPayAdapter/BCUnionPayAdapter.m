@@ -27,7 +27,6 @@
 }
 
 - (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    
     [BCUnionPayAdapter sharedInstance].unionAdapterDelegate = delegate ;
 }
 

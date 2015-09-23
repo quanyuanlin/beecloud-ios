@@ -106,4 +106,11 @@
     }
 }
 
++(void)beeCloudBaiduPay:(NSMutableDictionary *)dic {
+    id adapter = [[NSClassFromString(kAdapterBaidu) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(baiduPay:)]) {
+        [adapter baiduPay:dic];
+    }
+}
+
 @end
