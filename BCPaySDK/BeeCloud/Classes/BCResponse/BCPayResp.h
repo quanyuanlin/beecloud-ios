@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 #import "BCBaseResp.h"
+#import "BCPayReq.h"
 
 #pragma mark BCPayResp
 /**

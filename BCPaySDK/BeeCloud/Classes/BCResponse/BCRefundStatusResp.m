@@ -10,8 +10,8 @@
 
 @implementation BCRefundStatusResp
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithReq:(BCRefundStatusReq *)request {
+    self = [super initWithReq:request];
     if (self) {
         self.type = BCObjsTypeRefundStatusResp;
     }

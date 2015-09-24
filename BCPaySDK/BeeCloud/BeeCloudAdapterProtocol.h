@@ -13,8 +13,6 @@
 #import "BeeCloud.h"
 
 @protocol BeeCloudAdapterDelegate <NSObject>
-@required
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate;
 
 @optional
 - (BOOL)registerWeChat:(NSString *)appid;
@@ -29,7 +27,7 @@
 - (void)offlinePay:(NSMutableDictionary *)dic;
 - (void)offlineStatus:(NSMutableDictionary *)dic;
 - (void)offlineRevert:(NSMutableDictionary *)dic;
--(void)baiduPay:(NSMutableDictionary *)dic;
+- (void)baiduPay:(NSMutableDictionary *)dic;
 
 @end
 

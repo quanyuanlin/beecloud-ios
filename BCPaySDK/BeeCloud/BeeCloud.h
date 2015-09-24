@@ -76,6 +76,8 @@
  */
 + (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate;
 
++ (id<BeeCloudDelegate>)getBeeCloudDelegate;
+
 /**
  *  获取API版本号
  *

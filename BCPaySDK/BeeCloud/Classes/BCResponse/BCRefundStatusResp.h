@@ -7,6 +7,7 @@
 //
 
 #import "BCBaseResp.h"
+#import "BCRefundStatusReq.h"
 
 /**
  *  查询退款订单状态的响应

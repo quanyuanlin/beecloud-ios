@@ -11,6 +11,4 @@
 
 @interface BCWXPayAdapter : NSObject
 
-@property (nonatomic, weak) id<BeeCloudDelegate> wxBeeCloudDelegate;
-
 @end

@@ -15,8 +15,9 @@
 #import "QRCodeViewController.h"
 #import "ScanViewController.h"
 #import "PayChannelCell.h"
+#import "BDWalletSDKMainManager.h"
 
-@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate, QRCodeDelegate> {
+@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate, QRCodeDelegate,BDWalletSDKMainManagerDelegate> {
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
     PayChannel currentChannel;
@@ -192,7 +193,8 @@
         {
             if (resp.result_code == 0) {
                 BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
-                switch (tempResp.request.channel) {
+                BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
+                switch (payReq.channel) {
                     case PayChannelAliOfflineQrCode:
                     case PayChannelWxNative:
                         if (tempResp.codeurl.isValid) {
@@ -208,8 +210,8 @@
                     case PayChannelWxSCan:
                     {
                         BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
-                        req.channel = tempResp.request.channel;
-                        req.billno = tempResp.request.billno;
+                        req.channel = payReq.channel;
+                        req.billno = payReq.billno;
                         [BeeCloud sendBCReq:req];
                     }
                         break;
@@ -389,8 +391,9 @@
 
 - (void)qrCodeBeScaned:(BCOfflinePayResp *)resp {
     BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
-    req.channel = resp.request.channel;
-    req.billno = resp.request.billno;
+    BCOfflinePayReq *payReq = (BCOfflinePayReq *)resp.request;
+    req.channel = payReq.channel;
+    req.billno = payReq.billno;
     [BeeCloud sendBCReq:req];
 }
 

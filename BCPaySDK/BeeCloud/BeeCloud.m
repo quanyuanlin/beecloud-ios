@@ -12,10 +12,7 @@
 #import "BeeCloudAdapter.h"
 
 @interface BeeCloud ()
-
-@property (nonatomic, assign) BOOL registerStatus;
 @property (nonatomic, weak) id<BeeCloudDelegate> delegate;
-
 @end
 
 
@@ -54,12 +51,10 @@
 
 + (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
     [BeeCloud sharedInstance].delegate = delegate;
-    [BeeCloudAdapter beeCloud:kAdapterWXPay doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterAliPay doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterUnionPay doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterPayPal doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterOffline doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterBaidu doSetDelegate:delegate];
+}
+
++ (id<BeeCloudDelegate>)getBeeCloudDelegate {
+    return [BeeCloud sharedInstance].delegate;
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
@@ -123,6 +118,7 @@
 #pragma mark Pay Request
 
 - (void)reqPay:(BCPayReq *)req {
+    [BCPayCache sharedInstance].bcResp = [[BCPayResp alloc] initWithReq:req];
     if (![self checkParameters:req]) return;
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
@@ -222,6 +218,7 @@
 #pragma mark Query Bills/Refunds
 
 - (void)reqQueryOrder:(BCQueryReq *)req {
+    [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
@@ -317,6 +314,7 @@
 #pragma mark Refund Status
 
 - (void)reqRefundStatus:(BCRefundStatusReq *)req {
+    [BCPayCache sharedInstance].bcResp = [[BCRefundStatusResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;

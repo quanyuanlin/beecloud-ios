@@ -25,10 +25,6 @@
     return instance;
 }
 
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    [BCAliPayAdapter sharedInstance].aliBeeCloudDelegate = delegate;
-}
-
 - (BOOL)handleOpenUrl:(NSURL *)url {
     [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
         [[BCAliPayAdapter sharedInstance] processOrderForAliPay:resultDic];
@@ -70,14 +66,12 @@
             errcode = BCErrCodeUnsupport;
             break;
     }
-    BCPayResp *resp = [[BCPayResp alloc] init];
+    BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
     resp.result_code = errcode;
     resp.result_msg = strMsg;
     resp.err_detail = strMsg;
     resp.paySource = resultDic;
-    if (_aliBeeCloudDelegate && [_aliBeeCloudDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_aliBeeCloudDelegate onBeeCloudResp:resp];
-    }
+    [BCPayCache beeCloudDoResponse];
 }
 
 @end

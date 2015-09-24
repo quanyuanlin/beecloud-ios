@@ -13,9 +13,6 @@
 #import "BCOffinePay.h"
 
 @interface BCOfflineAdapter ()<BeeCloudAdapterDelegate>
-
-@property (nonatomic, weak) id<BeeCloudDelegate> offlineAdapterDelegate;
-
 @end
 
 @implementation BCOfflineAdapter
@@ -29,12 +26,9 @@
     return instance;
 }
 
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    [BCOfflineAdapter sharedInstance].offlineAdapterDelegate = delegate;
-}
-
 - (void)offlinePay:(NSMutableDictionary *)dic {
     BCOfflinePayReq *req = (BCOfflinePayReq *)[dic objectForKey:kAdapterOffline];
+    [BCPayCache sharedInstance].bcResp = [[BCOfflinePayResp alloc] initWithReq:req];
     
     if (![self checkParameters:req]) return;
     
@@ -72,7 +66,7 @@
               
               NSDictionary *source = (NSDictionary *)response;
               BCPayLog(@"channel=%@,resp=%@", cType, response);
-              BCOfflinePayResp *resp = [[BCOfflinePayResp alloc] init];
+              BCOfflinePayResp *resp = (BCOfflinePayResp *)[BCPayCache sharedInstance].bcResp;
               resp.result_code = [[source objectForKey:kKeyResponseResultCode] intValue];
               resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
               resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
@@ -82,22 +76,18 @@
                       resp.codeurl = [source objectForKey:kKeyResponseCodeUrl];
                   }
               }
-            [weakSelf doBeeCloudResp:resp];
+              [BCPayCache beeCloudDoResponse];
               
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
-- (void)doOfflinePayResp:(BCOfflinePayReq *)req source:(NSDictionary *)source {
-    
-    
-}
-
 #pragma mark - OffLine BillStatus
 
 - (void)offlineStatus:(NSMutableDictionary *)dic {
     BCOfflineStatusReq *req = (BCOfflineStatusReq *)[dic objectForKey:kAdapterOffline];
+    [BCPayCache sharedInstance].bcResp = [[BCOfflineStatusResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
@@ -123,7 +113,7 @@
           success:^(AFHTTPRequestOperation *operation, id response) {
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
-              BCOfflineStatusResp *resp = [[BCOfflineStatusResp alloc] init];
+              BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
               resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
               resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
               resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
@@ -131,7 +121,7 @@
               if (resp.result_code == 0) {
                 resp.payResult = [[response objectForKey:KKeyResponsePayResult] boolValue];
               }
-              [weakSelf doBeeCloudResp:resp];
+              [BCPayCache beeCloudDoResponse];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
@@ -141,7 +131,7 @@
 
 - (void)offlineRevert:(NSMutableDictionary *)dic {
     BCOfflineRevertReq *req = (BCOfflineRevertReq *)[dic objectForKey:kAdapterOffline];
-    
+    [BCPayCache sharedInstance].bcResp = [[BCOfflineRevertResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
@@ -167,7 +157,7 @@
           success:^(AFHTTPRequestOperation *operation, id response) {
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
-              BCOfflineRevertResp *resp = [[BCOfflineRevertResp alloc] init];
+              BCOfflineRevertResp *resp = (BCOfflineRevertResp *)[BCPayCache sharedInstance].bcResp;
               resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
               resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
               resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
@@ -175,8 +165,7 @@
               if (resp.result_code == 0) {
                     resp.revertStatus = [[response objectForKey:kKeyResponseRevertResult] boolValue];
               }
-              [weakSelf doBeeCloudResp:resp];
-              
+              [BCPayCache beeCloudDoResponse];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
@@ -209,20 +198,12 @@
     return NO ;
 }
 
-- (void)doBeeCloudResp:(BCBaseResp *)resp {
-    if ([BCOfflineAdapter sharedInstance].offlineAdapterDelegate && [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate onBeeCloudResp:resp];
-    }
-}
-
 - (void)doErrorResponse:(NSString *)errMsg {
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if ([BCOfflineAdapter sharedInstance].offlineAdapterDelegate && [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate onBeeCloudResp:resp];
-    }
+    [BCPayCache beeCloudDoResponse];
 }
 
 @end

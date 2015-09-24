@@ -10,8 +10,9 @@
 
 #pragma mark query response
 @implementation BCQueryResp
-- (instancetype)init {
-    self = [super init];
+
+- (instancetype)initWithReq:(BCQueryReq *)request {
+    self = [super initWithReq:request];
     if (self) {
         self.type = BCObjsTypeQueryResp;
     }

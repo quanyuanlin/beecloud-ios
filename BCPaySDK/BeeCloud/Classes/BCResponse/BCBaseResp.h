@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BCPayConstant.h"
+#import "BCBaseReq.h"
 #pragma mark BCBaseResp
 /**
  *  BeeCloud所有响应的基类
@@ -21,5 +22,9 @@
 @property (nonatomic, retain) NSString *result_msg;
 /** 错误详情 */
 @property (nonatomic, retain) NSString *err_detail;
+
+@property (nonatomic,retain) BCBaseReq *request;
+
+- (instancetype)initWithReq:(BCBaseReq *)request;
 
 @end

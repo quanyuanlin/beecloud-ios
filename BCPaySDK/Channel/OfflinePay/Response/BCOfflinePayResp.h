@@ -11,6 +11,5 @@
 @interface BCOfflinePayResp : BCBaseResp
 
 @property (nonatomic, retain) NSString *codeurl;
-@property (nonatomic, retain) BCOfflinePayReq *request;
 
 @end

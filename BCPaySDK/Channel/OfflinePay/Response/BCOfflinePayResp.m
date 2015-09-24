@@ -10,10 +10,11 @@
 
 @implementation BCOfflinePayResp
 
-- (instancetype)init {
+- (instancetype)initWithReq:(BCBaseReq *)request {
     self = [super init];
     if (self) {
         self.type = BCObjsTypeOfflinePayResp;
+        self.request = request;
     }
     return self;
 }

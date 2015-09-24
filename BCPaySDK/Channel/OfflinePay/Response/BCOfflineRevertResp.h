@@ -12,6 +12,5 @@
 @interface BCOfflineRevertResp : BCBaseResp
 
 @property (nonatomic, assign) BOOL revertStatus;
-@property (nonatomic, retain) BCOfflineRevertReq *request;
 
 @end

@@ -14,7 +14,6 @@
 
 @interface BCPayPalAdapter ()<BeeCloudAdapterDelegate>
 
-@property (nonatomic, weak) id<BeeCloudDelegate> payPalAdapterDelegate;
 @property (nonatomic, assign) BOOL isSandBox;
 
 @end
@@ -46,12 +45,10 @@
     }
 }
 
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    [BCPayPalAdapter sharedInstance].payPalAdapterDelegate = delegate;
-}
-
 - (void)payPal:(NSMutableDictionary *)dic {
+
     BCPayPalReq *req = (BCPayPalReq *)[dic objectForKey:kAdapterPayPal];
+    [BCPayCache sharedInstance].bcResp.request = req;
     
     if (![self checkParameters:req]) return;
     
@@ -141,10 +138,7 @@
     
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              BCBaseResp *resp = [self getErrorInResponse:response];
-              if ([BCPayPalAdapter sharedInstance].payPalAdapterDelegate && [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-                  [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate onBeeCloudResp:resp];
-              }
+              [self getErrorInResponse:response];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [self doErrorResponse:kNetWorkError];
           }];
@@ -179,22 +173,20 @@
 }
 
 - (void)doErrorResponse:(NSString *)errMsg {
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    BCBaseResp * resp = [BCPayCache sharedInstance].bcResp;
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    if (_payPalAdapterDelegate && [_payPalAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_payPalAdapterDelegate onBeeCloudResp:resp];
-    }
+    [BCPayCache beeCloudDoResponse];
 }
 
-- (BCBaseResp *)getErrorInResponse:(id)response {
+- (void)getErrorInResponse:(id)response {
     NSDictionary *dic = (NSDictionary *)response;
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
     resp.result_code = [dic[kKeyResponseResultCode] intValue];
     resp.result_msg = dic[kKeyResponseResultMsg];
     resp.err_detail = dic[kKeyResponseErrDetail];
-    return resp;
+    [BCPayCache beeCloudDoResponse];
 }
 
 @end

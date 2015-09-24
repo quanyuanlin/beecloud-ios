@@ -26,10 +26,6 @@
     return instance;
 }
 
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    [BCUnionPayAdapter sharedInstance].unionAdapterDelegate = delegate ;
-}
-
 - (void)unionPay:(NSMutableDictionary *)dic {
     NSString *tn = [dic objectForKey:@"tn"];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -50,13 +46,11 @@
         strMsg = @"支付取消";
     }
     
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
     resp.result_code = errcode;
     resp.result_msg = strMsg;
     resp.err_detail = strMsg;
-    if (_unionAdapterDelegate && [_unionAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_unionAdapterDelegate onBeeCloudResp:resp];
-    }
+    [BCPayCache beeCloudDoResponse];
 }
 
 @end

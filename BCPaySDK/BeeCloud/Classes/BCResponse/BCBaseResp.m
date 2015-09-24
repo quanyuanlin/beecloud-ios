@@ -10,10 +10,11 @@
 
 #pragma mark base response
 @implementation BCBaseResp
-- (instancetype)init {
+- (instancetype)initWithReq:(BCBaseReq *)request {
     self = [super init];
     if (self) {
         self.type = BCObjsTypeBaseResp;
+        self.request = request;
     }
     return self;
 }

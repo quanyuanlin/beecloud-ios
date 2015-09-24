@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 BeeCloud Inc. All rights reserved.
 //
 #import <Foundation/Foundation.h>
-
+#import "BCBaseResp.h"
 /*!
  This header file is *NOT* included in the public release.
  */
@@ -53,10 +53,20 @@
 @property (nonatomic, assign) BOOL willPrintLogMsg;
 
 /**
+ *  base response instance
+ */
+@property (nonatomic, strong) BCBaseResp *bcResp;
+
+/**
  *  Get the sharedInstance of BCCache.
  *
  *  @return BCCache shared instance.
  */
 + (instancetype)sharedInstance;
+
+/**
+ *  BeeCloud response
+ */
++ (void)beeCloudDoResponse;
 
 @end

@@ -12,13 +12,6 @@
 
 @implementation BeeCloudAdapter
 
-+ (void)beeCloud:(NSString *)object doSetDelegate:(id<BeeCloudDelegate>)delegate {
-    id adapter = [[NSClassFromString(object) alloc] init];
-    if (adapter && [adapter respondsToSelector:@selector(setBeeCloudDelegate:)]) {
-        [adapter setBeeCloudDelegate:delegate];
-    }
-}
-
 + (BOOL)beeCloudRegisterWeChat:(NSString *)appid {
     id adapter = [[NSClassFromString(kAdapterWXPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(registerWeChat:)]) {

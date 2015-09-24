@@ -11,6 +11,4 @@
 
 @interface BCUnionPayAdapter : NSObject
 
-@property (nonatomic, weak) id<BeeCloudDelegate> unionAdapterDelegate;
-
 @end

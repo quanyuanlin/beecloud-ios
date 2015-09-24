@@ -9,11 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "BeeCloud.h"
 
-
-
 @interface BeeCloudAdapter : NSObject
 
-+ (void)beeCloud:(NSString *)object doSetDelegate:(id<BeeCloudDelegate>)delegate;
 + (BOOL)beeCloudRegisterWeChat:(NSString *)appid;
 + (BOOL)beeCloudIsWXAppInstalled;
 + (void)beeCloudRegisterPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox;
