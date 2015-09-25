@@ -248,6 +248,17 @@
             }
         }
             break;
+        case BCObjsTypePayResp:
+        {
+            BCPayResp *tempResp = (BCPayResp *)resp;
+            BCPayReq *payReq = (BCPayReq *)resp.request;
+            if (payReq.channel == PayChannelBaiduApp) {
+                [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
+            } else {
+                [self showAlertView:resp.result_msg];
+            }
+        }
+            break;
         default:
         {
             if (resp.result_code == 0) {
@@ -416,6 +427,29 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor clearColor];
     tableView.tableFooterView = view;
+}
+
+#pragma mark - Baidu Delegate 
+- (void)BDWalletPayResultWithCode:(int)statusCode payDesc:(NSString *)payDescs {
+    NSString *status = @"";
+    switch (statusCode) {
+        case 0:
+            status = @"支付成功";
+            break;
+        case 1:
+            status = @"支付中";
+            break;
+        case 2:
+            status = @"支付取消";
+            break;
+        default:
+            break;
+    }
+    [self showAlertView:status];
+}
+
+- (void)logEventId:(NSString *)eventId eventDesc:(NSString *)eventDesc {
+    
 }
 
 @end

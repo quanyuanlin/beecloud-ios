@@ -141,12 +141,9 @@
     __weak BeeCloud *weakSelf = self;
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              
-              BCBaseResp *resp = [weakSelf getErrorInResponse:response];
-              if (resp.result_code != 0) {
-                  if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-                      [_delegate onBeeCloudResp:resp];
-                  }
+            
+              if ([[response objectForKey:kKeyResponseResultCode] intValue] != 0) {
+                  [weakSelf getErrorInResponse:response];
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
                   NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
@@ -269,13 +266,13 @@
 }
 
 - (void)doQueryResponse:(NSDictionary *)dic {
-    BCQueryResp *resp = [[BCQueryResp alloc] init];
+    BCQueryResp *resp = (BCQueryResp *)[BCPayCache sharedInstance].bcResp;
     resp.result_code = [dic[kKeyResponseResultCode] intValue];
     resp.result_msg = dic[kKeyResponseResultMsg];
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
-    [self doBeeCloudResp:resp];
+    [BCPayCache beeCloudDoResponse];
 }
 
 - (NSMutableArray *)parseResults:(NSDictionary *)dic {
@@ -344,37 +341,31 @@
 }
 
 - (void)doQueryRefundStatus:(NSDictionary *)dic {
-    BCRefundStatusResp *resp = [[BCRefundStatusResp alloc] init];
+    BCRefundStatusResp *resp = (BCRefundStatusResp *)[BCPayCache sharedInstance].bcResp;
     resp.result_code = [dic[kKeyResponseResultCode] intValue];
     resp.result_msg = dic[kKeyResponseResultMsg];
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
-    [self doBeeCloudResp:resp];
+    [BCPayCache beeCloudDoResponse];
 }
 
 #pragma mark Util Function
 
-- (void)doBeeCloudResp:(BCBaseResp *)resp {
-    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_delegate onBeeCloudResp:resp];
-    }
-}
-
 - (void)doErrorResponse:(NSString *)errMsg {
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
     resp.result_code = BCErrCodeCommon;
     resp.result_msg = errMsg;
     resp.err_detail = errMsg;
-    [self doBeeCloudResp:resp];
+    [BCPayCache beeCloudDoResponse];
 }
 
-- (BCBaseResp *)getErrorInResponse:(id)response {
+- (void)getErrorInResponse:(id)response {
     NSDictionary *dic = (NSDictionary *)response;
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
     resp.result_code = [dic[kKeyResponseResultCode] intValue];
     resp.result_msg = dic[kKeyResponseResultMsg];
     resp.err_detail = dic[kKeyResponseErrDetail];
-    return resp;
+    [BCPayCache beeCloudDoResponse];
 }
 
 - (BOOL)checkParameters:(BCBaseReq *)request {
