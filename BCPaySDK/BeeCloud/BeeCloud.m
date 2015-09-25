@@ -294,13 +294,15 @@
         if ([[dic allKeys] containsObject:@"spay_result"]) {
             BCQueryBillResult *qResp = [[BCQueryBillResult alloc] init];
             for (NSString *key in [dic allKeys]) {
-                [qResp setValue:[dic objectForKey:key] forKey:key];
+                NSString *tkey = [key stringByReplacingOccurrencesOfString:@"_" withString:@""];
+                [qResp setValue:[dic objectForKey:key] forKey:tkey];
             }
             return qResp;
         } else if ([[dic allKeys] containsObject:@"refund_no"]) {
             BCQueryRefundResult *qResp = [[BCQueryRefundResult alloc] init];
             for (NSString *key in [dic allKeys]) {
-                [qResp setValue:[dic objectForKey:key] forKey:key];
+                NSString *tkey = [key stringByReplacingOccurrencesOfString:@"_" withString:@""];
+                [qResp setValue:[dic objectForKey:key] forKey:tkey];
             }
             return qResp;
         }

@@ -17,10 +17,10 @@
 @interface BCBaseResult : NSObject
 
 @property (nonatomic, assign) BCObjsType type;
-@property (nonatomic, retain) NSString  *bill_no;
-@property (nonatomic, assign) NSInteger  total_fee;//NSInteger
+@property (nonatomic, retain) NSString  *billno;
+@property (nonatomic, assign) NSInteger  totalfee;//NSInteger
 @property (nonatomic, retain) NSString  *title;
-@property (nonatomic, assign) long long  created_time;//long long
+@property (nonatomic, assign) long long  createdtime;//long long
 @property (nonatomic, retain) NSString  *channel;
 
 @end

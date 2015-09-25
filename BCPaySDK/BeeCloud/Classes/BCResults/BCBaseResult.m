@@ -15,10 +15,10 @@
     if (self) {
         self.type = BCObjsTypeBaseResults;
         self.channel = @"";
-        self.bill_no = @"";
+        self.billno = @"";
         self.title = @"";
-        self.created_time = 0;
-        self.total_fee = 0;
+        self.createdtime = 0;
+        self.totalfee = 0;
     }
     return self;
 }

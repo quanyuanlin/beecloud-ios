@@ -15,6 +15,6 @@
  */
 @interface BCQueryBillResult : BCBaseResult
 
-@property (nonatomic, assign) BOOL spay_result;
+@property (nonatomic, assign) BOOL spayresult;
 
 @end
