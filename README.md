@@ -38,7 +38,33 @@ pod 'BeeCloud/UnionPay' //只包括银联
 pod 'BeeCloud/PayPal' //只包括paypal
 pod 'BeeCloud/Offline' //只包括线下收款
 ```
+## 配置
 
+1. `iOS 9`以上版本如果需要使用支付宝和微信支付，需要在`Info.plist`添加以下代码：
+
+    ```
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>weixin</string>
+        <string>wechat</string>
+        <string>alipay</string>
+    </array>
+    ```
+2. `iOS 9`默认限制了http协议的访问，如果App需要使用`http://`访问，必须在 `Info.plist`添加如下代码：
+
+    ```
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+    ```
+3. 如果Build失败，遇到以下错误信息：
+
+    ```
+    XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target.
+    ```
+    请到 Xcode 项目的 Build Settings 页搜索 bitcode，将 Enable Bitcode 设置为 NO。
 
 
 ## 注册
@@ -61,7 +87,7 @@ pod 'BeeCloud/Offline' //只包括线下收款
 ## 使用方法
 >具体使用请参考项目中的`BCPayExample`工程
 
-要调用以下方法，都需要实现接口`BeeCloudDelegate`， 实现本接口的方法使不同类型的请求获得对应的响应。  
+实现接口`BeeCloudDelegate`，获取不同类型的请求对应的响应。  
 
 *  使用以下方法设置delegate:
 
