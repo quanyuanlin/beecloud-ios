@@ -9,8 +9,16 @@
 目前已经包含微信APP、支付宝APP、银联在线APP、PayPal APP支付功能，以及支付订单和退款订单的查询功能。还包含了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，以及订单状态的查询与订单撤销。  
 本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
 
-##流程
+## 流程
+
+下图为整个支付的流程:
 ![pic](http://7xavqo.com1.z0.glb.clouddn.com/UML.png)
+
+其中需要开发者开发的只有：
+
+1. **（在App端）发送支付要素**
+5. **（在App端）处理同步支付结果**
+7. **（在商户服务端）处理异步支付结果通知（Webhook）**
 
 ## 安装
 
