@@ -70,7 +70,7 @@
 }
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
-    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],reqApiVersion]; //2015.07.28
+    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHost,reqApiVersion]; //2015.07.28
     return [NSString stringWithFormat:format, verHost];
 }
 

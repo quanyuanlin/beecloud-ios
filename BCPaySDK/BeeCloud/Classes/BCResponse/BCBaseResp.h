@@ -22,8 +22,10 @@
 @property (nonatomic, retain) NSString *result_msg;
 /** 错误详情 */
 @property (nonatomic, retain) NSString *err_detail;
-
-@property (nonatomic,retain) BCBaseReq *request;
+/** 请求体  */
+@property (nonatomic, retain) BCBaseReq *request;
+/** 成功下单后返回支付表记录唯一标识;根据id查询支付或退款订单时,传入的bcId */
+@property (nonatomic, retain) NSString *bcId;
 
 - (instancetype)initWithReq:(BCBaseReq *)request;
 

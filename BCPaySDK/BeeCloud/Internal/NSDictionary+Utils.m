@@ -17,47 +17,28 @@
  *
  *  @return  value值如果为nil或者null会返回空列表
  */
--(NSArray*)arrayObjectForKey:(id)aKey
+- (NSArray *)arrayObjectForKey:(id)aKey
 {
     id value = [self objectForKey:aKey];
     
-    if (value == nil || [value isKindOfClass:[NSNull class]])
-    {
+    if (value == nil || [value isKindOfClass:[NSNull class]]) {
         return  [NSArray array];
     }
     return value;
 }
 
 /**
- *获取字典指定的array的对象
+ *  获取字典指定的array的对象
  *
  *  @param aKey key
  *
  *  @return  value值如果为nil或者null会返回空列表
  */
--(NSMutableArray*)mutableArrayObjectForKey:(id)aKey
+- (NSMutableArray *)mutableArrayObjectForKey:(id)aKey
 {
     id value = [self objectForKey:aKey];
-    if (value == nil || [value isKindOfClass:[NSNull class]])
-    {
-        return  [NSMutableArray array];
-    }
-    return value;
-}
-
-/**
- *  获取字典指定的对象为空是返回默认对象
- *
- *  @param aKey          key
- *  @param defaultObject  value值如果为nil或者null会返回默认对象
- *
- *  @return 对象
- */
--(id)objectExtForKey:(id)aKey defaultObject:(id)defaultObject {
-    
-    id value = [self objectForKey:aKey];
     if (value == nil || [value isKindOfClass:[NSNull class]]) {
-        return  defaultObject;
+        return  [NSMutableArray array];
     }
     return value;
 }
@@ -69,41 +50,59 @@
  *
  * @return 字典value
  */
-- (NSString*) stringForKey:(id)aKey {
-
-    return [self stringForKey:aKey withDefaultValue:@""];
-}
 
 /**
- *获取字典指定的key的数值字符
+ *  获取字典指定的key的数值字符
  *
  *  @param aKey key
  *
  *  @return  value值如果为nil或者null会返回0字符串
  */
--(NSString*)numberStringForKey:(id)aKey {
-    
-    return [self stringForKey:aKey withDefaultValue:@"0"];
-    
+- (NSInteger)integerValueForKey:(NSString*)key defaultValue:(NSInteger)defaultValue {
+    if ([self valueForKeyIsNumber:key]) {
+        return [[self valueForKey:key] integerValue];
+    }
+    return defaultValue;
+}
+- (long long)longlongValueForKey:(NSString*)key defaultValue:(long long)defaultValue {
+    if ([self valueForKeyIsNumber:key]) {
+        return [[self valueForKey:key] longLongValue];
+    }
+    return defaultValue;
+}
+- (float)floatValueForKey:(NSString*)key defaultValue:(float)defaultValue {
+    if ([self valueForKeyIsNumber:key]) {
+        return [[self valueForKey:key] floatValue];
+    }
+    return defaultValue;
 }
 
-/**
- * @brief @brief 如果akey找不到，返回默认值 (防止出现nil，使程序崩溃)
- *
- * @param aKey 字典key值
- * @param defValue 为空时的默认值
- *
- * @return 字典value
- */
-- (NSString *)stringForKey:(id)aKey withDefaultValue:(NSString *)defValue
-{
-    NSString *value = [self objectForKey:aKey];
-    if (value == nil || [value isKindOfClass:[NSNull class]])
-    {
-        value = defValue;
+- (BOOL)boolValueForKey:(NSString*)key defaultValue:(BOOL)defaultValue {
+    if ([self valueForKeyIsNumber:key]) {
+        return [[self valueForKey:key] boolValue];
     }
-    
-    return [NSString stringWithFormat:@"%@",value];
+    return defaultValue;
+}
+
+- (NSString *)stringValueForKey:(NSString*)key defaultValue:(NSString*)defaultValue {
+    if ([self valueForKeyIsString:key]) {
+        return [self valueForKey:key];
+    }
+    return defaultValue;
+}
+
+- (NSArray *)arrayValueForKey:(NSString *)key defaultValue:(NSArray *)defaultValue {
+    if ([self valueForKeyIsArray:key]) {
+        return [self valueForKey:key];
+    }
+    return defaultValue;
+}
+
+- (NSDictionary *)dictValueForKey:(NSString *)key defaultValue:(NSDictionary *)defaultValue {
+    if ([self valueForKeyIsNSDictionary:key]) {
+        return [self valueForKey:key];
+    }
+    return defaultValue;
 }
 
 /**
@@ -114,21 +113,43 @@
  * @return 字典value
  */
 
--(NSString*)replaceNBSPforKey:(id)aKey
-{
+- (NSString *)replaceNBSPforKey:(id)aKey {
     NSString *value = [self objectForKey:aKey];
     
-    if (!value)
-        
-    {
-        
+    if (!value) {
         value = @"";
-        
     }
     NSString* str = [value stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "] ;
     
     return [NSString stringWithFormat:@"%@",str];
-    
+}
+
+- (BOOL)valueForKeyIsArray:(NSString *)key {
+    return [self valueForKeyIsType:key type:[NSArray class]];
+}
+
+- (BOOL)valueForKeyIsNull:(NSString *)key {
+    return [self valueForKeyIsType:key type:[NSNull class]];
+}
+
+- (BOOL)valueForKeyIsString:(NSString *)key {
+    return [self valueForKeyIsType:key type:[NSString class]];
+}
+
+- (BOOL)valueForKeyIsNumber:(NSString *)key {
+    return [self valueForKeyIsType:key type:[NSNumber class]];
+}
+
+- (BOOL)valueForKeyIsNSDictionary:(NSString *)key {
+    return [self valueForKeyIsType:key type:[NSDictionary class]];
+}
+
+- (BOOL)valueForKeyIsType:(NSString *)key type:(Class)kClass {
+    id value = [self objectForKey:key];
+    if (value == nil || [value isKindOfClass:[NSNull class]] || ![value isKindOfClass:kClass]) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

@@ -22,11 +22,7 @@ static NSString * const kKeyResponseCodeUrl = @"code_url";
 static NSString * const KKeyResponsePayResult = @"pay_result";
 static NSString * const kKeyResponseRevertResult = @"revert_status";
 
-static NSUInteger const kBCHostCount = 4;
-static NSString * const kBCHosts[] = {@"https://apisz.beecloud.cn",
-    @"https://apiqd.beecloud.cn",
-    @"https://apibj.beecloud.cn",
-    @"https://apihz.beecloud.cn"};
+static NSString * const kBCHost = @"https://apidynamic.beecloud.cn";
 
 static NSString * const reqApiVersion = @"/1";
 
@@ -36,6 +32,8 @@ static NSString * const kRestApiRefund = @"%@/rest/refund";
 static NSString * const kRestApiQueryBills = @"%@/rest/bills";
 static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
 static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
+static NSString * const kRestApiQueryBillById = @"%@/rest/bill/";
+static NSString * const kRestApiQueryRefundById = @"%@/rest/refund/";
 
 //rest api offline
 static NSString * const kRestApiOfflinePay = @"%@/rest/offline/bill";

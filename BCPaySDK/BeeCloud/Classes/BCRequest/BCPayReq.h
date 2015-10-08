@@ -32,6 +32,10 @@
  */
 @property (nonatomic, retain) NSString *billno;
 /**
+ *  订单失效时间,必须为非零正整数，单位为秒，建议不小于30
+ */
+@property (nonatomic, assign) NSInteger billTimeOut;
+/**
  *  调用支付的app注册在info.plist中的scheme,支付宝支付需要
  */
 @property (nonatomic, retain) NSString *scheme;

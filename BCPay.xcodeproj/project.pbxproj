@@ -518,7 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				3658AF551BB28B9400183C28 /* OfflinePay */,
-				3658AF681BB28B9400183C28 /* BaiDu */,
+				3658AF681BB28B9400183C28 /* Baidu */,
 				367F667F1BAAB48900B3466F /* PayPal */,
 				3602F9411BA07C3000A28ADC /* WXPay */,
 				3602F9481BA07C3000A28ADC /* AliPay */,
@@ -705,13 +705,14 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
-		3658AF681BB28B9400183C28 /* BaiDu */ = {
+		3658AF681BB28B9400183C28 /* Baidu */ = {
 			isa = PBXGroup;
 			children = (
 				369110661BB3F130003FE49D /* BCBaiduAdapter */,
 				3658AF6A1BB28B9400183C28 /* BDWalletSDK */,
 				3658AF6E1BB28B9400183C28 /* Dependency */,
 			);
+			name = Baidu;
 			path = BaiDu;
 			sourceTree = "<group>";
 		};

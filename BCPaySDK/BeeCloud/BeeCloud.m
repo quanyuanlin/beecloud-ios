@@ -133,10 +133,13 @@
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
     parameters[@"bill_no"] = req.billno;
     parameters[@"title"] = req.title;
+    if (req.billTimeOut > 0) {
+        parameters[@"bill_timeout"] = @(req.billTimeOut);
+    }
     if (req.optional) {
         parameters[@"optional"] = req.optional;
     }
-    
+  
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BeeCloud *weakSelf = self;
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
@@ -153,6 +156,7 @@
                   } else if (req.channel == PayChannelUnApp) {
                       [dic setObject:req.viewController forKey:@"viewController"];
                   }
+                  [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
                   [weakSelf doPayAction:req.channel source:dic];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -310,7 +314,7 @@
     return nil;
 }
 
-#pragma mark Refund Status
+#pragma mark Refund Status For WeChat
 
 - (void)reqRefundStatus:(BCRefundStatusReq *)req {
     [BCPayCache sharedInstance].bcResp = [[BCRefundStatusResp alloc] initWithReq:req];
@@ -349,6 +353,35 @@
     resp.err_detail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
     [BCPayCache beeCloudDoResponse];
+}
+
+#pragma mark Query By Id
+
+- (void)reqQueryBillById:(NSString *)bcId {
+    [BCPayCache sharedInstance].bcResp.bcId = bcId;
+    
+    if (!bcId.isValid) {
+        [self doErrorResponse:@"bcId 参数不合法"];
+        return;
+    }
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    if (parameters == nil) {
+        [self doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    
+    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    __weak BeeCloud *weakSelf = self;
+
+    [manager GET:[[BCPayUtil getBestHostWithFormat:kRestApiQueryBillById] stringByAppendingString:bcId] parameters:preparepara
+         success:^(AFHTTPRequestOperation *operation, id response) {
+          
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [weakSelf doErrorResponse:kNetWorkError];
+         }];
+
 }
 
 #pragma mark Util Function
