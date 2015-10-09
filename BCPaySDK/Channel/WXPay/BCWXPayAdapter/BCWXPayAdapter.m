@@ -74,7 +74,7 @@
                 break;
         }
         NSString *result = tempResp.errStr.isValid?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
-        BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+        BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
         resp.result_code = errcode;
         resp.result_msg = result;
         resp.err_detail = result;

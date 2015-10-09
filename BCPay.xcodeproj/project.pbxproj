@@ -40,6 +40,8 @@
 		3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9451BA07C3000A28ADC /* libWeChatSDK.a */; };
 		3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9491BA07C3000A28ADC /* AlipaySDK.framework */; };
 		3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */; };
+		36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D341BC66A0700CA6C81 /* libsqlite3.tbd */; };
+		36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D361BC66A1300CA6C81 /* libc++.tbd */; };
 		3658AFCB1BB28B9400183C28 /* BCOfflineAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658AF591BB28B9400183C28 /* BCOfflineAdapter.m */; settings = {ASSET_TAGS = (); }; };
 		3658AFCC1BB28B9400183C28 /* BCOfflinePayReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658AF5C1BB28B9400183C28 /* BCOfflinePayReq.m */; settings = {ASSET_TAGS = (); }; };
 		3658AFCD1BB28B9400183C28 /* BCOfflineRevertReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658AF5E1BB28B9400183C28 /* BCOfflineRevertReq.m */; settings = {ASSET_TAGS = (); }; };
@@ -113,9 +115,6 @@
 		369750341B68C659009FAEDB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 369750321B68C659009FAEDB /* LaunchScreen.xib */; };
 		3697504B1B68C6D5009FAEDB /* QueryResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 369750471B68C6D5009FAEDB /* QueryResultViewController.m */; };
 		3697504C1B68C6D5009FAEDB /* GuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 369750481B68C6D5009FAEDB /* GuideViewController.m */; };
-		369750681B68C7F2009FAEDB /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7131B5F886800EAFCCE /* libc++.dylib */; };
-		369750691B68C7F9009FAEDB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7171B5F888F00EAFCCE /* libz.dylib */; };
-		3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 364BC7151B5F887400EAFCCE /* libsqlite3.dylib */; };
 		369B3A191BA95CB300051CCE /* GenQrCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A181BA95CB300051CCE /* GenQrCode.m */; };
 		369B3A1C1BA9646300051CCE /* QRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 369B3A1B1BA9646200051CCE /* QRCodeViewController.m */; };
 		36A3C0801BB535B2003E82B1 /* NSDictionary+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 36A3C07F1BB535B2003E82B1 /* NSDictionary+Utils.m */; settings = {ASSET_TAGS = (); }; };
@@ -202,9 +201,8 @@
 		3602F94B1BA07C3000A28ADC /* APayAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APayAuthInfo.h; sourceTree = "<group>"; };
 		3602F94D1BA07C3000A28ADC /* BCAliPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCAliPayAdapter.h; sourceTree = "<group>"; };
 		3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCAliPayAdapter.m; sourceTree = "<group>"; };
-		364BC7131B5F886800EAFCCE /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
-		364BC7151B5F887400EAFCCE /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		364BC7171B5F888F00EAFCCE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		36379D341BC66A0700CA6C81 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		36379D361BC66A1300CA6C81 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		3658AF561BB28B9400183C28 /* BCOffinePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOffinePay.h; sourceTree = "<group>"; };
 		3658AF581BB28B9400183C28 /* BCOfflineAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineAdapter.h; sourceTree = "<group>"; };
 		3658AF591BB28B9400183C28 /* BCOfflineAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineAdapter.m; sourceTree = "<group>"; };
@@ -375,6 +373,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */,
+				36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */,
 				368EA8E61BB392C100F1F9D3 /* MapKit.framework in Frameworks */,
 				368EA8E41BB392AF00F1F9D3 /* libz.1.2.5.tbd in Frameworks */,
 				368EA8E21BB3929000F1F9D3 /* CoreGraphics.framework in Frameworks */,
@@ -396,11 +396,8 @@
 				36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */,
 				3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */,
 				36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */,
-				3697506A1B68C807009FAEDB /* libsqlite3.dylib in Frameworks */,
 				3602F93E1BA031E800A28ADC /* libUPPayPlugin.a in Frameworks */,
 				3658AFD31BB28B9400183C28 /* libBaiduWalletSDK.a in Frameworks */,
-				369750691B68C7F9009FAEDB /* libz.dylib in Frameworks */,
-				369750681B68C7F2009FAEDB /* libc++.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,6 +632,8 @@
 		364BC6E81B5F2AE700EAFCCE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				36379D361BC66A1300CA6C81 /* libc++.tbd */,
+				36379D341BC66A0700CA6C81 /* libsqlite3.tbd */,
 				368EA8E51BB392C100F1F9D3 /* MapKit.framework */,
 				368EA8E31BB392AF00F1F9D3 /* libz.1.2.5.tbd */,
 				368EA8E11BB3929000F1F9D3 /* CoreGraphics.framework */,
@@ -652,9 +651,6 @@
 				36DCE40E1B8F4A5E004BB25E /* CoreVideo.framework */,
 				36DCE4091B8F4A19004BB25E /* Accelerate.framework */,
 				36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */,
-				364BC7171B5F888F00EAFCCE /* libz.dylib */,
-				364BC7151B5F887400EAFCCE /* libsqlite3.dylib */,
-				364BC7131B5F886800EAFCCE /* libc++.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -46,7 +46,7 @@
         strMsg = @"支付取消";
     }
     
-    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
     resp.result_code = errcode;
     resp.result_msg = strMsg;
     resp.err_detail = strMsg;

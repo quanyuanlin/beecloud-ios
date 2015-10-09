@@ -19,15 +19,18 @@
 - (BOOL)isWXAppInstalled;
 - (void)registerPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox;
 - (BOOL)handleOpenUrl:(NSURL *)url;
+
 - (void)wxPay:(NSMutableDictionary *)dic;
 - (void)aliPay:(NSMutableDictionary *)dic;
 - (void)unionPay:(NSMutableDictionary *)dic;
 - (void)payPal:(NSMutableDictionary *)dic;
 - (void)payPalVerify:(NSMutableDictionary *)dic;
+- (void)baiduPay:(NSMutableDictionary *)dic;
+
 - (void)offlinePay:(NSMutableDictionary *)dic;
 - (void)offlineStatus:(NSMutableDictionary *)dic;
 - (void)offlineRevert:(NSMutableDictionary *)dic;
-- (void)baiduPay:(NSMutableDictionary *)dic;
+
 
 @end
 

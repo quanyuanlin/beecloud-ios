@@ -48,9 +48,9 @@
                                       @{@"sub":@(PayChannelAliScan),@"title":@"支付宝条码支付"}]},
                     @{@"channel":@"银联在线",@"img":@"uPay",
                       @"subChannel":@[@{@"sub":@(PayChannelUnApp),@"title":@"银联在线"}]},
-                    @{@"channel":@"PayPal",@"img":@"wxPay",
+                    @{@"channel":@"PayPal",@"img":@"paypal",
                       @"subChannel":@[@{@"sub":@(PayChannelPayPal),@"title":@"PayPal"}]},
-                    @{@"channel":@"Baidu",@"img":@"wxPay",
+                    @{@"channel":@"百度钱包",@"img":@"baidu",
                       @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
     self.payList = [NSMutableArray arrayWithCapacity:10];
 #pragma mark - 设置delegate
@@ -82,6 +82,7 @@
     payReq.totalfee = @"1";
     payReq.billno = outTradeNo;
     payReq.scheme = @"payDemo";
+    payReq.billTimeOut = 30;
     payReq.viewController = self;
     payReq.optional = dict;
     [BeeCloud sendBCReq:payReq];
