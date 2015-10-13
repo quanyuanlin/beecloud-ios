@@ -14,11 +14,14 @@
 #import "GenQrCode.h"
 #import "QRCodeViewController.h"
 #import "ScanViewController.h"
+#import "PayChannelCell.h"
+#import "BDWalletSDKMainManager.h"
 
-@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate, QRCodeDelegate> {
+@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate, QRCodeDelegate,BDWalletSDKMainManagerDelegate> {
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
     PayChannel currentChannel;
+    NSArray *channelList;
 }
 
 @end
@@ -35,10 +38,23 @@
     } else if (self.actionType == 2) {
         self.title = @"查询退款订单";
     }
-    
+    channelList = @[@{@"channel":@"微信",@"img":@"wxPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelWxApp),@"title":@"微信APP支付"},
+                                      @{@"sub":@(PayChannelWxNative),@"title":@"微信扫码支付"},
+                                      @{@"sub":@(PayChannelWxScan),@"title":@"微信刷卡支付"}]},
+                    @{@"channel":@"支付宝",@"img":@"aliPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelAliApp),@"title":@"支付宝APP支付"},
+                                      @{@"sub":@(PayChannelAliOfflineQrCode),@"title":@"支付宝扫码支付"},
+                                      @{@"sub":@(PayChannelAliScan),@"title":@"支付宝条码支付"}]},
+                    @{@"channel":@"银联在线",@"img":@"uPay",
+                      @"subChannel":@[@{@"sub":@(PayChannelUnApp),@"title":@"银联在线"}]},
+                    @{@"channel":@"PayPal",@"img":@"paypal",
+                      @"subChannel":@[@{@"sub":@(PayChannelPayPal),@"title":@"PayPal"}]},
+                    @{@"channel":@"百度钱包",@"img":@"baidu",
+                      @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
     self.payList = [NSMutableArray arrayWithCapacity:10];
 #pragma mark - 设置delegate
-    [BeeCloud setBeeCloudDelegate:self];    
+    [BeeCloud setBeeCloudDelegate:self];
 }
 
 #pragma mark - 微信支付
@@ -57,29 +73,30 @@
 }
 
 - (void)doPay:(PayChannel)channel {
-    NSString *outTradeNo = [self genOutTradeNo];
+    NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-
+    
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel;
     payReq.title = billTitle;
     payReq.totalfee = @"1";
-    payReq.billno = outTradeNo;
+    payReq.billno = billno;
     payReq.scheme = @"payDemo";
+    payReq.billTimeOut = 300;
     payReq.viewController = self;
     payReq.optional = dict;
     [BeeCloud sendBCReq:payReq];
 }
 
 - (void)doOfflinePay:(PayChannel)channel authCode:(NSString *)authcode {
-    NSString *outTradeNo = [self genOutTradeNo];
+    NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     
     BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
     payReq.channel = channel;
     payReq.title = billTitle;
     payReq.totalfee = @"1";
-    payReq.billno = outTradeNo;
+    payReq.billno = billno;
     payReq.authcode = authcode;
     payReq.terminalid = @"BeeCloud617";
     payReq.storeid = @"BeeCloud618";
@@ -146,12 +163,12 @@
     _completedPayment = completedPayment;
     
     [self doPayPalVerify];
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
-   
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -160,24 +177,42 @@
 - (void)onBeeCloudResp:(BCBaseResp *)resp {
     
     switch (resp.type) {
+        case BCObjsTypePayResp:
+        {
+            BCPayResp *tempResp = (BCPayResp *)resp;
+            if (tempResp.resultCode == 0) {
+                BCPayReq *payReq = (BCPayReq *)resp.request;
+                if (payReq.channel == PayChannelBaiduApp) {
+                    [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
+                } else {
+                    [self showAlertView:resp.resultMsg];
+                }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
         case BCObjsTypeQueryResp:
         {
-            if (resp.result_code == 0) {
-                BCQueryResp *tempResp = (BCQueryResp *)resp;
+            BCQueryResp *tempResp = (BCQueryResp *)resp;
+            if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
                     [self showAlertView:@"未找到相关订单信息"];
                 } else {
                     self.payList = tempResp.results;
                     [self performSegueWithIdentifier:@"queryResult" sender:self];
                 }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
             }
         }
             break;
         case BCObjsTypeOfflinePayResp:
         {
-            if (resp.result_code == 0) {
-                BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
-                switch (tempResp.request.channel) {
+            BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
+            if (resp.resultCode == 0) {
+                BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
+                switch (payReq.channel) {
                     case PayChannelAliOfflineQrCode:
                     case PayChannelWxNative:
                         if (tempResp.codeurl.isValid) {
@@ -190,17 +225,19 @@
                         }
                         break;
                     case PayChannelAliScan:
-                    case PayChannelWxSCan:
+                    case PayChannelWxScan:
                     {
                         BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
-                        req.channel = tempResp.request.channel;
-                        req.billno = tempResp.request.billno;
+                        req.channel = payReq.channel;
+                        req.billno = payReq.billno;
                         [BeeCloud sendBCReq:req];
                     }
                         break;
                     default:
                         break;
                 }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
             }
         }
             break;
@@ -208,35 +245,40 @@
         {
             static int queryTimes = 1;
             BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
-            if (!tempResp.payResult && queryTimes < 3) {
-                queryTimes++;
-                [BeeCloud sendBCReq:tempResp.request];
+            if (tempResp.resultCode == 0) {
+                if (!tempResp.payResult && queryTimes < 3) {
+                    queryTimes++;
+                    [BeeCloud sendBCReq:tempResp.request];
+                } else {
+                    [self showAlertView:tempResp.payResult?@"支付成功":@"支付失败"];
+                    //                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
+                    //                req.channel = tempResp.request.channel;
+                    //                req.billno = tempResp.request.billno;
+                    //                [BeeCloud sendBCReq:req];
+                    queryTimes = 1;
+                }
+                
             } else {
-                [self showAlertView:tempResp.payResult?@"支付成功":@"支付失败"];
-//                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
-//                req.channel = tempResp.request.channel;
-//                req.billno = tempResp.request.billno;
-//                [BeeCloud sendBCReq:req];
-                queryTimes = 1;
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
             }
         }
             break;
         case BCObjsTypeOfflineRevertResp:
         {
             BCOfflineRevertResp *tempResp = (BCOfflineRevertResp *)resp;
-            if (resp.result_code == 0) {
+            if (resp.resultCode == 0) {
                 [self showAlertView:tempResp.revertStatus?@"撤销成功":@"撤销失败"];
             } else {
-                [self showAlertView:tempResp.err_detail];
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
             }
         }
             break;
         default:
         {
-            if (resp.result_code == 0) {
-                [self showAlertView:resp.result_msg];
+            if (resp.resultCode == 0) {
+                [self showAlertView:resp.resultMsg];
             } else {
-                [self showAlertView:resp.err_detail];
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",resp.resultMsg, resp.errDetail]];
             }
         }
             break;
@@ -270,9 +312,9 @@
     if (self.actionType == 1) {
         BCQueryReq *req = [[BCQueryReq alloc] init];
         req.channel = channel;
-     //   req.billno = @"20150901104138656";
-       // req.starttime = @"2015-07-23 00:00";
-       // req.endtime = @"2015-07-23 12:00";
+        //   req.billno = @"20150901104138656";
+        // req.starttime = @"2015-07-23 00:00";
+        // req.endtime = @"2015-07-23 12:00";
         req.skip = 0;
         req.limit = 50;
         [BeeCloud sendBCReq:req];
@@ -290,70 +332,75 @@
 }
 
 #pragma maek tableView Delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return channelList.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 8;
+    NSArray *sub = channelList[section][@"subChannel"];
+    return sub.count;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return  channelList[section][@"channel"];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 30;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60.0f;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *simpleTableIdentifier = @"payChannelCell";
+    
+    PayChannelCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
+    if (cell == nil) {
+        cell = [[PayChannelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+    NSDictionary *row = channelList[indexPath.section][@"subChannel"][indexPath.row];
+    cell.cImg.image = [UIImage imageNamed:channelList[indexPath.section][@"img"]];
+    cell.title.text = row[@"title"];
+    
+    return cell;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *row = channelList[indexPath.section][@"subChannel"];
+    PayChannel channel = [row[indexPath.row][@"sub"] integerValue];
     if (self.actionType == 0) {
-        switch (indexPath.row) {
-            case 0:
-                [self doWXAppPay];
+        switch (channel) {
+            case PayChannelWxApp:
+            case PayChannelAliApp:
+            case PayChannelUnApp:
+            case PayChannelBaiduApp:
+                [self doPay:channel];
                 break;
-            case 1:
-                [self doOfflinePay:PayChannelWxNative authCode:@""];
+            case PayChannelWxNative:
+            case PayChannelAliOfflineQrCode:
+                [self doOfflinePay:channel authCode:@""];
                 break;
-            case 2:
-                currentChannel = PayChannelWxSCan;
+            case PayChannelWxScan:
+            case PayChannelAliScan:
+                currentChannel = channel;
                 [self showScanViewController];
                 break;
-            case 3:
-                [self doAliAppPay];
-                break;
-            case 4:
-                [self doOfflinePay:PayChannelAliOfflineQrCode authCode:@""];
-                break;
-            case 5:
-                currentChannel = PayChannelAliScan;
-                [self showScanViewController];
-            case 6:
-                [self doUnionPay];
-                break;
-            case 7:
+            case PayChannelPayPal:
+            case PayChannelPayPalSanBox:
                 [self doPayPal];
                 break;
             default:
                 break;
         }
     } else {
-        switch (indexPath.row) {
-            case 0:
-            case 1:
-            case 2:
-                [self doQueryWX];
-                break;
-            case 3:
-            case 4:
-            case 5:
-                [self doQueryAli];
-                break;
-            case 6:
-                [self doQueryUN];
-                break;
-            case 7:
-                [self doQueryPayPal];
-                break;
-            default:
-                break;
-        }
+        [self doQuery:channel];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
 }
 
 - (void)showScanViewController {
@@ -368,22 +415,22 @@
 
 - (void)qrCodeBeScaned:(BCOfflinePayResp *)resp {
     BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
-    req.channel = resp.request.channel;
-    req.billno = resp.request.billno;
+    BCOfflinePayReq *payReq = (BCOfflinePayReq *)resp.request;
+    req.channel = payReq.channel;
+    req.billno = payReq.billno;
     [BeeCloud sendBCReq:req];
 }
 
 #pragma mark - prepare segue
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationVC = (UINavigationController *)segue.destinationViewController;
-    QueryResultViewController *viewController = (QueryResultViewController *)navigationVC.childViewControllers[0];
+    QueryResultViewController *viewController = (QueryResultViewController *)segue.destinationViewController;
     if([segue.identifier isEqualToString:@"queryResult"]) {
         viewController.dataList = self.payList;
     }
 }
 
 #pragma mark - 生成订单号
-- (NSString *)genOutTradeNo {
+- (NSString *)genBillNo {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyyMMddHHmmssSSS"];
     return [formatter stringFromDate:[NSDate date]];
@@ -393,6 +440,29 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor clearColor];
     tableView.tableFooterView = view;
+}
+
+#pragma mark - Baidu Delegate
+- (void)BDWalletPayResultWithCode:(int)statusCode payDesc:(NSString *)payDescs {
+    NSString *status = @"";
+    switch (statusCode) {
+        case 0:
+            status = @"支付成功";
+            break;
+        case 1:
+            status = @"支付中";
+            break;
+        case 2:
+            status = @"支付取消";
+            break;
+        default:
+            break;
+    }
+    [self showAlertView:status];
+}
+
+- (void)logEventId:(NSString *)eventId eventDesc:(NSString *)eventDesc {
+    
 }
 
 @end

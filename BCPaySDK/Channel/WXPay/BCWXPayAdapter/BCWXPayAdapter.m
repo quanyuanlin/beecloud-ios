@@ -26,16 +26,11 @@
     return instance;
 }
 
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    [BCWXPayAdapter sharedInstance].wxBeeCloudDelegate = delegate;
-}
-
 - (BOOL)registerWeChat:(NSString *)appid {
     return [WXApi registerApp:appid];
 }
 
 - (BOOL)handleOpenUrl:(NSURL *)url {
-    
     return [WXApi handleOpenURL:url delegate:[BCWXPayAdapter sharedInstance]];
 }
 
@@ -79,13 +74,11 @@
                 break;
         }
         NSString *result = tempResp.errStr.isValid?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
-        BCBaseResp *resp = [[BCBaseResp alloc] init];
-        resp.result_code = errcode;
-        resp.result_msg = result;
-        resp.err_detail = result;
-        if (_wxBeeCloudDelegate && [_wxBeeCloudDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-            [_wxBeeCloudDelegate onBeeCloudResp:resp];
-        }
+        BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
+        resp.resultCode = errcode;
+        resp.resultMsg = result;
+        resp.errDetail = result;
+        [BCPayCache beeCloudDoResponse];
     }
 }
 

@@ -12,13 +12,6 @@
 
 @implementation BeeCloudAdapter
 
-+ (void)beeCloud:(NSString *)object doSetDelegate:(id<BeeCloudDelegate>)delegate {
-    id adapter = [[NSClassFromString(object) alloc] init];
-    if (adapter && [adapter respondsToSelector:@selector(setBeeCloudDelegate:)]) {
-        [adapter setBeeCloudDelegate:delegate];
-    }
-}
-
 + (BOOL)beeCloudRegisterWeChat:(NSString *)appid {
     id adapter = [[NSClassFromString(kAdapterWXPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(registerWeChat:)]) {
@@ -103,6 +96,13 @@
     id adapter = [[NSClassFromString(kAdapterOffline) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(offlineRevert:)]) {
         [adapter offlineRevert:dic];
+    }
+}
+
++(void)beeCloudBaiduPay:(NSMutableDictionary *)dic {
+    id adapter = [[NSClassFromString(kAdapterBaidu) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(baiduPay:)]) {
+        [adapter baiduPay:dic];
     }
 }
 

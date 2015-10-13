@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = '3.2.3'
+	s.version      = '3.3.0'
 	s.summary      = 'BeeCloud云服务 致力加速App开发'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
 	s.platform     = :ios, '7.0'
-	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.2.3'}
+	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.3.0'}
 	s.requires_arc = true
 	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
 	
@@ -51,5 +51,14 @@ Pod::Spec.new do |s|
 		offline.requires_arc = true
 		offline.dependency 'BeeCloud/Core'
 	end
+
+	s.subspec 'Baidu' do |baidu|
+    bfb.frameworks = 'CoreTelephony', 'AddressBook', 'AddressBookUI', 'AudioToolbox', 'CoreAudio', 'CoreGraphics', 'ImageIO', 'MapKit', 'MessageUI', 'MobileCoreServices', 'QuartzCore'
+    bfb.public_header_files = 'BCPaySDK/Channel/Baidu/Dependencies/**/*.h'
+    bfb.source_files = 'BCPaySDK/Channel/Baidu/Dependencies/**/*.h'
+    bfb.resource = 'BCPaySDK/Channel/Baidu/*.bundle'
+    bfb.vendored_libraries = 'BCPaySDK/Channel/Baidu/**/*.a'
+    bfb.dependency 'BeeCloud/Core'
+    end
 	
 end

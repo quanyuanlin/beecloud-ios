@@ -10,11 +10,12 @@
 
 @implementation BCOfflineRevertResp
 
-- (instancetype)init {
+- (instancetype)initWithReq:(BCBaseReq *)request {
     self = [super init];
     if (self) {
         self.type = BCObjsTypeOfflineRevertResp;
         self.revertStatus = NO;
+        self.request = request;
     }
     return self;
 }

@@ -14,7 +14,6 @@
 
 @interface BCPayPalAdapter ()<BeeCloudAdapterDelegate>
 
-@property (nonatomic, weak) id<BeeCloudDelegate> payPalAdapterDelegate;
 @property (nonatomic, assign) BOOL isSandBox;
 
 @end
@@ -46,12 +45,10 @@
     }
 }
 
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    [BCPayPalAdapter sharedInstance].payPalAdapterDelegate = delegate;
-}
-
 - (void)payPal:(NSMutableDictionary *)dic {
+
     BCPayPalReq *req = (BCPayPalReq *)[dic objectForKey:kAdapterPayPal];
+    [BCPayCache sharedInstance].bcResp.request = req;
     
     if (![self checkParameters:req]) return;
     
@@ -101,7 +98,7 @@
     [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
-    __weak BCPayPalAdapter *weakSelf = self;
+    __weak BCPayPalAdapter * weakSelf = [BCPayPalAdapter sharedInstance];
     [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         BCPayLog(@"token %@", response);
         NSDictionary *dic = (NSDictionary *)response;
@@ -138,15 +135,12 @@
     parameters[@"access_token"] = accessToken;
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BCPayPalAdapter *weakSelf = [BCPayPalAdapter sharedInstance];
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              BCBaseResp *resp = [self getErrorInResponse:response];
-              if ([BCPayPalAdapter sharedInstance].payPalAdapterDelegate && [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-                  [[BCPayPalAdapter sharedInstance].payPalAdapterDelegate onBeeCloudResp:resp];
-              }
+              [weakSelf getErrorInResponse:response];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
+              [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
@@ -179,22 +173,20 @@
 }
 
 - (void)doErrorResponse:(NSString *)errMsg {
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
-    resp.result_code = BCErrCodeCommon;
-    resp.result_msg = errMsg;
-    resp.err_detail = errMsg;
-    if (_payPalAdapterDelegate && [_payPalAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_payPalAdapterDelegate onBeeCloudResp:resp];
-    }
+    BCBaseResp * resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
+    [BCPayCache beeCloudDoResponse];
 }
 
-- (BCBaseResp *)getErrorInResponse:(id)response {
+- (void)getErrorInResponse:(id)response {
     NSDictionary *dic = (NSDictionary *)response;
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
-    return resp;
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
+    [BCPayCache beeCloudDoResponse];
 }
 
 @end

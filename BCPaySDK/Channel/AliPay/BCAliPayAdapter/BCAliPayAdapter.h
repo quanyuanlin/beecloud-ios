@@ -11,6 +11,4 @@
 
 @interface BCAliPayAdapter : NSObject
 
-@property (nonatomic, weak) id<BeeCloudDelegate> aliBeeCloudDelegate;
-
 @end

@@ -10,8 +10,8 @@
 
 #pragma mark pay response
 @implementation BCPayResp
-- (instancetype)init {
-    self = [super init];
+- (instancetype)initWithReq:(BCPayReq *)request {
+    self = [super initWithReq:request];
     if (self) {
         self.type = BCObjsTypePayResp;
     }

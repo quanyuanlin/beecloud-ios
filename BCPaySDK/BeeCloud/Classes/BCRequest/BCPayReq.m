@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         self.type = BCObjsTypePayReq;
+        self.billTimeOut = 0;
     }
     return self;
 }

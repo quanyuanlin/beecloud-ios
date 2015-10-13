@@ -12,6 +12,8 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixin</string>
+		<string>alipay</string>
+		<string>wechat</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>

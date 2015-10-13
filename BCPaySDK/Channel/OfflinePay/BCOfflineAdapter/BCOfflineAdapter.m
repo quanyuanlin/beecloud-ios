@@ -13,9 +13,6 @@
 #import "BCOffinePay.h"
 
 @interface BCOfflineAdapter ()<BeeCloudAdapterDelegate>
-
-@property (nonatomic, weak) id<BeeCloudDelegate> offlineAdapterDelegate;
-
 @end
 
 @implementation BCOfflineAdapter
@@ -29,12 +26,9 @@
     return instance;
 }
 
-- (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
-    [BCOfflineAdapter sharedInstance].offlineAdapterDelegate = delegate;
-}
-
 - (void)offlinePay:(NSMutableDictionary *)dic {
     BCOfflinePayReq *req = (BCOfflinePayReq *)[dic objectForKey:kAdapterOffline];
+    [BCPayCache sharedInstance].bcResp = [[BCOfflinePayResp alloc] initWithReq:req];
     
     if (![self checkParameters:req]) return;
     
@@ -50,7 +44,7 @@
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
     parameters[@"bill_no"] = req.billno;
     parameters[@"title"] = req.title;
-    if (req.channel == PayChannelWxSCan || req.channel == PayChannelAliScan) {
+    if (req.channel == PayChannelWxScan || req.channel == PayChannelAliScan) {
         parameters[@"auth_code"] = req.authcode;
     }
     if (req.channel == PayChannelAliScan) {
@@ -72,32 +66,28 @@
               
               NSDictionary *source = (NSDictionary *)response;
               BCPayLog(@"channel=%@,resp=%@", cType, response);
-              BCOfflinePayResp *resp = [[BCOfflinePayResp alloc] init];
-              resp.result_code = [[source objectForKey:kKeyResponseResultCode] intValue];
-              resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
-              resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
+              BCOfflinePayResp *resp = (BCOfflinePayResp *)[BCPayCache sharedInstance].bcResp;
+              resp.resultCode = [[source objectForKey:kKeyResponseResultCode] intValue];
+              resp.resultMsg = [source objectForKey:kKeyResponseResultMsg];
+              resp.errDetail = [source objectForKey:kKeyResponseErrDetail];
               resp.request = req;
-              if (resp.result_code == 0) {
+              if (resp.resultCode == 0) {
                   if (req.channel == PayChannelAliOfflineQrCode || req.channel == PayChannelWxNative) {
                       resp.codeurl = [source objectForKey:kKeyResponseCodeUrl];
                   }
               }
-            [weakSelf doBeeCloudResp:resp];
+              [BCPayCache beeCloudDoResponse];
               
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
-- (void)doOfflinePayResp:(BCOfflinePayReq *)req source:(NSDictionary *)source {
-    
-    
-}
-
 #pragma mark - OffLine BillStatus
 
 - (void)offlineStatus:(NSMutableDictionary *)dic {
     BCOfflineStatusReq *req = (BCOfflineStatusReq *)[dic objectForKey:kAdapterOffline];
+    [BCPayCache sharedInstance].bcResp = [[BCOfflineStatusResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
@@ -123,15 +113,15 @@
           success:^(AFHTTPRequestOperation *operation, id response) {
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
-              BCOfflineStatusResp *resp = [[BCOfflineStatusResp alloc] init];
-              resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
-              resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
-              resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
+              BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
+              resp.resultCode = [[response objectForKey:kKeyResponseResultCode] intValue];
+              resp.resultMsg = [response objectForKey:kKeyResponseResultMsg];
+              resp.errDetail = [response objectForKey:kKeyResponseErrDetail];
               resp.request = req;
-              if (resp.result_code == 0) {
+              if (resp.resultCode == 0) {
                 resp.payResult = [[response objectForKey:KKeyResponsePayResult] boolValue];
               }
-              [weakSelf doBeeCloudResp:resp];
+              [BCPayCache beeCloudDoResponse];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
@@ -141,7 +131,7 @@
 
 - (void)offlineRevert:(NSMutableDictionary *)dic {
     BCOfflineRevertReq *req = (BCOfflineRevertReq *)[dic objectForKey:kAdapterOffline];
-    
+    [BCPayCache sharedInstance].bcResp = [[BCOfflineRevertResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
@@ -167,16 +157,15 @@
           success:^(AFHTTPRequestOperation *operation, id response) {
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
-              BCOfflineRevertResp *resp = [[BCOfflineRevertResp alloc] init];
-              resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
-              resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
-              resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
+              BCOfflineRevertResp *resp = (BCOfflineRevertResp *)[BCPayCache sharedInstance].bcResp;
+              resp.resultCode = [[response objectForKey:kKeyResponseResultCode] intValue];
+              resp.resultMsg = [response objectForKey:kKeyResponseResultMsg];
+              resp.errDetail = [response objectForKey:kKeyResponseErrDetail];
               resp.request = req;
-              if (resp.result_code == 0) {
+              if (resp.resultCode == 0) {
                     resp.revertStatus = [[response objectForKey:kKeyResponseRevertResult] boolValue];
               }
-              [weakSelf doBeeCloudResp:resp];
-              
+              [BCPayCache beeCloudDoResponse];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
@@ -197,7 +186,7 @@
         } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
-        } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxSCan) && !req.authcode.isValid) {
+        } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxScan) && !req.authcode.isValid) {
             [self doErrorResponse:@"authcode 不是合法的字符串"];
             return NO;
         } else if ((req.channel == PayChannelAliScan) && (!req.terminalid.isValid || !req.storeid.isValid)) {
@@ -209,20 +198,12 @@
     return NO ;
 }
 
-- (void)doBeeCloudResp:(BCBaseResp *)resp {
-    if ([BCOfflineAdapter sharedInstance].offlineAdapterDelegate && [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate onBeeCloudResp:resp];
-    }
-}
-
 - (void)doErrorResponse:(NSString *)errMsg {
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
-    resp.result_code = BCErrCodeCommon;
-    resp.result_msg = errMsg;
-    resp.err_detail = errMsg;
-    if ([BCOfflineAdapter sharedInstance].offlineAdapterDelegate && [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [[BCOfflineAdapter sharedInstance].offlineAdapterDelegate onBeeCloudResp:resp];
-    }
+    BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
+    [BCPayCache beeCloudDoResponse];
 }
 
 @end

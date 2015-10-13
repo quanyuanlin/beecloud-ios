@@ -12,10 +12,7 @@
 #import "BeeCloudAdapter.h"
 
 @interface BeeCloud ()
-
-@property (nonatomic, assign) BOOL registerStatus;
 @property (nonatomic, weak) id<BeeCloudDelegate> delegate;
-
 @end
 
 
@@ -54,11 +51,10 @@
 
 + (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
     [BeeCloud sharedInstance].delegate = delegate;
-    [BeeCloudAdapter beeCloud:kAdapterWXPay doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterAliPay doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterUnionPay doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterPayPal doSetDelegate:delegate];
-    [BeeCloudAdapter beeCloud:kAdapterOffline doSetDelegate:delegate];
+}
+
++ (id<BeeCloudDelegate>)getBeeCloudDelegate {
+    return [BeeCloud sharedInstance].delegate;
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
@@ -122,6 +118,7 @@
 #pragma mark Pay Request
 
 - (void)reqPay:(BCPayReq *)req {
+    [BCPayCache sharedInstance].bcResp = [[BCPayResp alloc] initWithReq:req];
     if (![self checkParameters:req]) return;
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
@@ -136,20 +133,20 @@
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
     parameters[@"bill_no"] = req.billno;
     parameters[@"title"] = req.title;
+    if (req.billTimeOut > 0) {
+        parameters[@"bill_timeout"] = @(req.billTimeOut);
+    }
     if (req.optional) {
         parameters[@"optional"] = req.optional;
     }
-    
+  
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
+    __weak BeeCloud *weakSelf = [BeeCloud sharedInstance];
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              
-              BCBaseResp *resp = [weakSelf getErrorInResponse:response];
-              if (resp.result_code != 0) {
-                  if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-                      [_delegate onBeeCloudResp:resp];
-                  }
+            
+              if ([[response objectForKey:kKeyResponseResultCode] intValue] != 0) {
+                  [weakSelf getErrorInResponse:response];
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
                   NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
@@ -159,6 +156,7 @@
                   } else if (req.channel == PayChannelUnApp) {
                       [dic setObject:req.viewController forKey:@"viewController"];
                   }
+                  [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
                   [weakSelf doPayAction:req.channel source:dic];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -180,6 +178,9 @@
                 break;
             case PayChannelUnApp:
                 [BeeCloudAdapter beeCloudUnionPay:dic];
+                break;
+            case PayChannelBaiduApp:
+                [BeeCloudAdapter beeCloudBaiduPay:dic];
                 break;
             default:
                 break;
@@ -218,6 +219,7 @@
 #pragma mark Query Bills/Refunds
 
 - (void)reqQueryOrder:(BCQueryReq *)req {
+    [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
@@ -257,7 +259,7 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
+    __weak BeeCloud *weakSelf = [BeeCloud sharedInstance];
     [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"resp = %@", response);
@@ -268,13 +270,13 @@
 }
 
 - (void)doQueryResponse:(NSDictionary *)dic {
-    BCQueryResp *resp = [[BCQueryResp alloc] init];
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
+    BCQueryResp *resp = (BCQueryResp *)[BCPayCache sharedInstance].bcResp;
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
-    [self doBeeCloudResp:resp];
+    [BCPayCache beeCloudDoResponse];
 }
 
 - (NSMutableArray *)parseResults:(NSDictionary *)dic {
@@ -296,13 +298,15 @@
         if ([[dic allKeys] containsObject:@"spay_result"]) {
             BCQueryBillResult *qResp = [[BCQueryBillResult alloc] init];
             for (NSString *key in [dic allKeys]) {
-                [qResp setValue:[dic objectForKey:key] forKey:key];
+                NSString *tkey = [key stringByReplacingOccurrencesOfString:@"_" withString:@""];
+                [qResp setValue:[dic objectForKey:key] forKey:tkey];
             }
             return qResp;
         } else if ([[dic allKeys] containsObject:@"refund_no"]) {
             BCQueryRefundResult *qResp = [[BCQueryRefundResult alloc] init];
             for (NSString *key in [dic allKeys]) {
-                [qResp setValue:[dic objectForKey:key] forKey:key];
+                NSString *tkey = [key stringByReplacingOccurrencesOfString:@"_" withString:@""];
+                [qResp setValue:[dic objectForKey:key] forKey:tkey];
             }
             return qResp;
         }
@@ -310,9 +314,10 @@
     return nil;
 }
 
-#pragma mark Refund Status
+#pragma mark Refund Status For WeChat
 
 - (void)reqRefundStatus:(BCRefundStatusReq *)req {
+    [BCPayCache sharedInstance].bcResp = [[BCRefundStatusResp alloc] initWithReq:req];
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
@@ -332,7 +337,7 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
+    __weak BeeCloud *weakSelf = [BeeCloud sharedInstance];
     [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
              [weakSelf doQueryRefundStatus:(NSDictionary *)response];
@@ -342,37 +347,31 @@
 }
 
 - (void)doQueryRefundStatus:(NSDictionary *)dic {
-    BCRefundStatusResp *resp = [[BCRefundStatusResp alloc] init];
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
+    BCRefundStatusResp *resp = (BCRefundStatusResp *)[BCPayCache sharedInstance].bcResp;
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
-    [self doBeeCloudResp:resp];
+    [BCPayCache beeCloudDoResponse];
 }
 
 #pragma mark Util Function
 
-- (void)doBeeCloudResp:(BCBaseResp *)resp {
-    if (_delegate && [_delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
-        [_delegate onBeeCloudResp:resp];
-    }
-}
-
 - (void)doErrorResponse:(NSString *)errMsg {
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
-    resp.result_code = BCErrCodeCommon;
-    resp.result_msg = errMsg;
-    resp.err_detail = errMsg;
-    [self doBeeCloudResp:resp];
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
+    [BCPayCache beeCloudDoResponse];
 }
 
-- (BCBaseResp *)getErrorInResponse:(id)response {
+- (void)getErrorInResponse:(id)response {
     NSDictionary *dic = (NSDictionary *)response;
-    BCBaseResp *resp = [[BCBaseResp alloc] init];
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
-    return resp;
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
+    [BCPayCache beeCloudDoResponse];
 }
 
 - (BOOL)checkParameters:(BCBaseReq *)request {

@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.2.2";//api版本号
+static NSString * const kApiVersion = @"3.3.0";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kKeyResponseResultCode = @"result_code";
@@ -36,6 +36,8 @@ static NSString * const kRestApiRefund = @"%@/rest/refund";
 static NSString * const kRestApiQueryBills = @"%@/rest/bills";
 static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
 static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
+static NSString * const kRestApiQueryBillById = @"%@/rest/bill/";
+static NSString * const kRestApiQueryRefundById = @"%@/rest/refund/";
 
 //rest api offline
 static NSString * const kRestApiOfflinePay = @"%@/rest/offline/bill";
@@ -52,6 +54,7 @@ static NSString * const kAdapterAliPay = @"BCAliPayAdapter";
 static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
 static NSString * const kAdapterOffline = @"BCOfflineAdapter";
+static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
 
 /**
  *  BCPay URL type for handling URLs.
@@ -77,7 +80,7 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelWxApp,//微信APP
     PayChannelWxNative,//微信扫码
     PayChannelWxJsApi,//微信JSAPI(H5)
-    PayChannelWxSCan,
+    PayChannelWxScan,
     
     PayChannelAli = 20,//支付宝
     PayChannelAliApp,//支付宝APP
@@ -92,7 +95,13 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelUnWeb,//银联网页
     
     PayChannelPayPal = 40,
-    PayChannelPayPalSanBox
+    PayChannelPayPalLive,
+    PayChannelPayPalSanBox,
+    
+    PayChannelBaidu = 50,
+    PayChannelBaiduApp,
+    PayChannelBaiduWeb,
+    PayChannelBaiduWap
 };
 
 enum  BCErrCode {

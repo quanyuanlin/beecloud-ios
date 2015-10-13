@@ -9,11 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "BeeCloud.h"
 
-
-
 @interface BeeCloudAdapter : NSObject
 
-+ (void)beeCloud:(NSString *)object doSetDelegate:(id<BeeCloudDelegate>)delegate;
 + (BOOL)beeCloudRegisterWeChat:(NSString *)appid;
 + (BOOL)beeCloudIsWXAppInstalled;
 + (void)beeCloudRegisterPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox;
@@ -26,5 +23,6 @@
 + (void)beeCloudOfflinePay:(NSMutableDictionary *)dic;
 + (void)beeCloudOfflineStatus:(NSMutableDictionary *)dic;
 + (void)beeCloudOfflineRevert:(NSMutableDictionary *)dic;
++ (void)beeCloudBaiduPay:(NSMutableDictionary *)dic;
 
 @end

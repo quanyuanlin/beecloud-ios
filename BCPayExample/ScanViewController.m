@@ -99,8 +99,7 @@
     // Session
     _session = [[AVCaptureSession alloc]init];
     [_session setSessionPreset:AVCaptureSessionPresetHigh];
-    if ([_session canAddInput:self.input])
-    {
+    if ([_session canAddInput:self.input]) {
         [_session addInput:self.input];
     }
     
