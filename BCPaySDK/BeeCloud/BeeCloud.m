@@ -141,7 +141,7 @@
     }
   
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
+    __weak BeeCloud *weakSelf = [BeeCloud sharedInstance];
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
             
@@ -259,7 +259,7 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
+    __weak BeeCloud *weakSelf = [BeeCloud sharedInstance];
     [manager GET:reqUrl parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"resp = %@", response);
@@ -271,9 +271,9 @@
 
 - (void)doQueryResponse:(NSDictionary *)dic {
     BCQueryResp *resp = (BCQueryResp *)[BCPayCache sharedInstance].bcResp;
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
     resp.count = [[dic objectForKey:@"count"] integerValue];
     resp.results = [self parseResults:dic];
     [BCPayCache beeCloudDoResponse];
@@ -337,7 +337,7 @@
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
+    __weak BeeCloud *weakSelf = [BeeCloud sharedInstance];
     [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
              [weakSelf doQueryRefundStatus:(NSDictionary *)response];
@@ -348,58 +348,29 @@
 
 - (void)doQueryRefundStatus:(NSDictionary *)dic {
     BCRefundStatusResp *resp = (BCRefundStatusResp *)[BCPayCache sharedInstance].bcResp;
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
     resp.refundStatus = [dic objectForKey:@"refund_status"];
     [BCPayCache beeCloudDoResponse];
-}
-
-#pragma mark Query By Id
-
-- (void)reqQueryBillById:(NSString *)bcId {
-    [BCPayCache sharedInstance].bcResp.bcId = bcId;
-    
-    if (!bcId.isValid) {
-        [self doErrorResponse:@"bcId 参数不合法"];
-        return;
-    }
-    
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
-    if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
-        return;
-    }
-    
-    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BeeCloud *weakSelf = self;
-
-    [manager GET:[[BCPayUtil getBestHostWithFormat:kRestApiQueryBillById] stringByAppendingString:bcId] parameters:preparepara
-         success:^(AFHTTPRequestOperation *operation, id response) {
-          
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [weakSelf doErrorResponse:kNetWorkError];
-         }];
-
 }
 
 #pragma mark Util Function
 
 - (void)doErrorResponse:(NSString *)errMsg {
     BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
-    resp.result_code = BCErrCodeCommon;
-    resp.result_msg = errMsg;
-    resp.err_detail = errMsg;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
     [BCPayCache beeCloudDoResponse];
 }
 
 - (void)getErrorInResponse:(id)response {
     NSDictionary *dic = (NSDictionary *)response;
     BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
     [BCPayCache beeCloudDoResponse];
 }
 

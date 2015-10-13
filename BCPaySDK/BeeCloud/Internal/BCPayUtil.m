@@ -70,7 +70,7 @@
 }
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
-    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHost,reqApiVersion]; //2015.07.28
+    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],reqApiVersion];
     return [NSString stringWithFormat:format, verHost];
 }
 
@@ -90,7 +90,7 @@
         case PayChannelWxJsApi:
             cType = @"WX_JSAPI";
             break;
-        case PayChannelWxSCan:
+        case PayChannelWxScan:
             cType = @"WX_SCAN";
             break;
 #pragma mark PayChannel_ALI
@@ -125,8 +125,12 @@
         case PayChannelUnWeb:
             cType = @"UN_WEB";
             break;
+#pragma mark PayChannel_PayPal
         case PayChannelPayPal:
             cType = @"PAYPAL";
+            break;
+        case PayChannelPayPalLive:
+            cType = @"PAYPAL_LIVE";
             break;
         case PayChannelPayPalSanBox:
             cType = @"PAYPAL_SANDBOX";

@@ -75,9 +75,9 @@
         }
         NSString *result = tempResp.errStr.isValid?[NSString stringWithFormat:@"%@,%@",strMsg,tempResp.errStr]:strMsg;
         BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
-        resp.result_code = errcode;
-        resp.result_msg = result;
-        resp.err_detail = result;
+        resp.resultCode = errcode;
+        resp.resultMsg = result;
+        resp.errDetail = result;
         [BCPayCache beeCloudDoResponse];
     }
 }

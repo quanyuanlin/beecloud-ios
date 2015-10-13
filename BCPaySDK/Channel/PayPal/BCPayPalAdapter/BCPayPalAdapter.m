@@ -98,7 +98,7 @@
     [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
-    __weak BCPayPalAdapter *weakSelf = self;
+    __weak BCPayPalAdapter * weakSelf = [BCPayPalAdapter sharedInstance];
     [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         BCPayLog(@"token %@", response);
         NSDictionary *dic = (NSDictionary *)response;
@@ -135,12 +135,12 @@
     parameters[@"access_token"] = accessToken;
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    
+    __weak BCPayPalAdapter *weakSelf = [BCPayPalAdapter sharedInstance];
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              [self getErrorInResponse:response];
+              [weakSelf getErrorInResponse:response];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self doErrorResponse:kNetWorkError];
+              [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
 
@@ -174,18 +174,18 @@
 
 - (void)doErrorResponse:(NSString *)errMsg {
     BCBaseResp * resp = [BCPayCache sharedInstance].bcResp;
-    resp.result_code = BCErrCodeCommon;
-    resp.result_msg = errMsg;
-    resp.err_detail = errMsg;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
     [BCPayCache beeCloudDoResponse];
 }
 
 - (void)getErrorInResponse:(id)response {
     NSDictionary *dic = (NSDictionary *)response;
     BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
-    resp.result_code = [dic[kKeyResponseResultCode] intValue];
-    resp.result_msg = dic[kKeyResponseResultMsg];
-    resp.err_detail = dic[kKeyResponseErrDetail];
+    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
+    resp.resultMsg = dic[kKeyResponseResultMsg];
+    resp.errDetail = dic[kKeyResponseErrDetail];
     [BCPayCache beeCloudDoResponse];
 }
 

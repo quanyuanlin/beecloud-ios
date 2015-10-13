@@ -18,9 +18,9 @@
 
 - (void)baiduPay:(NSMutableDictionary *)dic {
     BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
-    resp.result_code = [[dic objectForKey:kKeyResponseResultCode] intValue];
-    resp.result_msg = [dic objectForKey:kKeyResponseResultMsg];
-    resp.err_detail = [dic objectForKey:kKeyResponseErrDetail];
+    resp.resultCode = [[dic objectForKey:kKeyResponseResultCode] intValue];
+    resp.resultMsg = [dic objectForKey:kKeyResponseResultMsg];
+    resp.errDetail = [dic objectForKey:kKeyResponseErrDetail];
     resp.paySource = @{@"orderInfo":[dic objectForKey:@"orderInfo"]};
     [BCPayCache beeCloudDoResponse];
 }

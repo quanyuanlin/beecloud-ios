@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.3.2";//api版本号
+static NSString * const kApiVersion = @"3.3.0";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kKeyResponseResultCode = @"result_code";
@@ -22,7 +22,11 @@ static NSString * const kKeyResponseCodeUrl = @"code_url";
 static NSString * const KKeyResponsePayResult = @"pay_result";
 static NSString * const kKeyResponseRevertResult = @"revert_status";
 
-static NSString * const kBCHost = @"https://apidynamic.beecloud.cn";
+static NSUInteger const kBCHostCount = 4;
+static NSString * const kBCHosts[] = {@"https://apisz.beecloud.cn",
+    @"https://apiqd.beecloud.cn",
+    @"https://apibj.beecloud.cn",
+    @"https://apihz.beecloud.cn"};
 
 static NSString * const reqApiVersion = @"/1";
 
@@ -76,7 +80,7 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelWxApp,//微信APP
     PayChannelWxNative,//微信扫码
     PayChannelWxJsApi,//微信JSAPI(H5)
-    PayChannelWxSCan,
+    PayChannelWxScan,
     
     PayChannelAli = 20,//支付宝
     PayChannelAliApp,//支付宝APP
@@ -91,6 +95,7 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelUnWeb,//银联网页
     
     PayChannelPayPal = 40,
+    PayChannelPayPalLive,
     PayChannelPayPalSanBox,
     
     PayChannelBaidu = 50,

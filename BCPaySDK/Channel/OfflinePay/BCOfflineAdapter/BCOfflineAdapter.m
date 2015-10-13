@@ -44,7 +44,7 @@
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
     parameters[@"bill_no"] = req.billno;
     parameters[@"title"] = req.title;
-    if (req.channel == PayChannelWxSCan || req.channel == PayChannelAliScan) {
+    if (req.channel == PayChannelWxScan || req.channel == PayChannelAliScan) {
         parameters[@"auth_code"] = req.authcode;
     }
     if (req.channel == PayChannelAliScan) {
@@ -67,11 +67,11 @@
               NSDictionary *source = (NSDictionary *)response;
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflinePayResp *resp = (BCOfflinePayResp *)[BCPayCache sharedInstance].bcResp;
-              resp.result_code = [[source objectForKey:kKeyResponseResultCode] intValue];
-              resp.result_msg = [source objectForKey:kKeyResponseResultMsg];
-              resp.err_detail = [source objectForKey:kKeyResponseErrDetail];
+              resp.resultCode = [[source objectForKey:kKeyResponseResultCode] intValue];
+              resp.resultMsg = [source objectForKey:kKeyResponseResultMsg];
+              resp.errDetail = [source objectForKey:kKeyResponseErrDetail];
               resp.request = req;
-              if (resp.result_code == 0) {
+              if (resp.resultCode == 0) {
                   if (req.channel == PayChannelAliOfflineQrCode || req.channel == PayChannelWxNative) {
                       resp.codeurl = [source objectForKey:kKeyResponseCodeUrl];
                   }
@@ -114,11 +114,11 @@
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
-              resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
-              resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
-              resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
+              resp.resultCode = [[response objectForKey:kKeyResponseResultCode] intValue];
+              resp.resultMsg = [response objectForKey:kKeyResponseResultMsg];
+              resp.errDetail = [response objectForKey:kKeyResponseErrDetail];
               resp.request = req;
-              if (resp.result_code == 0) {
+              if (resp.resultCode == 0) {
                 resp.payResult = [[response objectForKey:KKeyResponsePayResult] boolValue];
               }
               [BCPayCache beeCloudDoResponse];
@@ -158,11 +158,11 @@
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflineRevertResp *resp = (BCOfflineRevertResp *)[BCPayCache sharedInstance].bcResp;
-              resp.result_code = [[response objectForKey:kKeyResponseResultCode] intValue];
-              resp.result_msg = [response objectForKey:kKeyResponseResultMsg];
-              resp.err_detail = [response objectForKey:kKeyResponseErrDetail];
+              resp.resultCode = [[response objectForKey:kKeyResponseResultCode] intValue];
+              resp.resultMsg = [response objectForKey:kKeyResponseResultMsg];
+              resp.errDetail = [response objectForKey:kKeyResponseErrDetail];
               resp.request = req;
-              if (resp.result_code == 0) {
+              if (resp.resultCode == 0) {
                     resp.revertStatus = [[response objectForKey:kKeyResponseRevertResult] boolValue];
               }
               [BCPayCache beeCloudDoResponse];
@@ -186,7 +186,7 @@
         } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
-        } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxSCan) && !req.authcode.isValid) {
+        } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxScan) && !req.authcode.isValid) {
             [self doErrorResponse:@"authcode 不是合法的字符串"];
             return NO;
         } else if ((req.channel == PayChannelAliScan) && (!req.terminalid.isValid || !req.storeid.isValid)) {
@@ -200,9 +200,9 @@
 
 - (void)doErrorResponse:(NSString *)errMsg {
     BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
-    resp.result_code = BCErrCodeCommon;
-    resp.result_msg = errMsg;
-    resp.err_detail = errMsg;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
     [BCPayCache beeCloudDoResponse];
 }
 
