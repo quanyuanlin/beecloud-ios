@@ -33,7 +33,7 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>aliPay</string>
+			<string>zhifubao</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>payDemo</string>
@@ -41,7 +41,7 @@
 		</dict>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>wxPay</string>
+			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>wxf1aa465362b4c8f1</string>

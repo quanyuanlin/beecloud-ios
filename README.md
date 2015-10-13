@@ -56,7 +56,33 @@ pod 'BeeCloud/Offline' //只包括线下收款
 ```
 ## 配置
 
-1. `iOS 9`以上版本如果需要使用支付宝和微信支付，需要在`Info.plist`添加以下代码：
+1.  添加`URL Schemes`  
+  在 XCode 中，选择你的工程设置项，选中`TARGETS`，在`Info`标签栏的 `URL Types`添加`URL Schemes`。如果使用微信，填入所注册的微信应用程序`APPID`;如果不使用微信，则自定义，允许英文字母和数字，首字母必须是英文字母，建议起名稍复杂一些，尽量避免与支付宝(alipay)等其他程序冲突。
+![URL Schemes](http://7xavqo.com1.z0.glb.clouddn.com/scheme.png)
+ 在Info.plist中显示为：
+
+ ```
+ <array>
+	<dict>
+		<key>CFBundleURLName</key>
+		<string>zhifubao</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>payDemo</string>
+		</array>
+	</dict>
+	<dict>
+		<key>CFBundleURLName</key>
+		<string>weixin</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<string>wxf1aa465362b4c8f1</string>
+		</array>
+	</dict>
+ </array>
+ ```
+
+2. `iOS 9`以上版本如果需要使用支付宝和微信支付，需要在`Info.plist`添加以下代码：
 
     ```
     <key>LSApplicationQueriesSchemes</key>
@@ -66,7 +92,7 @@ pod 'BeeCloud/Offline' //只包括线下收款
         <string>alipay</string>
     </array>
     ```
-2. `iOS 9`默认限制了http协议的访问，如果App需要使用`http://`访问，必须在 `Info.plist`添加如下代码：
+3. `iOS 9`默认限制了http协议的访问，如果App需要使用`http://`访问，必须在 `Info.plist`添加如下代码：
 
     ```
     <key>NSAppTransportSecurity</key>
