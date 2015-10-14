@@ -53,12 +53,12 @@ Pod::Spec.new do |s|
 	end
 
 	s.subspec 'Baidu' do |baidu|
-    bfb.frameworks = 'CoreTelephony', 'AddressBook', 'AddressBookUI', 'AudioToolbox', 'CoreAudio', 'CoreGraphics', 'ImageIO', 'MapKit', 'MessageUI', 'MobileCoreServices', 'QuartzCore'
-    bfb.public_header_files = 'BCPaySDK/Channel/Baidu/Dependencies/**/*.h'
-    bfb.source_files = 'BCPaySDK/Channel/Baidu/Dependencies/**/*.h'
-    bfb.resource = 'BCPaySDK/Channel/Baidu/*.bundle'
-    bfb.vendored_libraries = 'BCPaySDK/Channel/Baidu/**/*.a'
-    bfb.dependency 'BeeCloud/Core'
+    baidu.frameworks = 'CoreTelephony', 'AddressBook', 'AddressBookUI', 'AudioToolbox', 'CoreAudio', 'CoreGraphics', 'ImageIO', 'MapKit', 'MessageUI', 'MobileCoreServices', 'QuartzCore'
+    baidu.public_header_files = 'BCPaySDK/Channel/Baidu/Dependencies/**/*.h'
+    baidu.source_files = 'BCPaySDK/Channel/Baidu/Dependencies/**/*.h'
+    baidu.resource = 'BCPaySDK/Channel/Baidu/*.bundle'
+    baidu.vendored_libraries = 'BCPaySDK/Channel/Baidu/**/*.a'
+    baidu.dependency 'BeeCloud/Core'
     end
 	
 end
