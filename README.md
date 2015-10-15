@@ -1,12 +1,12 @@
 ## BeeCloud iOS SDK (Open Source)
 
-![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.2.3-blue.svg)
+![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.3.0-blue.svg)
 
 ## 简介
 
 本项目的官方GitHub地址是 [https://github.com/beecloud/beecloud-ios](https://github.com/beecloud/beecloud-ios)
 
-目前已经包含微信APP、支付宝APP、银联在线APP、PayPal APP支付功能，以及支付订单和退款订单的查询功能。还包含了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，以及订单状态的查询与订单撤销。  
+目前已经包含微信APP、支付宝APP、银联在线APP、PayPal、百度钱包 APP支付功能，以及支付订单和退款订单的查询功能。还包含了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，以及订单状态的查询与订单撤销。  
 本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
 
 ## 流程
