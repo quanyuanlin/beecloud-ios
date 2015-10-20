@@ -1,6 +1,6 @@
 ## BeeCloud iOS SDK (Open Source)
 
-![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.3.0-blue.svg)
+![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.3.1-blue.svg)
 
 ## 简介
 
@@ -56,6 +56,7 @@ pod 'BeeCloud/Wx' //只包括微信
 pod 'BeeCloud/UnionPay' //只包括银联
 pod 'BeeCloud/PayPal' //只包括paypal
 pod 'BeeCloud/Offline' //只包括线下收款
+pod 'BeeCloud/Baidu' //只包括百度钱包
 ```
 ## 配置
 
@@ -119,7 +120,9 @@ pod 'BeeCloud/Offline' //只包括线下收款
 3. 在代码中注册：
 
 ```objc
-//请替换成自己的BeeCloud账户中的AppID和AppSecret
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //请替换成自己的BeeCloud账户中的AppID和AppSecret
 [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
 
 //如果需要微信支付，请添加下面这行（自行替换微信APP ID）
@@ -127,6 +130,15 @@ pod 'BeeCloud/Offline' //只包括线下收款
 
 //如果需要PayPal，请添加下面这行
  [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sanBox:YES];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    if (![BeeCloud handleOpenUrl:url]) {
+        //handle其他类型的url
+    }
+    return YES;
+}
 ```
 
 ## 使用方法

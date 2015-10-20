@@ -26,12 +26,11 @@
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    return [BeeCloud handleOpenUrl:url];
-}
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [BeeCloud handleOpenUrl:url];
+    if (![BeeCloud handleOpenUrl:url]) {
+        //handle其他类型的url
+    }
+    return YES;
 }
 
 @end
