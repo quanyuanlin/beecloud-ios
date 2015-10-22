@@ -292,21 +292,6 @@
 }
 
 #pragma mark - 订单查询
-- (void)doQueryWX {
-    [self doQuery:PayChannelWx];
-}
-
-- (void)doQueryAli {
-    [self doQuery:PayChannelAli];
-}
-
-- (void)doQueryUN {
-    [self doQuery:PayChannelUn];
-}
-
-- (void)doQueryPayPal {
-    [self doQuery:PayChannelPayPal];
-}
 
 - (void)doQuery:(PayChannel)channel {
     
@@ -314,8 +299,8 @@
         BCQueryReq *req = [[BCQueryReq alloc] init];
         req.channel = channel;
         //   req.billno = @"20150901104138656";
-         req.startTime = @"2015-10-22 00:00";
-         req.endTime = @"2015-10-23 00:00";
+       //  req.startTime = @"2015-10-22 00:00";
+        // req.endTime = @"2015-10-23 00:00";
         req.skip = 0;
         req.limit = 50;
         [BeeCloud sendBCReq:req];
