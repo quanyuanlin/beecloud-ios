@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BCPayConstant.h"
+#import "NSDictionary+Utils.h"
 
 #pragma mark BCBaseResult
 
@@ -17,10 +18,14 @@
 @interface BCBaseResult : NSObject
 
 @property (nonatomic, assign) BCObjsType type;
-@property (nonatomic, retain) NSString  *billno;
-@property (nonatomic, assign) NSInteger  totalfee;//NSInteger
+@property (nonatomic, retain) NSString  *billNo;
+@property (nonatomic, assign) NSInteger  totalFee;//NSInteger
 @property (nonatomic, retain) NSString  *title;
-@property (nonatomic, assign) long long  createdtime;//long long
+@property (nonatomic, assign) long long  createTime;//long long
 @property (nonatomic, retain) NSString  *channel;
+@property (nonatomic, retain) NSString  *subChannel;
+@property (nonatomic, retain) NSDictionary  *optional;
+
+- (instancetype) initWithResult:(NSDictionary *)dic;
 
 @end

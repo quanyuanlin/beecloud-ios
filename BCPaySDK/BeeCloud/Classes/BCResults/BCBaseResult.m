@@ -10,15 +10,22 @@
 
 @implementation BCBaseResult
 
-- (instancetype)init {
+- (instancetype) initWithResult:(NSDictionary *)dic {
     self = [super init];
     if (self) {
         self.type = BCObjsTypeBaseResults;
-        self.channel = @"";
-        self.billno = @"";
-        self.title = @"";
-        self.createdtime = 0;
-        self.totalfee = 0;
+        if (dic) {
+            self.billNo = [dic stringValueForKey:@"bill_no" defaultValue:@""];
+            self.title = [dic stringValueForKey:@"title" defaultValue:@""];
+            self.channel = [dic stringValueForKey:@"channel" defaultValue:@""];
+            self.subChannel = [dic stringValueForKey:@"sub_channel" defaultValue:@""];
+            self.createTime = [dic longlongValueForKey:@"create_time" defaultValue:0];
+            self.totalFee = [dic integerValueForKey:@"total_fee" defaultValue:0];
+            NSString *optionalString = [dic stringValueForKey:@"optional" defaultValue:@""];
+            NSData *opData = [optionalString dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *error = nil;
+            self.optional = [NSJSONSerialization JSONObjectWithData:opData options:NSJSONReadingAllowFragments error:&error];
+        }
     }
     return self;
 }

@@ -30,5 +30,6 @@
 #import "BCPayPalVerifyReq.h"
 
 #import "NSString+IsValid.h"
+#import "NSDictionary+Utils.h"
 
 #endif

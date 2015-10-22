@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.3.1";//api版本号
+static NSString * const kApiVersion = @"3.3.2";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kKeyResponseResultCode = @"result_code";
@@ -28,7 +28,7 @@ static NSString * const kBCHosts[] = {@"https://apisz.beecloud.cn",
     @"https://apibj.beecloud.cn",
     @"https://apihz.beecloud.cn"};
 
-static NSString * const reqApiVersion = @"/1";
+static NSString * const reqApiVersion = @"/2";
 
 //rest api online
 static NSString * const kRestApiPay = @"%@/rest/bill";

@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         self.type = BCObjsTypeQueryRefundReq;
-        self.refundno = @"";
+        self.refundNo = @"";
     }
     return self;
 }

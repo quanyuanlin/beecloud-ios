@@ -14,6 +14,6 @@
  */
 @interface BCRefundStatusReq : BCBaseReq
 
-@property (nonatomic, retain) NSString *refundno;
+@property (nonatomic, retain) NSString *refundNo;
 
 @end
