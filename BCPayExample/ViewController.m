@@ -79,8 +79,8 @@
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel;
     payReq.title = billTitle;
-    payReq.totalfee = @"1";
-    payReq.billno = billno;
+    payReq.totalFee = @"1";
+    payReq.billNo = billno;
     payReq.scheme = @"payDemo";
     payReq.billTimeOut = 300;
     payReq.viewController = self;
@@ -192,6 +192,7 @@
             }
         }
             break;
+        
         case BCObjsTypeQueryResp:
         {
             BCQueryResp *tempResp = (BCQueryResp *)resp;
@@ -313,8 +314,8 @@
         BCQueryReq *req = [[BCQueryReq alloc] init];
         req.channel = channel;
         //   req.billno = @"20150901104138656";
-        // req.starttime = @"2015-07-23 00:00";
-        // req.endtime = @"2015-07-23 12:00";
+         req.startTime = @"2015-10-22 00:00";
+         req.endTime = @"2015-10-23 00:00";
         req.skip = 0;
         req.limit = 50;
         [BeeCloud sendBCReq:req];
@@ -397,7 +398,21 @@
                 break;
         }
     } else {
-        [self doQuery:channel];
+        switch (channel) {
+            case PayChannelWxApp:
+            case PayChannelWxNative:
+            case PayChannelWxScan:
+                [self doQuery:PayChannelWx];
+                break;
+            case PayChannelAliApp:
+            case PayChannelAliScan:
+            case PayChannelAliOfflineQrCode:
+                [self doQuery:PayChannelAli];
+                break;
+            default:
+                [self doQuery:channel];
+                break;
+        }
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

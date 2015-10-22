@@ -15,8 +15,8 @@
  */
 @interface BCQueryRefundResult : BCBaseResult
 
-@property (nonatomic, retain) NSString *refundno;
-@property (nonatomic, assign) NSInteger refundfee; //NSInteger
+@property (nonatomic, retain) NSString *refundNo;
+@property (nonatomic, assign) NSInteger refundFee; //NSInteger
 @property (nonatomic, assign) BOOL      finish;//BOOL
 @property (nonatomic, assign) BOOL      result;//BOOL
 

@@ -14,6 +14,6 @@
  */
 @interface BCQueryRefundReq : BCQueryReq //type=103;
 
-@property (nonatomic, retain) NSString *refundno;
+@property (nonatomic, retain) NSString *refundNo;
 
 @end

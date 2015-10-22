@@ -26,11 +26,11 @@
 /**
  *  支付金额,以分为单位,必须为整数,100表示1元
  */
-@property (nonatomic, retain) NSString *totalfee;
+@property (nonatomic, retain) NSString *totalFee;
 /**
  *  商户系统内部的订单号,8~32位数字和/或字母组合,确保在商户系统中唯一
  */
-@property (nonatomic, retain) NSString *billno;
+@property (nonatomic, retain) NSString *billNo;
 /**
  *  订单失效时间,必须为非零正整数，单位为秒，建议不小于30
  */

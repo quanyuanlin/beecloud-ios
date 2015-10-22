@@ -17,9 +17,9 @@
         self.type = BCObjsTypeQueryReq;
         self.skip = 0;
         self.limit = 10;
-        self.starttime = @"";
-        self.endtime = @"";
-        self.billno = @"";
+        self.startTime = @"";
+        self.endTime = @"";
+        self.billNo = @"";
     }
     return self;
 }

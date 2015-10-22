@@ -15,6 +15,8 @@
  */
 @interface BCQueryBillResult : BCBaseResult
 
-@property (nonatomic, assign) BOOL spayresult;
+@property (nonatomic, assign) BOOL spayResult;
+@property (nonatomic, retain) NSString *tradeNo;
+@property (nonatomic, assign) BOOL revertResult;
 
 @end

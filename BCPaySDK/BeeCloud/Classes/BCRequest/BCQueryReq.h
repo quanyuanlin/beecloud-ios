@@ -16,9 +16,9 @@
 @interface BCQueryReq : BCBaseReq 
 
 @property (nonatomic, assign) PayChannel channel;
-@property (nonatomic, retain) NSString *billno;
-@property (nonatomic, assign) NSString *starttime;//@"yyyyMMddHHmm"格式
-@property (nonatomic, assign) NSString *endtime;//@"yyyyMMddHHmm"格式
+@property (nonatomic, retain) NSString *billNo;
+@property (nonatomic, assign) NSString *startTime;//@"yyyyMMddHHmm"格式
+@property (nonatomic, assign) NSString *endTime;//@"yyyyMMddHHmm"格式
 @property (nonatomic, assign) NSInteger skip;
 @property (nonatomic, assign) NSInteger limit;
 

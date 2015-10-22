@@ -10,12 +10,18 @@
 
 @implementation BCQueryBillResult
 
-- (instancetype)init {
-    self = [super init];
+- (instancetype) initWithResult:(NSDictionary *)dic {
+    self = [super initWithResult:dic];
     if (self) {
         self.type = BCObjsTypeBillResults;
-        self.spayresult = NO;
+        if (dic) {
+            self.spayResult = [dic boolValueForKey:@"spay_result" defaultValue:NO];
+            self.tradeNo = [dic stringValueForKey:@"trade_no" defaultValue:@""];
+            self.revertResult = [dic boolValueForKey:@"revert_result" defaultValue:NO];
+        }
     }
     return self;
 }
+
+
 @end

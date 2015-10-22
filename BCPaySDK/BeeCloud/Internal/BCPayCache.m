@@ -14,7 +14,7 @@
 
 + (instancetype)sharedInstance {
     static dispatch_once_t onceToken;
-    static BCPayCache *instance = nil;
+    __strong static BCPayCache *instance = nil;
     dispatch_once(&onceToken, ^{
         instance = [[BCPayCache alloc] init];
         

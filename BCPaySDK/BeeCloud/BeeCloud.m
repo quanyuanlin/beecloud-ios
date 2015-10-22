@@ -130,8 +130,8 @@
     }
     
     parameters[@"channel"] = cType;
-    parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
-    parameters[@"bill_no"] = req.billno;
+    parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalFee integerValue]];
+    parameters[@"bill_no"] = req.billNo;
     parameters[@"title"] = req.title;
     if (req.billTimeOut > 0) {
         parameters[@"bill_timeout"] = @(req.billTimeOut);
@@ -142,6 +142,7 @@
   
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BeeCloud *weakSelf = [BeeCloud sharedInstance];
+    
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
             
@@ -234,19 +235,19 @@
     }
     NSString *reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryBills];
     
-    if (req.billno.isValid) {
-        parameters[@"bill_no"] = req.billno;
+    if (req.billNo.isValid) {
+        parameters[@"bill_no"] = req.billNo;
     }
-    if (req.starttime.isValid) {
-        parameters[@"start_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.starttime]];
+    if (req.startTime.isValid) {
+        parameters[@"start_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.startTime]];
     }
-    if (req.endtime.isValid) {
-        parameters[@"end_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.endtime]];
+    if (req.endTime.isValid) {
+        parameters[@"end_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:req.endTime]];
     }
     if (req.type == BCObjsTypeQueryRefundReq) {
         BCQueryRefundReq *refundReq = (BCQueryRefundReq *)req;
-        if (refundReq.refundno.isValid) {
-            parameters[@"refund_no"] = refundReq.refundno;
+        if (refundReq.refundNo.isValid) {
+            parameters[@"refund_no"] = refundReq.refundNo;
         }
         reqUrl = [BCPayUtil getBestHostWithFormat:kRestApiQueryRefunds];
     }
@@ -296,19 +297,9 @@
 - (BCBaseResult *)parseQueryResult:(NSDictionary *)dic {
     if (dic) {
         if ([[dic allKeys] containsObject:@"spay_result"]) {
-            BCQueryBillResult *qResp = [[BCQueryBillResult alloc] init];
-            for (NSString *key in [dic allKeys]) {
-                NSString *tkey = [key stringByReplacingOccurrencesOfString:@"_" withString:@""];
-                [qResp setValue:[dic objectForKey:key] forKey:tkey];
-            }
-            return qResp;
+            return [[BCQueryBillResult alloc] initWithResult:dic];
         } else if ([[dic allKeys] containsObject:@"refund_no"]) {
-            BCQueryRefundResult *qResp = [[BCQueryRefundResult alloc] init];
-            for (NSString *key in [dic allKeys]) {
-                NSString *tkey = [key stringByReplacingOccurrencesOfString:@"_" withString:@""];
-                [qResp setValue:[dic objectForKey:key] forKey:tkey];
-            }
-            return qResp;
+            return [[BCQueryRefundResult alloc] initWithResult:dic];
         }
     }
     return nil;
@@ -329,8 +320,8 @@
         return;
     }
     
-    if (req.refundno.isValid) {
-        parameters[@"refund_no"] = req.refundno;
+    if (req.refundNo.isValid) {
+        parameters[@"refund_no"] = req.refundNo;
     }
     parameters[@"channel"] = @"WX";
     
@@ -383,10 +374,10 @@
         if (!req.title.isValid || [BCPayUtil getBytes:req.title] > 32) {
             [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
             return NO;
-        } else if (!req.totalfee.isValid || !req.totalfee.isPureInt) {
+        } else if (!req.totalFee.isValid || !req.totalFee.isPureInt) {
             [self doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
             return NO;
-        } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
+        } else if (!req.billNo.isValid || !req.billNo.isValidTraceNo || (req.billNo.length < 8) || (req.billNo.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
         } else if ((req.channel == PayChannelAliApp) && !req.scheme.isValid) {
