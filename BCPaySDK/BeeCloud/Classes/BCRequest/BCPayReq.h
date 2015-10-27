@@ -32,7 +32,7 @@
  */
 @property (nonatomic, retain) NSString *billNo;
 /**
- *  订单失效时间,必须为非零正整数，单位为秒，建议不小于30
+ *  订单失效时间,必须为非零正整数，单位为秒，建议不小于300
  */
 @property (nonatomic, assign) NSInteger billTimeOut;
 /**
