@@ -94,7 +94,7 @@
     
     BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
     payReq.channel = channel;
-    payReq.title = billTitle;
+    payReq.title = @"Offline Pay";
     payReq.totalfee = @"1";
     payReq.billno = billno;
     payReq.authcode = authcode;
@@ -179,6 +179,7 @@
     switch (resp.type) {
         case BCObjsTypePayResp:
         {
+            //支付响应事件类型，包含微信、支付宝、银联、百度
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
@@ -195,6 +196,7 @@
         
         case BCObjsTypeQueryResp:
         {
+            //查询订单或者退款记录响应事件类型
             BCQueryResp *tempResp = (BCQueryResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
@@ -210,6 +212,7 @@
             break;
         case BCObjsTypeOfflinePayResp:
         {
+            //线下支付响应事件类型
             BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
             if (resp.resultCode == 0) {
                 BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
@@ -244,6 +247,7 @@
             break;
         case BCObjsTypeOfflineBillStatusResp:
         {
+            //线下支付订单状态查询响应事件类型
             static int queryTimes = 1;
             BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
             if (tempResp.resultCode == 0) {
@@ -266,6 +270,7 @@
             break;
         case BCObjsTypeOfflineRevertResp:
         {
+            //线下撤销订单响应事件类型，包含WX_SCAN,ALI_SCAN,ALI_OFFLINE_QRCODE
             BCOfflineRevertResp *tempResp = (BCOfflineRevertResp *)resp;
             if (resp.resultCode == 0) {
                 [self showAlertView:tempResp.revertStatus?@"撤销成功":@"撤销失败"];

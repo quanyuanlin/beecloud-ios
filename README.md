@@ -16,37 +16,43 @@
 
 其中需要开发者开发的只有：
 
-步骤1：**（在App端）发送支付要素**
+步骤①**（在App端）发送支付要素**
 
 做完这一步之后就会跳到相应的支付页面（如微信app中），让用户继续后续的支付步骤
 
-步骤5：**（在App端）处理同步回调结果**
+步骤⑤：**（在App端）处理同步回调结果**
 
 付款完成或取消之后，会回到客户app中，需要做相应界面展示的更新（比如弹出框告诉用户"支付成功"或"支付失败")。非常不推荐用同步回调的结果来作为最终的支付结果，因为同步回调可能（虽然可能性不大）出现结果不准确的情况，最终支付结果应以下面的异步回调为准。
 
-步骤7：**（在客户服务端）处理异步回调结果（[Webhook](https://beecloud.cn/doc/?index=8)）**
+步骤⑦：**（在客户服务端）处理异步回调结果（[Webhook](https://beecloud.cn/doc/?index=8)）**
  
 付款完成之后，根据客户在BeeCloud后台的设置，BeeCloud会向客户服务端发送一个Webhook请求，里面包括了数字签名，订单号，订单金额等一系列信息。客户需要在服务端依据规则要验证**数字签名是否正确，购买的产品与订单金额是否匹配，这两个验证缺一不可**。验证结束后即可开始走支付完成后的逻辑。
 
 ## 安装
 
-1.下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
->1. 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`,`OfflinePay`,`百度钱包`的原生SDK，请按需选择自己所需要的渠道。 
->2. iOS SDK使用了第三方Http请求库AFNetworking，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。
->3. 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib` 
->4. 使用PayPal支付，需要添加以下系统库：  
->`AudioToolbox.framework`  
-`CoreLocation.framework`  
-`MessageUI.framework`  
-`CoreMedia.framework`  
-`CoreVideo.framework`  
-`Accelerate.framework`  
-`AVFoundation.framework`  
->5. 使用百度钱包，需要添加以下系统库：  
+① 下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
+
+- 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`,`OfflinePay`,`百度钱包`的原生SDK，请按需选择自己所需要的渠道。 
+
+- iOS SDK使用了第三方Http请求库**AFNetworking**，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。  
+
+- 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib`。  
+> iOS9 加入`libz.1.2.5.tbd`、`libc++.tbd`、`libsqlite.tbd` 
+ 
+
+- 使用PayPal支付，需要添加以下系统库：  
+ `AudioToolbox.framework`  
+ `CoreLocation.framework`  
+ `MessageUI.framework`  
+ `CoreMedia.framework`  
+ `CoreVideo.framework`  
+ `Accelerate.framework`  
+ `AVFoundation.framework`  
+
+- 使用百度钱包，需要添加以下系统库：  
 ![BDWalletVendor](http://7xavqo.com1.z0.glb.clouddn.com/BDWalletVendor.png)
 
-
-2.使用CocoaPods:  
+② 使用CocoaPods 
 在podfile中加入
 
 ```
@@ -58,12 +64,15 @@ pod 'BeeCloud/PayPal' //只包括paypal
 pod 'BeeCloud/Offline' //只包括线下收款
 pod 'BeeCloud/Baidu' //只包括百度钱包
 ```
+
 ## 配置
 
-1.  添加`URL Schemes`  
-  在 XCode 中，选择你的工程设置项，选中`TARGETS`，在`Info`标签栏的 `URL Types`添加`URL Schemes`。如果使用微信，填入所注册的微信应用程序`APPID`;如果不使用微信，则自定义，允许英文字母和数字，首字母必须是英文字母，建议起名稍复杂一些，尽量避免与支付宝(alipay)等其他程序冲突。
+① 添加`URL Schemes`  
+
+在`Xcode`中，选择你的工程设置项，选中`TARGETS`，在`Info`标签栏的 `URL Types`添加`URL Schemes`。如果使用微信，填入所注册的微信应用程序`APPID`;如果不使用微信，则自定义，允许英文字母和数字，首字母必须是英文字母，建议起名稍复杂一些，尽量避免与支付宝(alipay)等其他程序冲突。  
+
 ![URL Schemes](http://7xavqo.com1.z0.glb.clouddn.com/scheme.png)
- 在Info.plist中显示为：
+在Info.plist中显示为：
 
  ```
  <array>
@@ -86,7 +95,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
  </array>
  ```
 
-2. `iOS 9`以上版本如果需要使用支付宝和微信支付，需要在`Info.plist`添加以下代码：
+② `iOS 9`以上版本如果需要使用支付宝和微信支付，需要在`Info.plist`添加以下代码：
 
     ```
     <key>LSApplicationQueriesSchemes</key>
@@ -96,7 +105,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
         <string>alipay</string>
     </array>
     ```
-3. `iOS 9`默认限制了http协议的访问，如果App需要使用`http://`访问，必须在 `Info.plist`添加如下代码：
+③ `iOS 9`默认限制了http协议的访问，如果App需要使用`http://`访问，必须在 `Info.plist`添加如下代码：
 
     ```
     <key>NSAppTransportSecurity</key>
@@ -105,7 +114,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
         <true/>
     </dict>
     ```
-3. 如果Build失败，遇到以下错误信息：
+④ 如果Build失败，遇到以下错误信息：
 
     ```
     XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target.
@@ -113,11 +122,9 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
     请到 Xcode 项目的 Build Settings 页搜索 bitcode，将 Enable Bitcode 设置为 NO。
 
 
-## 注册
-三个步骤，2分钟轻松搞定：  
-1. 注册开发者：猛击[这里](http://www.beecloud.cn/register)注册成为BeeCloud开发者。  
-2. 注册应用：使用注册的账号登陆[控制台](http://www.beecloud.cn/dashboard/)后，点击"+创建App"创建新应用，并配置支付参数。  
-3. 在代码中注册：
+## 注册  
+
+① 初始化
 
 ```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -132,7 +139,12 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
  [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sanBox:YES];
     return YES;
 }
+```
 
+② handleOpenUrl
+
+```objc
+//为保证从支付宝，微信返回本应用，须绑定openUrl.
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if (![BeeCloud handleOpenUrl:url]) {
         //handle其他类型的url
@@ -140,6 +152,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
     return YES;
 }
 ```
+ 
 
 ## 使用方法
 >具体使用请参考项目中的`BCPayExample`工程
@@ -160,6 +173,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
     switch (resp.type) {
         case BCObjsTypePayResp:
         {
+        	  //支付响应事件类型，包含微信、支付宝、银联、百度
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
@@ -175,6 +189,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             break;
         case BCObjsTypeQueryResp:
         {
+        	  //查询订单或者退款记录响应事件类型
             BCQueryResp *tempResp = (BCQueryResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
@@ -190,6 +205,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             break;
         case BCObjsTypeOfflinePayResp:
         {
+        	  //线下支付响应事件类型
             BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
             if (resp.resultCode == 0) {
                 BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
@@ -224,6 +240,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             break;
         case BCObjsTypeOfflineBillStatusResp:
         {
+        	  //线下支付订单状态查询响应事件类型
             static int queryTimes = 1;
             BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
             if (tempResp.resultCode == 0) {
@@ -246,6 +263,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             break;
         case BCObjsTypeOfflineRevertResp:
         {
+        	  //线下撤销订单响应事件类型，包含WX_SCAN,ALI_SCAN,ALI_OFFLINE_QRCODE
             BCOfflineRevertResp *tempResp = (BCOfflineRevertResp *)resp;
             if (resp.resultCode == 0) {
                 [self showAlertView:tempResp.revertStatus?@"撤销成功":@"撤销失败"];
@@ -267,40 +285,56 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
 }
 ```
 
+*  请求与响应事件说明  
+   BeeCloud iOS SDK 的功能以事件为单元划分为：
+   > 事件类型被定义在`/BCPaySDK/BeeCloud/Internal/BCPayConstant.h`
+   * **请求事件**  
+     `/BCPaySDK/BeeCloud/Classes/BCRequest/`目录下包含所有请求事件对象。  
+   * **响应事件**  
+     `/BCPaySDK/BeeCloud/Classes/BCResponse/`目录下包含所有响应事件对象。
+     
+     - 公共返回参数  
 
-### 1.支付
+		参数名 | 类型 | 含义 
+	---- | ---- | ----
+	resultCode | Integer| 返回码，0为正常
+	resultMsg  | String | 返回信息， OK为正常
+	errDetail  | String | 具体错误信息
+	bcId       | String | 成功发起支付后返回支付订单表记录唯一标识
+	request    | BCBaseReq| 请求事件对象
 
-原型：
- 
+
+### 支付
+
+#### 微信&支付宝&银联&百度
 通过构造`BCPayReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。  
-
-调用：
+**响应事件对象为`BCPayResp`**
 
 ```objc
 //微信、支付宝、银联、百度钱包
 - (void)doPay:(PayChannel)channel {
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-
+    
     BCPayReq *payReq = [[BCPayReq alloc] init];
-    payReq.channel = channel;//渠道
-    payReq.title = @"BeeCloud自制白开水";//订单标题
-    payReq.totalfee = @"1";//订单金额
-    payReq.billno = billno;//商户自定义订单号，必须保证唯一性
-    payReq.billTimeOut = 300;//订单超时时间，秒位单位，建议大于5分钟
-    payReq.scheme = @"payDemo";//url scheme,"AliPay"必须参数
-    payReq.viewController = self;//"UnionPay"必须参数
-    payReq.optional = dict;//商户业务扩展参数
+    payReq.channel = channel;
+    payReq.title = billTitle;
+    payReq.totalFee = @"1";
+    payReq.billNo = billno;
+    payReq.scheme = @"payDemo";
+    payReq.billTimeOut = 300;
+    payReq.viewController = self;
+    payReq.optional = dict;
     [BeeCloud sendBCReq:payReq];
 }
 
 ```
 
 #### PayPal
-##### 支付
+通过构造`BCPayPalReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。  
+**响应事件对象为`BCBaseResp`**
  
  ```objc
- //PayPal Pay
 - (void)doPayPal {
     BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
     
@@ -343,10 +377,11 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
 }
  ```
 ##### 实现`PayPalPaymentDelegate`
-
-支付完成
+  
+> **支付完成后必须进行Verify的操作**
 
 ```objc
+//支付完成
 - (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
 
 	//使用`completedPayment`完成Payment Verify操作
@@ -356,41 +391,16 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
    
    [self dismissViewControllerAnimated:YES completion:nil];
 }
-```
-
-支付取消
-
-```objc
-
+//支付取消
 - (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 ```
 
-#### OfflinePay
-##### 支付
-
-```objc
-- (void)doOfflinePay:(PayChannel)channel authCode:(NSString *)authcode {
-    NSString *outTradeNo = [self genOutTradeNo];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-    
-    BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
-    payReq.channel = channel;
-    payReq.title = @"Offline Pay";
-    payReq.totalfee = @"1";
-    payReq.billno = outTradeNo;
-    payReq.authcode = authcode;
-    payReq.terminalid = @"BeeCloud617"; 
-    payReq.storeid = @"BeeCloud618";
-    payReq.optional = dict;
-    [BeeCloud sendBCReq:payReq];
-}
-```
-
-#### 百度钱包
-##### 支付
+#### 百度钱包  
+通过构造`BCPayReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付查询。
+**响应事件类型对象：`BCPayResp`**
 
 ```objc
 
@@ -462,8 +472,31 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
 }
 ```
 
+#### OfflinePay
+通过构造`BCOfflinePayReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付订单查询。  
+**响应事件类型对象：`BCOfflinePayResp`**
+
+```objc
+- (void)doOfflinePay:(PayChannel)channel authCode:(NSString *)authcode {
+    NSString *billno = [self genBillNo];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
+    
+    BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
+    payReq.channel = channel;
+    payReq.title = @"Offline Pay";
+    payReq.totalfee = @"1";
+    payReq.billno = billno;
+    payReq.authcode = authcode;
+    payReq.terminalid = @"BeeCloud617"; 
+    payReq.storeid = @"BeeCloud618";
+    payReq.optional = dict;
+    [BeeCloud sendBCReq:payReq];
+}
+```
 
 ##### 订单状态查询
+通过构造`BCOfflineStatusReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付订单查询。  
+**响应事件类型对象：`BCOfflineStatusResp`**
 
 ```objc
 BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
@@ -473,6 +506,8 @@ req.billno = @"2015091821320048";
 ```
 
 ##### 订单撤销
+通过构造`BCOfflineRevertReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付订单撤销。目前仅支持`WX_SCAN`、`ALI_OFFLINE_QRCODE`、`ALI_SCAN`  
+**响应事件类型对象：`BCOfflineRevertResp`**
 
 ```objc
 BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
@@ -481,15 +516,13 @@ req.billno = @"2015091821320048";
 [BeeCloud sendBCReq:req];
 ```
 
-### 2.查询
 
-* 查询支付订单
+### 查询
 
-原型：
-
-通过构造`BCQueryReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付查询  
-
-调用：
+#### 查询支付订单  
+通过构造`BCQueryReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付查询。  
+**响应时间类型对象：`BCQueryResp`**   
+**支付订单对象: `BCQueryBillResult`**  
 
 ```objc
 BCQueryReq *req = [[BCQueryReq alloc] init];
@@ -501,13 +534,11 @@ req.skip = 0;
 req.limit = 20;
 [BeeCloud sendBCReq:req];
 ```
-* 查询退款订单
 
-原型：
-
-通过构造`BCQueryRefundReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询
-
-调用：
+#### 查询退款订单  
+通过构造`BCQueryRefundReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询。  
+**响应事件类型对象：`BCQueryResp`**  
+**退款订单对象: `BCQueryRefundResult`**
 
 ```objc
    BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
@@ -520,13 +551,10 @@ req.limit = 20;
    req.limit = 20;
    [BeeCloud sendBCReq:req];
 ```
-* 查询退款状态（只支持微信）
 
-原型：
-
-通过构造`BCRefundStatusReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询
-
-调用：
+#### 查询退款状态（只支持微信）
+通过构造`BCRefundStatusReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询。  
+**响应事件类型对象：`BCRefundStatusResp`**
 
 ```objc
 BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
