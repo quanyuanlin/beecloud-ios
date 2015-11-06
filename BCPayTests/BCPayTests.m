@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "BeeCloud.h"
 #import "XCTestCase+AsyncTesting.h"
+#import "BeeCloud+Utils.h"
 
 @interface BCPayTests : XCTestCase<BeeCloudDelegate> {
     int testId;
@@ -46,19 +47,51 @@
     }];
 }
 
-- (void)testPayReqWithBillNo {
+- (void)testCheckParametersForReqPay {
+
+    BeeCloud *instance = [BeeCloud sharedInstance];
+    BCPayReq * req = [[BCPayReq alloc] init];
     
-    BCPayReq *req = [[BCPayReq alloc] init];
-    req.channel = PayChannelAliApp;
-    req.billNo = @"617";
-    req.title = @"testWithBillNo";
+    req.title = @"";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.title = @"123456781234567812345678123456781";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.title = @"比可网络比可网络比可网络比可网络比可网络";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.title = @"test";
+    req.totalFee = @"aaa";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.totalFee = @"";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
     req.totalFee = @"1";
-    req.scheme = @"payDemo";
-    [BeeCloud sendBCReq:req];
+    req.billNo = @"1212";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
     
-    [self waitForStatus:XCTAsyncTestCaseStatusFailed timeout:0.5];
-    XCTAssertFalse(testResp.resultCode == 0);
+    req.billNo = @"abcdefgh&*&^";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
     
+    req.billNo = @"123456781234567812345678123456781";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.billNo = @"2015110616001200";
+    req.channel = PayChannelAliApp;
+    req.scheme = @"";
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.channel = PayChannelUnApp;
+    req.viewController = nil;
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.channel = PayChannelWxApp;
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req.channel = PayChannelBaiduApp;
+    XCTAssertTrue([instance checkParametersForReqPay:req]);
 }
 
 
