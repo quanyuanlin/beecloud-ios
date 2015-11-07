@@ -10,7 +10,7 @@
 #import "BCTestHeader.h"
 #import "BeeCloud+Utils.h"
 
-@interface BCPayTests : XCTestCase<BeeCloudDelegate> {
+@interface BeeCloudUtilsTest : XCTestCase<BeeCloudDelegate> {
     int testId;
     BCBaseResp *testResp;
     BOOL bFinish;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation BCPayTests
+@implementation BeeCloudUtilsTest
 
 - (void)setUp {
     [super setUp];

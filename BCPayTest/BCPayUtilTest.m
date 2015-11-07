@@ -27,28 +27,12 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
 }
-
-
-//
-///**
-// *  A string's bytes
-// *
-// *  @param str string
-// *
-// *  @return the string's bytes
-// */
-//+ (NSUInteger)getBytes:(NSString *)str;
 
 - (void)testGetAFHTTPRequestOperationManager {
     XCTAssertNotNil([BCPayUtil getAFHTTPRequestOperationManager]);
@@ -116,10 +100,10 @@
 }
 
 - (void)testMillisecondToDate {
-    NSString * dateString = [BCPayUtil dateToString:[NSDate date]];
-    long long timeStamp = [BCPayUtil dateStringToMillisencond:dateString];
+    NSString * dateString1 = [BCPayUtil dateToString:[NSDate date]];
+    long long timeStamp = [BCPayUtil dateStringToMillisencond:dateString1];
     NSString *dateString2 = [BCPayUtil millisecondToDateString:timeStamp];
-    XCTAssertTrue([dateString isEqualToString: dateString2]);
+    XCTAssertTrue([dateString1 isEqualToString: dateString2]);
 }
 
 - (void)testIsValidEmail {
