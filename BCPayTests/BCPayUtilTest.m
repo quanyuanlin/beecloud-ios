@@ -39,51 +39,7 @@
     }];
 }
 
-//
-///**
-// *  Converts a common string to MD5.
-// *
-// *  @param string common string.
-// *
-// *  @return MD5 string.
-// */
-//+ (NSString *)stringToMD5:(NSString *)string;
-//
-///**
-// *  check the email.
-// *
-// *  @param email email.
-// *
-// *  @return YES if it is valid.
-// */
-//+ (BOOL)isValidEmail:(NSString *)email;
-//
-///**
-// *  check the mobile number
-// *
-// *  @param mobile mobile number
-// *
-// *  @return YES if it is valid
-// */
-//+ (BOOL)isValidMobile:(NSString *)mobile;
-//
-///**
-// *  Check whether a unichar is a letter 'a' to 'z' or 'A' to 'Z'.
-// *
-// *  @param ch Character of type unichar to be checked.
-// *
-// *  @return YES if it is a letter; NO otherwise.
-// */
-//+ (BOOL)isLetter:(unichar)ch;
-//
-///**
-// *  Check whether a unichar is a digit '0' to '9'.
-// *
-// *  @param ch Character of type unichar to be checked.
-// *
-// *  @return YES if is a digit; NO otherwise.
-// */
-//+ (BOOL)isDigit:(unichar)ch;
+
 //
 ///**
 // *  A string's bytes
@@ -164,6 +120,35 @@
     long long timeStamp = [BCPayUtil dateStringToMillisencond:dateString];
     NSString *dateString2 = [BCPayUtil millisecondToDateString:timeStamp];
     XCTAssertTrue([dateString isEqualToString: dateString2]);
+}
+
+- (void)testIsValidEmail {
+    XCTAssertTrue([BCPayUtil isValidEmail:@"hwl@beecloud.cn"]);
+    XCTAssertFalse([BCPayUtil isValidEmail:@"12?/@beecloud.cn"]);
+    XCTAssertFalse([BCPayUtil isValidEmail:@"dwojodwjo.cn"]);
+    XCTAssertFalse([BCPayUtil isValidEmail:@"@beecloud.cn"]);
+}
+
+
+- (void)testIsValidMobile {
+    XCTAssertFalse([BCPayUtil isValidMobile:@"0125363"]);
+    XCTAssertFalse([BCPayUtil isValidMobile:@"1381562711a"]);
+    XCTAssertFalse([BCPayUtil isValidMobile:@"33815627115"]);
+}
+
+- (void)testIsLetter {
+    XCTAssertFalse([BCPayUtil isLetter:'&']);
+    XCTAssertFalse([BCPayUtil isLetter:'1']);
+}
+
+- (void)testIsDigit {
+    XCTAssertFalse([BCPayUtil isDigit:'a']);
+    XCTAssertFalse([BCPayUtil isDigit:'*']);
+}
+
+- (void)testGetBytes {
+    XCTAssertTrue([BCPayUtil getBytes:@"wo"] == 2);
+    XCTAssertTrue([BCPayUtil getBytes:@"我"] == 2);
 }
 
 @end
