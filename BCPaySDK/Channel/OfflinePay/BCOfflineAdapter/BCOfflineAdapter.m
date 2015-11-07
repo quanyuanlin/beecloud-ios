@@ -34,7 +34,7 @@
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
     
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
     if (parameters == nil) {
         [self doErrorResponse:@"请检查是否全局初始化"];
         return;
@@ -98,7 +98,7 @@
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
     
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
     if (parameters == nil) {
         [self doErrorResponse:@"请检查是否全局初始化"];
         return;
@@ -142,7 +142,7 @@
     
     NSString *cType = [BCPayUtil getChannelString:req.channel];
     
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForPay];
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
     if (parameters == nil) {
         [self doErrorResponse:@"请检查是否全局初始化"];
         return;

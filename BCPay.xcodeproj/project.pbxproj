@@ -93,6 +93,7 @@
 		36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4111B8F4A78004BB25E /* MessageUI.framework */; };
 		36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4131B8F4A93004BB25E /* CoreLocation.framework */; };
 		36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */; };
+		7C43BF7F1BED95430039B4E4 /* BCPayUtilTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C43BF7E1BED95430039B4E4 /* BCPayUtilTest.m */; };
 		7CC6FAB41BEB80DF00E8705D /* BCPayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6FAB31BEB80DF00E8705D /* BCPayTests.m */; };
 		7CC6FABD1BEB8FFD00E8705D /* XCTestCase+AsyncTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CC6FABC1BEB8FFD00E8705D /* XCTestCase+AsyncTesting.m */; };
 		7CD455551BEC889F00E0EC4A /* BeeCloud+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD455541BEC889F00E0EC4A /* BeeCloud+Utils.m */; };
@@ -284,6 +285,8 @@
 		36DCE4111B8F4A78004BB25E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		36DCE4131B8F4A93004BB25E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		7C43BF7E1BED95430039B4E4 /* BCPayUtilTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayUtilTest.m; sourceTree = "<group>"; };
+		7C43BF801BED95F50039B4E4 /* BCTestHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCTestHeader.h; sourceTree = "<group>"; };
 		7CC6FAB11BEB80DF00E8705D /* BCPayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BCPayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CC6FAB31BEB80DF00E8705D /* BCPayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCPayTests.m; sourceTree = "<group>"; };
 		7CC6FAB51BEB80DF00E8705D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -813,7 +816,9 @@
 				7CC6FABB1BEB8FFD00E8705D /* XCTestCase+AsyncTesting.h */,
 				7CC6FABC1BEB8FFD00E8705D /* XCTestCase+AsyncTesting.m */,
 				7CC6FAB31BEB80DF00E8705D /* BCPayTests.m */,
+				7C43BF7E1BED95430039B4E4 /* BCPayUtilTest.m */,
 				7CC6FAB51BEB80DF00E8705D /* Info.plist */,
+				7C43BF801BED95F50039B4E4 /* BCTestHeader.h */,
 			);
 			path = BCPayTests;
 			sourceTree = "<group>";
@@ -983,6 +988,7 @@
 			files = (
 				7CC6FABD1BEB8FFD00E8705D /* XCTestCase+AsyncTesting.m in Sources */,
 				7CC6FAB41BEB80DF00E8705D /* BCPayTests.m in Sources */,
+				7C43BF7F1BED95430039B4E4 /* BCPayUtilTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,8 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "BeeCloud.h"
-#import "XCTestCase+AsyncTesting.h"
+#import "BCTestHeader.h"
 #import "BeeCloud+Utils.h"
 
 @interface BCPayTests : XCTestCase<BeeCloudDelegate> {
@@ -24,7 +23,7 @@
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    [BeeCloud initWithAppID:@"c37d661d-7e61-49ea-96a5-68c34e83db3b" andAppSecret:@"c37d661d-7e61-49ea-96a5-68c34e83db3b"];
+    [BeeCloud initWithAppID:TESTAPPID andAppSecret:TESTAPPSECRET];
     [BeeCloud setBeeCloudDelegate:self];
     testId = 0;
     bFinish = NO;
@@ -93,7 +92,6 @@
     req.channel = PayChannelBaiduApp;
     XCTAssertTrue([instance checkParametersForReqPay:req]);
 }
-
 
 - (void)onBeeCloudResp:(BCBaseResp *)resp {
     testResp = resp;
