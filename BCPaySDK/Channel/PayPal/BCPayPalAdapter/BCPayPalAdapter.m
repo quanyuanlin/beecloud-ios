@@ -102,7 +102,7 @@
     [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         BCPayLog(@"token %@", response);
         NSDictionary *dic = (NSDictionary *)response;
-        [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic objectForKey:@"token_type"],[dic objectForKey:@"access_token"]]];
+        [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic stringValueForKey:@"token_type" defaultValue:@""],[dic stringValueForKey:@"access_token" defaultValue:@""]]];
     }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [weakSelf doErrorResponse:kNetWorkError];
     }];

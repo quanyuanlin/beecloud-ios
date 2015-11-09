@@ -44,7 +44,7 @@
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               
-              if ([[response objectForKey:kKeyResponseResultCode] intValue] != 0) {
+              if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
                   [weakSelf getErrorInResponse:response];
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
@@ -84,7 +84,7 @@
 #pragma mark PayPal
 
 - (void)reqPayPal:(BCPayPalReq *)req {
-    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterPayPal,nil]];
+    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req,kAdapterPayPal,nil]];
 }
 
 - (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
@@ -253,7 +253,7 @@
     resp.resultCode = [dic[kKeyResponseResultCode] intValue];
     resp.resultMsg = dic[kKeyResponseResultMsg];
     resp.errDetail = dic[kKeyResponseErrDetail];
-    resp.count = [[dic objectForKey:@"count"] integerValue];
+    resp.count = [[dic stringValueForKey:@"count" defaultValue:@"0"] integerValue];
     resp.results = [self parseResults:dic];
     [BCPayCache beeCloudDoResponse];
 }
@@ -261,11 +261,11 @@
 - (NSMutableArray *)parseResults:(NSDictionary *)dic {
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:10];
     if ([[dic allKeys] containsObject:@"bills"]) {
-        for (NSDictionary *result in [dic objectForKey:@"bills"]) {
+        for (NSDictionary *result in [dic arrayValueForKey:@"bills" defaultValue:nil]) {
             [array addObject:[self parseQueryResult:result]];
         } ;
     } else if ([[dic allKeys] containsObject:@"refunds"]) {
-        for (NSDictionary *result in [dic objectForKey:@"refunds"]) {
+        for (NSDictionary *result in [dic arrayValueForKey:@"refunds" defaultValue:nil]) {
             [array addObject:[self parseQueryResult:result]];
         } ;
     }
@@ -288,7 +288,7 @@
     resp.resultCode = [dic[kKeyResponseResultCode] intValue];
     resp.resultMsg = dic[kKeyResponseResultMsg];
     resp.errDetail = dic[kKeyResponseErrDetail];
-    resp.refundStatus = [dic objectForKey:@"refund_status"];
+    resp.refundStatus = [dic stringValueForKey:@"refund_status" defaultValue:@""];
     [BCPayCache beeCloudDoResponse];
 }
 

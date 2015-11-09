@@ -17,7 +17,7 @@
 
 @property (nonatomic, assign) BCObjsType type;//200;
 /** 响应码 */
-@property (nonatomic, assign) int resultCode;
+@property (nonatomic, assign) NSInteger resultCode;
 /** 响应提示字符串 */
 @property (nonatomic, retain) NSString *resultMsg;
 /** 错误详情 */

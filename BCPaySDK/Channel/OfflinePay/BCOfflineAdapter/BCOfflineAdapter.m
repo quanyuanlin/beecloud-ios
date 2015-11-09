@@ -67,13 +67,12 @@
               NSDictionary *source = (NSDictionary *)response;
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflinePayResp *resp = (BCOfflinePayResp *)[BCPayCache sharedInstance].bcResp;
-              resp.resultCode = [[source objectForKey:kKeyResponseResultCode] intValue];
-              resp.resultMsg = [source objectForKey:kKeyResponseResultMsg];
-              resp.errDetail = [source objectForKey:kKeyResponseErrDetail];
-              resp.request = req;
+              resp.resultCode = [source integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+              resp.resultMsg = [source stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+              resp.errDetail = [source stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
               if (resp.resultCode == 0) {
                   if (req.channel == PayChannelAliOfflineQrCode || req.channel == PayChannelWxNative) {
-                      resp.codeurl = [source objectForKey:kKeyResponseCodeUrl];
+                      resp.codeurl = [source stringValueForKey:kKeyResponseCodeUrl defaultValue:@""];
                   }
               }
               [BCPayCache beeCloudDoResponse];
@@ -114,12 +113,11 @@
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
-              resp.resultCode = [[response objectForKey:kKeyResponseResultCode] intValue];
-              resp.resultMsg = [response objectForKey:kKeyResponseResultMsg];
-              resp.errDetail = [response objectForKey:kKeyResponseErrDetail];
-              resp.request = req;
+              resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+              resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+              resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
               if (resp.resultCode == 0) {
-                resp.payResult = [[response objectForKey:KKeyResponsePayResult] boolValue];
+                  resp.payResult = [response boolValueForKey:KKeyResponsePayResult defaultValue:NO];
               }
               [BCPayCache beeCloudDoResponse];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -158,12 +156,11 @@
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflineRevertResp *resp = (BCOfflineRevertResp *)[BCPayCache sharedInstance].bcResp;
-              resp.resultCode = [[response objectForKey:kKeyResponseResultCode] intValue];
-              resp.resultMsg = [response objectForKey:kKeyResponseResultMsg];
-              resp.errDetail = [response objectForKey:kKeyResponseErrDetail];
-              resp.request = req;
+              resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+              resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+              resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
               if (resp.resultCode == 0) {
-                    resp.revertStatus = [[response objectForKey:kKeyResponseRevertResult] boolValue];
+                  resp.revertStatus = [response boolValueForKey:kKeyResponseRevertResult defaultValue:NO];
               }
               [BCPayCache beeCloudDoResponse];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

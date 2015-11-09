@@ -27,10 +27,14 @@
     return instance;
 }
 
-+ (void)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret {
++ (BOOL)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret {
     BCPayCache *instance = [BCPayCache sharedInstance];
-    instance.appId = appId;
-    instance.appSecret = appSecret;
+    if (appId.isValid && appSecret.isValid) {
+        instance.appId = appId;
+        instance.appSecret = appSecret;
+        return YES;
+    }
+    return NO;
 }
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
