@@ -37,7 +37,7 @@
 - iOS SDK使用了第三方Http请求库**AFNetworking**，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。  
 
 - 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib`。  
-> iOS9 加入`libz.1.2.5.tbd`、`libc++.tbd`、`libsqlite.tbd` 
+> iOS9 加入`libz.1.2.5.tbd`、`libc++.tbd`、`libsqlite3.tbd` 
  
 
 - 使用PayPal支付，需要添加以下系统库：  
