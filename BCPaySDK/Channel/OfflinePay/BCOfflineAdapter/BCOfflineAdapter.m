@@ -133,7 +133,7 @@
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
-    } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
+    } else if (!req.billNo.isValid || !req.billNo.isValidTraceNo || (req.billNo.length < 8) || (req.billNo.length > 32)) {
         [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
         return;
     }
@@ -151,7 +151,7 @@
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
-    [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billno] parameters:parameters
+    [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billNo] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
