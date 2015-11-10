@@ -30,14 +30,14 @@
 
 ## 安装
 
-① 下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
+方法一、下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
 
 - 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`,`OfflinePay`,`百度钱包`的原生SDK，请按需选择自己所需要的渠道。 
 
 - iOS SDK使用了第三方Http请求库**AFNetworking**，请一起引入项目（如您之前已经使用AFNetworking，则无需重复导入，但是建议使用最新的AFNetworking版本，新版本修复了一个关于HTTPS链接的安全漏洞）。  
 
 - 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib`。  
-> iOS9 加入`libz.1.2.5.tbd`、`libc++.tbd`、`libsqlite.tbd` 
+> iOS9 加入`libz.1.2.5.tbd`、`libc++.tbd`、`libsqlite3.tbd` 
  
 
 - 使用PayPal支付，需要添加以下系统库：  
@@ -52,7 +52,7 @@
 - 使用百度钱包，需要添加以下系统库：  
 ![BDWalletVendor](http://7xavqo.com1.z0.glb.clouddn.com/BDWalletVendor.png)
 
-② 使用CocoaPods 
+方法二、使用CocoaPods   
 在podfile中加入
 
 ```
