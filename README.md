@@ -30,7 +30,7 @@
 
 ## 安装
 
-① 下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
+方法一、下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
 
 - 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`,`OfflinePay`,`百度钱包`的原生SDK，请按需选择自己所需要的渠道。 
 
@@ -52,7 +52,7 @@
 - 使用百度钱包，需要添加以下系统库：  
 ![BDWalletVendor](http://7xavqo.com1.z0.glb.clouddn.com/BDWalletVendor.png)
 
-② 使用CocoaPods 
+方法二、使用CocoaPods   
 在podfile中加入
 
 ```
