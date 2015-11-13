@@ -253,7 +253,7 @@
     resp.resultCode = [dic[kKeyResponseResultCode] intValue];
     resp.resultMsg = dic[kKeyResponseResultMsg];
     resp.errDetail = dic[kKeyResponseErrDetail];
-    resp.count = [[dic stringValueForKey:@"count" defaultValue:@"0"] integerValue];
+    resp.count = [dic integerValueForKey:@"count" defaultValue:0];
     resp.results = [self parseResults:dic];
     [BCPayCache beeCloudDoResponse];
 }

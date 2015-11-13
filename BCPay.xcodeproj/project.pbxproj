@@ -1256,6 +1256,7 @@
 				7C43BF8E1BEDE22B0039B4E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
