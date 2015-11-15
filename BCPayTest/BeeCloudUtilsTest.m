@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "BCTestHeader.h"
 #import "BeeCloud+Utils.h"
+#import "OCMock.h"
 
 @interface BeeCloudUtilsTest : XCTestCase<BeeCloudDelegate> {
     int testId;
@@ -93,10 +94,33 @@
     XCTAssertTrue([instance checkParametersForReqPay:req]);
 }
 
+- (void)test_reqPay {
+    BCPayReq *req = [[BCPayReq init] alloc];
+    req.title = @"BeeCloud";
+    req.totalFee = @"1";
+    req.billNo = @"2015111317050048";
+    req.channel = PayChannelWxApp;
+    req.scheme = @"BCTest";
+    req.viewController = nil;
+    
+    id mockDelegate = [OCMockObject mockForProtocol:@protocol(BeeCloudDelegate)];
+    [BeeCloud setBeeCloudDelegate:mockDelegate];
+    [mockDelegate verify];
+    
+    id manager = [OCMockObject mockForClass:[AFHTTPRequestOperationManager class]];
+    [[manager expect] POST:kRestApiPay parameters:nil success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id)) {
+        
+        return YES;
+    }] failure:OCMOCK_ANY];
+    
+    
+}
+
 - (void)onBeeCloudResp:(BCBaseResp *)resp {
     testResp = resp;
     bFinish = YES;
 }
+
 
 
 

@@ -12,8 +12,8 @@
 #import "BeeCloud.h"
 #import "XCTestCase+AsyncTesting.h"
 
-static NSString * const TESTAPPID = @"c37d661d-7e61-49ea-96a5-68c34e83db3b";
-static NSString * const TESTAPPSECRET = @"c37d661d-7e61-49ea-96a5-68c34e83db3b";
+static NSString * const TESTAPPID = @"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719";
+static NSString * const TESTAPPSECRET = @"39a7a518-9ac8-4a9e-87bc-7885f33cf18c";
 
 
 #endif /* BCTestHeader_h */
