@@ -26,11 +26,15 @@
     return instance;
 }
 
-- (void)unionPay:(NSMutableDictionary *)dic {
+- (BOOL)unionPay:(NSMutableDictionary *)dic {
     NSString *tn = [dic stringValueForKey:@"tn" defaultValue:@""];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCUnionPayAdapter sharedInstance]];
-    });
+    if (tn.isValid) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UPPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCUnionPayAdapter sharedInstance]];
+        });
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - Implementation UnionPayDelegate

@@ -43,20 +43,11 @@
     
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              
               if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
-                  [weakSelf getErrorInResponse:response];
+                  [weakSelf getErrorInResponse:(NSDictionary *)response];
               } else {
                   BCPayLog(@"channel=%@,resp=%@", cType, response);
-                  NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
-                                              (NSDictionary *)response];
-                  if (req.channel == PayChannelAliApp) {
-                      [dic setObject:req.scheme forKey:@"scheme"];
-                  } else if (req.channel == PayChannelUnApp) {
-                      [dic setObject:req.viewController forKey:@"viewController"];
-                  }
-                  [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
-                  [weakSelf doPayAction:req.channel source:dic];
+                  [weakSelf doPayAction:req source:(NSDictionary *)response];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
@@ -208,26 +199,35 @@
 
 #pragma mark - Pay Action
 
-- (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic {
-    if (dic) {
-        BCPayLog(@"payment====%@", dic);
-        switch (channel) {
+- (BOOL)doPayAction:(BCPayReq *)req source:(NSDictionary *)response {
+    BOOL bSendPay = NO;
+    if (response) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
+                                    (NSDictionary *)response];
+        if (req.channel == PayChannelAliApp) {
+            [dic setObject:req.scheme forKey:@"scheme"];
+        } else if (req.channel == PayChannelUnApp) {
+            [dic setObject:req.viewController forKey:@"viewController"];
+        }
+        [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
+        switch (req.channel) {
             case PayChannelWxApp:
-                [BeeCloudAdapter beeCloudWXPay:dic];
+                bSendPay = [BeeCloudAdapter beeCloudWXPay:dic];
                 break;
             case PayChannelAliApp:
-                [BeeCloudAdapter beeCloudAliPay:dic];
+                bSendPay = [BeeCloudAdapter beeCloudAliPay:dic];
                 break;
             case PayChannelUnApp:
-                [BeeCloudAdapter beeCloudUnionPay:dic];
+                bSendPay = [BeeCloudAdapter beeCloudUnionPay:dic];
                 break;
             case PayChannelBaiduApp:
-                [BeeCloudAdapter beeCloudBaiduPay:dic];
+                 [BeeCloudAdapter beeCloudBaiduPay:dic];
                 break;
             default:
                 break;
         }
     }
+    return bSendPay;
 }
 
 - (void)doErrorResponse:(NSString *)errMsg {
@@ -238,23 +238,21 @@
     [BCPayCache beeCloudDoResponse];
 }
 
-- (void)getErrorInResponse:(id)response {
-    NSDictionary *dic = (NSDictionary *)response;
+- (void)getErrorInResponse:(NSDictionary *)response {
     BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
-    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
-    resp.resultMsg = dic[kKeyResponseResultMsg];
-    resp.errDetail = dic[kKeyResponseErrDetail];
+    resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+    resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+    resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     [BCPayCache beeCloudDoResponse];
 }
 
-
-- (void)doQueryResponse:(NSDictionary *)dic {
+- (void)doQueryResponse:(NSDictionary *)response {
     BCQueryResp *resp = (BCQueryResp *)[BCPayCache sharedInstance].bcResp;
-    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
-    resp.resultMsg = dic[kKeyResponseResultMsg];
-    resp.errDetail = dic[kKeyResponseErrDetail];
-    resp.count = [dic integerValueForKey:@"count" defaultValue:0];
-    resp.results = [self parseResults:dic];
+    resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+    resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+    resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
+    resp.count = [response integerValueForKey:@"count" defaultValue:0];
+    resp.results = [self parseResults:response];
     [BCPayCache beeCloudDoResponse];
 }
 
@@ -285,9 +283,9 @@
 
 - (void)doQueryRefundStatus:(NSDictionary *)dic {
     BCRefundStatusResp *resp = (BCRefundStatusResp *)[BCPayCache sharedInstance].bcResp;
-    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
-    resp.resultMsg = dic[kKeyResponseResultMsg];
-    resp.errDetail = dic[kKeyResponseErrDetail];
+    resp.resultCode = [dic integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+    resp.resultMsg = [dic stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+    resp.errDetail = [dic stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     resp.refundStatus = [dic stringValueForKey:@"refund_status" defaultValue:@""];
     [BCPayCache beeCloudDoResponse];
 }
