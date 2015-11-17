@@ -38,7 +38,7 @@
     return [WXApi isWXAppInstalled];
 }
 
-- (void)wxPay:(NSMutableDictionary *)dic {
+- (BOOL)wxPay:(NSMutableDictionary *)dic {
     
     PayReq *request = [[PayReq alloc] init];
     request.partnerId = [dic stringValueForKey:@"partner_id" defaultValue:@""];
@@ -48,7 +48,7 @@
     NSString *time = [dic stringValueForKey:@"timestamp" defaultValue:@""];
     request.timeStamp = time.intValue;
     request.sign = [dic stringValueForKey:@"pay_sign" defaultValue:@""];
-    [WXApi sendReq:request];
+    return [WXApi sendReq:request];
 }
 
 #pragma mark - Implementation WXApiDelegate

@@ -153,7 +153,7 @@
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
     [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billNo] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
-              
+    
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflineRevertResp *resp = (BCOfflineRevertResp *)[BCPayCache sharedInstance].bcResp;
               resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];

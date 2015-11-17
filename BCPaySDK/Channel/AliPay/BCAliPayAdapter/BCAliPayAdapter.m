@@ -32,7 +32,7 @@
     return YES;
 }
 
-- (void)aliPay:(NSMutableDictionary *)dic {
+- (BOOL)aliPay:(NSMutableDictionary *)dic {
     
     NSString *orderString = [dic stringValueForKey:@"order_string" defaultValue:@""];
     if (orderString.isValid) {
@@ -40,7 +40,9 @@
                                     callback:^(NSDictionary *resultDic) {
                                         [[BCAliPayAdapter sharedInstance] processOrderForAliPay:resultDic];
                                     }];
+        return YES;
     }
+    return NO;
 }
 
 #pragma mark - Implementation AliPayDelegate

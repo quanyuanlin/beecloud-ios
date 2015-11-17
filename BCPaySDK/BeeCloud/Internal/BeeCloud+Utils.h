@@ -80,8 +80,10 @@
  *
  *  @param channel 支付渠道
  *  @param dic     支付参数
+ * 
+ *  @return 发起支付成功返回YES
  */
-- (void)doPayAction:(PayChannel)channel source:(NSMutableDictionary *)dic;
+- (BOOL)doPayAction:(BCPayReq *)req source:(NSDictionary *)response;
 
 #pragma mark - doResponse
 /**

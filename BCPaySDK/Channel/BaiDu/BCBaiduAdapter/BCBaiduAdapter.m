@@ -18,13 +18,14 @@ static NSString * const kBaiduOrderInfo = @"orderInfo";
 
 @implementation BCBaiduAdapter
 
-- (void)baiduPay:(NSMutableDictionary *)dic {
+- (BCPayResp *)baiduPay:(NSMutableDictionary *)dic {
     BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
     resp.resultCode = [dic integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
     resp.resultMsg = [dic stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [dic stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     resp.paySource = @{kBaiduOrderInfo:[dic stringValueForKey:kBaiduOrderInfo defaultValue:@""]};
     [BCPayCache beeCloudDoResponse];
+    return resp;
 }
 
 @end
