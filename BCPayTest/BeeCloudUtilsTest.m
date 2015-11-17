@@ -11,10 +11,8 @@
 #import "BeeCloud+Utils.h"
 #import "OCMock.h"
 
-@interface BeeCloudUtilsTest : XCTestCase<BeeCloudDelegate> {
-    int testId;
-    BCBaseResp *testResp;
-    BOOL bFinish;
+@interface BeeCloudUtilsTest : XCTestCase {
+    BeeCloud *instance;
 }
 
 @end
@@ -25,9 +23,7 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     [BeeCloud initWithAppID:TESTAPPID andAppSecret:TESTAPPSECRET];
-    [BeeCloud setBeeCloudDelegate:self];
-    testId = 0;
-    bFinish = NO;
+    instance = [BeeCloud sharedInstance];
 }
 
 - (void)tearDown {
@@ -49,7 +45,6 @@
 
 - (void)testCheckParametersForReqPay {
 
-    BeeCloud *instance = [BeeCloud sharedInstance];
     BCPayReq * req = [[BCPayReq alloc] init];
     
     req.title = @"";
@@ -94,36 +89,26 @@
     XCTAssertTrue([instance checkParametersForReqPay:req]);
 }
 
-- (void)test_reqPay {
-    BCPayReq *req = [[BCPayReq init] alloc];
-    req.title = @"BeeCloud";
-    req.totalFee = @"1";
-    req.billNo = @"2015111317050048";
+- (void)test_doPayAction {
+    BCPayReq *req = [[BCPayReq alloc] init];
+    [BCPayCache sharedInstance].bcResp = [[BCPayResp alloc] initWithReq:req];
+    
     req.channel = PayChannelWxApp;
-    req.scheme = @"BCTest";
-    req.viewController = nil;
+    XCTAssertFalse([instance doPayAction:req source:@{}]);
     
-    id mockDelegate = [OCMockObject mockForProtocol:@protocol(BeeCloudDelegate)];
-    [BeeCloud setBeeCloudDelegate:mockDelegate];
-    [mockDelegate verify];
+    req.channel = PayChannelAliApp;
+    req.scheme = @"test";
+    XCTAssertFalse([instance doPayAction:req source:@{}]);
     
-    id manager = [OCMockObject mockForClass:[AFHTTPRequestOperationManager class]];
-    [[manager expect] POST:kRestApiPay parameters:nil success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id)) {
-        
-        return YES;
-    }] failure:OCMOCK_ANY];
+    req.channel = PayChannelUnApp;
+    req.viewController = [[UIViewController alloc] init];
+    XCTAssertFalse([instance doPayAction:req source:@{}]);
     
+    req.channel = PayChannelBaiduApp;
+    XCTAssertFalse([instance doPayAction:req source:@{}]);
     
+    req.channel = PayChannelBaiduApp;
+    XCTAssertTrue([instance doPayAction:req source:@{@"orderInfo":@"test"}]);
 }
-
-- (void)onBeeCloudResp:(BCBaseResp *)resp {
-    testResp = resp;
-    bFinish = YES;
-}
-
-
-
-
-
 
 @end

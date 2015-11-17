@@ -67,6 +67,14 @@
     return NO;
 }
 
++ (NSString *)beeCloudBaiduPay:(NSMutableDictionary *)dic {
+    id adapter = [[NSClassFromString(kAdapterBaidu) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(baiduPay:)]) {
+        return [adapter baiduPay:dic];
+    }
+    return nil;
+}
+
 + (void)beeCloudPayPal:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterPayPal) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(payPal:)]) {
@@ -100,14 +108,6 @@
     if (adapter && [adapter respondsToSelector:@selector(offlineRevert:)]) {
         [adapter offlineRevert:dic];
     }
-}
-
-+ (BCPayResp *)beeCloudBaiduPay:(NSMutableDictionary *)dic {
-    id adapter = [[NSClassFromString(kAdapterBaidu) alloc] init];
-    if (adapter && [adapter respondsToSelector:@selector(baiduPay:)]) {
-        return [adapter baiduPay:dic];
-    }
-    return nil;
 }
 
 @end
