@@ -19,7 +19,7 @@
 + (BOOL)beeCloudWXPay:(NSMutableDictionary *)dic;
 + (BOOL)beeCloudAliPay:(NSMutableDictionary *)dic;
 + (BOOL)beeCloudUnionPay:(NSMutableDictionary *)dic;
-+ (BCPayResp *)beeCloudBaiduPay:(NSMutableDictionary *)dic;
++ (NSString *)beeCloudBaiduPay:(NSMutableDictionary *)dic;
 
 + (void)beeCloudPayPal:(NSMutableDictionary *)dic;
 + (void)beeCloudPayPalVerify:(NSMutableDictionary *)dic;

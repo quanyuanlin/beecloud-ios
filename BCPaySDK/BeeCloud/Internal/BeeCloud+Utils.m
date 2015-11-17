@@ -221,7 +221,7 @@
                 bSendPay = [BeeCloudAdapter beeCloudUnionPay:dic];
                 break;
             case PayChannelBaiduApp:
-                 [BeeCloudAdapter beeCloudBaiduPay:dic];
+                bSendPay = [BeeCloudAdapter beeCloudBaiduPay:dic].isValid;
                 break;
             default:
                 break;

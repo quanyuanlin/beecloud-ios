@@ -23,7 +23,7 @@
 - (BOOL)wxPay:(NSMutableDictionary *)dic;
 - (BOOL)aliPay:(NSMutableDictionary *)dic;
 - (BOOL)unionPay:(NSMutableDictionary *)dic;
-- (BCPayResp *)baiduPay:(NSMutableDictionary *)dic;
+- (NSString *)baiduPay:(NSMutableDictionary *)dic;
 
 - (void)payPal:(NSMutableDictionary *)dic;
 - (void)payPalVerify:(NSMutableDictionary *)dic;
