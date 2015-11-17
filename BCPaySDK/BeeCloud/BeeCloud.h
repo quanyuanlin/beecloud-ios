@@ -39,7 +39,7 @@
  *  @param appId     BeeCloud平台APPID
  *  @param appSecret BeeCloud平台APPSECRET
  *
- *  @return 初始化成功返回YES
+ *  @return 初始化成功返回YES; 若appId或者appSecret不合法，初始化失败返回NO
  */
 + (BOOL)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret;
 

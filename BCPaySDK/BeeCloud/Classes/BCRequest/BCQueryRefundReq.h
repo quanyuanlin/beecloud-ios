@@ -14,7 +14,7 @@
  */
 @interface BCQueryRefundReq : BCQueryReq //type=103;
 /**
- *  商户自定义退款订单号
+ *  发起退款时商户自定义的退款单号
  */
 @property (nonatomic, retain) NSString *refundNo;
 

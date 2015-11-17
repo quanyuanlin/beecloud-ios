@@ -47,6 +47,7 @@
 
 - (void)processOrderForAliPay:(NSDictionary *)resultDic {
     int status = [resultDic[@"resultStatus"] intValue];
+    
     NSString *strMsg;
     int errcode = 0;
     switch (status) {

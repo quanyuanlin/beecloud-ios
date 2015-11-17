@@ -27,13 +27,6 @@
     [super tearDown];
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
 - (void)testGetAFHTTPRequestOperationManager {
     XCTAssertNotNil([BCPayUtil getAFHTTPRequestOperationManager]);
 }
@@ -67,50 +60,51 @@
 }
 
 - (void)testGetChannelString {
-    XCTAssertTrue([@"WX" isEqualToString:[BCPayUtil getChannelString:PayChannelWx]]);
-    XCTAssertTrue([@"WX_APP" isEqualToString:[BCPayUtil getChannelString:PayChannelWxApp]]);
-    XCTAssertTrue([@"WX_NATIVE" isEqualToString:[BCPayUtil getChannelString:PayChannelWxNative]]);
-    XCTAssertTrue([@"WX_JSAPI" isEqualToString:[BCPayUtil getChannelString:PayChannelWxJsApi]]);
-    XCTAssertTrue([@"WX_SCAN"isEqualToString: [BCPayUtil getChannelString:PayChannelWxScan]]);
+    XCTAssertEqualObjects(@"WX", [BCPayUtil getChannelString:PayChannelWx]);
+    XCTAssertEqualObjects(@"WX_APP", [BCPayUtil getChannelString:PayChannelWxApp]);
+    XCTAssertEqualObjects(@"WX_NATIVE", [BCPayUtil getChannelString:PayChannelWxNative]);
+    XCTAssertEqualObjects(@"WX_JSAPI", [BCPayUtil getChannelString:PayChannelWxJsApi]);
+    XCTAssertEqualObjects(@"WX_SCAN", [BCPayUtil getChannelString:PayChannelWxScan]);
     
-    XCTAssertTrue([@"ALI" isEqualToString:[BCPayUtil getChannelString:PayChannelAli]]);
-    XCTAssertTrue([@"ALI_APP" isEqualToString: [BCPayUtil getChannelString:PayChannelAliApp]]);
-    XCTAssertTrue([@"ALI_WEB" isEqualToString:[BCPayUtil getChannelString:PayChannelAliWeb]]);
-    XCTAssertTrue([@"ALI_WAP" isEqualToString:[BCPayUtil getChannelString:PayChannelAliWap]]);
-    XCTAssertTrue([@"ALI_QRCODE" isEqualToString:[BCPayUtil getChannelString:PayChannelAliQrCode]]);
-    XCTAssertTrue([@"ALI_OFFLINE_QRCODE" isEqualToString: [BCPayUtil getChannelString:PayChannelAliOfflineQrCode]]);
-    XCTAssertTrue([@"ALI_SCAN" isEqualToString: [BCPayUtil getChannelString:PayChannelAliScan]]);
+    XCTAssertEqualObjects(@"ALI", [BCPayUtil getChannelString:PayChannelAli]);
+    XCTAssertEqualObjects(@"ALI_APP", [BCPayUtil getChannelString:PayChannelAliApp]);
+    XCTAssertEqualObjects(@"ALI_WEB", [BCPayUtil getChannelString:PayChannelAliWeb]);
+    XCTAssertEqualObjects(@"ALI_WAP", [BCPayUtil getChannelString:PayChannelAliWap]);
+    XCTAssertEqualObjects(@"ALI_QRCODE", [BCPayUtil getChannelString:PayChannelAliQrCode]);
+    XCTAssertEqualObjects(@"ALI_OFFLINE_QRCODE", [BCPayUtil getChannelString:PayChannelAliOfflineQrCode]);
+    XCTAssertEqualObjects(@"ALI_SCAN", [BCPayUtil getChannelString:PayChannelAliScan]);
     
-    XCTAssertTrue([@"UN" isEqualToString: [BCPayUtil getChannelString:PayChannelUn]]);
-    XCTAssertTrue([@"UN_APP" isEqualToString: [BCPayUtil getChannelString:PayChannelUnApp]]);
-    XCTAssertTrue([@"UN_WEB" isEqualToString: [BCPayUtil getChannelString:PayChannelUnWeb]]);
+    XCTAssertEqualObjects(@"UN", [BCPayUtil getChannelString:PayChannelUn]);
+    XCTAssertEqualObjects(@"UN_APP", [BCPayUtil getChannelString:PayChannelUnApp]);
+    XCTAssertEqualObjects(@"UN_WEB", [BCPayUtil getChannelString:PayChannelUnWeb]);
     
-    XCTAssertTrue([@"BD" isEqualToString:[BCPayUtil getChannelString:PayChannelBaidu]]);
-    XCTAssertTrue([@"BD_APP" isEqualToString: [BCPayUtil getChannelString:PayChannelBaiduApp]]);
-    XCTAssertTrue([@"BD_WEB" isEqualToString: [BCPayUtil getChannelString:PayChannelBaiduWeb]]);
-    XCTAssertTrue([@"BD_WAP" isEqualToString: [BCPayUtil getChannelString:PayChannelBaiduWap]]);
+    XCTAssertEqualObjects(@"BD", [BCPayUtil getChannelString:PayChannelBaidu]);
+    XCTAssertEqualObjects(@"BD_APP", [BCPayUtil getChannelString:PayChannelBaiduApp]);
+    XCTAssertEqualObjects(@"BD_WEB", [BCPayUtil getChannelString:PayChannelBaiduWeb]);
+    XCTAssertEqualObjects(@"BD_WAP", [BCPayUtil getChannelString:PayChannelBaiduWap]);
     
-    XCTAssertTrue([@"PAYPAL" isEqualToString: [BCPayUtil getChannelString:PayChannelPayPal]]);
-    XCTAssertTrue([@"PAYPAL_LIVE" isEqualToString: [BCPayUtil getChannelString:PayChannelPayPalLive]]);
-    XCTAssertTrue([@"PAYPAL_SANDBOX" isEqualToString: [BCPayUtil getChannelString:PayChannelPayPalSanBox]]);
+    XCTAssertEqualObjects(@"PAYPAL", [BCPayUtil getChannelString:PayChannelPayPal]);
+    XCTAssertEqualObjects(@"PAYPAL_LIVE", [BCPayUtil getChannelString:PayChannelPayPalLive]);
+    XCTAssertEqualObjects(@"PAYPAL_SANDBOX", [BCPayUtil getChannelString:PayChannelPayPalSanBox]);
 }
 
 - (void)testGenerateRandomUUID {
-    XCTAssertTrue([BCPayUtil generateRandomUUID].length == 36);
+    XCTAssertEqual([BCPayUtil generateRandomUUID].length, 36);
 }
 
 - (void)testMillisecondToDate {
     NSString * dateString1 = [BCPayUtil dateToString:[NSDate date]];
     long long timeStamp = [BCPayUtil dateStringToMillisencond:dateString1];
     NSString *dateString2 = [BCPayUtil millisecondToDateString:timeStamp];
-    XCTAssertTrue([dateString1 isEqualToString: dateString2]);
+    XCTAssertEqualObjects(dateString1, dateString2);
 }
 
 - (void)testIsValidEmail {
-    XCTAssertTrue([BCPayUtil isValidEmail:@"hwl@beecloud.cn"]);
     XCTAssertFalse([BCPayUtil isValidEmail:@"12?/@beecloud.cn"]);
     XCTAssertFalse([BCPayUtil isValidEmail:@"dwojodwjo.cn"]);
     XCTAssertFalse([BCPayUtil isValidEmail:@"@beecloud.cn"]);
+    
+    XCTAssertTrue([BCPayUtil isValidEmail:@"hwl@beecloud.cn"]);
 }
 
 
@@ -118,21 +112,25 @@
     XCTAssertFalse([BCPayUtil isValidMobile:@"0125363"]);
     XCTAssertFalse([BCPayUtil isValidMobile:@"1381562711a"]);
     XCTAssertFalse([BCPayUtil isValidMobile:@"33815627115"]);
+    XCTAssertTrue([BCPayUtil isValidMobile:@"13305120512"]);
 }
 
 - (void)testIsLetter {
     XCTAssertFalse([BCPayUtil isLetter:'&']);
     XCTAssertFalse([BCPayUtil isLetter:'1']);
+    XCTAssertTrue([BCPayUtil isLetter:'A']);
 }
 
 - (void)testIsDigit {
     XCTAssertFalse([BCPayUtil isDigit:'a']);
     XCTAssertFalse([BCPayUtil isDigit:'*']);
+    XCTAssertTrue([BCPayUtil isDigit:'1']);
 }
 
 - (void)testGetBytes {
     XCTAssertTrue([BCPayUtil getBytes:@"wo"] == 2);
     XCTAssertTrue([BCPayUtil getBytes:@"我"] == 2);
+    XCTAssertFalse([BCPayUtil getBytes:@"1"] == 2);
 }
 
 @end

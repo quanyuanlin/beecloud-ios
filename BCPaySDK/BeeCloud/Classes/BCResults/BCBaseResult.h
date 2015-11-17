@@ -21,7 +21,7 @@
  */
 @property (nonatomic, assign) BCObjsType type;
 /**
- *  商户自定义订单号
+ *  发起支付时商户自定义的订单号
  */
 @property (nonatomic, retain) NSString  *billNo;
 /**
@@ -37,11 +37,11 @@
  */
 @property (nonatomic, assign) long long  createTime;
 /**
- *  支付主渠道(WX、ALI、UN、BD、PAYPAL等)
+ *  支付主渠道(WX、ALI、UN、BD、PAYPAL),具体参考Enum PayChannel
  */
 @property (nonatomic, retain) NSString  *channel;
 /**
- *  支付子渠道
+ *  支付子渠道，如WX_APP，WX_NATIVE, WX_JSAPI,具体参考Enum PayChannel
  */
 @property (nonatomic, retain) NSString  *subChannel;
 /**

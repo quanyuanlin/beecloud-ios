@@ -129,7 +129,7 @@
         parameters[@"channel"] = cType;
     }
     parameters[@"skip"] = [NSNumber numberWithInteger:req.skip];
-    parameters[@"limit"] = [NSNumber numberWithInteger:req.limit];
+    parameters[@"limit"] =  req.limit > 50 ? @50 : [NSNumber numberWithInteger:req.limit];
     
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     

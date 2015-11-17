@@ -25,19 +25,13 @@
     [super tearDown];
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
 - (void)testValueForKeyIsArray {
     NSDictionary *testDic = @{@"test":@[@"a",@"b"]};
     XCTAssertTrue([testDic valueForKeyIsArray:@"test"]);
     
     testDic = @{@"test":@1};
     XCTAssertFalse([testDic valueForKeyIsArray:@"test"]);
+    XCTAssertFalse([testDic valueForKeyIsArray:@"testError"]);
 }
 
 - (void)testValueForKeyIsString {
@@ -46,6 +40,7 @@
     
     testDic = @{@"test":@1};
     XCTAssertFalse([testDic valueForKeyIsString:@"test"]);
+    XCTAssertFalse([testDic valueForKeyIsString:@"testError"]);
 }
 
 - (void)testValueForKeyIsNumber {
@@ -54,6 +49,7 @@
     
     testDic = @{@"test":@"a"};
     XCTAssertFalse([testDic valueForKeyIsNumber:@"test"]);
+    XCTAssertFalse([testDic valueForKeyIsNumber:@"testError"]);
 }
 
 - (void)testIntegerValueForKey {
