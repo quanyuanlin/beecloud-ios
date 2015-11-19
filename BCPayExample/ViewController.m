@@ -389,12 +389,9 @@
         }
     } else {
         switch (channel) {
-            case PayChannelWxApp:
-            case PayChannelWxNative:
             case PayChannelWxScan:
                 [self doQuery:PayChannelWx];
                 break;
-            case PayChannelAliApp:
             case PayChannelAliScan:
             case PayChannelAliOfflineQrCode:
                 [self doQuery:PayChannelAli];
