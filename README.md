@@ -3,7 +3,7 @@
 ![pass](https://img.shields.io/badge/Build-pass-green.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.3.2-blue.svg)
 
 * 目录  
-[配置](%e9%85%8d%e7%bd%ae)  
+[配置](#%e9%85%8d%e7%bd%ae)  
 
 ## 简介
 
