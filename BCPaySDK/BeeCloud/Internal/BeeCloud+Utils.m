@@ -230,23 +230,25 @@
     return bSendPay;
 }
 
-- (void)doErrorResponse:(NSString *)errMsg {
+- (BCBaseResp *)doErrorResponse:(NSString *)errMsg {
     BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
     resp.resultCode = BCErrCodeCommon;
     resp.resultMsg = errMsg;
     resp.errDetail = errMsg;
     [BCPayCache beeCloudDoResponse];
+    return resp;
 }
 
-- (void)getErrorInResponse:(NSDictionary *)response {
+- (BCBaseResp *)getErrorInResponse:(NSDictionary *)response {
     BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
     resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
     resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     [BCPayCache beeCloudDoResponse];
+    return resp;
 }
 
-- (void)doQueryResponse:(NSDictionary *)response {
+- (BCQueryResp *)doQueryResponse:(NSDictionary *)response {
     BCQueryResp *resp = (BCQueryResp *)[BCPayCache sharedInstance].bcResp;
     resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
     resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
@@ -254,20 +256,27 @@
     resp.count = [response integerValueForKey:@"count" defaultValue:0];
     resp.results = [self parseResults:response];
     [BCPayCache beeCloudDoResponse];
+    return resp;
 }
 
 - (NSMutableArray *)parseResults:(NSDictionary *)dic {
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:10];
     if ([[dic allKeys] containsObject:@"bills"]) {
         for (NSDictionary *result in [dic arrayValueForKey:@"bills" defaultValue:nil]) {
-            [array addObject:[self parseQueryResult:result]];
+            BCQueryBillResult *bill = (BCQueryBillResult *)[self parseQueryResult:result];
+            if (bill) {
+                [array addObject:bill];
+            }
         } ;
     } else if ([[dic allKeys] containsObject:@"refunds"]) {
         for (NSDictionary *result in [dic arrayValueForKey:@"refunds" defaultValue:nil]) {
-            [array addObject:[self parseQueryResult:result]];
+            BCQueryRefundResult *refund = (BCQueryRefundResult *)[self parseQueryResult:result];
+            if (refund) {
+                [array addObject:refund];
+            }
         } ;
     }
-    return array;
+    return array.count > 0 ? array : nil;
 }
 
 - (BCBaseResult *)parseQueryResult:(NSDictionary *)dic {
@@ -281,13 +290,14 @@
     return nil;
 }
 
-- (void)doQueryRefundStatus:(NSDictionary *)dic {
+- (BCRefundStatusResp *)doQueryRefundStatus:(NSDictionary *)dic {
     BCRefundStatusResp *resp = (BCRefundStatusResp *)[BCPayCache sharedInstance].bcResp;
     resp.resultCode = [dic integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
     resp.resultMsg = [dic stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [dic stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     resp.refundStatus = [dic stringValueForKey:@"refund_status" defaultValue:@""];
     [BCPayCache beeCloudDoResponse];
+    return resp;
 }
 
 @end
