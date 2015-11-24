@@ -1,3 +1,6 @@
-language: objective-c
-xcode_project: BCPay.xcodeproj # path to your xcodeproj folder
-xcode_scheme: BCPayTest
+nguage: objective-c
+before_install:
+  - brew update
+  - brew outdated xctool || brew upgrade xctool
+script:
+  - xctool test -xcproject BCPay.xcproject -scheme BCPayTest -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
