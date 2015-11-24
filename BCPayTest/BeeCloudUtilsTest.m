@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "BCTestHeader.h"
 #import "BeeCloud+Utils.h"
-#import "OCMock.h"
 
 @interface BeeCloudUtilsTest : XCTestCase {
     BeeCloud *instance;
