@@ -1,2 +1,6 @@
 language: objective-c
-script: xcodebuild test -project BCPay.xcodeproj -scheme BCPayTest -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+before_install:
+  - brew update
+  - brew outdated xctool || brew upgrade xctool
+script:
+  - xctool test -project BCPay.xcodeproj -scheme BCPayTest -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
