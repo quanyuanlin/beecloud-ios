@@ -17,9 +17,9 @@
 /**
  *  订单支付结果;YES表示支付成功,NO表示支付失败
  */
-@property (nonatomic, assign) BOOL spayResult;
+@property (nonatomic, assign) BOOL payResult;
 /**
- *  渠道流水号
+ *  渠道交易号
  */
 @property (nonatomic, retain) NSString *tradeNo;
 /**

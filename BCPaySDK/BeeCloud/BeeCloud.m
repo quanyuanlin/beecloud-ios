@@ -38,10 +38,13 @@
 }
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
+    if (!wxAppID.isValid) {
+        return NO;
+    }
     return [BeeCloudAdapter beeCloudRegisterWeChat:wxAppID];
 }
 
-+ (void)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
++ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
     
     if(clientID.isValid && secret.isValid) {
         BCPayCache *instance = [BCPayCache sharedInstance];
@@ -50,7 +53,9 @@
         instance.isPayPalSandBox = isSandBox;
         
         [BeeCloudAdapter beeCloudRegisterPayPal:clientID secret:secret sanBox:isSandBox];
+        return YES;
     }
+    return NO;
 }
 
 + (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
@@ -82,8 +87,9 @@
     [BCPayCache sharedInstance].networkTimeout = time;
 }
 
-+ (void)sendBCReq:(BCBaseReq *)req {
++ (BOOL)sendBCReq:(BCBaseReq *)req {
     BeeCloud *instance = [BeeCloud sharedInstance];
+    BOOL bSend = YES;
     switch (req.type) {
         case BCObjsTypePayReq:
             [instance reqPay:(BCPayReq *)req];
@@ -113,8 +119,10 @@
             [instance reqOfflineBillRevert:req];
             break;
         default:
+            bSend = NO;
             break;
     }
+    return bSend;
 }
 
 @end

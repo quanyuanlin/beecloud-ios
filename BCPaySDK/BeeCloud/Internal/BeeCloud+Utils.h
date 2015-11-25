@@ -91,14 +91,14 @@
  *
  *  @param errMsg 错误信息
  */
-- (void)doErrorResponse:(NSString *)errMsg;
+- (BCBaseResp *)doErrorResponse:(NSString *)errMsg;
 
 /**
  *  服务端返回错误，执行错误回调
  *
  *  @param response 服务端返回参数
  */
-- (void)getErrorInResponse:(id)response;
+- (BCBaseResp *)getErrorInResponse:(id)response;
 
 #pragma mark - QueryBill
 /**
@@ -106,7 +106,7 @@
  *
  *  @param dic 订单列表数据
  */
-- (void)doQueryResponse:(NSDictionary *)dic;
+- (BCQueryResp *)doQueryResponse:(NSDictionary *)dic;
 
 /**
  *  解析订单列表数据
@@ -133,6 +133,6 @@
  *
  *  @param dic 退款状态信息
  */
-- (void)doQueryRefundStatus:(NSDictionary *)dic;
+- (BCRefundStatusResp *)doQueryRefundStatus:(NSDictionary *)dic;
 
 @end
