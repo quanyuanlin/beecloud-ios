@@ -32,7 +32,10 @@
 
 - (void)testCheckParametersForReqPay {
 
-    BCPayReq * req = [[BCPayReq alloc] init];
+    BCPayReq * req = nil;
+    XCTAssertFalse([instance checkParametersForReqPay:req]);
+    
+    req = [[BCPayReq alloc] init];
     
     req.title = @"";
     XCTAssertFalse([instance checkParametersForReqPay:req]);
@@ -103,6 +106,9 @@
     
     req.channel = PayChannelBaiduApp;
     XCTAssertTrue([instance doPayAction:req source:@{@"orderInfo":@"test"}]);
+    
+    req.channel = PayChannelAli;
+    XCTAssertFalse([instance doPayAction:req source:@{}]);
 }
 
 - (void)test_doErrorResponse {
@@ -140,64 +146,43 @@
 }
 
 - (void)test_parseResults {
-    NSMutableArray *results = [instance parseResults:@{}];
+    NSMutableArray *results = [instance parseResults:@{} type:BCObjsTypeQueryBillsReq];
     XCTAssertNil(results);
     
-    results = [instance parseResults:@{@"bill":@""}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"bills":@""}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"bill":@[]}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"bills":@[@{@"title":@"test"}]}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"bills":@[@{@"title":@"test",@"pay_result":@YES}]}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"bills":@[@{@"title":@"test",@"spay_result":@YES}]}];
+    results = [instance parseResults:@{@"bills":@[@{@"title":@"test",@"spay_result":@YES}]} type:BCObjsTypeQueryBillsReq];
     XCTAssertNotNil(results);
     
-    results = [instance parseResults:@{@"refund":@""}];
+    results = [instance parseResults:@{@"bills":@[@{@"title":@"test",@"spay_result":@YES}]} type:BCObjsTypeQueryResp];
     XCTAssertNil(results);
     
-    results = [instance parseResults:@{@"refunds":@""}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"refunds":@[]}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"refunds":@[@{@"title":@"test"}]}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"refunds":@[@{@"title":@"test",@"refundNo":@""}]}];
-    XCTAssertNil(results);
-    
-    results = [instance parseResults:@{@"refunds":@[@{@"title":@"test",@"refund_no":@"2015010202"}]}];
+    results = [instance parseResults:@{@"refunds":@[@{@"title":@"test",@"refund_no":@"2015010202"}]} type:BCObjsTypeQueryRefundsReq];
     XCTAssertNotNil(results);
+    
+    results = [instance parseResults:@{@"refunds":@[@{@"title":@"test",@"refund_no":@"2015010202"}]} type:BCObjsTypeQueryResp];
+    XCTAssertNil(results);
 }
 
 - (void)test_parseQueryResult {
-    BCBaseResult *baseResult = [instance parseQueryResult:@{}];
+    BCBaseResult *baseResult = [instance parseQueryResult:@{} type:BCObjsTypeQueryBillsReq];
     XCTAssertNil(baseResult);
     
-    baseResult = [instance parseQueryResult:nil];
+    baseResult = [instance parseQueryResult:nil type:BCObjsTypeQueryBillsReq];
     XCTAssertNil(baseResult);
     
-    baseResult = [instance parseQueryResult:@{@"spayResult":@YES}];
-    XCTAssertNil(baseResult);
-    
-    baseResult = [instance parseQueryResult:@{@"spay_result":@YES}];
+    baseResult = [instance parseQueryResult:@{@"spayResult":@YES} type:BCObjsTypeQueryBillsReq];
     XCTAssertNotNil(baseResult);
     
-    baseResult = [instance parseQueryResult:@{@"refundNo":@YES}];
-    XCTAssertNil(baseResult);
-    
-    baseResult = [instance parseQueryResult:@{@"refund_no":@""}];
+    baseResult = [instance parseQueryResult:@{@"spay_result":@YES} type:BCObjsTypeQueryBillsReq];
     XCTAssertNotNil(baseResult);
+    
+    baseResult = [instance parseQueryResult:@{@"refundNo":@YES} type:BCObjsTypeQueryRefundsReq];
+    XCTAssertNotNil(baseResult);
+    
+    baseResult = [instance parseQueryResult:@{@"refund_no":@""} type:BCObjsTypeQueryRefundsReq];
+    XCTAssertNotNil(baseResult);
+    
+    baseResult = [instance parseQueryResult:@{@"refund_no":@""} type:BCObjsTypeQueryResp];
+    XCTAssertNil(baseResult);
 }
 
 - (void)test_doQueryRefundStatus {

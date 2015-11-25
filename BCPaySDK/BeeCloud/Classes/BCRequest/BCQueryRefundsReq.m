@@ -6,16 +6,18 @@
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCQueryRefundReq.h"
+#import "BCQueryRefundsReq.h"
 
 #pragma mark query refund request
-@implementation BCQueryRefundReq
+@implementation BCQueryRefundsReq
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.type = BCObjsTypeQueryRefundReq;
+        self.type = BCObjsTypeQueryRefundsReq;
         self.refundNo = @"";
+        self.needApproved = NeedApprovalAll;
+        self.needMsgDetail = NO;
     }
     return self;
 }

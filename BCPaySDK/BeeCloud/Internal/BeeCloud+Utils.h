@@ -53,12 +53,29 @@
 - (void)reqPayPalVerify:(BCPayPalVerifyReq *)req;
 
 /**
- *  查询支付/退款订单
+ *  查询支付订单
  *
  *  @param req 查询订单请求
  */
-- (void)reqQueryOrder:(BCQueryReq *)req;
-
+- (void)reqQueryBills:(BCQueryBillsReq *)req;
+/**
+ *  根据订单记录objectId查询单笔支付订单
+ *
+ *  @param req 查询单笔支付订单请求
+ */
+- (void)reqQueryBillById:(BCQueryBillByIdReq *)req;
+/**
+ *  查询退款订单
+ *
+ *  @param req 查询退款订单请求
+ */
+- (void)reqQueryRefunds:(BCQueryRefundsReq *)req;
+/**
+ *  根据订单记录objectId查询退款订单
+ *
+ *  @param req 查询单笔退款订单请求
+ */
+- (void)reqQueryRefundById:(BCQueryRefundByIdReq *)req;
 /**
  *  查询退款状态。目前仅支持WX_APP
  *
@@ -115,7 +132,7 @@
  *
  *  @return 本地化后的订单列表，查询支付订单元素为BCQueryBillResult；查询退款订单元素为BCQueryRefundResult
  */
-- (NSMutableArray *)parseResults:(NSDictionary *)dic;
+- (NSMutableArray *)parseResults:(NSDictionary *)dic type:(BCObjsType)type;
 
 /**
  *  解析单条订单数据
@@ -124,7 +141,7 @@
  *
  *  @return BCQueryBillResult或BCQueryRefundResult
  */
-- (BCBaseResult *)parseQueryResult:(NSDictionary *)dic;
+- (BCBaseResult *)parseQueryResult:(NSDictionary *)dic type:(BCObjsType)type;
 
 #pragma mark - RefundStatus
 

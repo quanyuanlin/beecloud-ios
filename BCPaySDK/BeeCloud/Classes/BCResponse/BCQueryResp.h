@@ -7,7 +7,7 @@
 //
 
 #import "BCBaseResp.h"
-#import "BCQueryReq.h"
+#import "BCQueryBillsReq.h"
 
 #pragma mark BCQueryResp
 /**

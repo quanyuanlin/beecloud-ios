@@ -26,5 +26,9 @@
  *  订单撤销结果(WX_SCAN, ALI_SCAN, ALI_OFFLINE_QRCODE渠道是此参数有意义),YES表示撤销成功,NO表示撤销失败
  */
 @property (nonatomic, assign) BOOL revertResult;
+/**
+ *  是否已经退款，YES代表已经退款
+ */
+@property (nonatomic, assign) BOOL refundResult;
 
 @end

@@ -53,6 +53,10 @@
                     @{@"channel":@"百度钱包",@"img":@"baidu",
                       @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
     self.payList = [NSMutableArray arrayWithCapacity:10];
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
 #pragma mark - 设置delegate
     [BeeCloud setBeeCloudDelegate:self];
 }
@@ -294,23 +298,26 @@
 - (void)doQuery:(PayChannel)channel {
     
     if (self.actionType == 1) {
-        BCQueryReq *req = [[BCQueryReq alloc] init];
+        BCQueryBillsReq *req = [[BCQueryBillsReq alloc] init];
         req.channel = channel;
+        req.billStatus = BillStatusOnlySuccess;
+        req.needMsgDetail = YES;
         //   req.billno = @"20150901104138656";//订单号
        //  req.startTime = @"2015-10-22 00:00";//订单时间
         // req.endTime = @"2015-10-23 00:00";//订单时间
         req.skip = 0;//
-        req.limit = 50;
+        req.limit = 10;
         [BeeCloud sendBCReq:req];
     } else if (self.actionType == 2) {
-        BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
+        BCQueryRefundsReq *req = [[BCQueryRefundsReq alloc] init];
         req.channel = channel;
+        req.needApproved = NeedApprovalAll;
         //  req.billno = @"20150722164700237";
         //  req.starttime = @"2015-07-21 00:00";
         // req.endtime = @"2015-07-23 12:00";
         //req.refundno = @"20150709173629127";
         req.skip = 0;
-        req.limit = 20;
+        req.limit = 10;
         [BeeCloud sendBCReq:req];
     }
 }

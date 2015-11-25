@@ -118,8 +118,10 @@ typedef NS_ENUM(NSInteger, BCErrCode) {
 typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeBaseReq = 100,
     BCObjsTypePayReq,
-    BCObjsTypeQueryReq,
-    BCObjsTypeQueryRefundReq,
+    BCObjsTypeQueryBillsReq,
+    BCObjsTypeQueryRefundsReq,
+    BCObjsTypeQueryBillByIdReq,
+    BCObjsTypeQueryRefundByIdReq,
     BCObjsTypeRefundStatusReq,
     BCObjsTypeOfflinePayReq,
     BCObjsTypeOfflineBillStatusReq,

@@ -15,9 +15,11 @@
 #import "BCPayReq.h"
 #import "BCPayResp.h"
 
-#import "BCQueryReq.h"
+#import "BCQueryBillsReq.h"
+#import "BCQueryBillByIdReq.h"
+#import "BCQueryRefundsReq.h"
+#import "BCQueryRefundByIdReq.h"
 #import "BCQueryResp.h"
-#import "BCQueryRefundReq.h"
 
 #import "BCRefundStatusReq.h"
 #import "BCRefundStatusResp.h"

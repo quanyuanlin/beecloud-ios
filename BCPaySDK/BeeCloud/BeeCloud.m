@@ -92,21 +92,35 @@
     BOOL bSend = YES;
     switch (req.type) {
         case BCObjsTypePayReq:
+            [BCPayCache sharedInstance].bcResp = [[BCPayResp alloc] initWithReq:req];
             [instance reqPay:(BCPayReq *)req];
             break;
-        case BCObjsTypeQueryReq:
-            [instance reqQueryOrder:(BCQueryReq *)req];
+        case BCObjsTypeQueryBillsReq:
+            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+            [instance reqQueryBills:(BCQueryBillsReq *)req];
             break;
-        case BCObjsTypeQueryRefundReq:
-            [instance reqQueryOrder:(BCQueryRefundReq *)req];
+        case BCObjsTypeQueryBillByIdReq:
+            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+            [instance reqQueryBillById:(BCQueryBillByIdReq *)req];
+            break;
+        case BCObjsTypeQueryRefundsReq:
+            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+            [instance reqQueryRefunds:(BCQueryRefundsReq *)req];
+            break;
+        case BCObjsTypeQueryRefundByIdReq:
+            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+            [instance reqQueryRefundById:(BCQueryRefundByIdReq *)req];
             break;
         case BCObjsTypeRefundStatusReq:
+            [BCPayCache sharedInstance].bcResp = [[BCRefundStatusResp alloc] initWithReq:req];
             [instance reqRefundStatus:(BCRefundStatusReq *)req];
             break;
         case BCObjsTypePayPal:
+            [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] initWithReq:req];
             [instance  reqPayPal:(BCPayPalReq *)req];
             break;
         case BCObjsTypePayPalVerify:
+            [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] initWithReq:req];
             [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
             break;
         case BCObjsTypeOfflinePayReq:

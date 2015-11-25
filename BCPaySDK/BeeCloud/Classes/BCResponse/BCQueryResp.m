@@ -11,7 +11,7 @@
 #pragma mark query response
 @implementation BCQueryResp
 
-- (instancetype)initWithReq:(BCQueryReq *)request {
+- (instancetype)initWithReq:(BCQueryBillsReq *)request {
     self = [super initWithReq:request];
     if (self) {
         self.type = BCObjsTypeQueryResp;

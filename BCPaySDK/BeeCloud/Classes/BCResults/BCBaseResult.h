@@ -21,6 +21,10 @@
  */
 @property (nonatomic, assign) BCObjsType type;
 /**
+ *  订单记录id
+ */
+@property (nonatomic, retain) NSString *objectId;
+/**
  *  发起支付时商户自定义的订单号
  */
 @property (nonatomic, retain) NSString  *billNo;
@@ -47,7 +51,11 @@
 /**
  *  商家自定义业务扩展参数
  */
-@property (nonatomic, retain) NSDictionary  *optional;
+@property (nonatomic, retain) NSDictionary *optional;
+/**
+ *  支付或者退款成功后渠道返回的详细信息
+ */
+@property (nonatomic, retain) NSDictionary *msgDetail;
 
 /**
  *  初始化一个BCBaseResult实例

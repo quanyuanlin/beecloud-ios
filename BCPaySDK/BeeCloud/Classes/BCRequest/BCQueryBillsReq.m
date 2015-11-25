@@ -1,25 +1,27 @@
 //
-//  BCQueryReq.m
+//  BCQueryBillsReq.m
 //  BCPaySDK
 //
 //  Created by Ewenlong03 on 15/7/27.
 //  Copyright (c) 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCQueryReq.h"
+#import "BCQueryBillsReq.h"
 
 #pragma mark query request
-@implementation BCQueryReq
+@implementation BCQueryBillsReq
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.type = BCObjsTypeQueryReq;
+        self.type = BCObjsTypeQueryBillsReq;
         self.skip = 0;
         self.limit = 10;
         self.startTime = @"";
         self.endTime = @"";
         self.billNo = @"";
+        self.billStatus = BillStatusAll;
+        self.needMsgDetail = NO;
     }
     return self;
 }
