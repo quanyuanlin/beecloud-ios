@@ -150,6 +150,14 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
     }
     return YES;
 }
+
+//iOS9之后apple官方建议使用此方法
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+    if (![BeeCloud handleOpenUrl:url]) {
+        //handle其他类型的url
+    }
+    return YES;
+}
 ```
  
 
@@ -566,7 +574,7 @@ req.refundno = @"20150709173629127";
 在真机上运行`BCPayExample`target，体验真实支付场景
 
 ## 测试
-TODO
+项目根目录命令行运行`bash runTest.sh`, 就可以完成Unit Test。
 
 ## 常见问题
 - 关于weekhook的接收  
