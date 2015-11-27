@@ -22,16 +22,16 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     req = [[BCRefundStatusReq alloc] init];
+    [BCPayCache sharedInstance].bcResp = [[BCRefundStatusResp alloc] initWithReq:req];
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    [BCPayCache sharedInstance].bcResp = nil;
 }
 
 - (void)test_doQueryRefundStatus {
-    
-    [BCPayCache sharedInstance].bcResp = [[BCRefundStatusResp alloc] init];
     
     BCRefundStatusResp *resp = [req doQueryRefundStatus:nil];
     XCTAssertNil(resp.refundStatus);

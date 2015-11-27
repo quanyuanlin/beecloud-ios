@@ -7,8 +7,9 @@
 //
 
 #import "BCQueryRefundsCountReq.h"
+#import "BCPayUtil.h"
 
-@implementation BCQueryRefundsCount
+@implementation BCQueryRefundsCountReq
 
 - (instancetype)init {
     self = [super init];
@@ -23,8 +24,57 @@
     return self;
 }
 
-- (void)reqBillsCount {
+- (void)queryRefundsCountReq {
+    [BCPayCache sharedInstance].bcResp = [[BCQueryRefundsCountResp alloc] initWithReq:self];
     
+    NSString *cType = [BCPayUtil getChannelString:self.channel];
+    
+    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
+    if (parameters == nil) {
+        [BCPayUtil doErrorResponse:@"请检查是否全局初始化"];
+        return;
+    }
+    
+    if (self.billNo.isValid) {
+        parameters[@"bill_no"] = self.billNo;
+    }
+    if (self.refundNo.isValid) {
+        parameters[@"refund_no"] = self.refundNo;
+    }
+    if (self.startTime.isValid) {
+        parameters[@"start_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:self.startTime]];
+    }
+    if (self.endTime.isValid) {
+        parameters[@"end_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:self.endTime]];
+    }
+    if (cType.isValid) {
+        parameters[@"channel"] = cType;
+    }
+    if (self.needApproved != NeedApprovalAll) {
+        parameters[@"need_approval"] = self.needApproved == NeedApprovalOnlyTrue ? @YES : @NO;
+    }
+    
+    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    __weak BCQueryRefundsCountReq *weakSelf = self;
+    [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiQueryRefundsCount] parameters:preparepara
+         success:^(AFHTTPRequestOperation *operation, id response) {
+             BCPayLog(@"resp = %@", response);
+             [weakSelf doQueryRefundsCountResponse:(NSDictionary *)response];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [BCPayUtil doErrorResponse:kNetWorkError];
+         }];
+}
+
+- (BCQueryRefundsCountResp *)doQueryRefundsCountResponse:(NSDictionary *)response {
+    BCQueryRefundsCountResp *resp = (BCQueryRefundsCountResp *)[BCPayCache sharedInstance].bcResp;
+    resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+    resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+    resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
+    resp.count = [response integerValueForKey:@"count" defaultValue:0];
+    [BCPayCache beeCloudDoResponse];
+    return resp;
 }
 
 @end

@@ -62,7 +62,10 @@
     resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
     resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
-    resp.refund = [[BCQueryRefundResult alloc] initWithResult:[response dictValueForKey:@"refund"  defaultValue:nil]];
+    NSDictionary *refund = [response dictValueForKey:@"refund"  defaultValue:nil];
+    if (refund) {
+        resp.refund = [[BCQueryRefundResult alloc] initWithResult:refund];
+    }
     [BCPayCache beeCloudDoResponse];
     return resp;
 }

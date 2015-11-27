@@ -39,6 +39,8 @@ static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
 static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
 static NSString * const kRestApiQueryBillById = @"%@/rest/bill/";
 static NSString * const kRestApiQueryRefundById = @"%@/rest/refund/";
+static NSString * const kRestApiQueryBillsCount = @"%@/rest/bills/count";
+static NSString * const kRestApiQueryRefundsCount = @"%@/rest/refunds/count";
 
 //rest api offline
 static NSString * const kRestApiOfflinePay = @"%@/rest/offline/bill";

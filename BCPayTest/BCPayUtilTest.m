@@ -20,11 +20,13 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     [BeeCloud initWithAppID:TESTAPPID andAppSecret:TESTAPPSECRET];
+    [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] init];
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    [BCPayCache sharedInstance].bcResp = nil;
 }
 
 - (void)testGetAFHTTPRequestOperationManager {
@@ -90,7 +92,7 @@
 
 - (void)test_doErrorResponse {
     BCBaseResp *resp = [BCPayUtil doErrorResponse:@"BeeCloud"];
-    XCTAssertEqual(@"BeeCloud",resp.resultMsg);
+    XCTAssertEqual(@"BeeCloud", resp.resultMsg);
     XCTAssertEqual(@"BeeCloud", resp.errDetail);
     XCTAssertTrue(resp.resultCode == BCErrCodeCommon);
 }

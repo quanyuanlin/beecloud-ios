@@ -7,8 +7,9 @@
 //
 
 #import "BCBaseReq.h"
+#import "BCQueryRefundsCountResp.h"
 
-@interface BCQueryRefundsCount : BCBaseReq
+@interface BCQueryRefundsCountReq : BCBaseReq
 /**
  *  支付渠道(具体支持渠道请参考Enum PayChannel)
  */
@@ -33,5 +34,16 @@
  *  根据是否是预退款状态查询
  */
 @property (nonatomic, assign) NeedApproval needApproved;
+
+#pragma mark - Functions 
+
+/**
+ *  解析从BeeCloud服务返回的数据
+ *
+ *  @param response 从BeeCloud服务返回的数据
+ *
+ *  @return 查询结果
+ */
+- (BCQueryRefundsCountResp *)doQueryRefundsCountResponse:(NSDictionary *)response;
 
 @end

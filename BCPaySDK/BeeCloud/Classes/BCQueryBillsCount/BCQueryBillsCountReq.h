@@ -7,8 +7,9 @@
 //
 
 #import "BCBaseReq.h"
+#import "BCQueryBillsCountResp.h"
 
-@interface BCQueryBillsCount : BCBaseReq
+@interface BCQueryBillsCountReq : BCBaseReq
 
 /**
  *  支付渠道(具体支持渠道请参考Enum PayChannel)
@@ -31,5 +32,16 @@
  *  根据订单状态查询
  */
 @property (nonatomic, assign) BillStatus billStatus;
+
+#pragma mark - Functions 
+
+/**
+ *  解析从BeeCloud服务返回的数据
+ *
+ *  @param response 从BeeCloud服务返回的数据
+ *
+ *  @return 查询结果
+ */
+- (BCQueryBillsCountResp *)doQueryBillsCountResponse:(NSDictionary *)response;
 
 @end

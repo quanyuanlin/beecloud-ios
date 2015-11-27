@@ -54,17 +54,22 @@
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [BCPayUtil doErrorResponse:kNetWorkError];
          }];
-    
 }
 
 - (BCQueryBillByIdResp *)doQueryBillByIdResponse:(NSDictionary *)response {
-    BCQueryBillByIdResp *resp = (BCQueryBillByIdResp *)[BCPayCache sharedInstance].bcResp;
-    resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
-    resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
-    resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
-    resp.bill = [[BCQueryBillResult alloc] initWithResult:[response dictValueForKey:@"pay" defaultValue:nil]];
-    [BCPayCache beeCloudDoResponse];
-    return resp;
+    if (response) {
+        BCQueryBillByIdResp *resp = (BCQueryBillByIdResp *)[BCPayCache sharedInstance].bcResp;
+        resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+        resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+        resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
+        NSDictionary *bill = [response dictValueForKey:@"pay" defaultValue:nil];
+        if (bill) {
+            resp.bill = [[BCQueryBillResult alloc] initWithResult:bill];
+        }
+        [BCPayCache beeCloudDoResponse];
+        return resp;
+    }
+    return nil;
 }
 
 @end

@@ -108,6 +108,10 @@
 		36E66DE51C08397300A6F62B /* BCQueryBillsReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */; };
 		36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */; };
 		36E66DE91C083C5800A6F62B /* BCRefundStatusReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE81C083C5800A6F62B /* BCRefundStatusReqTest.m */; };
+		36E66DEB1C08431C00A6F62B /* BCQueryBillByIdReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DEA1C08431C00A6F62B /* BCQueryBillByIdReqTest.m */; };
+		36E66DED1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */; };
+		36E66DF01C08508300A6F62B /* BCQueryBillsCountReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */; };
+		36E66DF21C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */; };
 		7C43BF941BEDE26F0039B4E4 /* BCPayUtilTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */; };
 		7C43BF951BEDE26F0039B4E4 /* BeeCloudUtilsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C43BF911BEDE26F0039B4E4 /* BeeCloudUtilsTest.m */; };
 		7C43BF9A1BEDE8D00039B4E4 /* NSStringIsValidTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C43BF991BEDE8D00039B4E4 /* NSStringIsValidTest.m */; };
@@ -327,6 +331,10 @@
 		36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryBillsReqTest.m; sourceTree = "<group>"; };
 		36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryRefundsReqTest.m; sourceTree = "<group>"; };
 		36E66DE81C083C5800A6F62B /* BCRefundStatusReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCRefundStatusReqTest.m; sourceTree = "<group>"; };
+		36E66DEA1C08431C00A6F62B /* BCQueryBillByIdReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryBillByIdReqTest.m; sourceTree = "<group>"; };
+		36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryRefundByIdReqTest.m; sourceTree = "<group>"; };
+		36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryBillsCountReqTest.m; sourceTree = "<group>"; };
+		36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryRefundsCountReqTest.m; sourceTree = "<group>"; };
 		7C43BF851BEDE22B0039B4E4 /* BCPayTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BCPayTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C43BF891BEDE22B0039B4E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayUtilTest.m; sourceTree = "<group>"; };
@@ -402,7 +410,7 @@
 		3602F8AF1BA031E800A28ADC /* BeeCloud */ = {
 			isa = PBXGroup;
 			children = (
-				36501DF91C06E87300BC8B8A /* BCObjects */,
+				36501DF91C06E87300BC8B8A /* Classes */,
 				3602F8D01BA031E800A28ADC /* Internal */,
 				3602F8D81BA031E800A28ADC /* Protocol */,
 			);
@@ -548,8 +556,8 @@
 		364BC5A01B5E32FD00EAFCCE = {
 			isa = PBXGroup;
 			children = (
-				3602F8AE1BA031E800A28ADC /* BCPaySDK */,
 				369750221B68C659009FAEDB /* BCPayExample */,
+				3602F8AE1BA031E800A28ADC /* BCPaySDK */,
 				7C43BF861BEDE22B0039B4E4 /* BCPayTest */,
 				364BC6E81B5F2AE700EAFCCE /* Frameworks */,
 				364BC5AA1B5E32FD00EAFCCE /* Products */,
@@ -591,22 +599,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		36501DF91C06E87300BC8B8A /* BCObjects */ = {
+		36501DF91C06E87300BC8B8A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				36501E6F1C06FBE000BC8B8A /* BCBase */,
-				36501E4D1C06EE2200BC8B8A /* BCQueryRefundsCount */,
-				36501E4C1C06EE1000BC8B8A /* BCQueryBillsCount */,
-				36501E331C06EB3600BC8B8A /* BCQueryRefundStatus */,
-				36501E311C06EA9800BC8B8A /* BCQueryRefundById */,
-				36501E301C06EA8100BC8B8A /* BCQueryBillById */,
-				36501E2F1C06EA5300BC8B8A /* BCQueryRefunds */,
-				36501E2E1C06EA3000BC8B8A /* BCQueryBills */,
-				36501E2D1C06E9A000BC8B8A /* BCPayPal */,
 				36501E0D1C06E87300BC8B8A /* BCPay */,
+				36501E2D1C06E9A000BC8B8A /* BCPayPal */,
+				36501E301C06EA8100BC8B8A /* BCQueryBillById */,
+				36501E2E1C06EA3000BC8B8A /* BCQueryBills */,
+				36501E4C1C06EE1000BC8B8A /* BCQueryBillsCount */,
+				36501E311C06EA9800BC8B8A /* BCQueryRefundById */,
+				36501E2F1C06EA5300BC8B8A /* BCQueryRefunds */,
+				36501E4D1C06EE2200BC8B8A /* BCQueryRefundsCount */,
+				36501E331C06EB3600BC8B8A /* BCQueryRefundStatus */,
 				36501E161C06E87300BC8B8A /* BCResults */,
 			);
-			name = BCObjects;
 			path = Classes;
 			sourceTree = "<group>";
 		};
@@ -648,10 +655,10 @@
 		36501E2E1C06EA3000BC8B8A /* BCQueryBills */ = {
 			isa = PBXGroup;
 			children = (
-				36501E5D1C06F13200BC8B8A /* BCQueryBillsResp.h */,
-				36501E5E1C06F13200BC8B8A /* BCQueryBillsResp.m */,
 				36501E5A1C06F0FF00BC8B8A /* BCQueryBillsReq.h */,
 				36501E5B1C06F0FF00BC8B8A /* BCQueryBillsReq.m */,
+				36501E5D1C06F13200BC8B8A /* BCQueryBillsResp.h */,
+				36501E5E1C06F13200BC8B8A /* BCQueryBillsResp.m */,
 			);
 			name = BCQueryBills;
 			sourceTree = "<group>";
@@ -958,6 +965,10 @@
 				36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */,
 				36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */,
 				36E66DE81C083C5800A6F62B /* BCRefundStatusReqTest.m */,
+				36E66DEA1C08431C00A6F62B /* BCQueryBillByIdReqTest.m */,
+				36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */,
+				36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */,
+				36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */,
 			);
 			path = BCPayTest;
 			sourceTree = "<group>";
@@ -1144,16 +1155,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36E66DED1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m in Sources */,
 				362FC8EF1BF5DE5F007450FF /* XCTestCase+AsyncTesting.m in Sources */,
+				36E66DF21C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m in Sources */,
 				36E66DE51C08397300A6F62B /* BCQueryBillsReqTest.m in Sources */,
 				7C43BF9A1BEDE8D00039B4E4 /* NSStringIsValidTest.m in Sources */,
 				36E66DE91C083C5800A6F62B /* BCRefundStatusReqTest.m in Sources */,
 				369462501C03FE3B002A35D0 /* BeeCloudTest.m in Sources */,
+				36E66DF01C08508300A6F62B /* BCQueryBillsCountReqTest.m in Sources */,
 				7C43BF941BEDE26F0039B4E4 /* BCPayUtilTest.m in Sources */,
 				7C43BF9C1BEDED200039B4E4 /* NSDictionaryUtilsTest.m in Sources */,
 				7C43BF951BEDE26F0039B4E4 /* BeeCloudUtilsTest.m in Sources */,
 				36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */,
 				36E66DE31C0837AC00A6F62B /* BCPayReqTest.m in Sources */,
+				36E66DEB1C08431C00A6F62B /* BCQueryBillByIdReqTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
