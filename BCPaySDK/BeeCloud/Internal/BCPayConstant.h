@@ -119,9 +119,11 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeBaseReq = 100,
     BCObjsTypePayReq,
     BCObjsTypeQueryBillsReq,
-    BCObjsTypeQueryRefundsReq,
     BCObjsTypeQueryBillByIdReq,
+    BCObjsTypeQueryBillsCountReq,
+    BCObjsTypeQueryRefundsReq,
     BCObjsTypeQueryRefundByIdReq,
+    BCObjsTypeQueryRefundsCountReq,
     BCObjsTypeRefundStatusReq,
     BCObjsTypeOfflinePayReq,
     BCObjsTypeOfflineBillStatusReq,
@@ -129,7 +131,12 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     
     BCObjsTypeBaseResp = 200,
     BCObjsTypePayResp,
-    BCObjsTypeQueryResp,
+    BCObjsTypeQueryBillsResp,
+    BCObjsTypeQueryBillByIdResp,
+    BCObjsTypeQueryBillsCountResp,
+    BCObjsTypeQueryRefundsResp,
+    BCObjsTypeQueryRefundByIdResp,
+    BCObjsTypeQueryRefundsCountCResp,
     BCObjsTypeRefundStatusResp,
     BCObjsTypeOfflinePayResp,
     BCObjsTypeOfflineBillStatusResp,
@@ -141,6 +148,18 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     
     BCObjsTypePayPal = 400,
     BCObjsTypePayPalVerify
+};
+
+typedef NS_ENUM(NSUInteger, BillStatus) {
+    BillStatusAll, //所有支付订单
+    BillStatusOnlySuccess,//支付成功的订单
+    BillStatusOnlyFail //支付失败的订单
+};
+
+typedef NS_ENUM(NSUInteger, NeedApproval) {
+    NeedApprovalAll,  //所有退款
+    NeedApprovalOnlyTrue, //预退款
+    NeedApprovalOnlyFalse //非预退款
 };
 
 static NSString * const kBCDateFormat = @"yyyy-MM-dd HH:mm";

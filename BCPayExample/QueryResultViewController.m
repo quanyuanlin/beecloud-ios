@@ -70,34 +70,32 @@
     if (result.type == BCObjsTypeBillResults) {
        
         BCQueryBillResult *bill = (BCQueryBillResult *)result;
-        [BeeCloud sendBCReq:[BCQueryBillByIdReq getInstance:bill.objectId]];
+        [BeeCloud sendBCReq:[[BCQueryBillByIdReq alloc] initWithObjectId:bill.objectId]];
         
     } else if (result.type == BCObjsTypeRefundResults) {
         
         BCQueryRefundResult *refund = (BCQueryRefundResult *)result;
-        [BeeCloud sendBCReq:[BCQueryRefundByIdReq getInstance:refund.objectId]];
-        
-//        cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@\n总金额:%ld 退款金额:%ld\n交易时间:%@\n交易订单号:%@\n退款单号:%@\n退款是否成功状态:%@\n退款是否完成:%@", result.title,result.subChannel, (long)result.totalFee, (long)result.refundFee,[BCPayUtil millisecondToDateString:result.createTime],result.billNo,result.refundNo, result.result?@"成功":@"失败",result.finish?@"完成":@"未完成"];
+        [BeeCloud sendBCReq:[[BCQueryRefundByIdReq alloc ] initWithObjectId:refund.objectId]];
     }
 }
 
 - (void)onBeeCloudResp:(BCBaseResp *)resp {
-    if (resp.type == BCObjsTypeQueryResp) {
-        BCQueryResp *tempResp = (BCQueryResp *)resp;
-        if (resp.request.type == BCObjsTypeQueryBillByIdReq) {
-            if (tempResp.count == 1) {
-                BCQueryBillResult *result = [tempResp.results lastObject];
-                NSString *string = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@     金额:%ld\n交易时间:%@\n交易订单号:%@\n交易状态:%@\n,是否撤销:%@\n,optional:%@\n, msgDetail: %@", result.title, result.subChannel, (long)result.totalFee,[BCPayUtil millisecondToDateString:result.createTime],result.billNo,result.payResult?@"成功":@"失败",result.revertResult?@"是":@"否",result.optional, result.msgDetail];
-                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"QueryById" message:string delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
-        } else if (resp.request.type == BCObjsTypeQueryRefundByIdReq) {
-            if (tempResp.count == 1) {
-                BCQueryRefundResult *result = [tempResp.results lastObject];
-                NSString *string = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@\n总金额:%ld 退款金额:%ld\n交易时间:%@\n交易订单号:%@\n退款单号:%@\n退款是否成功状态:%@\n退款是否完成:%@\nMessageDetail:%@", result.title,result.subChannel, (long)result.totalFee, (long)result.refundFee,[BCPayUtil millisecondToDateString:result.createTime],result.billNo,result.refundNo, result.result?@"成功":@"失败",result.finish?@"完成":@"未完成", result.msgDetail];
-                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"QueryById" message:string delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-                [alert show];
-            }
+    if (resp.type == BCObjsTypeQueryBillByIdResp) {
+        BCQueryBillByIdResp *tempResp = (BCQueryBillByIdResp *)resp;
+        if (tempResp.resultCode == 0) {
+            BCQueryBillResult *result = tempResp.bill;
+            NSString *string = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@     金额:%ld\n交易时间:%@\n交易订单号:%@\n交易状态:%@\n,是否撤销:%@\n,optional:%@\n, msgDetail: %@", result.title, result.subChannel, (long)result.totalFee,[BCPayUtil millisecondToDateString:result.createTime],result.billNo,result.payResult?@"成功":@"失败",result.revertResult?@"是":@"否",result.optional, result.msgDetail];
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"QueryById" message:string delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+    } else if (resp.type == BCObjsTypeQueryRefundByIdResp) {
+        BCQueryRefundByIdResp *tempResp = (BCQueryRefundByIdResp *)resp;
+        if (tempResp.resultCode == 0) {
+            BCQueryRefundResult *result = tempResp.refund;
+            NSString *string = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@\n总金额:%ld 退款金额:%ld\n交易时间:%@\n交易订单号:%@\n退款单号:%@\n退款是否成功状态:%@\n退款是否完成:%@\nMessageDetail:%@", result.title,result.subChannel, (long)result.totalFee, (long)result.refundFee,[BCPayUtil millisecondToDateString:result.createTime],result.billNo,result.refundNo, result.result?@"成功":@"失败",result.finish?@"完成":@"未完成", result.msgDetail];
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"QueryById" message:string delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
         }
     }
 }

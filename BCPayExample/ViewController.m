@@ -53,7 +53,7 @@
                     @{@"channel":@"百度钱包",@"img":@"baidu",
                       @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
     self.payList = [NSMutableArray arrayWithCapacity:10];
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -67,8 +67,8 @@
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     /**
-        按住键盘上的option键，点击参数名称，可以查看参数说明
-    **/
+     按住键盘上的option键，点击参数名称，可以查看参数说明
+     **/
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel; //支付渠道
     payReq.title = billTitle;//订单标题
@@ -190,11 +190,26 @@
             }
         }
             break;
-        
-        case BCObjsTypeQueryResp:
+        case BCObjsTypeQueryRefundsResp:
+        {
+#pragma mark - 查询支付订单响应事件类型
+            BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
+            if (resp.resultCode == 0) {
+                if (tempResp.count == 0) {
+                    [self showAlertView:@"未找到相关订单信息"];
+                } else {
+                    self.payList = tempResp.results;
+                    [self performSegueWithIdentifier:@"queryResult" sender:self];
+                }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
+        case BCObjsTypeQueryBillsResp:
         {
 #pragma mark - 查询订单或者退款记录响应事件类型
-            BCQueryResp *tempResp = (BCQueryResp *)resp;
+            BCQueryBillsResp *tempResp = (BCQueryBillsResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
                     [self showAlertView:@"未找到相关订单信息"];
@@ -303,7 +318,7 @@
         req.billStatus = BillStatusOnlySuccess;
         req.needMsgDetail = YES;
         //   req.billno = @"20150901104138656";//订单号
-       //  req.startTime = @"2015-10-22 00:00";//订单时间
+        //  req.startTime = @"2015-10-22 00:00";//订单时间
         // req.endTime = @"2015-10-23 00:00";//订单时间
         req.skip = 0;//
         req.limit = 10;

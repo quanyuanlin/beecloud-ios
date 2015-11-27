@@ -48,7 +48,7 @@
 - (void)payPal:(NSMutableDictionary *)dic {
 
     BCPayPalReq *req = (BCPayPalReq *)[dic objectForKey:kAdapterPayPal];
-    [BCPayCache sharedInstance].bcResp.request = req;
+    [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] initWithReq:req];
     
     if (![self checkParameters:req]) return;
     
@@ -85,6 +85,7 @@
 
 - (void)payPalVerify:(NSMutableDictionary *)dic {
     BCPayPalVerifyReq *req = (BCPayPalVerifyReq *)[dic objectForKey:kAdapterPayPal];
+    [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] initWithReq:req];
     [self reqPayPalAccessToken:req];
 }
 

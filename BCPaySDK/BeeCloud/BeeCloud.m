@@ -91,36 +91,28 @@
     BeeCloud *instance = [BeeCloud sharedInstance];
     BOOL bSend = YES;
     switch (req.type) {
-        case BCObjsTypePayReq:
-            [BCPayCache sharedInstance].bcResp = [[BCPayResp alloc] initWithReq:req];
+        case BCObjsTypePayReq: //支付(微信、支付宝、银联、百度钱包)
             [instance reqPay:(BCPayReq *)req];
             break;
-        case BCObjsTypeQueryBillsReq:
-            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+        case BCObjsTypeQueryBillsReq://条件查询支付订单
             [instance reqQueryBills:(BCQueryBillsReq *)req];
             break;
-        case BCObjsTypeQueryBillByIdReq:
-            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+        case BCObjsTypeQueryBillByIdReq://根据id查询支付订单
             [instance reqQueryBillById:(BCQueryBillByIdReq *)req];
             break;
-        case BCObjsTypeQueryRefundsReq:
-            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+        case BCObjsTypeQueryRefundsReq://条件查询退款订单
             [instance reqQueryRefunds:(BCQueryRefundsReq *)req];
             break;
-        case BCObjsTypeQueryRefundByIdReq:
-            [BCPayCache sharedInstance].bcResp = [[BCQueryResp alloc] initWithReq:req];
+        case BCObjsTypeQueryRefundByIdReq://根据id查询退款订单
             [instance reqQueryRefundById:(BCQueryRefundByIdReq *)req];
             break;
-        case BCObjsTypeRefundStatusReq:
-            [BCPayCache sharedInstance].bcResp = [[BCRefundStatusResp alloc] initWithReq:req];
+        case BCObjsTypeRefundStatusReq://查询退款状态，目前只支持微信、百度
             [instance reqRefundStatus:(BCRefundStatusReq *)req];
             break;
         case BCObjsTypePayPal:
-            [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] initWithReq:req];
             [instance  reqPayPal:(BCPayPalReq *)req];
             break;
         case BCObjsTypePayPalVerify:
-            [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] initWithReq:req];
             [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
             break;
         case BCObjsTypeOfflinePayReq:

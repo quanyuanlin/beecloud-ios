@@ -67,6 +67,20 @@
  */
 + (NSString *)getChannelString:(PayChannel)channel;
 
+/**
+ *  执行错误回调
+ *
+ *  @param errMsg 错误信息
+ */
++ (BCBaseResp *)doErrorResponse:(NSString *)errMsg;
+
+/**
+ *  服务端返回错误，执行错误回调
+ *
+ *  @param response 服务端返回参数
+ */
++ (BCBaseResp *)getErrorInResponse:(NSDictionary *)response;
+
 #pragma mark Util Functions
 /**
  *  Generate a random UUID in the format of "550e8400-e29b-41d4-a716-446655440000", in lower case.

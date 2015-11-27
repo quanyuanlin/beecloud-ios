@@ -154,6 +154,27 @@
     return cType;
 }
 
+#pragma mark - Util Response
+
++ (BCBaseResp *)doErrorResponse:(NSString *)errMsg {
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
+    [BCPayCache beeCloudDoResponse];
+    return resp;
+}
+
++ (BCBaseResp *)getErrorInResponse:(NSDictionary *)response {
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+    resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+    resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
+    [BCPayCache beeCloudDoResponse];
+    return resp;
+}
+
+#pragma mark - Util
 + (NSString *)generateRandomUUID {
     return [[NSUUID UUID] UUIDString].lowercaseString;
 }
