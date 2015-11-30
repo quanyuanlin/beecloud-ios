@@ -23,10 +23,21 @@
     [req queryBillsReq];
 }
 
+#pragma mark - 查询符合条件的订单数目
+- (void)reqBillsCount:(BCQueryBillsCountReq *)req {
+    [req queryBillsCountReq];
+}
+
 #pragma mark - 条件查询退款订单
 
 - (void)reqQueryRefunds:(BCQueryRefundsReq *)req {
     [req queryRefundsReq];
+}
+
+#pragma mark - 查询符合条件的退款数目 
+
+- (void)reqRefundsCount:(BCQueryRefundsCountReq *)req {
+    [req queryRefundsCountReq];
 }
 
 #pragma mark - 根据id查询支付订单

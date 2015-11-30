@@ -36,6 +36,11 @@
 #pragma mark - Functions 
 
 /**
+ *  查询满足条件的订单数目
+ */
+- (void)queryBillsCountReq;
+
+/**
  *  解析从BeeCloud服务返回的数据
  *
  *  @param response 从BeeCloud服务返回的数据

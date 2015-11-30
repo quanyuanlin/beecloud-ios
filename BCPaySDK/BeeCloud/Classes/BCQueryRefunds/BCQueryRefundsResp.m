@@ -14,7 +14,7 @@
 - (instancetype)initWithReq:(BCQueryRefundsReq *)request {
     self = [super initWithReq:request];
     if (self) {
-        self.type = BCObjsTypeQueryBillsResp;
+        self.type = BCObjsTypeQueryRefundsResp;
     }
     return self;
 }

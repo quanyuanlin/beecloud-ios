@@ -58,18 +58,35 @@
  *  @param req 查询订单请求
  */
 - (void)reqQueryBills:(BCQueryBillsReq *)req;
+
+/**
+ *  查询满足条件的支付订单数目
+ *
+ *  @param req 满足的条件结构
+ */
+- (void)reqBillsCount:(BCQueryBillsCountReq *)req;
+
 /**
  *  根据订单记录objectId查询单笔支付订单
  *
  *  @param req 查询单笔支付订单请求
  */
 - (void)reqQueryBillById:(BCQueryBillByIdReq *)req;
+
 /**
  *  查询退款订单
  *
  *  @param req 查询退款订单请求
  */
 - (void)reqQueryRefunds:(BCQueryRefundsReq *)req;
+
+/**
+ *  查询满足条件的退款订单数目
+ *
+ *  @param req 满足的条件结构
+ */
+- (void)reqRefundsCount:(BCQueryRefundsCountReq *)req;
+
 /**
  *  根据订单记录objectId查询退款订单
  *

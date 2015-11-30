@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7C43BF841BEDE22B0039B4E4"
-               BuildableName = "BCPayTest"
+               BuildableName = "BCPayTest.xctest"
                BlueprintName = "BCPayTest"
                ReferencedContainer = "container:BCPay.xcodeproj">
             </BuildableReference>
@@ -32,12 +32,21 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7C43BF841BEDE22B0039B4E4"
-               BuildableName = "BCPayTest"
+               BuildableName = "BCPayTest.xctest"
                BlueprintName = "BCPayTest"
                ReferencedContainer = "container:BCPay.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "7C43BF841BEDE22B0039B4E4"
+            BuildableName = "BCPayTest.xctest"
+            BlueprintName = "BCPayTest"
+            ReferencedContainer = "container:BCPay.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

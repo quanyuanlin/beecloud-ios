@@ -138,7 +138,7 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeQueryBillsCountResp,
     BCObjsTypeQueryRefundsResp,
     BCObjsTypeQueryRefundByIdResp,
-    BCObjsTypeQueryRefundsCountCResp,
+    BCObjsTypeQueryRefundsCountResp,
     BCObjsTypeRefundStatusResp,
     BCObjsTypeOfflinePayResp,
     BCObjsTypeOfflineBillStatusResp,

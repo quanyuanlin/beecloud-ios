@@ -7,7 +7,17 @@
 //
 
 #import "BCQueryBillsCountResp.h"
+#import "BCQueryBillsCountReq.h"
 
 @implementation BCQueryBillsCountResp
+
+- (instancetype)initWithReq:(BCQueryBillsCountReq *)request {
+    self = [super initWithReq:request];
+    if (self) {
+        self.type = BCObjsTypeQueryBillsCountResp;
+        self.count = 0;
+    }
+    return self;
+}
 
 @end

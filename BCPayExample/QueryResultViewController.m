@@ -11,6 +11,7 @@
 #import "BCPayUtil.h"
 
 @interface QueryResultViewController ()<BeeCloudDelegate>
+@property (nonatomic, strong) NSMutableArray *dataList;
 
 @end
 
@@ -22,6 +23,29 @@
     self.resultTableView.delegate = self;
     self.resultTableView.dataSource = self;
     [BeeCloud setBeeCloudDelegate:self];
+    
+    if (self.resp.type == BCObjsTypeQueryBillsResp) {
+        self.dataList = ((BCQueryBillsResp *)self.resp).results;
+        BCQueryBillsReq *request = (BCQueryBillsReq *)self.resp.request;
+        BCQueryBillsCountReq *req = [[BCQueryBillsCountReq alloc] init];
+        req.channel = request.channel;
+        req.billNo = request.billNo;
+        req.billStatus = request.billStatus;
+        req.startTime = request.startTime;
+        req.endTime = request.endTime;
+        [BeeCloud sendBCReq:req];
+    } else if (self.resp.type == BCObjsTypeQueryRefundsResp) {
+        self.dataList= ((BCQueryRefundsResp *)self.resp).results;
+        BCQueryRefundsReq *request = (BCQueryRefundsReq *)self.resp.request;
+        BCQueryRefundsCountReq *req = [[BCQueryRefundsCountReq alloc] init];
+        req.channel = request.channel;
+        req.billNo = request.billNo;
+        req.needApproved = request.needApproved;
+        req.refundNo = request.billNo;
+        req.startTime = request.startTime;
+        req.endTime = request.endTime;
+        [BeeCloud sendBCReq:req];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,7 +68,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
     }
     NSString *cellString = @"";
-    if ([[self.dataList objectAtIndex:indexPath.row] isKindOfClass:[BCQueryBillResult class]]) {
+    if (self.resp.type == BCObjsTypeQueryBillsResp) {
         cell  = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
@@ -53,7 +77,7 @@
         
         cellString = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@\n金额:%ld\n交易时间:%@\n交易订单号:%@\n交易状态:%@\n是否撤销:%@", result.title, result.subChannel, (long)result.totalFee,[BCPayUtil millisecondToDateString:result.createTime],result.billNo,result.payResult?@"成功":@"失败",result.revertResult?@"是":@"否"];
         
-    } else if ([[self.dataList objectAtIndex:indexPath.row] isKindOfClass:[BCQueryRefundResult class]]) {
+    } else if (self.resp.type == BCObjsTypeQueryRefundsResp) {
        
         BCQueryRefundResult *result = (BCQueryRefundResult *)[self.dataList objectAtIndex:indexPath.row];
         
@@ -96,6 +120,16 @@
             NSString *string = [NSString stringWithFormat:@"订单标题:%@\n渠道:%@\n总金额:%ld 退款金额:%ld\n交易时间:%@\n交易订单号:%@\n退款单号:%@\n退款是否成功状态:%@\n退款是否完成:%@\nMessageDetail:%@", result.title,result.subChannel, (long)result.totalFee, (long)result.refundFee,[BCPayUtil millisecondToDateString:result.createTime],result.billNo,result.refundNo, result.result?@"成功":@"失败",result.finish?@"完成":@"未完成", result.msgDetail];
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"QueryById" message:string delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
+        }
+    } else if (resp.type == BCObjsTypeQueryBillsCountResp) {
+        BCQueryBillsCountResp *tempResp = (BCQueryBillsCountResp *)resp;
+        if (tempResp.resultCode == 0) {
+            self.title = [NSString stringWithFormat:@"满足条件的订单共 %ld", tempResp.count];
+        }
+    } else if (resp.type == BCObjsTypeQueryRefundsCountResp) {
+        BCQueryRefundsCountResp *tempResp = (BCQueryRefundsCountResp *)resp;
+        if (tempResp.resultCode == 0) {
+            self.title = [NSString stringWithFormat:@"满足条件的订单共 %ld", tempResp.count];
         }
     }
 }

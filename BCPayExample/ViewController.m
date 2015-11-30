@@ -52,7 +52,7 @@
                       @"subChannel":@[@{@"sub":@(PayChannelPayPal),@"title":@"PayPal"}]},
                     @{@"channel":@"百度钱包",@"img":@"baidu",
                       @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
-    self.payList = [NSMutableArray arrayWithCapacity:10];
+    self.orderList = nil;
     
 }
 
@@ -198,7 +198,7 @@
                 if (tempResp.count == 0) {
                     [self showAlertView:@"未找到相关订单信息"];
                 } else {
-                    self.payList = tempResp.results;
+                    self.orderList = tempResp;
                     [self performSegueWithIdentifier:@"queryResult" sender:self];
                 }
             } else {
@@ -214,7 +214,7 @@
                 if (tempResp.count == 0) {
                     [self showAlertView:@"未找到相关订单信息"];
                 } else {
-                    self.payList = tempResp.results;
+                    self.orderList = tempResp;
                     [self performSegueWithIdentifier:@"queryResult" sender:self];
                 }
             } else {
@@ -459,7 +459,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     QueryResultViewController *viewController = (QueryResultViewController *)segue.destinationViewController;
     if([segue.identifier isEqualToString:@"queryResult"]) {
-        viewController.dataList = self.payList;
+        viewController.resp = self.orderList;
     }
 }
 

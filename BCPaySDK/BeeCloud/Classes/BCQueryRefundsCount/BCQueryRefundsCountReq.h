@@ -38,6 +38,11 @@
 #pragma mark - Functions 
 
 /**
+ *  查询满足条件的退款订单数目
+ */
+- (void)queryRefundsCountReq;
+
+/**
  *  解析从BeeCloud服务返回的数据
  *
  *  @param response 从BeeCloud服务返回的数据

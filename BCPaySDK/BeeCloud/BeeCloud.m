@@ -97,11 +97,17 @@
         case BCObjsTypeQueryBillsReq://条件查询支付订单
             [instance reqQueryBills:(BCQueryBillsReq *)req];
             break;
+        case BCObjsTypeQueryBillsCountReq:
+            [instance reqBillsCount:(BCQueryBillsCountReq *)req];
+            break;
         case BCObjsTypeQueryBillByIdReq://根据id查询支付订单
             [instance reqQueryBillById:(BCQueryBillByIdReq *)req];
             break;
         case BCObjsTypeQueryRefundsReq://条件查询退款订单
             [instance reqQueryRefunds:(BCQueryRefundsReq *)req];
+            break;
+        case BCObjsTypeQueryRefundsCountReq:
+            [instance reqRefundsCount:(BCQueryRefundsCountReq *)req];
             break;
         case BCObjsTypeQueryRefundByIdReq://根据id查询退款订单
             [instance reqQueryRefundById:(BCQueryRefundByIdReq *)req];

@@ -13,7 +13,7 @@ static NSString * const billTitle = @"2015-11-12 Release";
 
 @interface ViewController : UITableViewController<UIAlertViewDelegate, BeeCloudDelegate>
 
-@property (strong, nonatomic) NSMutableArray *payList;
+@property (strong, nonatomic) BCBaseResp *orderList;
 
 @property  (assign, nonatomic) NSInteger actionType;//0:pay;1:query;
 
