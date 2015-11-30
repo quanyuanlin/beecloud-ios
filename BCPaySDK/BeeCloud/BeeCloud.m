@@ -37,6 +37,22 @@
     return NO;
 }
 
++ (BOOL)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret sandBox:(BOOL)sandBox {
+    if ([BeeCloud initWithAppID:appId andAppSecret:appSecret]) {
+        [BCPayCache sharedInstance].sandBox = sandBox;
+        return YES;
+    }
+    return NO;
+}
+
++ (void)setSandBoxMode:(BOOL)sandBox {
+    [BCPayCache sharedInstance].sandBox = sandBox;
+}
+
++ (BOOL)getIsSandBoxMode {
+    return [BCPayCache sharedInstance].sandBox;
+}
+
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
     if (!wxAppID.isValid) {
         return NO;

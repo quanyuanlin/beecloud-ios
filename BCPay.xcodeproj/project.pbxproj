@@ -104,6 +104,7 @@
 		36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4111B8F4A78004BB25E /* MessageUI.framework */; };
 		36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4131B8F4A93004BB25E /* CoreLocation.framework */; };
 		36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */; };
+		36E458C11C0C3E77009EB389 /* PaySandBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E458C01C0C3E77009EB389 /* PaySandBoxViewController.m */; };
 		36E66DE31C0837AC00A6F62B /* BCPayReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE21C0837AC00A6F62B /* BCPayReqTest.m */; };
 		36E66DE51C08397300A6F62B /* BCQueryBillsReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */; };
 		36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */; };
@@ -327,6 +328,8 @@
 		36DCE4111B8F4A78004BB25E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		36DCE4131B8F4A93004BB25E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		36E458BF1C0C3E77009EB389 /* PaySandBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySandBoxViewController.h; sourceTree = "<group>"; };
+		36E458C01C0C3E77009EB389 /* PaySandBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySandBoxViewController.m; sourceTree = "<group>"; };
 		36E66DE21C0837AC00A6F62B /* BCPayReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayReqTest.m; sourceTree = "<group>"; };
 		36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryBillsReqTest.m; sourceTree = "<group>"; };
 		36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryRefundsReqTest.m; sourceTree = "<group>"; };
@@ -431,6 +434,8 @@
 				36A3C07F1BB535B2003E82B1 /* NSDictionary+Utils.m */,
 				7CD455531BEC889F00E0EC4A /* BeeCloud+Utils.h */,
 				7CD455541BEC889F00E0EC4A /* BeeCloud+Utils.m */,
+				36E458BF1C0C3E77009EB389 /* PaySandBoxViewController.h */,
+				36E458C01C0C3E77009EB389 /* PaySandBoxViewController.m */,
 			);
 			path = Internal;
 			sourceTree = "<group>";
@@ -1146,6 +1151,7 @@
 				36501E2B1C06E87300BC8B8A /* BCQueryBillResult.m in Sources */,
 				36501E561C06EF1100BC8B8A /* BCQueryRefundsReq.m in Sources */,
 				36501E2C1C06E87300BC8B8A /* BCQueryRefundResult.m in Sources */,
+				36E458C11C0C3E77009EB389 /* PaySandBoxViewController.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
 				36CAEF531BA275DA002AB286 /* BeeCloud.m in Sources */,
 			);

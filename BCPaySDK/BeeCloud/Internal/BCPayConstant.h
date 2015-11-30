@@ -51,6 +51,10 @@ static NSString * const kRestApiOfflineBillRevert = @"%@/rest/offline/bill/";
 static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
 static NSString * const kPayPalAccessTokenSandBox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
 
+//sandbox
+static NSString * const kRestApiSandBoxBill = @"%@/rest/sandbox/bill";
+static NSString * const kRestApiSandBoxNotify = @"%@/rest/sandbox/notify/";
+
 //Adapter
 static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
 static NSString * const kAdapterAliPay = @"BCAliPayAdapter";

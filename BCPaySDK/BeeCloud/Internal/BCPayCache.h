@@ -27,6 +27,12 @@
 @property (nonatomic, strong) NSString *appSecret;
 
 /**
+ *  YES表示沙箱环境，不产生真实交易；NO表示生产环境，产生真实交易
+ *  默认为NO，生产环境
+ */
+@property (nonatomic, assign) BOOL sandBox;
+
+/**
  *  PayPal client ID
  */
 @property (nonatomic, strong) NSString *payPalClientID;

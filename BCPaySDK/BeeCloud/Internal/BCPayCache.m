@@ -20,6 +20,7 @@
         
         instance.appId = nil;
         instance.appSecret = nil;
+        instance.sandBox = NO;
         
         instance.payPalClientID = nil;
         instance.payPalSecret = nil;
