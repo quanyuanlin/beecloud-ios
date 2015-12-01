@@ -32,7 +32,6 @@
 - (void)offlineStatus:(NSMutableDictionary *)dic;
 - (void)offlineRevert:(NSMutableDictionary *)dic;
 
-
 @end
 
 #endif

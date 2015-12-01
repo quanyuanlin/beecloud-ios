@@ -41,9 +41,11 @@
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[self.totalFee integerValue]];
     parameters[@"bill_no"] = self.billNo;
     parameters[@"title"] = self.title;
+    
     if (self.billTimeOut > 0) {
         parameters[@"bill_timeout"] = @(self.billTimeOut);
     }
+    
     if (self.optional) {
         parameters[@"optional"] = self.optional;
     }
@@ -105,7 +107,8 @@
     return bSendPay;
 }
 
-- (void)payInSandbox:(NSMutableDictionary *)parameters{
+- (void)payInSandbox:(NSMutableDictionary *)parameters {
+    
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BCPayReq *weakSelf = self;
     

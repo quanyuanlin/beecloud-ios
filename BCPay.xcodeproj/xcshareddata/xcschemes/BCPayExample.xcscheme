@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "369750201B68C659009FAEDB"
-               BuildableName = "BCPayExample"
+               BuildableName = "BCPay.app"
                BlueprintName = "BCPayExample"
                ReferencedContainer = "container:BCPay.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "369750201B68C659009FAEDB"
-            BuildableName = "BCPayExample"
+            BuildableName = "BCPay.app"
             BlueprintName = "BCPayExample"
             ReferencedContainer = "container:BCPay.xcodeproj">
          </BuildableReference>

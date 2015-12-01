@@ -43,7 +43,7 @@
     }
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
-    NSString *preHost = [BCPayUtil getBestHostWithFormat:kRestApiQueryBillById];
+    NSString *preHost = [BCPayUtil getBestHostWithFormat: [BCPayCache sharedInstance].sandBox ? kRestApiSandBoxQueryBillById : kRestApiQueryBillById];
     NSString *host = [NSString stringWithFormat:@"%@%@", preHost, self.objectId];
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];

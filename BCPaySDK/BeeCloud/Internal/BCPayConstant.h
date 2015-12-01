@@ -53,6 +53,8 @@ static NSString * const kPayPalAccessTokenSandBox = @"https://api.sandbox.paypal
 
 //sandbox
 static NSString * const kRestApiSandBoxBill = @"%@/rest/sandbox/bill";
+static NSString * const kRestApiSandBoxQueryBills = @"%@/rest/sandbox/bills";
+static NSString * const kRestApiSandBoxQueryBillById = @"%@/rest/sandbox/bill/";
 static NSString * const kRestApiSandBoxNotify = @"%@/rest/sandbox/notify/";
 
 //Adapter
