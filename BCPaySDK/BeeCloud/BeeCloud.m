@@ -92,43 +92,43 @@
     BOOL bSend = YES;
     switch (req.type) {
         case BCObjsTypePayReq: //支付(微信、支付宝、银联、百度钱包)
-            [instance reqPay:(BCPayReq *)req];
+            [instance reqPay: (BCPayReq *)req];
             break;
         case BCObjsTypeQueryBillsReq://条件查询支付订单
-            [instance reqQueryBills:(BCQueryBillsReq *)req];
+            [instance reqQueryBills: (BCQueryBillsReq *)req];
             break;
         case BCObjsTypeQueryBillsCountReq:
-            [instance reqBillsCount:(BCQueryBillsCountReq *)req];
+            [instance reqBillsCount: (BCQueryBillsCountReq *)req];
             break;
         case BCObjsTypeQueryBillByIdReq://根据id查询支付订单
-            [instance reqQueryBillById:(BCQueryBillByIdReq *)req];
+            [instance reqQueryBillById: (BCQueryBillByIdReq *)req];
             break;
         case BCObjsTypeQueryRefundsReq://条件查询退款订单
-            [instance reqQueryRefunds:(BCQueryRefundsReq *)req];
+            [instance reqQueryRefunds: (BCQueryRefundsReq *)req];
             break;
         case BCObjsTypeQueryRefundsCountReq:
-            [instance reqRefundsCount:(BCQueryRefundsCountReq *)req];
+            [instance reqRefundsCount: (BCQueryRefundsCountReq *)req];
             break;
         case BCObjsTypeQueryRefundByIdReq://根据id查询退款订单
-            [instance reqQueryRefundById:(BCQueryRefundByIdReq *)req];
+            [instance reqQueryRefundById: (BCQueryRefundByIdReq *)req];
             break;
         case BCObjsTypeRefundStatusReq://查询退款状态，目前只支持微信、百度
-            [instance reqRefundStatus:(BCRefundStatusReq *)req];
+            [instance reqRefundStatus: (BCRefundStatusReq *)req];
             break;
         case BCObjsTypePayPal:
-            [instance  reqPayPal:(BCPayPalReq *)req];
+            [instance  reqPayPal: (BCPayPalReq *)req];
             break;
         case BCObjsTypePayPalVerify:
-            [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
+            [instance reqPayPalVerify: (BCPayPalVerifyReq *)req];
             break;
         case BCObjsTypeOfflinePayReq:
-            [instance reqOfflinePay:req];
+            [instance reqOfflinePay: req];
             break;
         case BCObjsTypeOfflineBillStatusReq:
-            [instance reqOfflineBillStatus:req];
+            [instance reqOfflineBillStatus: req];
             break;
         case BCObjsTypeOfflineRevertReq:
-            [instance reqOfflineBillRevert:req];
+            [instance reqOfflineBillRevert: req];
             break;
         default:
             bSend = NO;
