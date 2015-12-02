@@ -64,6 +64,7 @@ static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
 static NSString * const kAdapterOffline = @"BCOfflineAdapter";
 static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
+static NSString * const kAdapterSandBox = @"BCSandBoxAdapter";
 
 /**
  *  BCPay URL type for handling URLs.

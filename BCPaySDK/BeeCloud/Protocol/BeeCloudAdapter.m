@@ -75,6 +75,14 @@
     return nil;
 }
 
++ (BOOL)beecloudSandBoxPay {
+    id adapter = [[NSClassFromString(kAdapterSandBox) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(sandBoxPay)]) {
+        return [adapter sandBoxPay];
+    }
+    return NO;
+}
+
 + (void)beeCloudPayPal:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterPayPal) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(payPal:)]) {

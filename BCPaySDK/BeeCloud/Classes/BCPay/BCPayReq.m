@@ -124,12 +124,16 @@
           }];
 }
 
-- (void)doPayActionInSandBox:(NSDictionary *)response {
+- (BOOL)doPayActionInSandBox:(NSDictionary *)response {
     
-    PaySandBoxViewController *view = [[PaySandBoxViewController alloc] init];
-    [self.viewController presentViewController:view animated:YES completion:^{
-        view.objectId = [response stringValueForKey:@"id" defaultValue:@""];
-   }];
+    if (response) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
+                                    (NSDictionary *)response];
+        [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
+        [BeeCloudAdapter beecloudSandBoxPay];
+    }
+    
+    return YES;
 }
 
 - (BOOL)checkParametersForReqPay {
@@ -145,7 +149,7 @@
     } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
         [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
         return NO;
-    } else if ((self.channel == PayChannelUnApp) && (self.viewController == nil)) {
+    } else if ((self.channel == PayChannelUnApp || [BeeCloud getIsSandBoxMode]) && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
         return NO;
     } else if (self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
