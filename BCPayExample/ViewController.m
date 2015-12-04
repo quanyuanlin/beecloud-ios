@@ -76,7 +76,7 @@
     payReq.billNo = billno;//商户自定义订单号
     payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
     payReq.billTimeOut = 300;//订单超时时间
-    payReq.viewController = self; //用于银联支付的页面跳转，银联必有参数
+    payReq.viewController = self; //银联支付和SandBox环境必填
     payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }

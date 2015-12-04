@@ -37,11 +37,21 @@
  *  全局初始化
  *
  *  @param appId     BeeCloud平台APPID
- *  @param appSecret BeeCloud平台APPSECRET
+ *  @param appSecret BeeCloud平台生产密钥APPSECRET
  *
  *  @return 初始化成功返回YES; 若appId或者appSecret不合法，初始化失败返回NO
  */
 + (BOOL)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret;
+
+/**
+ *  全局初始化
+ *
+ *  @param appId     BeeCloud平台APPID
+ *  @param testSecret BeeCloud平台测试密钥TESTSECRECT
+ *
+ *  @return 初始化成功返回YES;若appId或者appSecret不合法，初始化失败返回NO
+ */
++ (BOOL)initSandboxMode:(NSString *)appId testSecret:(NSString *)testSecret;
 
 /**
  *  需要在每次启动第三方应用程序时调用。第一次调用后，会在微信的可用应用列表中出现。
@@ -86,6 +96,14 @@
  *  @return BeeCloudDelegate对象，用来接收BeeCloud触发的消息。
  */
 + (id<BeeCloudDelegate>)getBeeCloudDelegate;
+
+/**
+ *  如果是sandBox环境，返回YES；
+ *  如果是live环境，返回NO；
+ *
+ *  @return YES表示当前是沙箱测试环境
+ */
++ (BOOL)getSandBoxMode;
 
 /**
  *  获取API版本号

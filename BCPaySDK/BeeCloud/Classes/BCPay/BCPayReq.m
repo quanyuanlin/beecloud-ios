@@ -9,6 +9,7 @@
 #import "BCPayReq.h"
 #import "BCPayUtil.h"
 #import "BeeCloudAdapter.h"
+#import "PaySandBoxViewController.h"
 
 #pragma mark pay request
 
@@ -40,12 +41,23 @@
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[self.totalFee integerValue]];
     parameters[@"bill_no"] = self.billNo;
     parameters[@"title"] = self.title;
+    
     if (self.billTimeOut > 0) {
         parameters[@"bill_timeout"] = @(self.billTimeOut);
     }
+    
     if (self.optional) {
         parameters[@"optional"] = self.optional;
     }
+    
+    if ([BeeCloud getSandBoxMode]) {
+        [self payInSandbox:parameters];
+    } else {
+        [self payInLiveMode:parameters];
+    }
+}
+
+- (void)payInLiveMode:(NSMutableDictionary *)parameters {
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BCPayReq *weakSelf = self;
@@ -55,35 +67,11 @@
               if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
                   [BCPayUtil getErrorInResponse:(NSDictionary *)response];
               } else {
-                  BCPayLog(@"channel=%@,resp=%@", cType, response);
                   [weakSelf doPayAction:(NSDictionary *)response];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [BCPayUtil doErrorResponse:kNetWorkError];
           }];
-}
-
-- (BOOL)checkParametersForReqPay {
-    if (!self.title.isValid || [BCPayUtil getBytes:self.title] > 32) {
-        [BCPayUtil doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
-        return NO;
-    } else if (!self.totalFee.isValid || !self.totalFee.isPureInt) {
-        [BCPayUtil doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
-        return NO;
-    } else if (!self.billNo.isValid || !self.billNo.isValidTraceNo || (self.billNo.length < 8) || (self.billNo.length > 32)) {
-        [BCPayUtil doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
-        return NO;
-    } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
-        [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
-        return NO;
-    } else if ((self.channel == PayChannelUnApp) && (self.viewController == nil)) {
-        [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
-        return NO;
-    } else if (self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
-        [BCPayUtil doErrorResponse:@"未找到微信客户端，请先下载安装"];
-        return NO;
-    }
-    return YES;
 }
 
 #pragma mark - Pay Action
@@ -118,5 +106,59 @@
     }
     return bSendPay;
 }
+
+- (void)payInSandbox:(NSMutableDictionary *)parameters {
+    
+    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    __weak BCPayReq *weakSelf = self;
+    
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiSandBoxBill] parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id response) {
+              if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
+                  [BCPayUtil getErrorInResponse:(NSDictionary *)response];
+              } else {
+                  [weakSelf doPayActionInSandBox:(NSDictionary *)response];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [BCPayUtil doErrorResponse:kNetWorkError];
+          }];
+}
+
+- (BOOL)doPayActionInSandBox:(NSDictionary *)response {
+    
+    if (response) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
+                                    (NSDictionary *)response];
+        [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
+        [BeeCloudAdapter beecloudSandBoxPay];
+    }
+    
+    return YES;
+}
+
+- (BOOL)checkParametersForReqPay {
+    if (!self.title.isValid || [BCPayUtil getBytes:self.title] > 32) {
+        [BCPayUtil doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
+        return NO;
+    } else if (!self.totalFee.isValid || !self.totalFee.isPureInt) {
+        [BCPayUtil doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
+        return NO;
+    } else if (!self.billNo.isValid || !self.billNo.isValidTraceNo || (self.billNo.length < 8) || (self.billNo.length > 32)) {
+        [BCPayUtil doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
+        return NO;
+    } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
+        [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
+        return NO;
+    } else if ((self.channel == PayChannelUnApp || [BeeCloud getSandBoxMode]) && (self.viewController == nil)) {
+        [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
+        return NO;
+    } else if (self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
+        [BCPayUtil doErrorResponse:@"未找到微信客户端，请先下载安装"];
+        return NO;
+    }
+    return YES;
+}
+
+
 
 @end

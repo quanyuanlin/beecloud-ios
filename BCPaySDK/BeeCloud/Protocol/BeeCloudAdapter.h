@@ -20,6 +20,7 @@
 + (BOOL)beeCloudAliPay:(NSMutableDictionary *)dic;
 + (BOOL)beeCloudUnionPay:(NSMutableDictionary *)dic;
 + (NSString *)beeCloudBaiduPay:(NSMutableDictionary *)dic;
++ (BOOL)beecloudSandBoxPay;
 
 + (void)beeCloudPayPal:(NSMutableDictionary *)dic;
 + (void)beeCloudPayPalVerify:(NSMutableDictionary *)dic;

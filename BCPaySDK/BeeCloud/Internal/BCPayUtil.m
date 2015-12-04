@@ -43,7 +43,7 @@
 
 + (NSString *)getAppSignature:(NSString *)timeStamp {
     NSString *appid = [BCPayCache sharedInstance].appId;
-    NSString *appsecret = [BCPayCache sharedInstance].appSecret;
+    NSString *appsecret = [BCPayCache sharedInstance].sandBox ? [BCPayCache sharedInstance].testSecret: [BCPayCache sharedInstance].appSecret;
     
     if (!appid.isValid || !appsecret.isValid)
         return nil;
@@ -71,6 +71,7 @@
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
     NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],reqApiVersion];
+    verHost = @"http://182.92.3.98:8080/2";
     return [NSString stringWithFormat:format, verHost];
 }
 

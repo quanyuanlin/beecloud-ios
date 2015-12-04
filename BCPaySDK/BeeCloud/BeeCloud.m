@@ -32,9 +32,25 @@
     if (appId.isValid && appSecret.isValid) {
         instance.appId = appId;
         instance.appSecret = appSecret;
+        instance.sandBox = NO;
         return YES;
     }
     return NO;
+}
+
++ (BOOL)initSandboxMode:(NSString *)appId testSecret:(NSString *)testSecret {
+    BCPayCache *instance = [BCPayCache sharedInstance];
+    if (appId.isValid && testSecret.isValid) {
+        instance.appId = appId;
+        instance.testSecret = testSecret;
+        instance.sandBox = YES;
+        return YES;
+    }
+    return NO;
+}
+
++ (BOOL)getSandBoxMode {
+    return [BCPayCache sharedInstance].sandBox;
 }
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
