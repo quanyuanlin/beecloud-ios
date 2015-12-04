@@ -10,6 +10,4 @@
 
 @interface PaySandBoxViewController : UIViewController
 
-@property (nonatomic, retain) NSString *objectId;
-
 @end

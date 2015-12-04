@@ -32,24 +32,24 @@
     if (appId.isValid && appSecret.isValid) {
         instance.appId = appId;
         instance.appSecret = appSecret;
+        instance.sandBox = NO;
         return YES;
     }
     return NO;
 }
 
-+ (BOOL)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret sandBox:(BOOL)sandBox {
-    if ([BeeCloud initWithAppID:appId andAppSecret:appSecret]) {
-        [BCPayCache sharedInstance].sandBox = sandBox;
++ (BOOL)initSandboxMode:(NSString *)appId testSecret:(NSString *)testSecret {
+    BCPayCache *instance = [BCPayCache sharedInstance];
+    if (appId.isValid && testSecret.isValid) {
+        instance.appId = appId;
+        instance.testSecret = testSecret;
+        instance.sandBox = YES;
         return YES;
     }
     return NO;
 }
 
-+ (void)setSandBoxMode:(BOOL)sandBox {
-    [BCPayCache sharedInstance].sandBox = sandBox;
-}
-
-+ (BOOL)getIsSandBoxMode {
++ (BOOL)getSandBoxMode {
     return [BCPayCache sharedInstance].sandBox;
 }
 

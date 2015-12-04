@@ -124,19 +124,19 @@
     resultMsg = @"支付取消";
     
     [self dismissViewControllerAnimated:YES completion:^{
-
+        
     }];
 }
 
 - (void)pay {
     
-    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
-    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
-    NSString *host = [NSString stringWithFormat:@"%@%@/%@", [BCPayUtil getBestHostWithFormat:kRestApiSandBoxNotify], [BCPayCache sharedInstance].appId, self.objectId];
-    NSLog(@"sandboxPay id = %@", self.objectId);
+//    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
+//    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
+    NSString *host = [NSString stringWithFormat:@"%@%@/%@", [BCPayUtil getBestHostWithFormat:kRestApiSandBoxNotify], [BCPayCache sharedInstance].appId, [BCPayCache sharedInstance].bcResp.bcId];
+    NSLog(@"sandboxPay id = %@", [BCPayCache sharedInstance].bcResp.bcId);
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak PaySandBoxViewController *weakSelf = self;
-    [manager GET:host parameters:preparepara
+    [manager GET:host parameters:nil
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"resp = %@", response);
              [weakSelf doNotifyResponse:(NSDictionary *)response];
