@@ -26,9 +26,9 @@
 		3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9451BA07C3000A28ADC /* libWeChatSDK.a */; };
 		3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9491BA07C3000A28ADC /* AlipaySDK.framework */; };
 		3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */; };
-		3611EB381C0E809500D1392E /* PaySandBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3611EB371C0E809500D1392E /* PaySandBoxViewController.m */; };
-		3611EB3B1C0E80B900D1392E /* BCSandBoxAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3611EB3A1C0E80B900D1392E /* BCSandBoxAdapter.m */; };
 		362FC8EF1BF5DE5F007450FF /* XCTestCase+AsyncTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 362FC8E11BF5DE5F007450FF /* XCTestCase+AsyncTesting.m */; };
+		363464041C15842C00C724B2 /* BCSandBoxAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 363464011C15842C00C724B2 /* BCSandBoxAdapter.m */; };
+		363464051C15842C00C724B2 /* PaySandBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 363464031C15842C00C724B2 /* PaySandBoxViewController.m */; };
 		36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D341BC66A0700CA6C81 /* libsqlite3.tbd */; };
 		36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D361BC66A1300CA6C81 /* libc++.tbd */; };
 		36501E2A1C06E87300BC8B8A /* BCBaseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E181C06E87300BC8B8A /* BCBaseResult.m */; };
@@ -175,12 +175,12 @@
 		3602F94B1BA07C3000A28ADC /* APayAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APayAuthInfo.h; sourceTree = "<group>"; };
 		3602F94D1BA07C3000A28ADC /* BCAliPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCAliPayAdapter.h; sourceTree = "<group>"; };
 		3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCAliPayAdapter.m; sourceTree = "<group>"; };
-		3611EB361C0E809500D1392E /* PaySandBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PaySandBoxViewController.h; path = SandBox/PaySandBoxViewController.h; sourceTree = "<group>"; };
-		3611EB371C0E809500D1392E /* PaySandBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PaySandBoxViewController.m; path = SandBox/PaySandBoxViewController.m; sourceTree = "<group>"; };
-		3611EB391C0E80B900D1392E /* BCSandBoxAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCSandBoxAdapter.h; path = SandBox/BCSandBoxAdapter/BCSandBoxAdapter.h; sourceTree = "<group>"; };
-		3611EB3A1C0E80B900D1392E /* BCSandBoxAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCSandBoxAdapter.m; path = SandBox/BCSandBoxAdapter/BCSandBoxAdapter.m; sourceTree = "<group>"; };
 		362FC8E01BF5DE5F007450FF /* XCTestCase+AsyncTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+AsyncTesting.h"; sourceTree = "<group>"; };
 		362FC8E11BF5DE5F007450FF /* XCTestCase+AsyncTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+AsyncTesting.m"; sourceTree = "<group>"; };
+		363464001C15842C00C724B2 /* BCSandBoxAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCSandBoxAdapter.h; sourceTree = "<group>"; };
+		363464011C15842C00C724B2 /* BCSandBoxAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCSandBoxAdapter.m; sourceTree = "<group>"; };
+		363464021C15842C00C724B2 /* PaySandBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySandBoxViewController.h; sourceTree = "<group>"; };
+		363464031C15842C00C724B2 /* PaySandBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySandBoxViewController.m; sourceTree = "<group>"; };
 		36379D341BC66A0700CA6C81 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		36379D361BC66A1300CA6C81 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		364C00911C07F7E900B585A6 /* BCCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCCategory.h; sourceTree = "<group>"; };
@@ -416,6 +416,7 @@
 		3602F8AF1BA031E800A28ADC /* BeeCloud */ = {
 			isa = PBXGroup;
 			children = (
+				363463FE1C15842C00C724B2 /* SandBox */,
 				36501DF91C06E87300BC8B8A /* Classes */,
 				3602F8D01BA031E800A28ADC /* Internal */,
 				3602F8D81BA031E800A28ADC /* Protocol */,
@@ -453,7 +454,6 @@
 		3602F8E61BA031E800A28ADC /* Channel */ = {
 			isa = PBXGroup;
 			children = (
-				3611EB351C0DD89700D1392E /* Sandbox */,
 				3658AF551BB28B9400183C28 /* OfflinePay */,
 				3658AF681BB28B9400183C28 /* Baidu */,
 				367F667F1BAAB48900B3466F /* PayPal */,
@@ -551,25 +551,6 @@
 			path = BCAliPayAdapter;
 			sourceTree = "<group>";
 		};
-		3611EB351C0DD89700D1392E /* Sandbox */ = {
-			isa = PBXGroup;
-			children = (
-				3611EB3C1C0E80BF00D1392E /* BCSandBoxAdapter */,
-				3611EB361C0E809500D1392E /* PaySandBoxViewController.h */,
-				3611EB371C0E809500D1392E /* PaySandBoxViewController.m */,
-			);
-			name = Sandbox;
-			sourceTree = "<group>";
-		};
-		3611EB3C1C0E80BF00D1392E /* BCSandBoxAdapter */ = {
-			isa = PBXGroup;
-			children = (
-				3611EB391C0E80B900D1392E /* BCSandBoxAdapter.h */,
-				3611EB3A1C0E80B900D1392E /* BCSandBoxAdapter.m */,
-			);
-			name = BCSandBoxAdapter;
-			sourceTree = "<group>";
-		};
 		362FC8DF1BF5DE5F007450FF /* TestCategory */ = {
 			isa = PBXGroup;
 			children = (
@@ -577,6 +558,25 @@
 				362FC8E11BF5DE5F007450FF /* XCTestCase+AsyncTesting.m */,
 			);
 			path = TestCategory;
+			sourceTree = "<group>";
+		};
+		363463FE1C15842C00C724B2 /* SandBox */ = {
+			isa = PBXGroup;
+			children = (
+				363463FF1C15842C00C724B2 /* BCSandBoxAdapter */,
+				363464021C15842C00C724B2 /* PaySandBoxViewController.h */,
+				363464031C15842C00C724B2 /* PaySandBoxViewController.m */,
+			);
+			path = SandBox;
+			sourceTree = "<group>";
+		};
+		363463FF1C15842C00C724B2 /* BCSandBoxAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				363464001C15842C00C724B2 /* BCSandBoxAdapter.h */,
+				363464011C15842C00C724B2 /* BCSandBoxAdapter.m */,
+			);
+			path = BCSandBoxAdapter;
 			sourceTree = "<group>";
 		};
 		364BC5A01B5E32FD00EAFCCE = {
@@ -1133,6 +1133,7 @@
 				3658AFCC1BB28B9400183C28 /* BCOfflinePayReq.m in Sources */,
 				369110691BB3F130003FE49D /* BCBaiduAdapter.m in Sources */,
 				36501E591C06F0E300BC8B8A /* BCQueryRefundsResp.m in Sources */,
+				363464041C15842C00C724B2 /* BCSandBoxAdapter.m in Sources */,
 				36501E6E1C06F38100BC8B8A /* BCQueryRefundByIdResp.m in Sources */,
 				36501E6B1C06F34A00BC8B8A /* BCQueryBillByIdResp.m in Sources */,
 				36501E501C06EE4D00BC8B8A /* BCQueryRefundsCountReq.m in Sources */,
@@ -1144,9 +1145,9 @@
 				3658AFD01BB28B9400183C28 /* BCOfflineRevertResp.m in Sources */,
 				36501E651C06F2DF00BC8B8A /* BCQueryRefundsCountResp.m in Sources */,
 				3602F9341BA031E800A28ADC /* AFSecurityPolicy.m in Sources */,
-				3611EB3B1C0E80B900D1392E /* BCSandBoxAdapter.m in Sources */,
 				36501E681C06F30100BC8B8A /* BCQueryBillsCountResp.m in Sources */,
 				7CD455551BEC889F00E0EC4A /* BeeCloud+Utils.m in Sources */,
+				363464051C15842C00C724B2 /* PaySandBoxViewController.m in Sources */,
 				3697504B1B68C6D5009FAEDB /* QueryResultViewController.m in Sources */,
 				3658AFCD1BB28B9400183C28 /* BCOfflineRevertReq.m in Sources */,
 				3602F94F1BA07C3000A28ADC /* BCWXPayAdapter.m in Sources */,
@@ -1173,7 +1174,6 @@
 				36501E2B1C06E87300BC8B8A /* BCQueryBillResult.m in Sources */,
 				36501E561C06EF1100BC8B8A /* BCQueryRefundsReq.m in Sources */,
 				36501E2C1C06E87300BC8B8A /* BCQueryRefundResult.m in Sources */,
-				3611EB381C0E809500D1392E /* PaySandBoxViewController.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
 				36CAEF531BA275DA002AB286 /* BeeCloud.m in Sources */,
 			);
