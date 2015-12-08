@@ -46,6 +46,4 @@
     XCTAssertNotNil(resp.bill);
 }
 
-
-
 @end

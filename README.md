@@ -31,7 +31,7 @@
 
 ## 安装
 
-方法一、下载本工程源码，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
+方法一、[下载本工程源码](https://beecloud.cn/download/)，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
 
 - 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`,`OfflinePay`,`百度钱包`的原生SDK，请按需选择自己所需要的渠道。 
 
@@ -130,13 +130,19 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
 ```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //请替换成自己的BeeCloud账户中的AppID和AppSecret
-    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+    //请勿同时初始化生产环境与测试环境
+    
+    //初始化生产环境
+    [BeeCloud initWithAppID:@"appId" andAppSecret:@"appsecret"];
+    
+    //初始化测试环境，测试环境中不产生真实交易(目前仅支持WX_APP、ALI_APP、UN_APP、BD_APP)
+    [BeeCloud initSandboxMode:@"appId" testSecret:@"testsecret"];
 
     //如果需要微信支付，请添加下面这行（自行替换微信APP ID）
-    [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
+    [BeeCloud initWeChatPay:@"微信开放平台创建应用的appid"];
 
     //如果需要PayPal，请添加下面这行
-    [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sanBox:YES];
+    [BeeCloud initPayPal:@"clientID" secret:@"secret" sanBox:YES];
     return YES;
 }
 ```
@@ -185,6 +191,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
+                //百度钱包需要用户使用获得的支付数据，调用百度钱包SDK提供的方法发起支付请求，并实现相关的protocol
                 if (payReq.channel == PayChannelBaiduApp) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
@@ -330,7 +337,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
     payReq.totalFee = @"1";
     payReq.billNo = billno;
     payReq.scheme = @"payDemo";
-    payReq.billTimeOut = 300;
+    payReq.billTimeOut = 360;
     payReq.viewController = self;
     payReq.optional = dict;
     [BeeCloud sendBCReq:payReq];
@@ -421,7 +428,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
     payReq.channel = channel;//渠道
     payReq.title = @"BeeCloud自制白开水";//订单标题
     payReq.totalfee = @"1";//订单金额
-    payReq.billTimeOut = 300; //订单超时时间，秒位单位，建议大于5分钟
+    payReq.billTimeOut = 360; //订单超时时间，秒位单位，建议大于6分钟
     payReq.billno = billno;//商户自定义订单号，必须保证唯一性
     payReq.optional = dict;//商户业务扩展参数
     [BeeCloud sendBCReq:payReq];
@@ -528,36 +535,88 @@ req.billno = @"2015091821320048";
 ### 查询
 
 #### 查询支付订单  
-通过构造`BCQueryReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付查询。  
-**响应时间类型对象：`BCQueryResp`**   
+通过构造`BCQueryBillsReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付查询。  
+**响应事件类型对象：`BCQueryBillsResp`**   
 **支付订单对象: `BCQueryBillResult`**  
 
 ```objc
-BCQueryReq *req = [[BCQueryReq alloc] init];
-//req.channel = channel;
-req.billno = @"20150722164700237";
-//req.starttime = @"2015-07-21 00:00";
-//req.endtime = @"2015-07-23 12:00";
+BCQueryBillsReq *req = [[BCQueryBillsReq alloc] init];
+req.channel = channel;
+req.billStatus = BillStatusOnlySuccess; //支付成功的订单
+req.needMsgDetail = YES; //是否需要返回支付成功订单的渠道反馈的具体信息
+//req.billno = @"20150901104138656";   //订单号
+//req.startTime = @"2015-10-22 00:00"; //订单时间
+//req.endTime = @"2015-10-23 00:00";   //订单时间
 req.skip = 0;
-req.limit = 20;
+req.limit = 10;
+[BeeCloud sendBCReq:req];
+```
+
+#### 查询支付订单总数
+通过构造`BCQueryBillsCountReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起查询符合条件的支付订单总数。  
+**响应事件类型：`BCQueryBillsCountResp`**
+
+```objc
+BCQueryBillsCountReq *req = [[BCQueryBillsCountReq alloc] init];
+req.channel = channel; //支付渠道
+req.billNo = billNo;//商户订单号
+req.billStatus = billStatus;//订单状态
+req.startTime = startTime; //开始时间
+req.endTime = endTime; //结束时间
+[BeeCloud sendBCReq:req];
+```
+
+#### 根据id查询支付订单
+通过构造`BCQueryBillByIdReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起查询支付订单。  
+**响应事件类型: `BCQueryBillByIdResp`**
+
+```objc
+//bcId会在支付的回调中返回
+BCQueryBillByIdReq *req = [[BCQueryBillByIdReq alloc] initWithObjectId:bcId];
 [BeeCloud sendBCReq:req];
 ```
 
 #### 查询退款订单  
-通过构造`BCQueryRefundReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询。  
-**响应事件类型对象：`BCQueryResp`**  
+通过构造`BCQueryRefundsReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询。  
+**响应事件类型对象：`BCQueryRefundsResp`**  
 **退款订单对象: `BCQueryRefundResult`**
 
 ```objc
-   BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
-   //req.channel = channel;
-   req.billno = @"20150722164700237";
-   //req.starttime = @"2015-07-21 00:00";
-   //req.endtime = @"2015-07-23 12:00";
-   //req.refundno = @"20150709173629127";
-   req.skip = 0;
-   req.limit = 20;
-   [BeeCloud sendBCReq:req];
+BCQueryRefundsReq *req = [[BCQueryRefundsReq alloc] init];
+req.channel = channel;
+req.needApproved = NeedApprovalAll; 
+//  req.billno = @"20150722164700237";
+//  req.starttime = @"2015-07-21 00:00";
+// req.endtime = @"2015-07-23 12:00";
+//req.refundno = @"20150709173629127";
+req.skip = 0;
+req.limit = 10;
+[BeeCloud sendBCReq:req];
+```
+
+#### 查询退款订单总数
+通过构造`BCQueryRefundsCountReq`的实例，使用`[BeeCloud sendBCReq:req]`方法查询符合条件的退款订单总数。  
+**响应事件类型: `BCQueryRefundsCountResp`**
+
+```objc
+BCQueryRefundsCountReq *req = [[BCQueryRefundsCountReq alloc] init];
+req.channel = channel;
+req.billNo = billNo;
+req.needApproved = needApproved;
+req.refundNo = billNo;
+req.startTime = startTime;
+req.endTime = endTime;
+[BeeCloud sendBCReq:req];
+```
+
+#### 根据id查询退款订单
+通过构造`BCQueryRefundByIdReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起查询支付订单。  
+**响应事件类型: `BCQueryRefundByIdResp`**
+
+```objc
+//bcId会在退款的回调中返回
+BCQueryRefundByIdReq *req = [[BCQueryRefundByIdReq alloc] initWithObjectId:bcId];
+[BeeCloud sendBCReq:req];
 ```
 
 #### 查询退款状态（只支持微信）
@@ -572,6 +631,7 @@ req.refundno = @"20150709173629127";
 
 ## Demo
 项目中的`BCPayExample`文件夹为我们的demo文件  
+项目中的`BCPaySDK`文件夹为SDK目录，可以查看SDK源码    
 在真机上运行`BCPayExample`target，体验真实支付场景
 
 ## 测试
@@ -618,7 +678,7 @@ Pull Request要求
 - 清晰的commit历史 - 保证你的pull请求的每次commit操作都是有意义的。如果你开发中需要执行多次的即时commit操作，那么请把它们放到一起再提交pull请求。
 
 ## 联系我们
-- 如果有什么问题，可以到BeeCloud开发者1群:**321545822** 或 BeeCloud开发者2群:**427128840** 提问
+- 如果有什么问题，可以到BeeCloud开发者④群: **476614720**  
 - 更详细的文档，见源代码的注释以及[官方文档](https://beecloud.cn/doc/?index=1)
 - 如果发现了bug，欢迎提交[issue](https://github.com/beecloud/beecloud-dotnet-sdk/issues)
 - 如果有新的需求，欢迎提交[issue](https://github.com/beecloud/beecloud-dotnet-sdk/issues)

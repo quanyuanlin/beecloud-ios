@@ -87,7 +87,7 @@
     
     XCTAssertEqualObjects(@"PAYPAL", [BCPayUtil getChannelString:PayChannelPayPal]);
     XCTAssertEqualObjects(@"PAYPAL_LIVE", [BCPayUtil getChannelString:PayChannelPayPalLive]);
-    XCTAssertEqualObjects(@"PAYPAL_SANDBOX", [BCPayUtil getChannelString:PayChannelPayPalSanBox]);
+    XCTAssertEqualObjects(@"PAYPAL_SANDBOX", [BCPayUtil getChannelString:PayChannelPayPalSandbox]);
 }
 
 - (void)test_doErrorResponse {

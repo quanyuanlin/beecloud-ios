@@ -125,7 +125,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bc" translatesAutoresizingMaskIntoConstraints="NO" id="fsv-ye-afI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bc" translatesAutoresizingMaskIntoConstraints="NO" id="fsv-ye-afI">
                                 <rect key="frame" x="240" y="98" width="120" height="120"/>
                                 <animations/>
                                 <constraints>
@@ -210,21 +210,21 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderCell" rowHeight="140" id="DIp-h3-fr4">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="orderCell" rowHeight="140" id="DIp-h3-fr4">
                                 <rect key="frame" x="0.0" y="86" width="600" height="140"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DIp-h3-fr4" id="IdO-BZ-UPy">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="139.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="553" height="139.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="refundCell" rowHeight="160" id="Hce-ou-YMa">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="refundCell" rowHeight="160" id="Hce-ou-YMa">
                                 <rect key="frame" x="0.0" y="226" width="600" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hce-ou-YMa" id="kGf-fb-ro1">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="159.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="553" height="159.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </tableViewCellContentView>

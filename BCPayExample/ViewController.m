@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     if (self.actionType == 0) {
         self.title = @"支付";
@@ -76,7 +77,7 @@
     payReq.billNo = billno;//商户自定义订单号
     payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
     payReq.billTimeOut = 300;//订单超时时间
-    payReq.viewController = self; //银联支付和SandBox环境必填
+    payReq.viewController = self; //银联支付和Sandbox环境必填
     payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }
@@ -235,9 +236,7 @@
                             QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
                             qrCodeView.resp = tempResp;
                             qrCodeView.delegate = self;
-                            self.modalPresentationStyle = UIModalPresentationCurrentContext;
-                            qrCodeView.view.backgroundColor = [UIColor whiteColor];
-                            [self presentViewController:qrCodeView animated:YES completion:nil];
+                            [self.navigationController pushViewController:qrCodeView animated:YES];
                         }
                         break;
                     case PayChannelAliScan:
@@ -400,7 +399,7 @@
 #endif
                 break;
             case PayChannelPayPal:
-            case PayChannelPayPalSanBox:
+            case PayChannelPayPalSandbox:
                 [self doPayPal];
                 break;
             default:

@@ -1,5 +1,5 @@
 //
-//  BCSandBoxAdapter.h
+//  BCSandboxAdapter.h
 //  BCPay
 //
 //  Created by Ewenlong03 on 15/12/2.
@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BCSandBoxAdapter : NSObject
+@interface BCSandboxAdapter : NSObject
 
 @end

@@ -49,13 +49,13 @@ static NSString * const kRestApiOfflineBillRevert = @"%@/rest/offline/bill/";
 
 //paypal accesstoken
 static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
-static NSString * const kPayPalAccessTokenSandBox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
+static NSString * const kPayPalAccessTokenSandbox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
 
 //sandbox
-static NSString * const kRestApiSandBoxBill = @"%@/rest/sandbox/bill";
-static NSString * const kRestApiSandBoxQueryBills = @"%@/rest/sandbox/bills";
-static NSString * const kRestApiSandBoxQueryBillById = @"%@/rest/sandbox/bill/";
-static NSString * const kRestApiSandBoxNotify = @"%@/rest/sandbox/notify/";
+static NSString * const kRestApiSandboxBill = @"%@/rest/sandbox/bill";
+static NSString * const kRestApiSandboxQueryBills = @"%@/rest/sandbox/bills";
+static NSString * const kRestApiSandboxQueryBillById = @"%@/rest/sandbox/bill/";
+static NSString * const kRestApiSandboxNotify = @"%@/rest/sandbox/notify/";
 
 //Adapter
 static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
@@ -64,7 +64,7 @@ static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
 static NSString * const kAdapterOffline = @"BCOfflineAdapter";
 static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
-static NSString * const kAdapterSandBox = @"BCSandBoxAdapter";
+static NSString * const kAdapterSandbox = @"BCSandboxAdapter";
 
 /**
  *  BCPay URL type for handling URLs.
@@ -108,7 +108,7 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     
     PayChannelPayPal = 40,
     PayChannelPayPalLive,
-    PayChannelPayPalSanBox,
+    PayChannelPayPalSandbox,
     
     PayChannelBaidu = 50,
     PayChannelBaiduApp,

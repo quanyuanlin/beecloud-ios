@@ -1,5 +1,5 @@
 //
-//  PaySandBoxViewController.h
+//  PaySandboxViewController.h
 //  BCPay
 //
 //  Created by Ewenlong03 on 15/11/30.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PaySandBoxViewController : UIViewController
+@interface PaySandboxViewController : UIViewController
 
 @end

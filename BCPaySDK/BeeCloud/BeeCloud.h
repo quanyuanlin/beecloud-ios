@@ -49,7 +49,7 @@
  *  @param appId     BeeCloud平台APPID
  *  @param testSecret BeeCloud平台测试密钥TESTSECRECT
  *
- *  @return 初始化成功返回YES;若appId或者appSecret不合法，初始化失败返回NO
+ *  @return 初始化成功返回YES;若appId或者testSecret不合法，初始化失败返回NO
  */
 + (BOOL)initSandboxMode:(NSString *)appId testSecret:(NSString *)testSecret;
 
@@ -68,11 +68,11 @@
  *
  *  @param clientID paypal clientId
  *  @param secret   paypal secret
- *  @param isSandBox 是否是sanbox环境
+ *  @param isSandbox 是否是sandbox环境
  *
  *  @return  初始化成功返回YES; 若clientID或者secret不合法，初始化失败返回NO
  */
-+ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox;
++ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox;
 
 /**
  * 处理通过URL启动App时传递的数据。需要在application:openURL:sourceApplication:annotation:中调用。
@@ -98,12 +98,12 @@
 + (id<BeeCloudDelegate>)getBeeCloudDelegate;
 
 /**
- *  如果是sandBox环境，返回YES；
+ *  如果是sandbox环境，返回YES；
  *  如果是live环境，返回NO；
  *
  *  @return YES表示当前是沙箱测试环境
  */
-+ (BOOL)getSandBoxMode;
++ (BOOL)getSandboxMode;
 
 /**
  *  获取API版本号

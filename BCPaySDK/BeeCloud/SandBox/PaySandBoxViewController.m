@@ -1,15 +1,15 @@
 //
-//  PaySandBoxViewController.m
+//  PaySandboxViewController.m
 //  BCPay
 //
 //  Created by Ewenlong03 on 15/11/30.
 //  Copyright © 2015年 BeeCloud. All rights reserved.
 //
 
-#import "PaySandBoxViewController.h"
+#import "PaySandboxViewController.h"
 #import "BeeCloud.h"
 
-@interface PaySandBoxViewController () {
+@interface PaySandboxViewController () {
     UIStatusBarStyle statusStyle;
     
     NSInteger resultCode;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation PaySandBoxViewController
+@implementation PaySandboxViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -132,10 +132,10 @@
     
 //    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
 //    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
-    NSString *host = [NSString stringWithFormat:@"%@%@/%@", [BCPayUtil getBestHostWithFormat:kRestApiSandBoxNotify], [BCPayCache sharedInstance].appId, [BCPayCache sharedInstance].bcResp.bcId];
+    NSString *host = [NSString stringWithFormat:@"%@%@/%@", [BCPayUtil getBestHostWithFormat:kRestApiSandboxNotify], [BCPayCache sharedInstance].appId, [BCPayCache sharedInstance].bcResp.bcId];
     NSLog(@"sandboxPay id = %@", [BCPayCache sharedInstance].bcResp.bcId);
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak PaySandBoxViewController *weakSelf = self;
+    __weak PaySandboxViewController *weakSelf = self;
     [manager GET:host parameters:nil
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"resp = %@", response);

@@ -17,14 +17,14 @@
 @optional
 - (BOOL)registerWeChat:(NSString *)appid;
 - (BOOL)isWXAppInstalled;
-- (void)registerPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox;
+- (void)registerPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox;
 - (BOOL)handleOpenUrl:(NSURL *)url;
 
 - (BOOL)wxPay:(NSMutableDictionary *)dic;
 - (BOOL)aliPay:(NSMutableDictionary *)dic;
 - (BOOL)unionPay:(NSMutableDictionary *)dic;
 - (NSString *)baiduPay:(NSMutableDictionary *)dic;
-- (BOOL)sandBoxPay;
+- (BOOL)sandboxPay;
 
 - (void)payPal:(NSMutableDictionary *)dic;
 - (void)payPalVerify:(NSMutableDictionary *)dic;

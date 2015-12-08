@@ -39,7 +39,7 @@
  */
 @property (nonatomic, retain) NSString *scheme;
 /**
- *  银联支付或者SandBox环境必填
+ *  银联支付或者Sandbox环境必填
  */
 @property (nonatomic, retain) UIViewController *viewController;
 /**

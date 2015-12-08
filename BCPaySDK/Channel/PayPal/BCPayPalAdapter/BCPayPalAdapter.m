@@ -14,7 +14,7 @@
 
 @interface BCPayPalAdapter ()<BeeCloudAdapterDelegate>
 
-@property (nonatomic, assign) BOOL isSandBox;
+@property (nonatomic, assign) BOOL isSandbox;
 
 @end
 
@@ -29,16 +29,16 @@
     return instance;
 }
 
-- (void)registerPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
+- (void)registerPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox {
     if(clientID.isValid && secret.isValid) {
         
-        if (isSandBox) {
+        if (isSandbox) {
             [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : @"YOUR_PRODUCTION_CLIENT_ID",
                                                                    PayPalEnvironmentSandbox : clientID}];
             [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentSandbox];
         } else {
             [PayPalMobile initializeWithClientIdsForEnvironments:@{PayPalEnvironmentProduction : clientID,
-                                                                   PayPalEnvironmentSandbox : @"YOUR_SANDBOX_CLIENT_ID"}];
+                                                                   PayPalEnvironmentSandbox : @"YOUR_SANDbox_CLIENT_ID"}];
             [PayPalMobile preconnectWithEnvironment:PayPalEnvironmentProduction];
         }
         
@@ -100,7 +100,7 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
     __weak BCPayPalAdapter * weakSelf = [BCPayPalAdapter sharedInstance];
-    [manager POST:[BCPayCache sharedInstance].isPayPalSandBox?kPayPalAccessTokenSandBox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager POST:[BCPayCache sharedInstance].isPayPalSandbox?kPayPalAccessTokenSandbox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
         BCPayLog(@"token %@", response);
         NSDictionary *dic = (NSDictionary *)response;
         [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic stringValueForKey:@"token_type" defaultValue:@""],[dic stringValueForKey:@"access_token" defaultValue:@""]]];
@@ -120,8 +120,8 @@
         [self doErrorResponse:@"请检查是否全局初始化"];
         return;
     }
-    if ([BCPayCache sharedInstance].isPayPalSandBox) {
-        parameters[@"channel"] = @"PAYPAL_SANDBOX";
+    if ([BCPayCache sharedInstance].isPayPalSandbox) {
+        parameters[@"channel"] = @"PAYPAL_SANDbox";
     } else {
         parameters[@"channel"] = @"PAYPAL_LIVE";
     }

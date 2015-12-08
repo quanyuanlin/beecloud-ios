@@ -1,29 +1,29 @@
 //
-//  BCSandBoxAdapter.m
+//  BCSandboxAdapter.m
 //  BCPay
 //
 //  Created by Ewenlong03 on 15/12/2.
 //  Copyright © 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCSandBoxAdapter.h"
+#import "BCSandboxAdapter.h"
 #import "BeeCloudAdapterProtocol.h"
 #import "BCPayUtil.h"
 #import "BCPayCache.h"
-#import "PaySandBoxViewController.h"
+#import "PaySandboxViewController.h"
 
-@interface BCSandBoxAdapter () <BeeCloudAdapterDelegate>
+@interface BCSandboxAdapter () <BeeCloudAdapterDelegate>
 
 @end
 
-@implementation BCSandBoxAdapter
+@implementation BCSandboxAdapter
 
-- (BOOL)sandBoxPay {
+- (BOOL)sandboxPay {
     
     BCPayReq *req = (BCPayReq *)[BCPayCache sharedInstance].bcResp.request;
     
     if (req.viewController) {
-        PaySandBoxViewController *view = [[PaySandBoxViewController alloc] init];
+        PaySandboxViewController *view = [[PaySandboxViewController alloc] init];
         [req.viewController presentViewController:view animated:YES completion:^{
         }];
         return YES;

@@ -43,7 +43,7 @@
 
 + (NSString *)getAppSignature:(NSString *)timeStamp {
     NSString *appid = [BCPayCache sharedInstance].appId;
-    NSString *appsecret = [BCPayCache sharedInstance].sandBox ? [BCPayCache sharedInstance].testSecret: [BCPayCache sharedInstance].appSecret;
+    NSString *appsecret = [BCPayCache sharedInstance].sandbox ? [BCPayCache sharedInstance].testSecret: [BCPayCache sharedInstance].appSecret;
     
     if (!appid.isValid || !appsecret.isValid)
         return nil;
@@ -54,7 +54,7 @@
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CC_MD5(str, (CC_LONG)strlen(str), result);
     NSMutableString *ret = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
-    for(int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
+    for (int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
         [ret appendFormat:@"%02x",result[i]];
     }
     return ret;
@@ -132,7 +132,7 @@
         case PayChannelPayPalLive:
             cType = @"PAYPAL_LIVE";
             break;
-        case PayChannelPayPalSanBox:
+        case PayChannelPayPalSandbox:
             cType = @"PAYPAL_SANDBOX";
             break;
 #pragma mark PayChannel_Baidu

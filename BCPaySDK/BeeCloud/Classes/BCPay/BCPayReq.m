@@ -9,7 +9,7 @@
 #import "BCPayReq.h"
 #import "BCPayUtil.h"
 #import "BeeCloudAdapter.h"
-#import "PaySandBoxViewController.h"
+#import "PaySandboxViewController.h"
 
 #pragma mark pay request
 
@@ -50,7 +50,7 @@
         parameters[@"optional"] = self.optional;
     }
     
-    if ([BeeCloud getSandBoxMode]) {
+    if ([BeeCloud getSandboxMode]) {
         [self payInSandbox:parameters];
     } else {
         [self payInLiveMode:parameters];
@@ -112,25 +112,25 @@
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BCPayReq *weakSelf = self;
     
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiSandBoxBill] parameters:parameters
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiSandboxBill] parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id response) {
               if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
                   [BCPayUtil getErrorInResponse:(NSDictionary *)response];
               } else {
-                  [weakSelf doPayActionInSandBox:(NSDictionary *)response];
+                  [weakSelf doPayActionInSandbox:(NSDictionary *)response];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [BCPayUtil doErrorResponse:kNetWorkError];
           }];
 }
 
-- (BOOL)doPayActionInSandBox:(NSDictionary *)response {
+- (BOOL)doPayActionInSandbox:(NSDictionary *)response {
     
     if (response) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                     (NSDictionary *)response];
         [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
-        [BeeCloudAdapter beecloudSandBoxPay];
+        [BeeCloudAdapter beecloudSandboxPay];
     }
     
     return YES;
@@ -149,7 +149,7 @@
     } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
         [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
         return NO;
-    } else if ((self.channel == PayChannelUnApp || [BeeCloud getSandBoxMode]) && (self.viewController == nil)) {
+    } else if ((self.channel == PayChannelUnApp || [BeeCloud getSandboxMode]) && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
         return NO;
     } else if (self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
@@ -158,7 +158,5 @@
     }
     return YES;
 }
-
-
 
 @end

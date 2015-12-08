@@ -131,7 +131,7 @@
    
     NSString *stringValue;
     
-    if ([metadataObjects count] >0)
+    if ([metadataObjects count] > 0)
     {
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
         stringValue = metadataObject.stringValue;
