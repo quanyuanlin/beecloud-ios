@@ -20,11 +20,11 @@
         
         instance.appId = nil;
         instance.appSecret = nil;
+        instance.testSecret = nil;
         instance.sandbox = NO;
         
         instance.payPalClientID = nil;
         instance.payPalSecret = nil;
-        
         instance.isPayPalSandbox = NO;
         
         instance.bcResp = [[BCBaseResp alloc] init];

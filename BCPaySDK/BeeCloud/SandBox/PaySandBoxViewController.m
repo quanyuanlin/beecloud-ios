@@ -14,6 +14,8 @@
     
     NSInteger resultCode;
     NSString *resultMsg;
+    
+    UIActivityIndicatorView *loading;
 }
 
 @end
@@ -108,6 +110,15 @@
     comment.font = [UIFont systemFontOfSize:15];
     comment.textColor = [UIColor colorWithRed:1.0 green:108.0/255.0 blue:44.0/255.0 alpha:1];//[UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1];
     [self.view addSubview:comment];
+    
+    loading = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    loading.backgroundColor = [UIColor colorWithRed:214.0/255 green:214.0/255 blue:214.0/255 alpha:0.6];
+    loading.layer.cornerRadius = 5;
+    loading.center = self.view.center;
+    [loading setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [self.view addSubview:loading];
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -122,7 +133,7 @@
 - (void)back {
     resultCode = BCErrCodeUserCancel;
     resultMsg = @"支付取消";
-    
+    [loading stopAnimating];
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -130,8 +141,8 @@
 
 - (void)pay {
     
-//    NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
-//    NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
+    [loading startAnimating];
+    
     NSString *host = [NSString stringWithFormat:@"%@%@/%@", [BCPayUtil getBestHostWithFormat:kRestApiSandboxNotify], [BCPayCache sharedInstance].appId, [BCPayCache sharedInstance].bcResp.bcId];
     NSLog(@"sandboxPay id = %@", [BCPayCache sharedInstance].bcResp.bcId);
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
@@ -141,11 +152,13 @@
              BCPayLog(@"resp = %@", response);
              [weakSelf doNotifyResponse:(NSDictionary *)response];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [loading stopAnimating];
              [BCPayUtil doErrorResponse:kNetWorkError];
          }];
 }
 
 - (void)doNotifyResponse:(NSDictionary *)response {
+    [loading stopAnimating];
     if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] == BCErrCodeSuccess) {
         resultMsg = @"支付成功";
         resultCode = BCErrCodeSuccess;

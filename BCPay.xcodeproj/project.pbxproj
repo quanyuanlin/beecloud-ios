@@ -183,7 +183,6 @@
 		363464031C15842C00C724B2 /* PaySandBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySandBoxViewController.m; sourceTree = "<group>"; };
 		36379D341BC66A0700CA6C81 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		36379D361BC66A1300CA6C81 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		364C00911C07F7E900B585A6 /* BCCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCCategory.h; sourceTree = "<group>"; };
 		36501E171C06E87300BC8B8A /* BCBaseResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCBaseResult.h; sourceTree = "<group>"; };
 		36501E181C06E87300BC8B8A /* BCBaseResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCBaseResult.m; sourceTree = "<group>"; };
 		36501E191C06E87300BC8B8A /* BCQueryBillResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCQueryBillResult.h; sourceTree = "<group>"; };
@@ -322,10 +321,11 @@
 		36AF1A241BB158810007592E /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ../InfoPlist.strings; sourceTree = "<group>"; };
 		36AF1A261BB1590A0007592E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		36AF1A271BB1590A0007592E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		36CAEF4F1BA275DA002AB286 /* BeeCloudAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeCloudAdapterProtocol.h; path = BeeCloud/BeeCloudAdapterProtocol.h; sourceTree = "<group>"; };
 		36CAEF501BA275DA002AB286 /* BeeCloud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeeCloud.m; path = BeeCloud/BeeCloud.m; sourceTree = "<group>"; };
 		36CAEF511BA275DA002AB286 /* BeeCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeCloud.h; path = BeeCloud/BeeCloud.h; sourceTree = "<group>"; };
 		36CAEF521BA275DA002AB286 /* BCPayObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCPayObjects.h; path = BeeCloud/BCPayObjects.h; sourceTree = "<group>"; };
+		36D654CF1C20355E00E287C7 /* BCCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCCategory.h; sourceTree = "<group>"; };
+		36D654D01C20358100E287C7 /* BeeCloudAdapterProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCloudAdapterProtocol.h; sourceTree = "<group>"; };
 		36DCE4091B8F4A19004BB25E /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		36DCE40A1B8F4A19004BB25E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		36DCE40D1B8F4A5E004BB25E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -402,11 +402,9 @@
 		3602F8AE1BA031E800A28ADC /* BCPaySDK */ = {
 			isa = PBXGroup;
 			children = (
-				36CAEF4F1BA275DA002AB286 /* BeeCloudAdapterProtocol.h */,
 				36CAEF501BA275DA002AB286 /* BeeCloud.m */,
 				36CAEF511BA275DA002AB286 /* BeeCloud.h */,
 				36CAEF521BA275DA002AB286 /* BCPayObjects.h */,
-				364C00911C07F7E900B585A6 /* BCCategory.h */,
 				3602F8AF1BA031E800A28ADC /* BeeCloud */,
 				3602F8E61BA031E800A28ADC /* Channel */,
 			);
@@ -427,6 +425,7 @@
 		3602F8D01BA031E800A28ADC /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				36D654CF1C20355E00E287C7 /* BCCategory.h */,
 				3602F8D11BA031E800A28ADC /* BCPayCache.h */,
 				3602F8D21BA031E800A28ADC /* BCPayCache.m */,
 				3602F8D31BA031E800A28ADC /* BCPayConstant.h */,
@@ -445,6 +444,7 @@
 		3602F8D81BA031E800A28ADC /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				36D654D01C20358100E287C7 /* BeeCloudAdapterProtocol.h */,
 				3602F8D91BA031E800A28ADC /* BeeCloudAdapter.h */,
 				3602F8DA1BA031E800A28ADC /* BeeCloudAdapter.m */,
 			);

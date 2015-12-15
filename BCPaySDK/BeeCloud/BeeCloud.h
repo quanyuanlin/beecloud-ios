@@ -51,7 +51,7 @@
  *
  *  @return 初始化成功返回YES;若appId或者testSecret不合法，初始化失败返回NO
  */
-+ (BOOL)initSandboxMode:(NSString *)appId testSecret:(NSString *)testSecret;
++ (BOOL)initSandboxWithAppID:(NSString *)appId testSecret:(NSString *)testSecret;
 
 /**
  *  需要在每次启动第三方应用程序时调用。第一次调用后，会在微信的可用应用列表中出现。
@@ -96,6 +96,13 @@
  *  @return BeeCloudDelegate对象，用来接收BeeCloud触发的消息。
  */
 + (id<BeeCloudDelegate>)getBeeCloudDelegate;
+
+/**
+ *  设置开启或关闭沙箱测试环境
+ *
+ *  @param sandbox YES表示开启沙箱、关闭生产环境，并请确保已经初始化沙箱环境；NO表示关闭沙箱环境、开启生产环境，并确保已经初始化生产环境
+ */
++ (void)setSandboxMode:(BOOL)sandbox;
 
 /**
  *  如果是sandbox环境，返回YES；

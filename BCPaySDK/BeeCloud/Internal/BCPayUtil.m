@@ -43,7 +43,7 @@
 
 + (NSString *)getAppSignature:(NSString *)timeStamp {
     NSString *appid = [BCPayCache sharedInstance].appId;
-    NSString *appsecret = [BCPayCache sharedInstance].sandbox ? [BCPayCache sharedInstance].testSecret: [BCPayCache sharedInstance].appSecret;
+    NSString *appsecret = [BCPayCache sharedInstance].sandbox ? [BCPayCache sharedInstance].testSecret : [BCPayCache sharedInstance].appSecret;
     
     if (!appid.isValid || !appsecret.isValid)
         return nil;
@@ -229,6 +229,7 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:email];
 }
+
 + (BOOL)isValidMobile:(NSString *)mobile {
     NSString *phoneRegex = @"^([0|86|17951]?(13[0-9])|(15[^4,\\D])|(17[678])|(18[0,0-9]))\\d{8}$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];

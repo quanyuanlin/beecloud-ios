@@ -18,6 +18,12 @@
     self = [super init];
     if (self) {
         self.type = BCObjsTypePayReq;
+        self.channel = PayChannelNone;
+        self.title = @"";
+        self.totalFee = @"";
+        self.billNo = @"";
+        self.scheme = @"";
+        self.viewController = nil;
         self.billTimeOut = 0;
     }
     return self;
@@ -47,6 +53,10 @@
     
     if (self.optional) {
         parameters[@"optional"] = self.optional;
+    }
+    
+    if (self.analysis) {
+        parameters[@"analysis"] = self.analysis;
     }
     
     if ([BeeCloud getSandboxMode]) {
@@ -151,7 +161,7 @@
     } else if ((self.channel == PayChannelUnApp || [BeeCloud getSandboxMode]) && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
         return NO;
-    } else if (self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) {
+    } else if ((self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getSandboxMode]) {
         [BCPayUtil doErrorResponse:@"未找到微信客户端，请先下载安装"];
         return NO;
     }

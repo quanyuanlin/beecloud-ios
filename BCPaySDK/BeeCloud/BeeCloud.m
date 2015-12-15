@@ -38,7 +38,7 @@
     return NO;
 }
 
-+ (BOOL)initSandboxMode:(NSString *)appId testSecret:(NSString *)testSecret {
++ (BOOL)initSandboxWithAppID:(NSString *)appId testSecret:(NSString *)testSecret {
     BCPayCache *instance = [BCPayCache sharedInstance];
     if (appId.isValid && testSecret.isValid) {
         instance.appId = appId;
@@ -47,6 +47,10 @@
         return YES;
     }
     return NO;
+}
+
++ (void)setSandboxMode:(BOOL)sandbox {
+    [BCPayCache sharedInstance].sandbox = sandbox;
 }
 
 + (BOOL)getSandboxMode {

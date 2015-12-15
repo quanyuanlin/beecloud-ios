@@ -181,7 +181,7 @@
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
                 //百度钱包需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
-                if (payReq.channel == PayChannelBaiduApp) {
+                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getSandboxMode]) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
                     [self showAlertView:resp.resultMsg];

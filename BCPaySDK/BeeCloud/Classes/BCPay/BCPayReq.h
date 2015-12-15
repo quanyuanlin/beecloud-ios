@@ -46,6 +46,10 @@
  *  扩展参数,可以传入任意数量的key/value对来补充对业务逻辑的需求;此参数会在webhook回调中返回;
  */
 @property (nonatomic, retain) NSMutableDictionary *optional;
+/**
+ *  用于统计分析的数据
+ */
+@property (nonatomic, retain) NSMutableDictionary *analysis;
 
 #pragma mark - Functions
 
