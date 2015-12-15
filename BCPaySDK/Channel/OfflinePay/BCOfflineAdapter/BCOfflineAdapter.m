@@ -41,18 +41,18 @@
     }
     
     parameters[@"channel"] = cType;
-    parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalfee integerValue]];
-    parameters[@"bill_no"] = req.billno;
+    parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalFee integerValue]];
+    parameters[@"bill_no"] = req.billNo;
     parameters[@"title"] = req.title;
     if (req.channel == PayChannelWxScan || req.channel == PayChannelAliScan) {
         parameters[@"auth_code"] = req.authcode;
     }
     if (req.channel == PayChannelAliScan) {
-        if (req.terminalid.isValid) {
-            parameters[@"terminal_id"] = req.terminalid;
+        if (req.terminalId.isValid) {
+            parameters[@"terminal_id"] = req.terminalId;
         }
-        if (req.storeid.isValid) {
-            parameters[@"store_id"] = req.storeid;
+        if (req.storeId.isValid) {
+            parameters[@"store_id"] = req.storeId;
         }
     }
     if (req.optional) {
@@ -90,7 +90,7 @@
     if (req == nil) {
         [self doErrorResponse:@"请求结构体不合法"];
         return;
-    } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
+    } else if (!req.billNo.isValid || !req.billNo.isValidTraceNo || (req.billNo.length < 8) || (req.billNo.length > 32)) {
         [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
         return;
     }
@@ -104,7 +104,7 @@
     }
     
     parameters[@"channel"] = cType;
-    parameters[@"bill_no"] = req.billno;
+    parameters[@"bill_no"] = req.billNo;
     
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
@@ -177,16 +177,16 @@
         if (!req.title.isValid || [BCPayUtil getBytes:req.title] > 32) {
             [self doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
             return NO;
-        } else if (!req.totalfee.isValid || !req.totalfee.isPureInt) {
+        } else if (!req.totalFee.isValid || !req.totalFee.isPureInt) {
             [self doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
             return NO;
-        } else if (!req.billno.isValid || !req.billno.isValidTraceNo || (req.billno.length < 8) || (req.billno.length > 32)) {
+        } else if (!req.billNo.isValid || !req.billNo.isValidTraceNo || (req.billNo.length < 8) || (req.billNo.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
         } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxScan) && !req.authcode.isValid) {
             [self doErrorResponse:@"authcode 不是合法的字符串"];
             return NO;
-        } else if ((req.channel == PayChannelAliScan) && (!req.terminalid.isValid || !req.storeid.isValid)) {
+        } else if ((req.channel == PayChannelAliScan) && (!req.terminalId.isValid || !req.storeId.isValid)) {
             [self doErrorResponse:@"terminalid或storeid 不是合法的字符串"];
             return NO;
         }

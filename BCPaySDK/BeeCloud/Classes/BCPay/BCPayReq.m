@@ -9,7 +9,6 @@
 #import "BCPayReq.h"
 #import "BCPayUtil.h"
 #import "BeeCloudAdapter.h"
-#import "PaySandboxViewController.h"
 
 #pragma mark pay request
 
@@ -131,9 +130,9 @@
                                     (NSDictionary *)response];
         [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
         [BeeCloudAdapter beecloudSandboxPay];
+        return YES;
     }
-    
-    return YES;
+    return NO;
 }
 
 - (BOOL)checkParametersForReqPay {
@@ -141,10 +140,10 @@
         [BCPayUtil doErrorResponse:@"title 必须是长度不大于32个字节,最长16个汉字的字符串的合法字符串"];
         return NO;
     } else if (!self.totalFee.isValid || !self.totalFee.isPureInt) {
-        [BCPayUtil doErrorResponse:@"totalfee 以分为单位，必须是只包含数值的字符串"];
+        [BCPayUtil doErrorResponse:@"totalFee 以分为单位，必须是只包含数值的字符串"];
         return NO;
     } else if (!self.billNo.isValid || !self.billNo.isValidTraceNo || (self.billNo.length < 8) || (self.billNo.length > 32)) {
-        [BCPayUtil doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
+        [BCPayUtil doErrorResponse:@"billNo 必须是长度8~32位字母和/或数字组合成的字符串"];
         return NO;
     } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
         [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];

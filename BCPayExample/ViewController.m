@@ -92,11 +92,11 @@
     BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
     payReq.channel = channel; //支付渠道，支持WX_NATIVE、WX_SCAN、ALI_OFFLINE_QRCODE、ALI_SCAN
     payReq.title = @"Offline Pay";//订单标题
-    payReq.totalfee = @"1"; //订单价格
-    payReq.billno = billno; //商户自定义订单号
+    payReq.totalFee = @"1"; //订单价格
+    payReq.billNo = billno; //商户自定义订单号
     payReq.authcode = authcode; //支付授权码(ALI_SCAN,WX_SCAN时必需)，通过扫码用户的支付宝钱包(付款)、微信钱包(刷卡)获取
-    payReq.terminalid = @"BeeCloud617"; //自定义扫码设备号
-    payReq.storeid = @"BeeCloud618";//自定义店铺编号
+    payReq.terminalId = @"BeeCloud617"; //自定义扫码设备号
+    payReq.storeId = @"BeeCloud618";//自定义店铺编号
     payReq.optional = dict;//用于商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }
@@ -244,7 +244,7 @@
                     {
                         BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
                         req.channel = payReq.channel;
-                        req.billno = payReq.billno;
+                        req.billNo = payReq.billNo;
                         [BeeCloud sendBCReq:req];
                     }
                         break;
@@ -450,7 +450,7 @@
     BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
     BCOfflinePayReq *payReq = (BCOfflinePayReq *)resp.request;
     req.channel = payReq.channel;
-    req.billno = payReq.billno;
+    req.billNo = payReq.billNo;
     [BeeCloud sendBCReq:req];
 }
 
