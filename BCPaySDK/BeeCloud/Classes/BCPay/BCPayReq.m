@@ -158,7 +158,10 @@
     } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
         [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
         return NO;
-    } else if ((self.channel == PayChannelUnApp || [BeeCloud getSandboxMode]) && (self.viewController == nil)) {
+    } else if (self.channel == PayChannelUnApp && (self.viewController == nil)) {
+        [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
+        return NO;
+    } else if ([BeeCloud getSandboxMode] && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
         return NO;
     } else if ((self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getSandboxMode]) {

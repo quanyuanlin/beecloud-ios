@@ -78,8 +78,8 @@
     resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
     resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
-    resp.count = [response integerValueForKey:@"count" defaultValue:0];
     resp.results = [self parseRefundsResults:response];
+    resp.count = resp.results.count;
     [BCPayCache beeCloudDoResponse];
     return resp;
 }
@@ -92,7 +92,7 @@
             [array addObject:refund];
         }
     } ;
-    return array.count > 0 ? array : nil;
+    return array;
 }
 
 @end

@@ -43,7 +43,7 @@
 - (void)test_parseRefundsResults {
     
     NSMutableArray *results = [req parseRefundsResults:@{}];
-    XCTAssertNil(results);
+    XCTAssertFalse(results.count > 0);
     
     results = [req parseRefundsResults:@{@"refunds":@[@{@"title":@"test",@"refund_no":@"2015010202"}]}];
     XCTAssertNotNil(results);

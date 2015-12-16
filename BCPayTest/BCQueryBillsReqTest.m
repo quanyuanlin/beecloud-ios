@@ -43,7 +43,7 @@
 - (void)test_parseBillsResults {
     
     NSMutableArray *results = [req parseBillsResults:@{}];
-    XCTAssertNil(results);
+    XCTAssertFalse(results.count > 0);
     
     results = [req parseBillsResults:@{@"bills":@[@{@"title":@"test",@"spay_result":@YES}]}];
     XCTAssertNotNil(results);
