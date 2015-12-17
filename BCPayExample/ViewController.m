@@ -21,7 +21,8 @@
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
     PayChannel currentChannel;
-    NSArray *channelList;
+    NSMutableArray *channelList;
+    NSString * billTitle;
 }
 
 @end
@@ -39,20 +40,25 @@
     } else if (self.actionType == 2) {
         self.title = @"查询退款订单";
     }
-    channelList = @[@{@"channel":@"微信",@"img":@"wxPay",
-                      @"subChannel":@[@{@"sub":@(PayChannelWxApp),@"title":@"微信APP支付"},
-                                      @{@"sub":@(PayChannelWxNative),@"title":@"微信扫码支付"},
-                                      @{@"sub":@(PayChannelWxScan),@"title":@"微信刷卡支付"}]},
-                    @{@"channel":@"支付宝",@"img":@"aliPay",
-                      @"subChannel":@[@{@"sub":@(PayChannelAliApp),@"title":@"支付宝APP支付"},
-                                      @{@"sub":@(PayChannelAliOfflineQrCode),@"title":@"支付宝扫码支付"},
-                                      @{@"sub":@(PayChannelAliScan),@"title":@"支付宝条码支付"}]},
-                    @{@"channel":@"银联在线",@"img":@"uPay",
-                      @"subChannel":@[@{@"sub":@(PayChannelUnApp),@"title":@"银联在线"}]},
-                    @{@"channel":@"PayPal",@"img":@"paypal",
-                      @"subChannel":@[@{@"sub":@(PayChannelPayPal),@"title":@"PayPal"}]},
-                    @{@"channel":@"百度钱包",@"img":@"baidu",
-                      @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
+    NSArray *tempArray = @[@{@"channel":@"线上支付",
+                      @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信APP支付"},
+                                      @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝APP支付"},
+                                      @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
+                                      @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
+                                      @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"}
+                                      ]},
+                    @{@"channel":@"线下收款",
+                      @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码支付"},
+                                      @{@"sub":@(PayChannelWxScan), @"img":@"wx", @"title":@"微信刷卡支付"},
+                                      @{@"sub":@(PayChannelAliOfflineQrCode), @"img":@"ali", @"title":@"支付宝扫码支付"},
+                                      @{@"sub":@(PayChannelAliScan), @"img":@"ali", @"title":@"支付宝条码支付"}]}
+                ];
+    channelList = [NSMutableArray arrayWithArray:tempArray];
+    
+    if ([BeeCloud getSandboxMode]) {
+        [channelList removeLastObject];
+    }
+    billTitle = [BeeCloud getSandboxMode] ? @"iOS Demo Sandbox" : @"iOS Demo Live";
     self.orderList = nil;
     
 }
@@ -368,7 +374,7 @@
         cell = [[PayChannelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     NSDictionary *row = channelList[indexPath.section][@"subChannel"][indexPath.row];
-    cell.cImg.image = [UIImage imageNamed:channelList[indexPath.section][@"img"]];
+    cell.cImg.image = [UIImage imageNamed:row[@"img"]];
     cell.title.text = row[@"title"];
     
     return cell;

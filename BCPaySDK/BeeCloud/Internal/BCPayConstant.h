@@ -29,33 +29,30 @@ static NSString * const kBCHosts[] = {@"https://apisz.beecloud.cn",
     @"https://apibj.beecloud.cn",
     @"https://apihz.beecloud.cn"};
 
-static NSString * const reqApiVersion = @"/2";
+static NSString * const reqApiVersion = @"/2/rest";
 
 //rest api online
-static NSString * const kRestApiPay = @"%@/rest/bill";
-static NSString * const kRestApiRefund = @"%@/rest/refund";
-static NSString * const kRestApiQueryBills = @"%@/rest/bills";
-static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
-static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
-static NSString * const kRestApiQueryBillById = @"%@/rest/bill/";
-static NSString * const kRestApiQueryRefundById = @"%@/rest/refund/";
-static NSString * const kRestApiQueryBillsCount = @"%@/rest/bills/count";
-static NSString * const kRestApiQueryRefundsCount = @"%@/rest/refunds/count";
+static NSString * const kRestApiPay = @"%@%@/bill";
+static NSString * const kRestApiRefund = @"%@%@/refund";
+static NSString * const kRestApiQueryBills = @"%@%@/bills";
+static NSString * const kRestApiQueryRefunds = @"%@%@/refunds";
+static NSString * const kRestApiRefundState = @"%@%@/refund/status";
+static NSString * const kRestApiQueryBillById = @"%@%@/bill/";
+static NSString * const kRestApiQueryRefundById = @"%@%@/refund/";
+static NSString * const kRestApiQueryBillsCount = @"%@%@/bills/count";
+static NSString * const kRestApiQueryRefundsCount = @"%@%@/refunds/count";
 
 //rest api offline
-static NSString * const kRestApiOfflinePay = @"%@/rest/offline/bill";
-static NSString * const kRestApiOfflineBillStatus = @"%@/rest/offline/bill/status";
-static NSString * const kRestApiOfflineBillRevert = @"%@/rest/offline/bill/";
+static NSString * const kRestApiOfflinePay = @"%@%@/offline/bill";
+static NSString * const kRestApiOfflineBillStatus = @"%@%@/offline/bill/status";
+static NSString * const kRestApiOfflineBillRevert = @"%@%@/offline/bill/";
 
 //paypal accesstoken
 static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
 static NSString * const kPayPalAccessTokenSandbox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
 
 //sandbox
-static NSString * const kRestApiSandboxBill = @"%@/rest/sandbox/bill";
-static NSString * const kRestApiSandboxQueryBills = @"%@/rest/sandbox/bills";
-static NSString * const kRestApiSandboxQueryBillById = @"%@/rest/sandbox/bill/";
-static NSString * const kRestApiSandboxNotify = @"%@/rest/sandbox/notify/";
+static NSString * const kRestApiSandboxNotify = @"%@%@/notify/";
 
 //Adapter
 static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
