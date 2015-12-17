@@ -15,17 +15,18 @@
     return YES;
 }
 
-- (BOOL)isValidIdentifier {
-    if (!self.isValid) return NO;
-    // First letter not a letter.
-    if (![BCPayUtil isLetter:[self characterAtIndex:0]]) return NO;
-    for (NSUInteger i = 1; i < self.length; i++) {
+- (BOOL)isValidUUID {
+    if (!self.isValid || self.length != 36) return NO;
+    for (NSUInteger i = 0; i < self.length; i++) {
         unichar ch = [self characterAtIndex:i];
-        // Invalid character.
-        if (![BCPayUtil isLetter:ch] && ![BCPayUtil isDigit:ch] && ch != '_') return NO;
+        if (i == 8 || i == 13 || i == 18 || i == 23) {
+            if (ch != '-')
+                return NO;
+        } else {
+            if (!([BCPayUtil isDigit:ch] || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F')))
+                return NO;
+        }
     }
-    // Identifier ending with "__" is reserved.
-    if ([self hasSuffix:@"__"]) return NO;
     return YES;
 }
 

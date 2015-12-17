@@ -53,86 +53,51 @@
 - (void)reqPayPalVerify:(BCPayPalVerifyReq *)req;
 
 /**
- *  查询支付/退款订单
+ *  查询支付订单
  *
  *  @param req 查询订单请求
  */
-- (void)reqQueryOrder:(BCQueryReq *)req;
+- (void)reqQueryBills:(BCQueryBillsReq *)req;
 
+/**
+ *  查询满足条件的支付订单数目
+ *
+ *  @param req 满足的条件结构
+ */
+- (void)reqBillsCount:(BCQueryBillsCountReq *)req;
+
+/**
+ *  根据订单记录objectId查询单笔支付订单
+ *
+ *  @param req 查询单笔支付订单请求
+ */
+- (void)reqQueryBillById:(BCQueryBillByIdReq *)req;
+
+/**
+ *  查询退款订单
+ *
+ *  @param req 查询退款订单请求
+ */
+- (void)reqQueryRefunds:(BCQueryRefundsReq *)req;
+
+/**
+ *  查询满足条件的退款订单数目
+ *
+ *  @param req 满足的条件结构
+ */
+- (void)reqRefundsCount:(BCQueryRefundsCountReq *)req;
+
+/**
+ *  根据订单记录objectId查询退款订单
+ *
+ *  @param req 查询单笔退款订单请求
+ */
+- (void)reqQueryRefundById:(BCQueryRefundByIdReq *)req;
 /**
  *  查询退款状态。目前仅支持WX_APP
  *
  *  @param req 查询退款状态请求
  */
 - (void)reqRefundStatus:(BCRefundStatusReq *)req;
-
-/**
- *  检查reqPay时参数是否合法
- *
- *  @param request BCPayReq
- *
- *  @return 合法返回 YES;不合法返回 NO;
- */
-- (BOOL)checkParametersForReqPay:(BCBaseReq *)request;
-
-/**
- *  获得支付参数成功，发起渠道支付。支持WX_APP\ALI_APP\UN_APP\BD_APP
- *
- *  @param channel 支付渠道
- *  @param dic     支付参数
- * 
- *  @return 发起支付成功返回YES
- */
-- (BOOL)doPayAction:(BCPayReq *)req source:(NSDictionary *)response;
-
-#pragma mark - doResponse
-/**
- *  执行错误回调
- *
- *  @param errMsg 错误信息
- */
-- (BCBaseResp *)doErrorResponse:(NSString *)errMsg;
-
-/**
- *  服务端返回错误，执行错误回调
- *
- *  @param response 服务端返回参数
- */
-- (BCBaseResp *)getErrorInResponse:(id)response;
-
-#pragma mark - QueryBill
-/**
- *  查询支付\退款订单的回调
- *
- *  @param dic 订单列表数据
- */
-- (BCQueryResp *)doQueryResponse:(NSDictionary *)dic;
-
-/**
- *  解析订单列表数据
- *
- *  @param dic 订单列表数据
- *
- *  @return 本地化后的订单列表，查询支付订单元素为BCQueryBillResult；查询退款订单元素为BCQueryRefundResult
- */
-- (NSMutableArray *)parseResults:(NSDictionary *)dic;
-
-/**
- *  解析单条订单数据
- *
- *  @param dic 单挑订单数据
- *
- *  @return BCQueryBillResult或BCQueryRefundResult
- */
-- (BCBaseResult *)parseQueryResult:(NSDictionary *)dic;
-
-#pragma mark - RefundStatus
-
-/**
- *  退款状态查询回调
- *
- *  @param dic 退款状态信息
- */
-- (BCRefundStatusResp *)doQueryRefundStatus:(NSDictionary *)dic;
 
 @end

@@ -11,7 +11,7 @@
 @implementation NSDictionary (Utils)
 
 /**
- *获取字典指定的array的对象
+ *  获取字典指定的array的对象
  *
  *  @param aKey key
  *

@@ -85,10 +85,12 @@
         [timer invalidate];
     }];
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [self setupCamera];
 }
+
 - (void)setupCamera
 {
     // Device
@@ -125,21 +127,19 @@
     // Start
     [_session startRunning];
 }
+
 #pragma mark AVCaptureMetadataOutputObjectsDelegate
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
-{
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
    
     NSString *stringValue;
     
-    if ([metadataObjects count] >0)
-    {
+    if ([metadataObjects count] > 0) {
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
         stringValue = metadataObject.stringValue;
     }
-    
     [_session stopRunning];
-   [self dismissViewControllerAnimated:YES completion:^
-    {
+    
+    [self dismissViewControllerAnimated:YES completion:^{
         [timer invalidate];
         NSLog(@"%@",stringValue);
         if (_delegate && [_delegate respondsToSelector:@selector(scanWithAuthCode:)]) {

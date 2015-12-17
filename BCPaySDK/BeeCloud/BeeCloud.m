@@ -32,9 +32,29 @@
     if (appId.isValid && appSecret.isValid) {
         instance.appId = appId;
         instance.appSecret = appSecret;
+        instance.sandbox = NO;
         return YES;
     }
     return NO;
+}
+
++ (BOOL)initSandboxWithAppID:(NSString *)appId testSecret:(NSString *)testSecret {
+    BCPayCache *instance = [BCPayCache sharedInstance];
+    if (appId.isValid && testSecret.isValid) {
+        instance.appId = appId;
+        instance.testSecret = testSecret;
+        instance.sandbox = YES;
+        return YES;
+    }
+    return NO;
+}
+
++ (void)setSandboxMode:(BOOL)sandbox {
+    [BCPayCache sharedInstance].sandbox = sandbox;
+}
+
++ (BOOL)getSandboxMode {
+    return [BCPayCache sharedInstance].sandbox;
 }
 
 + (BOOL)initWeChatPay:(NSString *)wxAppID {
@@ -44,15 +64,15 @@
     return [BeeCloudAdapter beeCloudRegisterWeChat:wxAppID];
 }
 
-+ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox {
++ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox {
     
     if(clientID.isValid && secret.isValid) {
         BCPayCache *instance = [BCPayCache sharedInstance];
         instance.payPalClientID = clientID;
         instance.payPalSecret = secret;
-        instance.isPayPalSandBox = isSandBox;
+        instance.isPayPalSandbox = isSandbox;
         
-        [BeeCloudAdapter beeCloudRegisterPayPal:clientID secret:secret sanBox:isSandBox];
+        [BeeCloudAdapter beeCloudRegisterPayPal:clientID secret:secret sandbox:isSandbox];
         return YES;
     }
     return NO;
@@ -91,16 +111,28 @@
     BeeCloud *instance = [BeeCloud sharedInstance];
     BOOL bSend = YES;
     switch (req.type) {
-        case BCObjsTypePayReq:
+        case BCObjsTypePayReq: //支付(微信、支付宝、银联、百度钱包)
             [instance reqPay:(BCPayReq *)req];
             break;
-        case BCObjsTypeQueryReq:
-            [instance reqQueryOrder:(BCQueryReq *)req];
+        case BCObjsTypeQueryBillsReq://条件查询支付订单
+            [instance reqQueryBills:(BCQueryBillsReq *)req];
             break;
-        case BCObjsTypeQueryRefundReq:
-            [instance reqQueryOrder:(BCQueryRefundReq *)req];
+        case BCObjsTypeQueryBillsCountReq:
+            [instance reqBillsCount:(BCQueryBillsCountReq *)req];
             break;
-        case BCObjsTypeRefundStatusReq:
+        case BCObjsTypeQueryBillByIdReq://根据id查询支付订单
+            [instance reqQueryBillById:(BCQueryBillByIdReq *)req];
+            break;
+        case BCObjsTypeQueryRefundsReq://条件查询退款订单
+            [instance reqQueryRefunds:(BCQueryRefundsReq *)req];
+            break;
+        case BCObjsTypeQueryRefundsCountReq:
+            [instance reqRefundsCount:(BCQueryRefundsCountReq *)req];
+            break;
+        case BCObjsTypeQueryRefundByIdReq://根据id查询退款订单
+            [instance reqQueryRefundById:(BCQueryRefundByIdReq *)req];
+            break;
+        case BCObjsTypeRefundStatusReq://查询退款状态，目前只支持微信、百度
             [instance reqRefundStatus:(BCRefundStatusReq *)req];
             break;
         case BCObjsTypePayPal:

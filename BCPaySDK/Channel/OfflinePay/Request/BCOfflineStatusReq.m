@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         self.type = BCObjsTypeOfflineBillStatusReq;
-        self.billno = @"";
+        self.billNo = @"";
     }
     return self;
 }

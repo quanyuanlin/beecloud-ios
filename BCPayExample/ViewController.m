@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     if (self.actionType == 0) {
         self.title = @"支付";
@@ -52,7 +53,11 @@
                       @"subChannel":@[@{@"sub":@(PayChannelPayPal),@"title":@"PayPal"}]},
                     @{@"channel":@"百度钱包",@"img":@"baidu",
                       @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
-    self.payList = [NSMutableArray arrayWithCapacity:10];
+    self.orderList = nil;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
 #pragma mark - 设置delegate
     [BeeCloud setBeeCloudDelegate:self];
 }
@@ -63,8 +68,8 @@
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     /**
-        按住键盘上的option键，点击参数名称，可以查看参数说明
-    **/
+     按住键盘上的option键，点击参数名称，可以查看参数说明
+     **/
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel; //支付渠道
     payReq.title = billTitle;//订单标题
@@ -72,7 +77,7 @@
     payReq.billNo = billno;//商户自定义订单号
     payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
     payReq.billTimeOut = 300;//订单超时时间
-    payReq.viewController = self; //用于银联支付的页面跳转，银联必有参数
+    payReq.viewController = self; //银联支付和Sandbox环境必填
     payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }
@@ -87,11 +92,11 @@
     BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
     payReq.channel = channel; //支付渠道，支持WX_NATIVE、WX_SCAN、ALI_OFFLINE_QRCODE、ALI_SCAN
     payReq.title = @"Offline Pay";//订单标题
-    payReq.totalfee = @"1"; //订单价格
-    payReq.billno = billno; //商户自定义订单号
+    payReq.totalFee = @"1"; //订单价格
+    payReq.billNo = billno; //商户自定义订单号
     payReq.authcode = authcode; //支付授权码(ALI_SCAN,WX_SCAN时必需)，通过扫码用户的支付宝钱包(付款)、微信钱包(刷卡)获取
-    payReq.terminalid = @"BeeCloud617"; //自定义扫码设备号
-    payReq.storeid = @"BeeCloud618";//自定义店铺编号
+    payReq.terminalId = @"BeeCloud617"; //自定义扫码设备号
+    payReq.storeId = @"BeeCloud618";//自定义店铺编号
     payReq.optional = dict;//用于商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }
@@ -176,7 +181,7 @@
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
                 //百度钱包需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
-                if (payReq.channel == PayChannelBaiduApp) {
+                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getSandboxMode]) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
                     [self showAlertView:resp.resultMsg];
@@ -186,16 +191,31 @@
             }
         }
             break;
-        
-        case BCObjsTypeQueryResp:
+        case BCObjsTypeQueryRefundsResp:
         {
-#pragma mark - 查询订单或者退款记录响应事件类型
-            BCQueryResp *tempResp = (BCQueryResp *)resp;
+#pragma mark - 查询支付订单响应事件类型
+            BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
                     [self showAlertView:@"未找到相关订单信息"];
                 } else {
-                    self.payList = tempResp.results;
+                    self.orderList = tempResp;
+                    [self performSegueWithIdentifier:@"queryResult" sender:self];
+                }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
+        case BCObjsTypeQueryBillsResp:
+        {
+#pragma mark - 查询订单或者退款记录响应事件类型
+            BCQueryBillsResp *tempResp = (BCQueryBillsResp *)resp;
+            if (resp.resultCode == 0) {
+                if (tempResp.count == 0) {
+                    [self showAlertView:@"未找到相关订单信息"];
+                } else {
+                    self.orderList = tempResp;
                     [self performSegueWithIdentifier:@"queryResult" sender:self];
                 }
             } else {
@@ -216,9 +236,7 @@
                             QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
                             qrCodeView.resp = tempResp;
                             qrCodeView.delegate = self;
-                            self.modalPresentationStyle = UIModalPresentationCurrentContext;
-                            qrCodeView.view.backgroundColor = [UIColor whiteColor];
-                            [self presentViewController:qrCodeView animated:YES completion:nil];
+                            [self.navigationController pushViewController:qrCodeView animated:YES];
                         }
                         break;
                     case PayChannelAliScan:
@@ -226,7 +244,7 @@
                     {
                         BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
                         req.channel = payReq.channel;
-                        req.billno = payReq.billno;
+                        req.billNo = payReq.billNo;
                         [BeeCloud sendBCReq:req];
                     }
                         break;
@@ -294,23 +312,26 @@
 - (void)doQuery:(PayChannel)channel {
     
     if (self.actionType == 1) {
-        BCQueryReq *req = [[BCQueryReq alloc] init];
+        BCQueryBillsReq *req = [[BCQueryBillsReq alloc] init];
         req.channel = channel;
+        req.billStatus = BillStatusOnlySuccess;
+        req.needMsgDetail = YES;
         //   req.billno = @"20150901104138656";//订单号
-       //  req.startTime = @"2015-10-22 00:00";//订单时间
+        //  req.startTime = @"2015-10-22 00:00";//订单时间
         // req.endTime = @"2015-10-23 00:00";//订单时间
         req.skip = 0;//
-        req.limit = 50;
+        req.limit = 10;
         [BeeCloud sendBCReq:req];
     } else if (self.actionType == 2) {
-        BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
+        BCQueryRefundsReq *req = [[BCQueryRefundsReq alloc] init];
         req.channel = channel;
+        req.needApproved = NeedApprovalAll;
         //  req.billno = @"20150722164700237";
         //  req.starttime = @"2015-07-21 00:00";
         // req.endtime = @"2015-07-23 12:00";
         //req.refundno = @"20150709173629127";
         req.skip = 0;
-        req.limit = 20;
+        req.limit = 10;
         [BeeCloud sendBCReq:req];
     }
 }
@@ -378,7 +399,7 @@
 #endif
                 break;
             case PayChannelPayPal:
-            case PayChannelPayPalSanBox:
+            case PayChannelPayPalSandbox:
                 [self doPayPal];
                 break;
             default:
@@ -429,7 +450,7 @@
     BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
     BCOfflinePayReq *payReq = (BCOfflinePayReq *)resp.request;
     req.channel = payReq.channel;
-    req.billno = payReq.billno;
+    req.billNo = payReq.billNo;
     [BeeCloud sendBCReq:req];
 }
 
@@ -437,7 +458,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     QueryResultViewController *viewController = (QueryResultViewController *)segue.destinationViewController;
     if([segue.identifier isEqualToString:@"queryResult"]) {
-        viewController.dataList = self.payList;
+        viewController.resp = self.orderList;
     }
 }
 

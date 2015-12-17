@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.3.2";//api版本号
+static NSString * const kApiVersion = @"3.4.0";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kUnknownError = @"未知错误";
@@ -39,6 +39,8 @@ static NSString * const kRestApiQueryRefunds = @"%@/rest/refunds";
 static NSString * const kRestApiRefundState = @"%@/rest/refund/status";
 static NSString * const kRestApiQueryBillById = @"%@/rest/bill/";
 static NSString * const kRestApiQueryRefundById = @"%@/rest/refund/";
+static NSString * const kRestApiQueryBillsCount = @"%@/rest/bills/count";
+static NSString * const kRestApiQueryRefundsCount = @"%@/rest/refunds/count";
 
 //rest api offline
 static NSString * const kRestApiOfflinePay = @"%@/rest/offline/bill";
@@ -47,7 +49,13 @@ static NSString * const kRestApiOfflineBillRevert = @"%@/rest/offline/bill/";
 
 //paypal accesstoken
 static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
-static NSString * const kPayPalAccessTokenSandBox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
+static NSString * const kPayPalAccessTokenSandbox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
+
+//sandbox
+static NSString * const kRestApiSandboxBill = @"%@/rest/sandbox/bill";
+static NSString * const kRestApiSandboxQueryBills = @"%@/rest/sandbox/bills";
+static NSString * const kRestApiSandboxQueryBillById = @"%@/rest/sandbox/bill/";
+static NSString * const kRestApiSandboxNotify = @"%@/rest/sandbox/notify/";
 
 //Adapter
 static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
@@ -56,6 +64,7 @@ static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
 static NSString * const kAdapterOffline = @"BCOfflineAdapter";
 static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
+static NSString * const kAdapterSandbox = @"BCSandboxAdapter";
 
 /**
  *  BCPay URL type for handling URLs.
@@ -99,7 +108,7 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     
     PayChannelPayPal = 40,
     PayChannelPayPalLive,
-    PayChannelPayPalSanBox,
+    PayChannelPayPalSandbox,
     
     PayChannelBaidu = 50,
     PayChannelBaiduApp,
@@ -118,8 +127,12 @@ typedef NS_ENUM(NSInteger, BCErrCode) {
 typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeBaseReq = 100,
     BCObjsTypePayReq,
-    BCObjsTypeQueryReq,
-    BCObjsTypeQueryRefundReq,
+    BCObjsTypeQueryBillsReq,
+    BCObjsTypeQueryBillByIdReq,
+    BCObjsTypeQueryBillsCountReq,
+    BCObjsTypeQueryRefundsReq,
+    BCObjsTypeQueryRefundByIdReq,
+    BCObjsTypeQueryRefundsCountReq,
     BCObjsTypeRefundStatusReq,
     BCObjsTypeOfflinePayReq,
     BCObjsTypeOfflineBillStatusReq,
@@ -127,7 +140,12 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     
     BCObjsTypeBaseResp = 200,
     BCObjsTypePayResp,
-    BCObjsTypeQueryResp,
+    BCObjsTypeQueryBillsResp,
+    BCObjsTypeQueryBillByIdResp,
+    BCObjsTypeQueryBillsCountResp,
+    BCObjsTypeQueryRefundsResp,
+    BCObjsTypeQueryRefundByIdResp,
+    BCObjsTypeQueryRefundsCountResp,
     BCObjsTypeRefundStatusResp,
     BCObjsTypeOfflinePayResp,
     BCObjsTypeOfflineBillStatusResp,
@@ -139,6 +157,18 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     
     BCObjsTypePayPal = 400,
     BCObjsTypePayPalVerify
+};
+
+typedef NS_ENUM(NSUInteger, BillStatus) {
+    BillStatusAll, //所有支付订单
+    BillStatusOnlySuccess,//支付成功的订单
+    BillStatusOnlyFail //支付失败的订单
+};
+
+typedef NS_ENUM(NSUInteger, NeedApproval) {
+    NeedApprovalAll,  //所有退款
+    NeedApprovalOnlyTrue, //预退款
+    NeedApprovalOnlyFalse //非预退款
 };
 
 static NSString * const kBCDateFormat = @"yyyy-MM-dd HH:mm";

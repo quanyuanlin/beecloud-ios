@@ -14,5 +14,6 @@
 - (BOOL)isPureInt;
 - (BOOL)isValidTraceNo;
 - (BOOL)isPureFloat;
+- (BOOL)isValidUUID;
 
 @end

@@ -20,11 +20,13 @@
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
     [BeeCloud initWithAppID:TESTAPPID andAppSecret:TESTAPPSECRET];
+    [BCPayCache sharedInstance].bcResp = [[BCBaseResp alloc] init];
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    [BCPayCache sharedInstance].bcResp = nil;
 }
 
 - (void)testGetAFHTTPRequestOperationManager {
@@ -85,8 +87,34 @@
     
     XCTAssertEqualObjects(@"PAYPAL", [BCPayUtil getChannelString:PayChannelPayPal]);
     XCTAssertEqualObjects(@"PAYPAL_LIVE", [BCPayUtil getChannelString:PayChannelPayPalLive]);
-    XCTAssertEqualObjects(@"PAYPAL_SANDBOX", [BCPayUtil getChannelString:PayChannelPayPalSanBox]);
+    XCTAssertEqualObjects(@"PAYPAL_SANDBOX", [BCPayUtil getChannelString:PayChannelPayPalSandbox]);
 }
+
+- (void)test_doErrorResponse {
+    BCBaseResp *resp = [BCPayUtil doErrorResponse:@"BeeCloud"];
+    XCTAssertEqual(@"BeeCloud", resp.resultMsg);
+    XCTAssertEqual(@"BeeCloud", resp.errDetail);
+    XCTAssertTrue(resp.resultCode == BCErrCodeCommon);
+}
+
+- (void)test_getErrorInResponse {
+    
+    BCBaseResp *resp = [BCPayUtil getErrorInResponse:@{}];
+    XCTAssertFalse(resp.resultCode == BCErrCodeSuccess);
+    XCTAssertNotEqual(resp.resultMsg, @"OK");
+    XCTAssertNotEqual(resp.errDetail, @"");
+    
+    resp = [BCPayUtil getErrorInResponse:@{@"resultCode":@0,@"resultMsg":@"OK",@"errDetail":@""}];
+    XCTAssertFalse(resp.resultCode == BCErrCodeSuccess);
+    XCTAssertNotEqual(resp.resultMsg, @"OK");
+    XCTAssertNotEqual(resp.errDetail, @"");
+    
+    resp = [BCPayUtil getErrorInResponse:@{@"result_code":@0,@"result_msg":@"OK",@"err_detail":@""}];
+    XCTAssertTrue(resp.resultCode == BCErrCodeSuccess);
+    XCTAssertEqual(resp.resultMsg, @"OK");
+    XCTAssertEqual(resp.errDetail, @"");
+}
+
 
 - (void)testGenerateRandomUUID {
     XCTAssertEqual([BCPayUtil generateRandomUUID].length, 36);
