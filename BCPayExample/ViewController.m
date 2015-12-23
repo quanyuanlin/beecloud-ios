@@ -502,7 +502,6 @@
 }
 
 - (void)logEventId:(NSString *)eventId eventDesc:(NSString *)eventDesc {
-    
 }
 
 @end
