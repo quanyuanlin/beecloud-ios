@@ -200,7 +200,7 @@
             break;
         case BCObjsTypeQueryRefundsResp:
         {
-#pragma mark - 查询支付订单响应事件类型
+#pragma mark - 查询退款订单响应事件类型
             BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
@@ -216,7 +216,7 @@
             break;
         case BCObjsTypeQueryBillsResp:
         {
-#pragma mark - 查询订单或者退款记录响应事件类型
+#pragma mark - 查询支付订单记录响应事件类型
             BCQueryBillsResp *tempResp = (BCQueryBillsResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
