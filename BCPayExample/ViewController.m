@@ -190,6 +190,7 @@
                 if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getSandboxMode]) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
+                    //微信、支付宝、银联支付结果
                     [self showAlertView:resp.resultMsg];
                 }
             } else {
