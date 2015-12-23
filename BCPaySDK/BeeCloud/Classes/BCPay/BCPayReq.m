@@ -59,15 +59,6 @@
         parameters[@"analysis"] = self.analysis;
     }
     
-    if ([BeeCloud getSandboxMode]) {
-        [self payInSandbox:parameters];
-    } else {
-        [self payInLiveMode:parameters];
-    }
-}
-
-- (void)payInLiveMode:(NSMutableDictionary *)parameters {
-    
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BCPayReq *weakSelf = self;
     
@@ -76,7 +67,11 @@
               if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
                   [BCPayUtil getErrorInResponse:(NSDictionary *)response];
               } else {
-                  [weakSelf doPayAction:(NSDictionary *)response];
+                  if ([BCPayCache sharedInstance].sandbox) {
+                      [weakSelf doPayActionInSandbox:(NSDictionary *)response];
+                  } else {
+                      [weakSelf doPayAction:(NSDictionary *)response];
+                  }
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [BCPayUtil doErrorResponse:kNetWorkError];
@@ -114,23 +109,6 @@
         }
     }
     return bSendPay;
-}
-
-- (void)payInSandbox:(NSMutableDictionary *)parameters {
-    
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
-    __weak BCPayReq *weakSelf = self;
-    
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiSandboxBill] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
-              if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
-                  [BCPayUtil getErrorInResponse:(NSDictionary *)response];
-              } else {
-                  [weakSelf doPayActionInSandbox:(NSDictionary *)response];
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [BCPayUtil doErrorResponse:kNetWorkError];
-          }];
 }
 
 - (BOOL)doPayActionInSandbox:(NSDictionary *)response {

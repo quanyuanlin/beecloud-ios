@@ -61,11 +61,9 @@
     
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
-    NSString *host = [BCPayUtil getBestHostWithFormat: [BCPayCache sharedInstance].sandbox ? kRestApiSandboxQueryBills : kRestApiQueryBills];
-    
     AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
     __weak BCQueryBillsReq *weakSelf = self;
-    [manager GET:host parameters:preparepara
+    [manager GET:[BCPayUtil getBestHostWithFormat: kRestApiQueryBills] parameters:preparepara
          success:^(AFHTTPRequestOperation *operation, id response) {
              BCPayLog(@"resp = %@", response);
              [weakSelf doQueryBillsResponse:(NSDictionary *)response];

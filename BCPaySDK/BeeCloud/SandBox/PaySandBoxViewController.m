@@ -63,6 +63,13 @@
     [leftBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [titleView addSubview:leftBtn];
     
+    UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width-40, 27, 30, 30)];
+    rightBtn.backgroundColor = [UIColor clearColor];
+    [rightBtn setImage:[self parseChannel:req.channel] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [titleView addSubview:rightBtn];
+    
     UILabel *billTitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, self.view.frame.size.width, 30)];
     billTitle.text = req.title;
     billTitle.font = [UIFont systemFontOfSize:22];
@@ -75,11 +82,16 @@
     totalFee.text = [NSString stringWithFormat:@"￥%.2f", [req.totalFee intValue] * 0.01];
     [self.view addSubview:totalFee];
     
-    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(-2, 200, self.view.frame.size.width+4, 60)];
+    UILabel *billno = [[UILabel alloc] initWithFrame:CGRectMake(0, 170, self.view.frame.size.width, 30)];
+    billno.text = req.billNo;
+    billno.textAlignment = NSTextAlignmentCenter;
+    billno.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:billno];
+    
+    UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(-2, 210, self.view.frame.size.width+4, 60)];
     bgView.backgroundColor = [UIColor whiteColor];
     bgView.layer.borderWidth = 2;
     bgView.layer.borderColor = [UIColor colorWithRed:0.88 green:0.88 blue:0.88 alpha:1].CGColor;
-    
     
     UILabel *merchant = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, self.view.frame.size.width/2 - 20, 40)];
     merchant.text = @"收款方";
@@ -95,7 +107,6 @@
     [bgView addSubview:merName];
     
     [self.view addSubview:bgView];
-    
     
     UIButton *payBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, 320, self.view.frame.size.width-40,   50)];
     payBtn.backgroundColor = [UIColor colorWithRed:1.0 green:108.0/255.0 blue:44.0/255.0 alpha:1];
@@ -117,8 +128,30 @@
     loading.center = self.view.center;
     [loading setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [self.view addSubview:loading];
+}
+
+- (UIImage *)parseChannel:(PayChannel)channel {
     
-    
+    if (channel == PayChannelWxApp) {
+        return [self imagesNamedFromCustomBundle:@"wx"];
+    }
+    if (channel == PayChannelAliApp) {
+        return [self imagesNamedFromCustomBundle:@"ali"];
+    }
+    if (channel == PayChannelUnApp) {
+        return [self imagesNamedFromCustomBundle:@"un"];
+    }
+    if (channel == PayChannelBaiduApp) {
+        return [self imagesNamedFromCustomBundle:@"bd"];
+    }
+    return nil;
+}
+
+- (UIImage *)imagesNamedFromCustomBundle:(NSString *)imgName {
+    NSString *bundlePath = [[NSBundle mainBundle].resourcePath stringByAppendingPathComponent:@"BeeCloud.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString *img_path = [bundle pathForResource:imgName ofType:@"png"];
+    return [UIImage imageWithContentsOfFile:img_path];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
