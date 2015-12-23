@@ -25,7 +25,7 @@
     [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
 #pragma mark - 初始化沙箱测试环境
     //开启沙箱测试模式，可通过[BeeCloud getSandboxMode]查看当前模式，返回YES代表当前是sandbox环境，返回NO代表当前是生产环境
-    [BeeCloud initSandboxWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" testSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee"];
+//    [BeeCloud initSandboxWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" testSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee"];
 #pragma mark - 初始化PayPal
     [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR"
                   secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF"
