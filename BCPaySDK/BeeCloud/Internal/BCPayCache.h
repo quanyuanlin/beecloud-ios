@@ -78,6 +78,6 @@
 /**
  *  BeeCloud response
  */
-+ (void)beeCloudDoResponse;
++ (BOOL)beeCloudDoResponse;
 
 @end

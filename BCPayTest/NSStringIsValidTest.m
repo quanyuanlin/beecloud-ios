@@ -7,7 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
-#include "NSString+IsValid.h"
+#import "NSString+IsValid.h"
+#import "BCTestHeader.h"
+
 
 @interface NSStringIsValidTest : XCTestCase
 
@@ -82,6 +84,20 @@
     
     testString = @"123.000001";
     XCTAssertTrue(testString.isPureFloat);
+}
+
+- (void)testIsValidUUID {
+    NSString *testString = @"";
+    XCTAssertFalse(testString.isValidUUID);
+    
+    testString = nil;
+    XCTAssertFalse(testString.isValidUUID);
+    
+    testString = TESTAPPID;
+    XCTAssertFalse([testString stringByReplacingOccurrencesOfString:@"-" withString:@""].isValidUUID);
+    
+    testString = TESTAPPID;
+    XCTAssertTrue(testString.isValidUUID);
 }
 
 @end

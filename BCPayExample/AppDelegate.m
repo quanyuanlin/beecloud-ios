@@ -20,7 +20,8 @@
 
 #pragma mark - 初始化生产环境
     //初始化生产环境
-    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+//    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+    [BeeCloud initWithAppID:@"b366d678-e357-4401-a401-1e81976c1c9d" andAppSecret:@"2a1ebf25-c46e-4209-ac9f-aab34981ec86"];
     //初始化微信
     [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
 #pragma mark - 初始化沙箱测试环境

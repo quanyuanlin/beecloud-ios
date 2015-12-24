@@ -192,7 +192,7 @@
     return (long long)([date timeIntervalSince1970] * 1000.0);
 }
 
-+ (long long)dateStringToMillisencond:(NSString *)string {
++ (long long)dateStringToMillisecond:(NSString *)string {
     NSDate *dat = [BCPayUtil stringToDate:string];
     if (dat) return [BCPayUtil dateToMillisecond:dat];
     return 0;
