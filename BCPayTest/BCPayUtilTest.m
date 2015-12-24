@@ -29,7 +29,6 @@
     [BCPayCache sharedInstance].bcResp = nil;
     [BCPayCache sharedInstance].appId = @"";
     [BCPayCache sharedInstance].appSecret = @"";
-    [BCPayCache sharedInstance].testSecret = @"";
 }
 
 - (void)testGetAFHTTPRequestOperationManager {
@@ -58,15 +57,10 @@
     NSString *appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
     XCTAssertNotNil(appSign);
     
-    [BeeCloud initSandboxWithAppID:TESTAPPID testSecret:TESTAPPSECRET];
-    appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
-    XCTAssertNotNil(appSign);
-    
     [BCPayCache sharedInstance].appId = @"";
     appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
     XCTAssertNil(appSign);
     
-    [BCPayCache sharedInstance].testSecret = @"";
     appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
     XCTAssertNil(appSign);
     
@@ -85,6 +79,7 @@
 }
 
 - (void)testGetBestHostWithFormat {
+    [BeeCloud setSandboxMode:NO];
     XCTAssertFalse([[BCPayUtil getBestHostWithFormat:kRestApiPay] rangeOfString:@"sandbox"].length == 7);
     
     [BCPayCache sharedInstance].sandbox = YES;
@@ -165,7 +160,6 @@
 }
 
 - (void)testMillisecondToDateString {
-    XCTAssertEqualObjects([BCPayUtil millisecondToDateString:0], @"1970-01-01 08:00" );
     XCTAssertNotNil([BCPayUtil millisecondToDateString:[BCPayUtil dateToMillisecond:[NSDate date]]]);
 }
 

@@ -25,7 +25,6 @@
     [super tearDown];
     [BCPayCache sharedInstance].appId = @"";
     [BCPayCache sharedInstance].appSecret = @"";
-    [BCPayCache sharedInstance].testSecret = @"";
 }
 
 - (void)test_initBeeCloud {
@@ -33,13 +32,6 @@
     XCTAssertFalse([BeeCloud initWithAppID:TESTAPPID andAppSecret:@""]);
     XCTAssertFalse([BeeCloud initWithAppID:@"" andAppSecret:TESTAPPSECRET]);
     XCTAssertTrue([BeeCloud initWithAppID:TESTAPPID andAppSecret:TESTAPPSECRET]);
-}
-
-- (void)test_initSandbox {
-    XCTAssertFalse([BeeCloud initSandboxWithAppID:@"" testSecret:@""]);
-    XCTAssertFalse([BeeCloud initSandboxWithAppID:TESTAPPID testSecret:@""]);
-    XCTAssertFalse([BeeCloud initSandboxWithAppID:@"" testSecret:TESTAPPSECRET]);
-    XCTAssertTrue([BeeCloud initSandboxWithAppID:TESTAPPID testSecret:TESTAPPSECRET]);
 }
 
 - (void)test_initWeChat {

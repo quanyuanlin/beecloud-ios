@@ -43,7 +43,7 @@
 
 + (NSString *)getAppSignature:(NSString *)timeStamp {
     NSString *appid = [BCPayCache sharedInstance].appId;
-    NSString *appsecret = [BCPayCache sharedInstance].sandbox ? [BCPayCache sharedInstance].testSecret : [BCPayCache sharedInstance].appSecret;
+    NSString *appsecret = [BCPayCache sharedInstance].appSecret;
     
     if (!appid.isValid || !appsecret.isValid)
         return nil;

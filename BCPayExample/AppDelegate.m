@@ -18,16 +18,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-#pragma mark - 初始化生产环境
-    //初始化生产环境
-//    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
-    [BeeCloud initWithAppID:@"b366d678-e357-4401-a401-1e81976c1c9d" andAppSecret:@"2a1ebf25-c46e-4209-ac9f-aab34981ec86"];
+    //如果使用BeeCloud控制台的APP Secret初始化，代表初始化生产环境；
+    //如果使用BeeCloud控制台的Test Secret初始化，代表初始化沙箱测试环境;
+    //测试账号 appid: c5d1cba1-5e3f-4ba0-941d-9b0a371fe719
+    //        appSecret: 39a7a518-9ac8-4a9e-87bc-7885f33cf18c
+    //        testSecret: 4bfdd244-574d-4bf3-b034-0c751ed34fee
+    //由于支付宝的政策原因，测试账号的支付宝支付不能在生产环境中使用，带来不便，敬请原谅！
+    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee"];
+    
+    //开启/关闭沙箱测试模式;
+    //可通过[BeeCloud getCurrentMode]查看当前模式，返回YES代表当前是sandbox环境，返回NO代表当前是生产环境
+    //开启沙箱测试模式，请使用Test Secret初始化
+//    [BeeCloud setSandboxMode:YES];
+    
     //初始化微信
     [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
-#pragma mark - 初始化沙箱测试环境
-    //开启沙箱测试模式，可通过[BeeCloud getSandboxMode]查看当前模式，返回YES代表当前是sandbox环境，返回NO代表当前是生产环境
-//    [BeeCloud initSandboxWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" testSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee"];
-#pragma mark - 初始化PayPal
+    
+    //初始化PayPal
     [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR"
                   secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF"
                  sandbox:YES];
