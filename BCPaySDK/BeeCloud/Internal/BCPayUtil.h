@@ -41,6 +41,15 @@
 + (NSMutableDictionary *)prepareParametersForRequest;
 
 /**
+ *  生成签名
+ *
+ *  @param timeStamp 当前时间戳
+ *
+ *  @return 签名
+ */
++ (NSString *)getAppSignature:(NSString *)timeStamp;
+
+/**
  *  获取url的类型，微信或者支付宝
  *
  *  @param url 渠道返回的url
@@ -123,7 +132,7 @@
  *
  *  @return Number of milliseconds in the format of 1400000000000.
  */
-+ (long long)dateStringToMillisencond:(NSString *)string;
++ (long long)dateStringToMillisecond:(NSString *)string;
 
 /**
  *  Converts a string in the format of "2014-02-25 14:27" to NSDate.

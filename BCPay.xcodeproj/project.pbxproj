@@ -107,6 +107,7 @@
 		36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4131B8F4A93004BB25E /* CoreLocation.framework */; };
 		36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */; };
 		36E556A21C2A4F3E00DACE7C /* BeeCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 36E556A11C2A4F3E00DACE7C /* BeeCloud.bundle */; };
+		36E556A41C2B8E1C00DACE7C /* BCPayCacheTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E556A31C2B8E1C00DACE7C /* BCPayCacheTest.m */; };
 		36E66DE31C0837AC00A6F62B /* BCPayReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE21C0837AC00A6F62B /* BCPayReqTest.m */; };
 		36E66DE51C08397300A6F62B /* BCQueryBillsReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */; };
 		36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */; };
@@ -335,6 +336,7 @@
 		36DCE4131B8F4A93004BB25E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		36E556A11C2A4F3E00DACE7C /* BeeCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BeeCloud.bundle; sourceTree = "<group>"; };
+		36E556A31C2B8E1C00DACE7C /* BCPayCacheTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayCacheTest.m; sourceTree = "<group>"; };
 		36E66DE21C0837AC00A6F62B /* BCPayReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayReqTest.m; sourceTree = "<group>"; };
 		36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryBillsReqTest.m; sourceTree = "<group>"; };
 		36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryRefundsReqTest.m; sourceTree = "<group>"; };
@@ -998,6 +1000,7 @@
 				36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */,
 				36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */,
 				36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */,
+				36E556A31C2B8E1C00DACE7C /* BCPayCacheTest.m */,
 			);
 			path = BCPayTest;
 			sourceTree = "<group>";
@@ -1188,6 +1191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36E66DED1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m in Sources */,
+				36E556A41C2B8E1C00DACE7C /* BCPayCacheTest.m in Sources */,
 				362FC8EF1BF5DE5F007450FF /* XCTestCase+AsyncTesting.m in Sources */,
 				36E66DF21C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m in Sources */,
 				36E66DE51C08397300A6F62B /* BCQueryBillsReqTest.m in Sources */,

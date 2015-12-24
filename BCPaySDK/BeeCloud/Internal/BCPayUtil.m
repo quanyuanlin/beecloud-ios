@@ -43,7 +43,7 @@
 
 + (NSString *)getAppSignature:(NSString *)timeStamp {
     NSString *appid = [BCPayCache sharedInstance].appId;
-    NSString *appsecret = [BCPayCache sharedInstance].sandbox ? [BCPayCache sharedInstance].testSecret : [BCPayCache sharedInstance].appSecret;
+    NSString *appsecret = [BCPayCache sharedInstance].appSecret;
     
     if (!appid.isValid || !appsecret.isValid)
         return nil;
@@ -192,7 +192,7 @@
     return (long long)([date timeIntervalSince1970] * 1000.0);
 }
 
-+ (long long)dateStringToMillisencond:(NSString *)string {
++ (long long)dateStringToMillisecond:(NSString *)string {
     NSDate *dat = [BCPayUtil stringToDate:string];
     if (dat) return [BCPayUtil dateToMillisecond:dat];
     return 0;

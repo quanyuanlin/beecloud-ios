@@ -42,10 +42,10 @@
         parameters[@"refund_no"] = self.refundNo;
     }
     if (self.startTime.isValid) {
-        parameters[@"start_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:self.startTime]];
+        parameters[@"start_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisecond:self.startTime]];
     }
     if (self.endTime.isValid) {
-        parameters[@"end_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisencond:self.endTime]];
+        parameters[@"end_time"] = [NSNumber numberWithLongLong:[BCPayUtil dateStringToMillisecond:self.endTime]];
     }
     if (cType.isValid) {
         parameters[@"channel"] = cType;

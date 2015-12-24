@@ -27,6 +27,8 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
     [BCPayCache sharedInstance].bcResp = nil;
+    [BCPayCache sharedInstance].appId = @"";
+    [BCPayCache sharedInstance].appSecret = @"";
 }
 
 - (void)testGetAFHTTPRequestOperationManager {
@@ -44,6 +46,25 @@
     XCTAssertNotNil([params objectForKey:@"app_id"]);
     XCTAssertNotNil([params objectForKey:@"app_sign"]);
     XCTAssertNotNil([params objectForKey:@"timestamp"]);
+    [BCPayCache sharedInstance].appId = @"";
+    [BCPayCache sharedInstance].appSecret = @"";
+    XCTAssertNil([BCPayUtil prepareParametersForRequest]);
+    [BeeCloud initWithAppID:TESTAPPID andAppSecret:TESTAPPSECRET];
+}
+
+- (void)testGetAppSignature {
+    NSNumber *timeStamp = [NSNumber numberWithLongLong:[BCPayUtil dateToMillisecond:[NSDate date]]];
+    NSString *appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
+    XCTAssertNotNil(appSign);
+    
+    [BCPayCache sharedInstance].appId = @"";
+    appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
+    XCTAssertNil(appSign);
+    
+    appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
+    XCTAssertNil(appSign);
+    
+    [BeeCloud initWithAppID:TESTAPPID andAppSecret:TESTAPPSECRET];
 }
 
 - (void)testGetUrlType {
@@ -58,7 +79,12 @@
 }
 
 - (void)testGetBestHostWithFormat {
-    XCTAssertNotNil([BCPayUtil getBestHostWithFormat:@"%@/1/rest/bill"]);
+    [BeeCloud setSandboxMode:NO];
+    XCTAssertFalse([[BCPayUtil getBestHostWithFormat:kRestApiPay] rangeOfString:@"sandbox"].length == 7);
+    
+    [BCPayCache sharedInstance].sandbox = YES;
+    XCTAssertTrue([[BCPayUtil getBestHostWithFormat:kRestApiPay] rangeOfString:@"sandbox"].length == 7);
+    [BCPayCache sharedInstance].sandbox = NO;
 }
 
 - (void)testGetChannelString {
@@ -88,16 +114,18 @@
     XCTAssertEqualObjects(@"PAYPAL", [BCPayUtil getChannelString:PayChannelPayPal]);
     XCTAssertEqualObjects(@"PAYPAL_LIVE", [BCPayUtil getChannelString:PayChannelPayPalLive]);
     XCTAssertEqualObjects(@"PAYPAL_SANDBOX", [BCPayUtil getChannelString:PayChannelPayPalSandbox]);
+    
+    XCTAssertEqualObjects(@"", [BCPayUtil getChannelString:60]);
 }
 
-- (void)test_doErrorResponse {
+- (void)testDoErrorResponse {
     BCBaseResp *resp = [BCPayUtil doErrorResponse:@"BeeCloud"];
     XCTAssertEqual(@"BeeCloud", resp.resultMsg);
     XCTAssertEqual(@"BeeCloud", resp.errDetail);
     XCTAssertTrue(resp.resultCode == BCErrCodeCommon);
 }
 
-- (void)test_getErrorInResponse {
+- (void)testGetErrorInResponse {
     
     BCBaseResp *resp = [BCPayUtil getErrorInResponse:@{}];
     XCTAssertFalse(resp.resultCode == BCErrCodeSuccess);
@@ -115,16 +143,38 @@
     XCTAssertEqual(resp.errDetail, @"");
 }
 
-
 - (void)testGenerateRandomUUID {
     XCTAssertEqual([BCPayUtil generateRandomUUID].length, 36);
 }
 
 - (void)testMillisecondToDate {
     NSString * dateString1 = [BCPayUtil dateToString:[NSDate date]];
-    long long timeStamp = [BCPayUtil dateStringToMillisencond:dateString1];
+    long long timeStamp = [BCPayUtil dateStringToMillisecond:dateString1];
     NSString *dateString2 = [BCPayUtil millisecondToDateString:timeStamp];
     XCTAssertEqualObjects(dateString1, dateString2);
+}
+
+- (void)testDateToString {
+    XCTAssertNil([BCPayUtil dateToString:nil]);
+    XCTAssertNotNil([BCPayUtil dateToString:[NSDate date]]);
+}
+
+- (void)testMillisecondToDateString {
+    XCTAssertNotNil([BCPayUtil millisecondToDateString:[BCPayUtil dateToMillisecond:[NSDate date]]]);
+}
+
+- (void)testDateStringToMillisecond {
+    XCTAssertTrue([BCPayUtil dateStringToMillisecond:@""] == 0);
+    XCTAssertTrue([BCPayUtil dateStringToMillisecond:@"2015-12-24 11:24"] != 0);
+}
+
+- (void)testStringToMD5 {
+    XCTAssertEqualObjects([BCPayUtil stringToMD5:@""], @"");
+    XCTAssertEqualObjects([BCPayUtil stringToMD5:nil], @"");
+    
+    XCTAssertNotEqualObjects([BCPayUtil stringToMD5:@"test"], @"");
+    [BeeCloud setWillPrintLog:YES];
+    BCPayLog(@"Do %s", __func__);
 }
 
 - (void)testIsValidEmail {
@@ -134,7 +184,6 @@
     
     XCTAssertTrue([BCPayUtil isValidEmail:@"hwl@beecloud.cn"]);
 }
-
 
 - (void)testIsValidMobile {
     XCTAssertFalse([BCPayUtil isValidMobile:@"0125363"]);
@@ -156,6 +205,8 @@
 }
 
 - (void)testGetBytes {
+    XCTAssertTrue([BCPayUtil getBytes:@""] == 0);
+    XCTAssertTrue([BCPayUtil getBytes:nil] == 0);
     XCTAssertTrue([BCPayUtil getBytes:@"wo"] == 2);
     XCTAssertTrue([BCPayUtil getBytes:@"我"] == 2);
     XCTAssertFalse([BCPayUtil getBytes:@"1"] == 2);

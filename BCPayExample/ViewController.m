@@ -55,10 +55,10 @@
                 ];
     channelList = [NSMutableArray arrayWithArray:tempArray];
     
-    if ([BeeCloud getSandboxMode]) {
+    if ([BeeCloud getCurrentMode]) {
         [channelList removeLastObject];
     }
-    billTitle = [BeeCloud getSandboxMode] ? @"iOS Demo Sandbox" : @"iOS Demo Live";
+    billTitle = [BeeCloud getCurrentMode] ? @"iOS Demo Sandbox" : @"iOS Demo Live";
     self.orderList = nil;
     
 }
@@ -187,7 +187,7 @@
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
                 //百度钱包需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
-                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getSandboxMode]) {
+                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
                     //微信、支付宝、银联支付结果

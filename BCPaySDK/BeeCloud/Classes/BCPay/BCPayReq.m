@@ -139,10 +139,10 @@
     } else if (self.channel == PayChannelUnApp && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
         return NO;
-    } else if ([BeeCloud getSandboxMode] && (self.viewController == nil)) {
+    } else if ([BeeCloud getCurrentMode] && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
         return NO;
-    } else if ((self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getSandboxMode]) {
+    } else if ((self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getCurrentMode]) {
         [BCPayUtil doErrorResponse:@"未找到微信客户端，请先下载安装"];
         return NO;
     }

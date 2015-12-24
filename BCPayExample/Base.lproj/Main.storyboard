@@ -116,11 +116,6 @@
                             <constraint firstItem="zGX-x0-pDU" firstAttribute="top" secondItem="24I-1V-Aps" secondAttribute="bottom" constant="30" id="i2v-yM-cRz"/>
                             <constraint firstItem="24I-1V-Aps" firstAttribute="centerY" secondItem="BPp-TD-kQt" secondAttribute="centerY" id="xzh-I6-G7V"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="10"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="首页" id="BRq-Rh-458"/>
                 </viewController>
