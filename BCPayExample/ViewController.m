@@ -182,41 +182,25 @@
     switch (resp.type) {
         case BCObjsTypePayResp:
         {
-#pragma mark - 支付响应事件类型，包含微信、支付宝、银联、百度
+            // 支付请求响应
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
-                //百度钱包需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
+                //百度钱包比较特殊需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
                 if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
-                    //微信、支付宝、银联支付结果
+                    //微信、支付宝、银联支付成功
                     [self showAlertView:resp.resultMsg];
                 }
             } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        case BCObjsTypeQueryRefundsResp:
-        {
-#pragma mark - 查询退款订单响应事件类型
-            BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
-            if (resp.resultCode == 0) {
-                if (tempResp.count == 0) {
-                    [self showAlertView:@"未找到相关订单信息"];
-                } else {
-                    self.orderList = tempResp;
-                    [self performSegueWithIdentifier:@"queryResult" sender:self];
-                }
-            } else {
+                //支付取消或者支付失败
                 [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
             }
         }
             break;
         case BCObjsTypeQueryBillsResp:
         {
-#pragma mark - 查询支付订单记录响应事件类型
             BCQueryBillsResp *tempResp = (BCQueryBillsResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
@@ -230,9 +214,24 @@
             }
         }
             break;
+        case BCObjsTypeQueryRefundsResp:
+        {
+            BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
+            if (resp.resultCode == 0) {
+                if (tempResp.count == 0) {
+                    [self showAlertView:@"未找到相关订单信息"];
+                } else {
+                    self.orderList = tempResp;
+                    [self performSegueWithIdentifier:@"queryResult" sender:self];
+                }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
+        
         case BCObjsTypeOfflinePayResp:
         {
-#pragma mark - 线下支付响应事件类型
             BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
             if (resp.resultCode == 0) {
                 BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
@@ -265,7 +264,6 @@
             break;
         case BCObjsTypeOfflineBillStatusResp:
         {
-#pragma mark- 线下支付订单状态查询响应事件类型
             static int queryTimes = 1;
             BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
             if (tempResp.resultCode == 0) {

@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = '3.3.2'
+	s.version      = '3.4.0'
 	s.summary      = 'BeeCloud云服务 致力加速App开发'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
 	s.platform     = :ios, '7.0'
-	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.3.2'}
+	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.4.0'}
 	s.requires_arc = true
 	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
 	
@@ -15,7 +15,8 @@ Pod::Spec.new do |s|
 		core.source_files = 'BCPaySDK/BeeCloud/**/*.{h,m}'
 		core.requires_arc = true
 		core.ios.library = 'c++', 'z'
-		core.dependency 'AFNetworking'
+		core.dependency 'AFNetworking' , '2.6.1'
+		core.resource = 'BCPaySDK/BeeCloud/SandBox/*.bundle'
 		core.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
 	end
 

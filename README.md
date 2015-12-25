@@ -1,8 +1,9 @@
 ## BeeCloud iOS SDK (Open Source)
 
-[![Build Status](https://travis-ci.org/beecloud/beecloud-ios.svg?branch=objectid)](https://travis-ci.org/beecloud/beecloud-ios) 
-![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.3.2-blue.svg) 
+[![Build Status](https://travis-ci.org/beecloud/beecloud-ios.svg)](https://travis-ci.org/beecloud/beecloud-ios) 
+![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.4.0-blue.svg) 
 
+</br>
 ## 简介
 
 本项目的官方GitHub地址是 [https://github.com/beecloud/beecloud-ios](https://github.com/beecloud/beecloud-ios)
@@ -10,6 +11,7 @@
 目前已经包含微信APP、支付宝APP、银联在线APP、PayPal、百度钱包 APP支付功能，以及支付订单和退款订单的查询功能。还包含了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，以及订单状态的查询与订单撤销。  
 本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
 
+</br>
 ## 流程
 
 下图为整个支付的流程:
@@ -29,6 +31,7 @@
  
 付款完成之后，根据客户在BeeCloud后台的设置，BeeCloud会向客户服务端发送一个Webhook请求，里面包括了数字签名，订单号，订单金额等一系列信息。客户需要在服务端依据规则要验证**数字签名是否正确，购买的产品与订单金额是否匹配，这两个验证缺一不可**。验证结束后即可开始走支付完成后的逻辑。
 
+</br>
 ## 安装
 
 方法一、[下载本工程源码](https://beecloud.cn/download/)，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
@@ -66,6 +69,7 @@ pod 'BeeCloud/Offline' //只包括线下收款
 pod 'BeeCloud/Baidu' //只包括百度钱包
 ```
 
+</br>
 ## 配置
 
 ① 添加`URL Schemes`  
@@ -98,51 +102,89 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
 
 ② `iOS 9`以上版本如果需要使用支付宝和微信支付，需要在`Info.plist`添加以下代码：
 
-    ```
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>weixin</string>
-        <string>wechat</string>
-        <string>alipay</string>
-    </array>
-    ```
+```
+<key>LSApplicationQueriesSchemes</key>
+<array>
+   <string>weixin</string>
+   <string>wechat</string>
+   <string>alipay</string>
+</array>
+```
 ③ `iOS 9`默认限制了http协议的访问，如果App需要使用`http://`访问，必须在 `Info.plist`添加如下代码：
 
-    ```
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-    ```
+```
+<key>NSAppTransportSecurity</key>
+<dict>
+   <key>NSAllowsArbitraryLoads</key>
+   <true/>
+</dict>
+```
 ④ 如果Build失败，遇到以下错误信息：
 
-    ```
-    XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target.
-    ```
-    请到 Xcode 项目的 Build Settings 页搜索 bitcode，将 Enable Bitcode 设置为 NO。
+```
+XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target.
+```
+请到 Xcode 项目的 Build Settings 页搜索 bitcode，将 Enable Bitcode 设置为 NO。
 
-
+</br>
 ## 注册  
 
-① 初始化
+① 初始化  
+
+**初始化分为生产模式(LiveMode)、沙箱环境(SandboxMode)；沙箱测试模式下不产生真实交易**  
+
+开启生产环境
+
+```objc
+[BeeCloud initWithAppID:@"BeeCloud AppId" andAppSecret:@"BeeCloud App Secret"];
+```
+  
+开启沙箱测试环境
+
+```objc
+[BeeCloud initWithAppID:@"BeeCloud AppId" andAppSecret:@"BeeCloud Test Secret"];
+[BeeCloud setSandboxMode:YES];
+或者
+[BeeCloud initWithAppID:@"BeeCloud AppId" andAppSecret:@"BeeCloud Test Secret" sandbox:YES];
+```
+
+查看当前模式
+
+```objc
+/* 返回YES代表沙箱测试模式；NO代表生产模式 */
+[BeeCloud getCurrentMode];
+```
+
+初始化示例：
 
 ```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //请替换成自己的BeeCloud账户中的AppID和AppSecret
-    //请勿同时初始化生产环境与测试环境
-    
-    //初始化生产环境
-    [BeeCloud initWithAppID:@"appId" andAppSecret:@"appsecret"];
-    
-    //初始化测试环境，测试环境中不产生真实交易(目前仅支持WX_APP、ALI_APP、UN_APP、BD_APP)
-    [BeeCloud initSandboxMode:@"appId" testSecret:@"testsecret"];
 
-    //如果需要微信支付，请添加下面这行（自行替换微信APP ID）
-    [BeeCloud initWeChatPay:@"微信开放平台创建应用的appid"];
-
-    //如果需要PayPal，请添加下面这行
-    [BeeCloud initPayPal:@"clientID" secret:@"secret" sanBox:YES];
+   /* 
+    如果使用BeeCloud控制台的APP Secret初始化，代表初始化生产环境；
+    如果使用BeeCloud控制台的Test Secret初始化，代表初始化沙箱测试环境;
+    Demo账号:
+    appid: c5d1cba1-5e3f-4ba0-941d-9b0a371fe719
+    appSecret: 39a7a518-9ac8-4a9e-87bc-7885f33cf18c  
+    testSecret: 4bfdd244-574d-4bf3-b034-0c751ed34fee
+    由于支付宝的政策原因，测试账号的支付宝支付不能在生产环境中使用，带来不便，敬请原谅！
+    */
+    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+    
+    /* 沙箱测试模式 */
+//  [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee" sandbox:YES];
+    
+    //开启/关闭沙箱测试模式;
+    //可通过[BeeCloud getCurrentMode]查看当前模式，返回YES代表当前是sandbox环境，返回NO代表当前是生产环境
+	//[BeeCloud setSandboxMode:YES];
+    
+    //初始化微信
+    [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
+    
+    //初始化PayPal
+    [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR"
+                  secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF"
+                 sandbox:YES];
     return YES;
 }
 ```
@@ -187,30 +229,31 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
     switch (resp.type) {
         case BCObjsTypePayResp:
         {
-        	  //支付响应事件类型，包含微信、支付宝、银联、百度
+            // 支付请求响应
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
-                //百度钱包需要用户使用获得的支付数据，调用百度钱包SDK提供的方法发起支付请求，并实现相关的protocol
-                if (payReq.channel == PayChannelBaiduApp) {
+                //百度钱包比较特殊需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
+                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
+                    //微信、支付宝、银联支付成功
                     [self showAlertView:resp.resultMsg];
                 }
             } else {
+                //支付取消或者支付失败
                 [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
             }
         }
             break;
-        case BCObjsTypeQueryResp:
+        case BCObjsTypeQueryBillsResp:
         {
-        	  //查询订单或者退款记录响应事件类型
-            BCQueryResp *tempResp = (BCQueryResp *)resp;
+            BCQueryBillsResp *tempResp = (BCQueryBillsResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
                     [self showAlertView:@"未找到相关订单信息"];
                 } else {
-                    self.payList = tempResp.results;
+                    self.orderList = tempResp;
                     [self performSegueWithIdentifier:@"queryResult" sender:self];
                 }
             } else {
@@ -218,9 +261,24 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             }
         }
             break;
+        case BCObjsTypeQueryRefundsResp:
+        {
+            BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
+            if (resp.resultCode == 0) {
+                if (tempResp.count == 0) {
+                    [self showAlertView:@"未找到相关订单信息"];
+                } else {
+                    self.orderList = tempResp;
+                    [self performSegueWithIdentifier:@"queryResult" sender:self];
+                }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
+        
         case BCObjsTypeOfflinePayResp:
         {
-        	  //线下支付响应事件类型
             BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
             if (resp.resultCode == 0) {
                 BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
@@ -231,9 +289,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
                             QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
                             qrCodeView.resp = tempResp;
                             qrCodeView.delegate = self;
-                            self.modalPresentationStyle = UIModalPresentationCurrentContext;
-                            qrCodeView.view.backgroundColor = [UIColor whiteColor];
-                            [self presentViewController:qrCodeView animated:YES completion:nil];
+                            [self.navigationController pushViewController:qrCodeView animated:YES];
                         }
                         break;
                     case PayChannelAliScan:
@@ -241,7 +297,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
                     {
                         BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
                         req.channel = payReq.channel;
-                        req.billno = payReq.billno;
+                        req.billNo = payReq.billNo;
                         [BeeCloud sendBCReq:req];
                     }
                         break;
@@ -255,7 +311,6 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             break;
         case BCObjsTypeOfflineBillStatusResp:
         {
-        	  //线下支付订单状态查询响应事件类型
             static int queryTimes = 1;
             BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
             if (tempResp.resultCode == 0) {
@@ -278,7 +333,7 @@ pod 'BeeCloud/Baidu' //只包括百度钱包
             break;
         case BCObjsTypeOfflineRevertResp:
         {
-        	  //线下撤销订单响应事件类型，包含WX_SCAN,ALI_SCAN,ALI_OFFLINE_QRCODE
+#pragma mark - 线下撤销订单响应事件类型，包含WX_SCAN,ALI_SCAN,ALI_OFFLINE_QRCODE
             BCOfflineRevertResp *tempResp = (BCOfflineRevertResp *)resp;
             if (resp.resultCode == 0) {
                 [self showAlertView:tempResp.revertStatus?@"撤销成功":@"撤销失败"];
@@ -636,6 +691,9 @@ req.refundno = @"20150709173629127";
 
 ## 测试
 项目根目录命令行运行`bash runTest.sh`, 就可以完成Unit Test。
+
+## 附录
+**错误码**请点击[这里](https://beecloud.cn/faq/?index=2)
 
 ## 常见问题
 - 关于weekhook的接收  
