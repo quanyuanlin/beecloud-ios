@@ -14,11 +14,10 @@
     self = [super initWithResult:dic];
     if (self) {
         self.type = BCObjsTypeBillResults;
-        if (dic) {
-            self.spayResult = [dic boolValueForKey:@"spay_result" defaultValue:NO];
-            self.tradeNo = [dic stringValueForKey:@"trade_no" defaultValue:@""];
-            self.revertResult = [dic boolValueForKey:@"revert_result" defaultValue:NO];
-        }
+        self.payResult = [dic boolValueForKey:@"spay_result" defaultValue:NO];
+        self.tradeNo = [dic stringValueForKey:@"trade_no" defaultValue:@""];
+        self.revertResult = [dic boolValueForKey:@"revert_result" defaultValue:NO];
+        self.refundResult = [dic boolValueForKey:@"refund_result" defaultValue:NO];
     }
     return self;
 }

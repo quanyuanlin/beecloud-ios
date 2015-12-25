@@ -15,9 +15,23 @@
 #import "BCPayReq.h"
 #import "BCPayResp.h"
 
-#import "BCQueryReq.h"
-#import "BCQueryResp.h"
-#import "BCQueryRefundReq.h"
+#import "BCQueryBillsReq.h"
+#import "BCQueryBillsResp.h"
+
+#import "BCQueryBillByIdReq.h"
+#import "BCQueryBillByIdResp.h"
+
+#import "BCQueryBillsCountReq.h"
+#import "BCQueryBillsCountResp.h"
+
+#import "BCQueryRefundsReq.h"
+#import "BCQueryRefundsResp.h"
+
+#import "BCQueryRefundByIdReq.h"
+#import "BCQueryRefundByIdResp.h"
+
+#import "BCQueryRefundsCountReq.h"
+#import "BCQueryRefundsCountResp.h"
 
 #import "BCRefundStatusReq.h"
 #import "BCRefundStatusResp.h"
@@ -29,7 +43,6 @@
 #import "BCPayPalReq.h"
 #import "BCPayPalVerifyReq.h"
 
-#import "NSString+IsValid.h"
-#import "NSDictionary+Utils.h"
+#import "BCCategory.h"
 
 #endif

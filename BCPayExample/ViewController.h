@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BeeCloud.h"
 
-static NSString * const billTitle = @"2015-10-21 Release";
-
 @interface ViewController : UITableViewController<UIAlertViewDelegate, BeeCloudDelegate>
 
-@property (strong, nonatomic) NSMutableArray *payList;
+@property (strong, nonatomic) BCBaseResp *orderList;
 
 @property  (assign, nonatomic) NSInteger actionType;//0:pay;1:query;
 

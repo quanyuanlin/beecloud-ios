@@ -38,7 +38,16 @@
  *
  *  @return default request map
  */
-+ (NSMutableDictionary *)prepareParametersForPay;
++ (NSMutableDictionary *)prepareParametersForRequest;
+
+/**
+ *  生成签名
+ *
+ *  @param timeStamp 当前时间戳
+ *
+ *  @return 签名
+ */
++ (NSString *)getAppSignature:(NSString *)timeStamp;
 
 /**
  *  获取url的类型，微信或者支付宝
@@ -66,6 +75,20 @@
  *  @return Channel String
  */
 + (NSString *)getChannelString:(PayChannel)channel;
+
+/**
+ *  执行错误回调
+ *
+ *  @param errMsg 错误信息
+ */
++ (BCBaseResp *)doErrorResponse:(NSString *)errMsg;
+
+/**
+ *  服务端返回错误，执行错误回调
+ *
+ *  @param response 服务端返回参数
+ */
++ (BCBaseResp *)getErrorInResponse:(NSDictionary *)response;
 
 #pragma mark Util Functions
 /**
@@ -109,7 +132,7 @@
  *
  *  @return Number of milliseconds in the format of 1400000000000.
  */
-+ (long long)dateStringToMillisencond:(NSString *)string;
++ (long long)dateStringToMillisecond:(NSString *)string;
 
 /**
  *  Converts a string in the format of "2014-02-25 14:27" to NSDate.

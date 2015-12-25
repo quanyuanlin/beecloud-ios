@@ -11,39 +11,6 @@
 @implementation NSDictionary (Utils)
 
 /**
- *获取字典指定的array的对象
- *
- *  @param aKey key
- *
- *  @return  value值如果为nil或者null会返回空列表
- */
-- (NSArray *)arrayObjectForKey:(id)aKey
-{
-    id value = [self objectForKey:aKey];
-    
-    if (value == nil || [value isKindOfClass:[NSNull class]]) {
-        return  [NSArray array];
-    }
-    return value;
-}
-
-/**
- *  获取字典指定的array的对象
- *
- *  @param aKey key
- *
- *  @return  value值如果为nil或者null会返回空列表
- */
-- (NSMutableArray *)mutableArrayObjectForKey:(id)aKey
-{
-    id value = [self objectForKey:aKey];
-    if (value == nil || [value isKindOfClass:[NSNull class]]) {
-        return  [NSMutableArray array];
-    }
-    return value;
-}
-
-/**
  * @brief 如果akey找不到，返回@"" (防止出现nil，使程序崩溃)
  *
  * @param aKey 字典key值
@@ -105,31 +72,27 @@
     return defaultValue;
 }
 
-/**
- * @brief 替换&nbsp;为空
- *
- * @param aKey 字典key值
- *
- * @return 字典value
- */
-
-- (NSString *)replaceNBSPforKey:(id)aKey {
-    NSString *value = [self objectForKey:aKey];
-    
-    if (!value) {
-        value = @"";
-    }
-    NSString* str = [value stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "] ;
-    
-    return [NSString stringWithFormat:@"%@",str];
-}
+///**
+// * @brief 替换&nbsp;为空
+// *
+// * @param aKey 字典key值
+// *
+// * @return 字典value
+// */
+//
+//- (NSString *)replaceNBSPforKey:(id)aKey {
+//    NSString *value = [self objectForKey:aKey];
+//    
+//    if (!value) {
+//        value = @"";
+//    }
+//    NSString* str = [value stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "] ;
+//    
+//    return [NSString stringWithFormat:@"%@",str];
+//}
 
 - (BOOL)valueForKeyIsArray:(NSString *)key {
     return [self valueForKeyIsType:key type:[NSArray class]];
-}
-
-- (BOOL)valueForKeyIsNull:(NSString *)key {
-    return [self valueForKeyIsType:key type:[NSNull class]];
 }
 
 - (BOOL)valueForKeyIsString:(NSString *)key {

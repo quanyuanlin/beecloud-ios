@@ -21,7 +21,8 @@
     PayPalConfiguration * _payPalConfig;
     PayPalPayment *_completedPayment;
     PayChannel currentChannel;
-    NSArray *channelList;
+    NSMutableArray *channelList;
+    NSString * billTitle;
 }
 
 @end
@@ -30,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
     if (self.actionType == 0) {
         self.title = @"支付";
@@ -38,53 +40,51 @@
     } else if (self.actionType == 2) {
         self.title = @"查询退款订单";
     }
-    channelList = @[@{@"channel":@"微信",@"img":@"wxPay",
-                      @"subChannel":@[@{@"sub":@(PayChannelWxApp),@"title":@"微信APP支付"},
-                                      @{@"sub":@(PayChannelWxNative),@"title":@"微信扫码支付"},
-                                      @{@"sub":@(PayChannelWxScan),@"title":@"微信刷卡支付"}]},
-                    @{@"channel":@"支付宝",@"img":@"aliPay",
-                      @"subChannel":@[@{@"sub":@(PayChannelAliApp),@"title":@"支付宝APP支付"},
-                                      @{@"sub":@(PayChannelAliOfflineQrCode),@"title":@"支付宝扫码支付"},
-                                      @{@"sub":@(PayChannelAliScan),@"title":@"支付宝条码支付"}]},
-                    @{@"channel":@"银联在线",@"img":@"uPay",
-                      @"subChannel":@[@{@"sub":@(PayChannelUnApp),@"title":@"银联在线"}]},
-                    @{@"channel":@"PayPal",@"img":@"paypal",
-                      @"subChannel":@[@{@"sub":@(PayChannelPayPal),@"title":@"PayPal"}]},
-                    @{@"channel":@"百度钱包",@"img":@"baidu",
-                      @"subChannel":@[@{@"sub":@(PayChannelBaiduApp),@"title":@"百度钱包"}]}];
-    self.payList = [NSMutableArray arrayWithCapacity:10];
+    NSArray *tempArray = @[@{@"channel":@"线上支付",
+                      @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信APP支付"},
+                                      @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝APP支付"},
+                                      @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
+                                      @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
+                                      @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"}
+                                      ]},
+                    @{@"channel":@"线下收款",
+                      @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码支付"},
+                                      @{@"sub":@(PayChannelWxScan), @"img":@"wx", @"title":@"微信刷卡支付"},
+                                      @{@"sub":@(PayChannelAliOfflineQrCode), @"img":@"ali", @"title":@"支付宝扫码支付"},
+                                      @{@"sub":@(PayChannelAliScan), @"img":@"ali", @"title":@"支付宝条码支付"}]}
+                ];
+    channelList = [NSMutableArray arrayWithArray:tempArray];
+    
+    if ([BeeCloud getCurrentMode]) {
+        [channelList removeLastObject];
+    }
+    billTitle = [BeeCloud getCurrentMode] ? @"iOS Demo Sandbox" : @"iOS Demo Live";
+    self.orderList = nil;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
 #pragma mark - 设置delegate
     [BeeCloud setBeeCloudDelegate:self];
 }
 
-#pragma mark - 微信支付
-- (void)doWXAppPay {
-    [self doPay:PayChannelWxApp];
-}
-
-#pragma mark - 支付宝
-- (void)doAliAppPay {
-    [self doPay:PayChannelAliApp];
-}
-
-#pragma mark - 银联在线
-- (void)doUnionPay {
-    [self doPay:PayChannelUnApp];
-}
+#pragma mark - 微信、支付宝、银联、百度钱包
 
 - (void)doPay:(PayChannel)channel {
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-    
+    /**
+     按住键盘上的option键，点击参数名称，可以查看参数说明
+     **/
     BCPayReq *payReq = [[BCPayReq alloc] init];
-    payReq.channel = channel;
-    payReq.title = billTitle;
-    payReq.totalFee = @"1";
-    payReq.billNo = billno;
-    payReq.scheme = @"payDemo";
-    payReq.billTimeOut = 300;
-    payReq.viewController = self;
-    payReq.optional = dict;
+    payReq.channel = channel; //支付渠道
+    payReq.title = billTitle;//订单标题
+    payReq.totalFee = @"1";//订单价格
+    payReq.billNo = billno;//商户自定义订单号
+    payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
+    payReq.billTimeOut = 300;//订单超时时间
+    payReq.viewController = self; //银联支付和Sandbox环境必填
+    payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }
 
@@ -92,15 +92,18 @@
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     
+    /**
+     按住键盘上的option键，点击参数名称，可以查看参数说明
+     **/
     BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
-    payReq.channel = channel;
-    payReq.title = @"Offline Pay";
-    payReq.totalfee = @"1";
-    payReq.billno = billno;
-    payReq.authcode = authcode;
-    payReq.terminalid = @"BeeCloud617";
-    payReq.storeid = @"BeeCloud618";
-    payReq.optional = dict;
+    payReq.channel = channel; //支付渠道，支持WX_NATIVE、WX_SCAN、ALI_OFFLINE_QRCODE、ALI_SCAN
+    payReq.title = @"Offline Pay";//订单标题
+    payReq.totalFee = @"1"; //订单价格
+    payReq.billNo = billno; //商户自定义订单号
+    payReq.authcode = authcode; //支付授权码(ALI_SCAN,WX_SCAN时必需)，通过扫码用户的支付宝钱包(付款)、微信钱包(刷卡)获取
+    payReq.terminalId = @"BeeCloud617"; //自定义扫码设备号
+    payReq.storeId = @"BeeCloud618";//自定义店铺编号
+    payReq.optional = dict;//用于商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }
 
@@ -179,30 +182,31 @@
     switch (resp.type) {
         case BCObjsTypePayResp:
         {
-            //支付响应事件类型，包含微信、支付宝、银联、百度
+            // 支付请求响应
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
                 BCPayReq *payReq = (BCPayReq *)resp.request;
-                if (payReq.channel == PayChannelBaiduApp) {
+                //百度钱包比较特殊需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
+                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
                     [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
                 } else {
+                    //微信、支付宝、银联支付成功
                     [self showAlertView:resp.resultMsg];
                 }
             } else {
+                //支付取消或者支付失败
                 [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
             }
         }
             break;
-        
-        case BCObjsTypeQueryResp:
+        case BCObjsTypeQueryBillsResp:
         {
-            //查询订单或者退款记录响应事件类型
-            BCQueryResp *tempResp = (BCQueryResp *)resp;
+            BCQueryBillsResp *tempResp = (BCQueryBillsResp *)resp;
             if (resp.resultCode == 0) {
                 if (tempResp.count == 0) {
                     [self showAlertView:@"未找到相关订单信息"];
                 } else {
-                    self.payList = tempResp.results;
+                    self.orderList = tempResp;
                     [self performSegueWithIdentifier:@"queryResult" sender:self];
                 }
             } else {
@@ -210,9 +214,24 @@
             }
         }
             break;
+        case BCObjsTypeQueryRefundsResp:
+        {
+            BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
+            if (resp.resultCode == 0) {
+                if (tempResp.count == 0) {
+                    [self showAlertView:@"未找到相关订单信息"];
+                } else {
+                    self.orderList = tempResp;
+                    [self performSegueWithIdentifier:@"queryResult" sender:self];
+                }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
+        
         case BCObjsTypeOfflinePayResp:
         {
-            //线下支付响应事件类型
             BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
             if (resp.resultCode == 0) {
                 BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
@@ -223,9 +242,7 @@
                             QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
                             qrCodeView.resp = tempResp;
                             qrCodeView.delegate = self;
-                            self.modalPresentationStyle = UIModalPresentationCurrentContext;
-                            qrCodeView.view.backgroundColor = [UIColor whiteColor];
-                            [self presentViewController:qrCodeView animated:YES completion:nil];
+                            [self.navigationController pushViewController:qrCodeView animated:YES];
                         }
                         break;
                     case PayChannelAliScan:
@@ -233,7 +250,7 @@
                     {
                         BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
                         req.channel = payReq.channel;
-                        req.billno = payReq.billno;
+                        req.billNo = payReq.billNo;
                         [BeeCloud sendBCReq:req];
                     }
                         break;
@@ -247,7 +264,6 @@
             break;
         case BCObjsTypeOfflineBillStatusResp:
         {
-            //线下支付订单状态查询响应事件类型
             static int queryTimes = 1;
             BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
             if (tempResp.resultCode == 0) {
@@ -270,7 +286,7 @@
             break;
         case BCObjsTypeOfflineRevertResp:
         {
-            //线下撤销订单响应事件类型，包含WX_SCAN,ALI_SCAN,ALI_OFFLINE_QRCODE
+#pragma mark - 线下撤销订单响应事件类型，包含WX_SCAN,ALI_SCAN,ALI_OFFLINE_QRCODE
             BCOfflineRevertResp *tempResp = (BCOfflineRevertResp *)resp;
             if (resp.resultCode == 0) {
                 [self showAlertView:tempResp.revertStatus?@"撤销成功":@"撤销失败"];
@@ -301,23 +317,26 @@
 - (void)doQuery:(PayChannel)channel {
     
     if (self.actionType == 1) {
-        BCQueryReq *req = [[BCQueryReq alloc] init];
+        BCQueryBillsReq *req = [[BCQueryBillsReq alloc] init];
         req.channel = channel;
-        //   req.billno = @"20150901104138656";
-       //  req.startTime = @"2015-10-22 00:00";
-        // req.endTime = @"2015-10-23 00:00";
-        req.skip = 0;
-        req.limit = 50;
+        req.billStatus = BillStatusOnlySuccess;
+        req.needMsgDetail = YES;
+        //   req.billno = @"20150901104138656";//订单号
+        //  req.startTime = @"2015-10-22 00:00";//订单时间
+        // req.endTime = @"2015-10-23 00:00";//订单时间
+        req.skip = 0;//
+        req.limit = 10;
         [BeeCloud sendBCReq:req];
     } else if (self.actionType == 2) {
-        BCQueryRefundReq *req = [[BCQueryRefundReq alloc] init];
+        BCQueryRefundsReq *req = [[BCQueryRefundsReq alloc] init];
         req.channel = channel;
+        req.needApproved = NeedApprovalAll;
         //  req.billno = @"20150722164700237";
         //  req.starttime = @"2015-07-21 00:00";
         // req.endtime = @"2015-07-23 12:00";
         //req.refundno = @"20150709173629127";
         req.skip = 0;
-        req.limit = 20;
+        req.limit = 10;
         [BeeCloud sendBCReq:req];
     }
 }
@@ -354,7 +373,7 @@
         cell = [[PayChannelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     NSDictionary *row = channelList[indexPath.section][@"subChannel"][indexPath.row];
-    cell.cImg.image = [UIImage imageNamed:channelList[indexPath.section][@"img"]];
+    cell.cImg.image = [UIImage imageNamed:row[@"img"]];
     cell.title.text = row[@"title"];
     
     return cell;
@@ -378,10 +397,14 @@
             case PayChannelWxScan:
             case PayChannelAliScan:
                 currentChannel = channel;
+#if TARGET_IPHONE_SIMULATOR
+                [self showAlertView:@"模拟器不能打开相机"];
+#elif TARGET_OS_IPHONE
                 [self showScanViewController];
+#endif
                 break;
             case PayChannelPayPal:
-            case PayChannelPayPalSanBox:
+            case PayChannelPayPalSandbox:
                 [self doPayPal];
                 break;
             default:
@@ -389,12 +412,9 @@
         }
     } else {
         switch (channel) {
-            case PayChannelWxApp:
-            case PayChannelWxNative:
             case PayChannelWxScan:
                 [self doQuery:PayChannelWx];
                 break;
-            case PayChannelAliApp:
             case PayChannelAliScan:
             case PayChannelAliOfflineQrCode:
                 [self doQuery:PayChannelAli];
@@ -408,21 +428,34 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+/**
+ *  打开摄像头，扫描用户的二维码
+ */
 - (void)showScanViewController {
     ScanViewController *scanView = [[ScanViewController alloc] init];
     scanView.delegate = self;
     [self presentViewController:scanView animated:YES completion:nil];
 }
 
+/**
+ *  获得支付授权码，发起支付
+ *
+ *  @param authCode 支付授权码
+ */
 - (void)scanWithAuthCode:(NSString *)authCode {
     [self doOfflinePay:currentChannel authCode:authCode];
 }
 
+/**
+ *  用户付款后，查询订单状态
+ *
+ *  @param resp 支付结果
+ */
 - (void)qrCodeBeScaned:(BCOfflinePayResp *)resp {
     BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
     BCOfflinePayReq *payReq = (BCOfflinePayReq *)resp.request;
     req.channel = payReq.channel;
-    req.billno = payReq.billno;
+    req.billNo = payReq.billNo;
     [BeeCloud sendBCReq:req];
 }
 
@@ -430,7 +463,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     QueryResultViewController *viewController = (QueryResultViewController *)segue.destinationViewController;
     if([segue.identifier isEqualToString:@"queryResult"]) {
-        viewController.dataList = self.payList;
+        viewController.resp = self.orderList;
     }
 }
 
@@ -467,7 +500,6 @@
 }
 
 - (void)logEventId:(NSString *)eventId eventDesc:(NSString *)eventDesc {
-    
 }
 
 @end

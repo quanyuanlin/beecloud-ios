@@ -37,9 +37,22 @@
  *  全局初始化
  *
  *  @param appId     BeeCloud平台APPID
- *  @param appSecret BeeCloud平台APPSECRET
+ *  @param appSecret BeeCloud平台密钥APPSECRET(生产密钥)/TESTSECRET(测试密钥)
+ *
+ *  @return 初始化成功返回YES; 若appId或者appSecret不合法，初始化失败返回NO
  */
-+ (void)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret;
++ (BOOL)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret;
+
+/**
+ *  全局初始化
+ *
+ *  @param appId     BeeCloud平台AppID
+ *  @param appSecret BeeCloud平台密钥APPSECRET(生产密钥)/TESTSECRET(测试密钥)
+ *  @param isSandbox 是否是沙箱测试模式
+ *
+ *  @return 初始化成功返回YES；失败返回NO
+ */
++ (BOOL)initWithAppID:(NSString *)appId andAppSecret:(NSString *)appSecret sandbox:(BOOL)isSandbox;
 
 /**
  *  需要在每次启动第三方应用程序时调用。第一次调用后，会在微信的可用应用列表中出现。
@@ -56,9 +69,11 @@
  *
  *  @param clientID paypal clientId
  *  @param secret   paypal secret
- *  @param isSandBox 是否是sanbox环境
+ *  @param isSandbox 是否是sandbox环境
+ *
+ *  @return  初始化成功返回YES; 若clientID或者secret不合法，初始化失败返回NO
  */
-+ (void)initPayPal:(NSString *)clientID secret:(NSString *)secret sanBox:(BOOL)isSandBox;
++ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox;
 
 /**
  * 处理通过URL启动App时传递的数据。需要在application:openURL:sourceApplication:annotation:中调用。
@@ -72,11 +87,31 @@
 /**
  *  设置接收消息的对象
  *
- *  @param delegate BCApiDelegate对象，用来接收BeeCloud触发的消息。
+ *  @param delegate BeeCloudDelegate对象，用来接收BeeCloud触发的消息。
  */
 + (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate;
 
+/**
+ *  获取接收消息的对象
+ *
+ *  @return BeeCloudDelegate对象，用来接收BeeCloud触发的消息。
+ */
 + (id<BeeCloudDelegate>)getBeeCloudDelegate;
+
+/**
+ *  设置开启或关闭沙箱测试环境
+ *
+ *  @param sandbox YES表示开启沙箱、关闭生产环境，并请确保已经初始化沙箱环境；NO表示关闭沙箱环境、开启生产环境，并确保已经初始化生产环境
+ */
++ (void)setSandboxMode:(BOOL)sandbox;
+
+/**
+ *  如果是sandbox环境，返回YES；
+ *  如果是live环境，返回NO；
+ *
+ *  @return YES表示当前是沙箱测试环境
+ */
++ (BOOL)getCurrentMode;
 
 /**
  *  获取API版本号
@@ -102,12 +137,12 @@
 #pragma mark - Send BeeCloud Request
 
 /**
- *  发送BeeCloud Api请求
+ *  发送BeeCloud Request请求
  *
  *  @param req 请求体
  *
  *  @return 发送请求是否成功
  */
-+ (void)sendBCReq:(BCBaseReq *)req;
++ (BOOL)sendBCReq:(BCBaseReq *)req;
 
 @end

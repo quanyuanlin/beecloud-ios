@@ -19,7 +19,6 @@
 - (NSDictionary *)dictValueForKey:(NSString *)key defaultValue:(NSDictionary *)defaultValue;
 
 - (BOOL)valueForKeyIsArray:(NSString*)key;
-- (BOOL)valueForKeyIsNull:(NSString*)key;
 - (BOOL)valueForKeyIsString:(NSString*)key;
 - (BOOL)valueForKeyIsNumber:(NSString*)key;
 

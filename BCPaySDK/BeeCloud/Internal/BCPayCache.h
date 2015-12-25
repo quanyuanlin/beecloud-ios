@@ -22,9 +22,15 @@
 @property (nonatomic, strong) NSString *appId;
 
 /**
- *  App key obtained when registering this app in BeeCloud website.
+ *  生产环境密钥
  */
 @property (nonatomic, strong) NSString *appSecret;
+
+/**
+ *  YES表示沙箱环境，不产生真实交易；NO表示生产环境，产生真实交易
+ *  默认为NO，生产环境
+ */
+@property (nonatomic, assign) BOOL sandbox;
 
 /**
  *  PayPal client ID
@@ -37,9 +43,9 @@
 @property (nonatomic, strong) NSString *payPalSecret;
 
 /**
- *  PayPal SandBox Client ID
+ *  PayPal Sandbox Client ID
  */
-@property (nonatomic, assign) BOOL isPayPalSandBox;
+@property (nonatomic, assign) BOOL isPayPalSandbox;
 
 
 /**
@@ -67,6 +73,6 @@
 /**
  *  BeeCloud response
  */
-+ (void)beeCloudDoResponse;
++ (BOOL)beeCloudDoResponse;
 
 @end

@@ -2,7 +2,7 @@
 //  ScanViewController.h
 //  NewProject
 //
-//  Created by 学鸿 张 on 13-11-29.
+//  Created by Ewenlong on 15-09-29.
 //  Copyright (c) 2013年 Steven. All rights reserved.
 //
 
@@ -15,12 +15,12 @@
 
 @end
 
-@interface ScanViewController : UIViewController<AVCaptureMetadataOutputObjectsDelegate>
-{
+@interface ScanViewController : UIViewController<AVCaptureMetadataOutputObjectsDelegate> {
     int num;
     BOOL upOrdown;
     NSTimer * timer;
 }
+
 @property (strong,nonatomic)AVCaptureDevice * device;
 @property (strong,nonatomic)AVCaptureDeviceInput * input;
 @property (strong,nonatomic)AVCaptureMetadataOutput * output;

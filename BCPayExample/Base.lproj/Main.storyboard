@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bWb-n2-sYm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bWb-n2-sYm">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -12,14 +12,20 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ikA-dY-nm4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="1" green="0.42352941176470588" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="1" green="0.42352941179999998" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
-                        <segue destination="ZZF-b9-bZT" kind="relationship" relationship="rootViewController" id="G1u-9Q-LIL"/>
+                        <segue destination="ZZF-b9-bZT" kind="relationship" relationship="rootViewController" id="Nl7-Gy-bvd"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nqq-BX-Cz1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1106" y="81"/>
+            <point key="canvasLocation" x="-664" y="-233"/>
         </scene>
         <!--首页-->
         <scene sceneID="Uxx-c0-MgI">
@@ -35,48 +41,67 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24I-1V-Aps">
                                 <rect key="frame" x="180" y="270" width="240" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.42352941179999998" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="ess-Pj-xNA"/>
                                     <constraint firstAttribute="height" constant="60" id="jnk-bu-dYT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="查询支付订单" backgroundImage="btn_normal">
+                                <state key="normal" title="查询支付订单">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted" backgroundImage="btn_highlight"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="7Kq-JA-Y9q" kind="show" identifier="doQuery" id="17r-uv-rln"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zGX-x0-pDU">
                                 <rect key="frame" x="180" y="360" width="240" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.42352941179999998" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="VtQ-z9-kds"/>
                                     <constraint firstAttribute="height" constant="60" id="nj3-tF-Whl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="查询退款订单" backgroundImage="btn_normal">
+                                <state key="normal" title="查询退款订单">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted" backgroundImage="btn_highlight"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="7Kq-JA-Y9q" kind="show" identifier="doQueryRefund" id="AAk-bx-4JO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEI-LT-H2h">
                                 <rect key="frame" x="180" y="180" width="240" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.42352941179999998" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="KXe-7J-xIn"/>
                                     <constraint firstAttribute="width" constant="240" id="aGg-3o-PSQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="支付" backgroundImage="btn_normal">
+                                <color key="tintColor" red="1" green="0.42352941179999998" blue="0.17254901959999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="支付">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="highlighted" backgroundImage="btn_highlight"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="7Kq-JA-Y9q" kind="show" identifier="doPay" id="t72-I7-gpS"/>
                                 </connections>
@@ -96,7 +121,39 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VbA-ES-uO7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="81" y="86"/>
+            <point key="canvasLocation" x="37" y="-233"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="JPp-TG-bSc">
+            <objects>
+                <viewController id="M3Z-yP-TgU" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wcj-O3-zgM"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hp8-e4-4nR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Gh-aH-A6C">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bc" translatesAutoresizingMaskIntoConstraints="NO" id="fsv-ye-afI">
+                                <rect key="frame" x="240" y="98" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="KOJ-YK-kHx"/>
+                                    <constraint firstAttribute="width" constant="120" id="gFg-EJ-hY1"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fsv-ye-afI" firstAttribute="centerX" secondItem="7Gh-aH-A6C" secondAttribute="centerX" id="J2D-8e-7zJ"/>
+                            <constraint firstItem="fsv-ye-afI" firstAttribute="top" secondItem="Wcj-O3-zgM" secondAttribute="bottom" constant="34" id="vdf-Km-DCv"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="EU1-bi-fdv"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Imn-LI-q63" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-47" y="455"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Jon-GA-0VR">
@@ -144,7 +201,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e1j-6D-6hT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="777" y="81"/>
+            <point key="canvasLocation" x="741" y="-233"/>
         </scene>
         <!--查询结果-->
         <scene sceneID="E8g-lj-qTk">
@@ -155,19 +212,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="orderCell" rowHeight="140" id="DIp-h3-fr4">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="orderCell" rowHeight="140" id="DIp-h3-fr4">
                                 <rect key="frame" x="0.0" y="86" width="600" height="140"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DIp-h3-fr4" id="IdO-BZ-UPy">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="139.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="553" height="139.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="refundCell" rowHeight="160" id="Hce-ou-YMa">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="refundCell" rowHeight="160" id="Hce-ou-YMa">
                                 <rect key="frame" x="0.0" y="226" width="600" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hce-ou-YMa" id="kGf-fb-ro1">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="159.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="553" height="159.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -184,12 +241,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0zS-GV-hAR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1489" y="81"/>
+            <point key="canvasLocation" x="1437" y="-233"/>
         </scene>
     </scenes>
     <resources>
+        <image name="bc" width="60" height="60"/>
         <image name="btn_highlight" width="278" height="40"/>
-        <image name="btn_normal" width="278" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="t72-I7-gpS"/>

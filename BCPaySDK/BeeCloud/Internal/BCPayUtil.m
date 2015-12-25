@@ -28,7 +28,7 @@
     return paramWrapper;
 }
 
-+ (NSMutableDictionary *)prepareParametersForPay {
++ (NSMutableDictionary *)prepareParametersForRequest {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     NSNumber *timeStamp = [NSNumber numberWithLongLong:[BCPayUtil dateToMillisecond:[NSDate date]]];
     NSString *appSign = [BCPayUtil getAppSignature:[NSString stringWithFormat:@"%@",timeStamp]];
@@ -53,8 +53,8 @@
     const char* str = [input UTF8String];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CC_MD5(str, (CC_LONG)strlen(str), result);
-    NSMutableString *ret = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH*2];
-    for(int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
+    NSMutableString *ret = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    for (int i = 0; i<CC_MD5_DIGEST_LENGTH; i++) {
         [ret appendFormat:@"%02x",result[i]];
     }
     return ret;
@@ -70,8 +70,8 @@
 }
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
-    NSString *verHost = [NSString stringWithFormat:@"%@%@",kBCHosts[arc4random()%kBCHostCount],reqApiVersion];
-    return [NSString stringWithFormat:format, verHost];
+    NSString *verHost = [NSString stringWithFormat:@"%@%@", kBCHosts[arc4random()%kBCHostCount], reqApiVersion];
+    return [NSString stringWithFormat:format, verHost, [BCPayCache sharedInstance].sandbox ? @"/sandbox" : @""];
 }
 
 + (NSString *)getChannelString:(PayChannel)channel {
@@ -132,7 +132,7 @@
         case PayChannelPayPalLive:
             cType = @"PAYPAL_LIVE";
             break;
-        case PayChannelPayPalSanBox:
+        case PayChannelPayPalSandbox:
             cType = @"PAYPAL_SANDBOX";
             break;
 #pragma mark PayChannel_Baidu
@@ -154,6 +154,27 @@
     return cType;
 }
 
+#pragma mark - Util Response
+
++ (BCBaseResp *)doErrorResponse:(NSString *)errMsg {
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = BCErrCodeCommon;
+    resp.resultMsg = errMsg;
+    resp.errDetail = errMsg;
+    [BCPayCache beeCloudDoResponse];
+    return resp;
+}
+
++ (BCBaseResp *)getErrorInResponse:(NSDictionary *)response {
+    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
+    resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
+    resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
+    resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
+    [BCPayCache beeCloudDoResponse];
+    return resp;
+}
+
+#pragma mark - Util
 + (NSString *)generateRandomUUID {
     return [[NSUUID UUID] UUIDString].lowercaseString;
 }
@@ -171,7 +192,7 @@
     return (long long)([date timeIntervalSince1970] * 1000.0);
 }
 
-+ (long long)dateStringToMillisencond:(NSString *)string {
++ (long long)dateStringToMillisecond:(NSString *)string {
     NSDate *dat = [BCPayUtil stringToDate:string];
     if (dat) return [BCPayUtil dateToMillisecond:dat];
     return 0;
@@ -208,6 +229,7 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     return [emailTest evaluateWithObject:email];
 }
+
 + (BOOL)isValidMobile:(NSString *)mobile {
     NSString *phoneRegex = @"^([0|86|17951]?(13[0-9])|(15[^4,\\D])|(17[678])|(18[0,0-9]))\\d{8}$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
