@@ -1,7 +1,7 @@
 ## BeeCloud iOS SDK (Open Source)
 
 [![Build Status](https://travis-ci.org/beecloud/beecloud-ios.svg)](https://travis-ci.org/beecloud/beecloud-ios) 
-![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.4.0-blue.svg) 
+![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.4.1-blue.svg) 
 
 </br>
 ## 简介
