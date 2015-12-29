@@ -1,5 +1,8 @@
 BeeCloud iOS SDK Changelog
 ==========================
+v3.4.1 2015年12月29日
++ 修改PayPal支付bug
+
 v3.4.0 2015年12月25日
 + 增加Sandbox测试模式
 + 增加根据id查询订单
