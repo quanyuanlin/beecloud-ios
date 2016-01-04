@@ -121,7 +121,7 @@
         return;
     }
     if ([BCPayCache sharedInstance].isPayPalSandbox) {
-        parameters[@"channel"] = @"PAYPAL_SANDbox";
+        parameters[@"channel"] = @"PAYPAL_SANDBOX";
     } else {
         parameters[@"channel"] = @"PAYPAL_LIVE";
     }
