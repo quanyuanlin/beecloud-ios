@@ -129,7 +129,7 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 </br>
 ## 注册  
 
-① 初始化  
+① 初始化BeeCloud  
 
 **初始化分为生产模式(LiveMode)、沙箱环境(SandboxMode)；沙箱测试模式下不产生真实交易**  
 
@@ -153,6 +153,13 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 ```objc
 /* 返回YES代表沙箱测试模式；NO代表生产模式 */
 [BeeCloud getCurrentMode];
+```
+
+② 初始化微信  
+如果您使用了微信支付，需要用微信开放平台Appid初始化。  
+
+```objc
+[BeeCloud initWeChatPay:@"微信开放平台appid"];
 ```
 
 初始化示例：
