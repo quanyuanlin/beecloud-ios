@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
 	s.version      = '3.4.1'
-	s.summary      = 'BeeCloud云服务 致力加速App开发'
+	s.summary      = 'BeeCloud 让支付更简单'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
