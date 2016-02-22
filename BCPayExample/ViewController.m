@@ -45,7 +45,8 @@
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝APP支付"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
                                       @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
-                                      @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"}
+                                      @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
+                                      @{@"sub":@(PayChannelApplePay), @"img":@"paypal", @"title":@"ApplePay"}
                                       ]},
                     @{@"channel":@"线下收款",
                       @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码支付"},
@@ -388,6 +389,7 @@
             case PayChannelAliApp:
             case PayChannelUnApp:
             case PayChannelBaiduApp:
+            case PayChannelApplePay:
                 [self doPay:channel];
                 break;
             case PayChannelWxNative:

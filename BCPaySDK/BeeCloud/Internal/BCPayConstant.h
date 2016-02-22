@@ -58,6 +58,7 @@ static NSString * const kRestApiSandboxNotify = @"%@%@/notify/";
 static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
 static NSString * const kAdapterAliPay = @"BCAliPayAdapter";
 static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
+static NSString * const kAdapterApplePay = @"BCApplePayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
 static NSString * const kAdapterOffline = @"BCOfflineAdapter";
 static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
@@ -84,6 +85,8 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
 
 typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelNone = 0,
+    
+    PayChannelApplePay,
     
     PayChannelWx = 10, //微信
     PayChannelWxApp,//微信APP
