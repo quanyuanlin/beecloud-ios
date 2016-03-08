@@ -33,7 +33,7 @@
     }
     NSString *cType = [BCPayUtil getChannelString:self.channel];
     
-    if (!self.refundNo.isValid || cType.isValid) {
+    if (!self.refundNo.isValid || !cType.isValid) {
         [BCPayUtil doErrorResponse:@"请求参数不合法"];
         return;
     }
