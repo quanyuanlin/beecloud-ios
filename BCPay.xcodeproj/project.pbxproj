@@ -33,6 +33,8 @@
 		36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D341BC66A0700CA6C81 /* libsqlite3.tbd */; };
 		36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D361BC66A1300CA6C81 /* libc++.tbd */; };
 		363B89391C97A79500DD2AB1 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3639726E1C7AB60300412108 /* PassKit.framework */; };
+		363B89411C97BD4B00DD2AB1 /* BCApplePayAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */; };
+		363B89421C97BD4B00DD2AB1 /* libUPAPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */; };
 		36501E2A1C06E87300BC8B8A /* BCBaseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E181C06E87300BC8B8A /* BCBaseResult.m */; };
 		36501E2B1C06E87300BC8B8A /* BCQueryBillResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E1A1C06E87300BC8B8A /* BCQueryBillResult.m */; };
 		36501E2C1C06E87300BC8B8A /* BCQueryRefundResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E1C1C06E87300BC8B8A /* BCQueryRefundResult.m */; };
@@ -188,6 +190,11 @@
 		36379D361BC66A1300CA6C81 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		3637DD681C7AAFAC007EC5A7 /* BCPay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BCPay.entitlements; sourceTree = "<group>"; };
 		3639726E1C7AB60300412108 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		363B893C1C97BD4B00DD2AB1 /* BCApplePayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCApplePayAdapter.h; sourceTree = "<group>"; };
+		363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCApplePayAdapter.mm; sourceTree = "<group>"; };
+		363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPAPayPlugin.a; sourceTree = "<group>"; };
+		363B893F1C97BD4B00DD2AB1 /* UPAPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAPayPlugin.h; sourceTree = "<group>"; };
+		363B89401C97BD4B00DD2AB1 /* UPAPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAPayPluginDelegate.h; sourceTree = "<group>"; };
 		36501E171C06E87300BC8B8A /* BCBaseResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCBaseResult.h; sourceTree = "<group>"; };
 		36501E181C06E87300BC8B8A /* BCBaseResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCBaseResult.m; sourceTree = "<group>"; };
 		36501E191C06E87300BC8B8A /* BCQueryBillResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCQueryBillResult.h; sourceTree = "<group>"; };
@@ -377,6 +384,7 @@
 				36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */,
 				368EA8D91BB3923F00F1F9D3 /* AddressBook.framework in Frameworks */,
 				368EA8DA1BB3923F00F1F9D3 /* AddressBookUI.framework in Frameworks */,
+				363B89421C97BD4B00DD2AB1 /* libUPAPayPlugin.a in Frameworks */,
 				368EA8D61BB3922800F1F9D3 /* Security.framework in Frameworks */,
 				3658AFFF1BB295F700183C28 /* CoreTelephony.framework in Frameworks */,
 				36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */,
@@ -460,6 +468,7 @@
 		3602F8E61BA031E800A28ADC /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				363B893A1C97BD4B00DD2AB1 /* ApplePay */,
 				3658AF551BB28B9400183C28 /* OfflinePay */,
 				3658AF681BB28B9400183C28 /* Baidu */,
 				367F667F1BAAB48900B3466F /* PayPal */,
@@ -584,6 +593,26 @@
 				363464011C15842C00C724B2 /* BCSandBoxAdapter.m */,
 			);
 			path = BCSandBoxAdapter;
+			sourceTree = "<group>";
+		};
+		363B893A1C97BD4B00DD2AB1 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				363B893B1C97BD4B00DD2AB1 /* BCApplePayAdapter */,
+				363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */,
+				363B893F1C97BD4B00DD2AB1 /* UPAPayPlugin.h */,
+				363B89401C97BD4B00DD2AB1 /* UPAPayPluginDelegate.h */,
+			);
+			path = ApplePay;
+			sourceTree = "<group>";
+		};
+		363B893B1C97BD4B00DD2AB1 /* BCApplePayAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				363B893C1C97BD4B00DD2AB1 /* BCApplePayAdapter.h */,
+				363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */,
+			);
+			path = BCApplePayAdapter;
 			sourceTree = "<group>";
 		};
 		364BC5A01B5E32FD00EAFCCE = {
@@ -1144,6 +1173,7 @@
 				3602F9371BA031E800A28ADC /* AFURLResponseSerialization.m in Sources */,
 				3602F92C1BA031E800A28ADC /* NSString+IsValid.m in Sources */,
 				36501E2A1C06E87300BC8B8A /* BCBaseResult.m in Sources */,
+				363B89411C97BD4B00DD2AB1 /* BCApplePayAdapter.mm in Sources */,
 				36501E381C06EC9000BC8B8A /* BCPayReq.m in Sources */,
 				3602F9351BA031E800A28ADC /* AFURLConnectionOperation.m in Sources */,
 				3602F9311BA031E800A28ADC /* AFHTTPRequestOperationManager.m in Sources */,
