@@ -41,18 +41,18 @@
         self.title = @"查询退款订单";
     }
     NSArray *tempArray = @[@{@"channel":@"线上支付",
-                      @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信APP支付"},
-                                      @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝APP支付"},
+                      @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
+                                      @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
                                       @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
                                       @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
                                       @{@"sub":@(PayChannelApplePay), @"img":@"paypal", @"title":@"ApplePay"}
                                       ]},
                     @{@"channel":@"线下收款",
-                      @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码支付"},
-                                      @{@"sub":@(PayChannelWxScan), @"img":@"wx", @"title":@"微信刷卡支付"},
-                                      @{@"sub":@(PayChannelAliOfflineQrCode), @"img":@"ali", @"title":@"支付宝扫码支付"},
-                                      @{@"sub":@(PayChannelAliScan), @"img":@"ali", @"title":@"支付宝条码支付"}]}
+                      @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码"},
+                                      @{@"sub":@(PayChannelWxScan), @"img":@"wx", @"title":@"微信刷卡"},
+                                      @{@"sub":@(PayChannelAliOfflineQrCode), @"img":@"ali", @"title":@"支付宝扫码"},
+                                      @{@"sub":@(PayChannelAliScan), @"img":@"ali", @"title":@"支付宝刷卡"}]}
                 ];
     channelList = [NSMutableArray arrayWithArray:tempArray];
     
