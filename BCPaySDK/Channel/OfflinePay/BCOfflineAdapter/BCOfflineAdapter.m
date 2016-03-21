@@ -59,10 +59,10 @@
         parameters[@"optional"] = req.optional;
     }
     
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflinePay] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflinePay] parameters:parameters progress:nil
+          success:^(NSURLSessionTask *task, id response) {
               
               NSDictionary *source = (NSDictionary *)response;
               BCPayLog(@"channel=%@,resp=%@", cType, response);
@@ -77,7 +77,7 @@
               }
               [BCPayCache beeCloudDoResponse];
               
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          } failure:^(NSURLSessionTask *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
@@ -106,10 +106,10 @@
     parameters[@"channel"] = cType;
     parameters[@"bill_no"] = req.billNo;
     
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillStatus] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillStatus] parameters:parameters progress:nil
+          success:^(NSURLSessionTask *operation, id response) {
               
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflineStatusResp *resp = (BCOfflineStatusResp *)[BCPayCache sharedInstance].bcResp;
@@ -120,7 +120,7 @@
                   resp.payResult = [response boolValueForKey:KKeyResponsePayResult defaultValue:NO];
               }
               [BCPayCache beeCloudDoResponse];
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          } failure:^(NSURLSessionTask *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
 }
@@ -149,10 +149,10 @@
     parameters[@"channel"] = cType;
     parameters[@"method"] = @"REVERT";
     
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
-    [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billNo] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billNo] parameters:parameters progress:nil
+          success:^(NSURLSessionTask *operation, id response) {
     
               BCPayLog(@"channel=%@,resp=%@", cType, response);
               BCOfflineRevertResp *resp = (BCOfflineRevertResp *)[BCPayCache sharedInstance].bcResp;
@@ -163,7 +163,7 @@
                   resp.revertStatus = [response boolValueForKey:kKeyResponseRevertResult defaultValue:NO];
               }
               [BCPayCache beeCloudDoResponse];
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          } failure:^(NSURLSessionTask *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
 }

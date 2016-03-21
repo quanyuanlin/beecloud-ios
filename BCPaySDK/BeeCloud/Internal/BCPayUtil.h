@@ -18,9 +18,9 @@
 /** @name util functions*/
 
 /*!
- A wrapper for AFHTTPRequestOperationManager.
+ A wrapper for AFHTTPSessionManager.
  */
-+ (AFHTTPRequestOperationManager *)getAFHTTPRequestOperationManager;
++ (AFHTTPSessionManager *)getAFHTTPSessionManager;
 
 /**
  *  Get wrapped parameters in the format of "para" to a map for GET REST APIs.

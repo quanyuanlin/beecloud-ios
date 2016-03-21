@@ -91,7 +91,7 @@
 
 - (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.securityPolicy.allowInvalidCertificates = NO;
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     
@@ -100,11 +100,11 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObject:@"client_credentials" forKey:@"grant_type"];
     __weak BCPayPalAdapter * weakSelf = [BCPayPalAdapter sharedInstance];
-    [manager POST:[BCPayCache sharedInstance].isPayPalSandbox?kPayPalAccessTokenSandbox:kPayPalAccessTokenProduction parameters:params success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager POST:[BCPayCache sharedInstance].isPayPalSandbox?kPayPalAccessTokenSandbox:kPayPalAccessTokenProduction parameters:params progress:nil success:^(NSURLSessionTask *task, id response) {
         BCPayLog(@"token %@", response);
         NSDictionary *dic = (NSDictionary *)response;
         [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic stringValueForKey:@"token_type" defaultValue:@""],[dic stringValueForKey:@"access_token" defaultValue:@""]]];
-    }  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }  failure:^(NSURLSessionTask *operation, NSError *error) {
         [weakSelf doErrorResponse:kNetWorkError];
     }];
 }
@@ -135,12 +135,12 @@
     parameters[@"bill_no"] = [[payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];
     parameters[@"access_token"] = accessToken;
     
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
     __weak BCPayPalAdapter *weakSelf = [BCPayPalAdapter sharedInstance];
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters progress:nil
+          success:^(NSURLSessionTask *task, id response) {
               [weakSelf getErrorInResponse:response];
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          } failure:^(NSURLSessionTask *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
 }

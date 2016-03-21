@@ -42,12 +42,13 @@
     
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
     __weak BCRefundStatusReq *weakSelf = self;
-    [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara
-         success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara progress:nil
+         success:^(NSURLSessionTask *task, id response) {
              [weakSelf doQueryRefundStatus:(NSDictionary *)response];
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         } failure:^(NSURLSessionTask *operation, NSError *error) {
              [BCPayUtil doErrorResponse:kNetWorkError];
          }];
 }

@@ -59,11 +59,11 @@
         parameters[@"analysis"] = self.analysis;
     }
     
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
     __weak BCPayReq *weakSelf = self;
     
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters progress:nil
+          success:^(NSURLSessionTask *task, id response) {
               if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
                   [BCPayUtil getErrorInResponse:(NSDictionary *)response];
               } else {
@@ -73,7 +73,7 @@
                       [weakSelf doPayAction:(NSDictionary *)response];
                   }
               }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          } failure:^(NSURLSessionTask *operation, NSError *error) {
               [BCPayUtil doErrorResponse:kNetWorkError];
           }];
 }

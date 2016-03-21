@@ -31,8 +31,8 @@
     [BCPayCache sharedInstance].appSecret = @"";
 }
 
-- (void)testGetAFHTTPRequestOperationManager {
-    XCTAssertNotNil([BCPayUtil getAFHTTPRequestOperationManager]);
+- (void)testGetAFHTTPSessionManager {
+    XCTAssertNotNil([BCPayUtil getAFHTTPSessionManager]);
 }
 
 - (void)testGetWrappedParametersForGetRequest {
