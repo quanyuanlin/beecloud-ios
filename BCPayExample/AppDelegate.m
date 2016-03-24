@@ -36,6 +36,7 @@
 //    [BeeCloud setSandboxMode:YES];
     
     //初始化微信
+    //此处的微信appid必须是在微信开放平台创建的移动应用的appid，且必须与在『BeeCloud控制台-》微信APP支付』配置的"应用APPID"一致，否则会出现『跳转到微信客户端后只显示一个确定按钮的现象』。
     [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
     
     //初始化PayPal

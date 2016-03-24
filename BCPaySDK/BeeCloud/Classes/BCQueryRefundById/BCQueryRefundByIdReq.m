@@ -47,12 +47,12 @@
     NSString *preHost = [BCPayUtil getBestHostWithFormat:kRestApiQueryRefundById];
     NSString *host = [NSString stringWithFormat:@"%@%@", preHost, self.objectId];
     
-    AFHTTPRequestOperationManager *manager = [BCPayUtil getAFHTTPRequestOperationManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCQueryRefundByIdReq *weakSelf = self;
-    [manager GET:host parameters:preparepara
-         success:^(AFHTTPRequestOperation *operation, id response) {
+    [manager GET:host parameters:preparepara progress:nil
+         success:^(NSURLSessionTask *task, id response) {
              [weakSelf doQueryRefundByIdResponse:(NSDictionary *)response];
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         } failure:^(NSURLSessionTask *operation, NSError *error) {
              [BCPayUtil doErrorResponse:kNetWorkError];
          }];
 }
