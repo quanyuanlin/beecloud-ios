@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "AFNetworking.h"
+#import "BCNetworking.h"
 #import "BCPayConstant.h"
 #import "BCPayCache.h"
 #import "BCPayObjects.h"
@@ -18,9 +18,9 @@
 /** @name util functions*/
 
 /*!
- A wrapper for AFHTTPSessionManager.
+ A wrapper for BCHTTPSessionManager.
  */
-+ (AFHTTPSessionManager *)getAFHTTPSessionManager;
++ (BCHTTPSessionManager *)getBCHTTPSessionManager;
 
 /**
  *  Get wrapped parameters in the format of "para" to a map for GET REST APIs.

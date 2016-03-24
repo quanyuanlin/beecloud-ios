@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "QueryResultViewController.h"
-#import "AFNetworking.h"
+#import "BCNetworking.h"
 #import "PayPalMobile.h"
 #import "BCOffinePay.h"
 #import "GenQrCode.h"

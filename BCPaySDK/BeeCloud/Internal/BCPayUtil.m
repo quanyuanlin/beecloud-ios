@@ -12,10 +12,10 @@
 
 @implementation BCPayUtil
 
-+ (AFHTTPSessionManager *)getAFHTTPSessionManager {
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
++ (BCHTTPSessionManager *)getBCHTTPSessionManager {
+    BCHTTPSessionManager *manager = [BCHTTPSessionManager manager];
     manager.securityPolicy.allowInvalidCertificates = NO;
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.requestSerializer = [BCJSONRequestSerializer serializer];
     return manager;
 }
 

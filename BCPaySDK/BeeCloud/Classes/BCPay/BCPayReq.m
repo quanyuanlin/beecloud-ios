@@ -59,7 +59,7 @@
         parameters[@"analysis"] = self.analysis;
     }
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCPayReq *weakSelf = self;
     
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters progress:nil

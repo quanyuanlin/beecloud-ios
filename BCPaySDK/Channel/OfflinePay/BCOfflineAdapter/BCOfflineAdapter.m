@@ -59,7 +59,7 @@
         parameters[@"optional"] = req.optional;
     }
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflinePay] parameters:parameters progress:nil
           success:^(NSURLSessionTask *task, id response) {
@@ -106,7 +106,7 @@
     parameters[@"channel"] = cType;
     parameters[@"bill_no"] = req.billNo;
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillStatus] parameters:parameters progress:nil
           success:^(NSURLSessionTask *operation, id response) {
@@ -149,7 +149,7 @@
     parameters[@"channel"] = cType;
     parameters[@"method"] = @"REVERT";
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCOfflineAdapter *weakSelf = [BCOfflineAdapter sharedInstance];
     [manager POST:[[BCPayUtil getBestHostWithFormat:kRestApiOfflineBillRevert] stringByAppendingString:req.billNo] parameters:parameters progress:nil
           success:^(NSURLSessionTask *operation, id response) {

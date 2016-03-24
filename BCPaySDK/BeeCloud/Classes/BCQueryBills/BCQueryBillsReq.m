@@ -61,7 +61,7 @@
     
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCQueryBillsReq *weakSelf = self;
     [manager GET:[BCPayUtil getBestHostWithFormat: kRestApiQueryBills] parameters:preparepara progress:nil
          success:^(NSURLSessionTask *task, id response) {

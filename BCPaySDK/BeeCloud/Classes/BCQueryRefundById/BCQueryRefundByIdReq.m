@@ -47,7 +47,7 @@
     NSString *preHost = [BCPayUtil getBestHostWithFormat:kRestApiQueryRefundById];
     NSString *host = [NSString stringWithFormat:@"%@%@", preHost, self.objectId];
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCQueryRefundByIdReq *weakSelf = self;
     [manager GET:host parameters:preparepara progress:nil
          success:^(NSURLSessionTask *task, id response) {

@@ -91,9 +91,9 @@
 
 - (void)reqPayPalAccessToken:(BCPayPalVerifyReq *)req {
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    BCHTTPSessionManager *manager = [BCHTTPSessionManager manager];
     manager.securityPolicy.allowInvalidCertificates = NO;
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.requestSerializer = [BCHTTPRequestSerializer serializer];
     
     [manager.requestSerializer setAuthorizationHeaderFieldWithUsername:[BCPayCache sharedInstance].payPalClientID password:[BCPayCache sharedInstance].payPalSecret];
     [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
@@ -135,7 +135,7 @@
     parameters[@"bill_no"] = [[payment.confirmation[@"response"] objectForKey:@"id"] stringByReplacingOccurrencesOfString:@"PAY-" withString:@""];
     parameters[@"access_token"] = accessToken;
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCPayPalAdapter *weakSelf = [BCPayPalAdapter sharedInstance];
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters progress:nil
           success:^(NSURLSessionTask *task, id response) {

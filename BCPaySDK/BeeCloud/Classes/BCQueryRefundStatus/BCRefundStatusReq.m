@@ -42,7 +42,7 @@
     
     NSMutableDictionary *preparepara = [BCPayUtil getWrappedParametersForGetRequest:parameters];
     
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCRefundStatusReq *weakSelf = self;
     
     [manager GET:[BCPayUtil getBestHostWithFormat:kRestApiRefundState] parameters:preparepara progress:nil

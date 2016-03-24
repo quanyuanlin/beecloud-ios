@@ -178,7 +178,7 @@
     
     NSString *host = [NSString stringWithFormat:@"%@%@/%@", [BCPayUtil getBestHostWithFormat:kRestApiSandboxNotify], [BCPayCache sharedInstance].appId, [BCPayCache sharedInstance].bcResp.bcId];
     NSLog(@"sandboxPay id = %@", [BCPayCache sharedInstance].bcResp.bcId);
-    AFHTTPSessionManager *manager = [BCPayUtil getAFHTTPSessionManager];
+    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak PaySandboxViewController *weakSelf = self;
     [manager GET:host parameters:nil progress:nil
          success:^(NSURLSessionTask *task, id response) {

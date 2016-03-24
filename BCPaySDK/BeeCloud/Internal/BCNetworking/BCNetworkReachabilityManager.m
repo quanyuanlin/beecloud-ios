@@ -1,4 +1,4 @@
-// AFNetworkReachabilityManager.m
+// BCNetworkReachabilityManager.m
 // Copyright (c) 2011–2016 Alamofire Software Foundation ( http://alamofire.org/ )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,7 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "AFNetworkReachabilityManager.h"
+#import "BCNetworkReachabilityManager.h"
 #if !TARGET_OS_WATCH
 
 #import <netinet/in.h>
@@ -28,43 +28,43 @@
 #import <ifaddrs.h>
 #import <netdb.h>
 
-NSString * const AFNetworkingReachabilityDidChangeNotification = @"com.alamofire.networking.reachability.change";
-NSString * const AFNetworkingReachabilityNotificationStatusItem = @"AFNetworkingReachabilityNotificationStatusItem";
+NSString * const BCNetworkingReachabilityDidChangeNotification = @"com.alamofire.networking.reachability.change";
+NSString * const BCNetworkingReachabilityNotificationStatusItem = @"BCNetworkingReachabilityNotificationStatusItem";
 
-typedef void (^AFNetworkReachabilityStatusBlock)(AFNetworkReachabilityStatus status);
+typedef void (^BCNetworkReachabilityStatusBlock)(BCNetworkReachabilityStatus status);
 
-NSString * AFStringFromNetworkReachabilityStatus(AFNetworkReachabilityStatus status) {
+NSString * BCStringFromNetworkReachabilityStatus(BCNetworkReachabilityStatus status) {
     switch (status) {
-        case AFNetworkReachabilityStatusNotReachable:
-            return NSLocalizedStringFromTable(@"Not Reachable", @"AFNetworking", nil);
-        case AFNetworkReachabilityStatusReachableViaWWAN:
-            return NSLocalizedStringFromTable(@"Reachable via WWAN", @"AFNetworking", nil);
-        case AFNetworkReachabilityStatusReachableViaWiFi:
-            return NSLocalizedStringFromTable(@"Reachable via WiFi", @"AFNetworking", nil);
-        case AFNetworkReachabilityStatusUnknown:
+        case BCNetworkReachabilityStatusNotReachable:
+            return NSLocalizedStringFromTable(@"Not Reachable", @"BCNetworking", nil);
+        case BCNetworkReachabilityStatusReachableViaWWAN:
+            return NSLocalizedStringFromTable(@"Reachable via WWAN", @"BCNetworking", nil);
+        case BCNetworkReachabilityStatusReachableViaWiFi:
+            return NSLocalizedStringFromTable(@"Reachable via WiFi", @"BCNetworking", nil);
+        case BCNetworkReachabilityStatusUnknown:
         default:
-            return NSLocalizedStringFromTable(@"Unknown", @"AFNetworking", nil);
+            return NSLocalizedStringFromTable(@"Unknown", @"BCNetworking", nil);
     }
 }
 
-static AFNetworkReachabilityStatus AFNetworkReachabilityStatusForFlags(SCNetworkReachabilityFlags flags) {
+static BCNetworkReachabilityStatus BCNetworkReachabilityStatusForFlags(SCNetworkReachabilityFlags flags) {
     BOOL isReachable = ((flags & kSCNetworkReachabilityFlagsReachable) != 0);
     BOOL needsConnection = ((flags & kSCNetworkReachabilityFlagsConnectionRequired) != 0);
     BOOL canConnectionAutomatically = (((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) || ((flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0));
     BOOL canConnectWithoutUserInteraction = (canConnectionAutomatically && (flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0);
     BOOL isNetworkReachable = (isReachable && (!needsConnection || canConnectWithoutUserInteraction));
 
-    AFNetworkReachabilityStatus status = AFNetworkReachabilityStatusUnknown;
+    BCNetworkReachabilityStatus status = BCNetworkReachabilityStatusUnknown;
     if (isNetworkReachable == NO) {
-        status = AFNetworkReachabilityStatusNotReachable;
+        status = BCNetworkReachabilityStatusNotReachable;
     }
 #if	TARGET_OS_IPHONE
     else if ((flags & kSCNetworkReachabilityFlagsIsWWAN) != 0) {
-        status = AFNetworkReachabilityStatusReachableViaWWAN;
+        status = BCNetworkReachabilityStatusReachableViaWWAN;
     }
 #endif
     else {
-        status = AFNetworkReachabilityStatusReachableViaWiFi;
+        status = BCNetworkReachabilityStatusReachableViaWiFi;
     }
 
     return status;
@@ -75,46 +75,46 @@ static AFNetworkReachabilityStatus AFNetworkReachabilityStatusForFlags(SCNetwork
  *
  * This is done to ensure that the notifications are received in the same order
  * as they are sent. If notifications are sent directly, it is possible that
- * a queued notification (for an earlier status condition) is processed after
+ * a queued notification (for an earlier status condition) is processed BCter
  * the later update, resulting in the listener being left in the wrong state.
  */
-static void AFPostReachabilityStatusChange(SCNetworkReachabilityFlags flags, AFNetworkReachabilityStatusBlock block) {
-    AFNetworkReachabilityStatus status = AFNetworkReachabilityStatusForFlags(flags);
+static void BCPostReachabilityStatusChange(SCNetworkReachabilityFlags flags, BCNetworkReachabilityStatusBlock block) {
+    BCNetworkReachabilityStatus status = BCNetworkReachabilityStatusForFlags(flags);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (block) {
             block(status);
         }
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        NSDictionary *userInfo = @{ AFNetworkingReachabilityNotificationStatusItem: @(status) };
-        [notificationCenter postNotificationName:AFNetworkingReachabilityDidChangeNotification object:nil userInfo:userInfo];
+        NSDictionary *userInfo = @{ BCNetworkingReachabilityNotificationStatusItem: @(status) };
+        [notificationCenter postNotificationName:BCNetworkingReachabilityDidChangeNotification object:nil userInfo:userInfo];
     });
 }
 
-static void AFNetworkReachabilityCallback(SCNetworkReachabilityRef __unused target, SCNetworkReachabilityFlags flags, void *info) {
-    AFPostReachabilityStatusChange(flags, (__bridge AFNetworkReachabilityStatusBlock)info);
+static void BCNetworkReachabilityCallback(SCNetworkReachabilityRef __unused target, SCNetworkReachabilityFlags flags, void *info) {
+    BCPostReachabilityStatusChange(flags, (__bridge BCNetworkReachabilityStatusBlock)info);
 }
 
 
-static const void * AFNetworkReachabilityRetainCallback(const void *info) {
+static const void * BCNetworkReachabilityRetainCallback(const void *info) {
     return Block_copy(info);
 }
 
-static void AFNetworkReachabilityReleaseCallback(const void *info) {
+static void BCNetworkReachabilityReleaseCallback(const void *info) {
     if (info) {
         Block_release(info);
     }
 }
 
-@interface AFNetworkReachabilityManager ()
+@interface BCNetworkReachabilityManager ()
 @property (readonly, nonatomic, assign) SCNetworkReachabilityRef networkReachability;
-@property (readwrite, nonatomic, assign) AFNetworkReachabilityStatus networkReachabilityStatus;
-@property (readwrite, nonatomic, copy) AFNetworkReachabilityStatusBlock networkReachabilityStatusBlock;
+@property (readwrite, nonatomic, assign) BCNetworkReachabilityStatus networkReachabilityStatus;
+@property (readwrite, nonatomic, copy) BCNetworkReachabilityStatusBlock networkReachabilityStatusBlock;
 @end
 
-@implementation AFNetworkReachabilityManager
+@implementation BCNetworkReachabilityManager
 
 + (instancetype)sharedManager {
-    static AFNetworkReachabilityManager *_sharedManager = nil;
+    static BCNetworkReachabilityManager *_sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedManager = [self manager];
@@ -126,7 +126,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 + (instancetype)managerForDomain:(NSString *)domain {
     SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, [domain UTF8String]);
 
-    AFNetworkReachabilityManager *manager = [[self alloc] initWithReachability:reachability];
+    BCNetworkReachabilityManager *manager = [[self alloc] initWithReachability:reachability];
     
     CFRelease(reachability);
 
@@ -135,7 +135,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
 + (instancetype)managerForAddress:(const void *)address {
     SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)address);
-    AFNetworkReachabilityManager *manager = [[self alloc] initWithReachability:reachability];
+    BCNetworkReachabilityManager *manager = [[self alloc] initWithReachability:reachability];
 
     CFRelease(reachability);
     
@@ -165,7 +165,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     }
 
     _networkReachability = CFRetain(reachability);
-    self.networkReachabilityStatus = AFNetworkReachabilityStatusUnknown;
+    self.networkReachabilityStatus = BCNetworkReachabilityStatusUnknown;
 
     return self;
 }
@@ -190,11 +190,11 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 }
 
 - (BOOL)isReachableViaWWAN {
-    return self.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN;
+    return self.networkReachabilityStatus == BCNetworkReachabilityStatusReachableViaWWAN;
 }
 
 - (BOOL)isReachableViaWiFi {
-    return self.networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWiFi;
+    return self.networkReachabilityStatus == BCNetworkReachabilityStatusReachableViaWiFi;
 }
 
 #pragma mark -
@@ -207,7 +207,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
     }
 
     __weak __typeof(self)weakSelf = self;
-    AFNetworkReachabilityStatusBlock callback = ^(AFNetworkReachabilityStatus status) {
+    BCNetworkReachabilityStatusBlock callback = ^(BCNetworkReachabilityStatus status) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
 
         strongSelf.networkReachabilityStatus = status;
@@ -217,14 +217,14 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 
     };
 
-    SCNetworkReachabilityContext context = {0, (__bridge void *)callback, AFNetworkReachabilityRetainCallback, AFNetworkReachabilityReleaseCallback, NULL};
-    SCNetworkReachabilitySetCallback(self.networkReachability, AFNetworkReachabilityCallback, &context);
+    SCNetworkReachabilityContext context = {0, (__bridge void *)callback, BCNetworkReachabilityRetainCallback, BCNetworkReachabilityReleaseCallback, NULL};
+    SCNetworkReachabilitySetCallback(self.networkReachability, BCNetworkReachabilityCallback, &context);
     SCNetworkReachabilityScheduleWithRunLoop(self.networkReachability, CFRunLoopGetMain(), kCFRunLoopCommonModes);
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^{
         SCNetworkReachabilityFlags flags;
         if (SCNetworkReachabilityGetFlags(self.networkReachability, &flags)) {
-            AFPostReachabilityStatusChange(flags, callback);
+            BCPostReachabilityStatusChange(flags, callback);
         }
     });
 }
@@ -240,18 +240,18 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 #pragma mark -
 
 - (NSString *)localizedNetworkReachabilityStatusString {
-    return AFStringFromNetworkReachabilityStatus(self.networkReachabilityStatus);
+    return BCStringFromNetworkReachabilityStatus(self.networkReachabilityStatus);
 }
 
 #pragma mark -
 
-- (void)setReachabilityStatusChangeBlock:(void (^)(AFNetworkReachabilityStatus status))block {
+- (void)setReachabilityStatusChangeBlock:(void (^)(BCNetworkReachabilityStatus status))block {
     self.networkReachabilityStatusBlock = block;
 }
 
 #pragma mark - NSKeyValueObserving
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet *)keyPathsForValuesBCfectingValueForKey:(NSString *)key {
     if ([key isEqualToString:@"reachable"] || [key isEqualToString:@"reachableViaWWAN"] || [key isEqualToString:@"reachableViaWiFi"]) {
         return [NSSet setWithObject:@"networkReachabilityStatus"];
     }
