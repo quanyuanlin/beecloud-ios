@@ -32,7 +32,7 @@
 }
 
 - (void)testGetAFHTTPSessionManager {
-    XCTAssertNotNil([BCPayUtil getAFHTTPSessionManager]);
+    XCTAssertNotNil([BCPayUtil getBCHTTPSessionManager]);
 }
 
 - (void)testGetWrappedParametersForGetRequest {
