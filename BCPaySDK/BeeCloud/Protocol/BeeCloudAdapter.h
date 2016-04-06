@@ -22,6 +22,7 @@
 + (BOOL)beeCloudApplePay:(NSMutableDictionary *)dic;
 + (NSString *)beeCloudBaiduPay:(NSMutableDictionary *)dic;
 + (BOOL)beecloudSandboxPay;
++ (BOOL)beecloudCanMakeApplePayments;
 
 + (void)beeCloudPayPal:(NSMutableDictionary *)dic;
 + (void)beeCloudPayPalVerify:(NSMutableDictionary *)dic;

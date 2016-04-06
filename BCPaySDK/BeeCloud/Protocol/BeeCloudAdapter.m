@@ -67,6 +67,14 @@
     return NO;
 }
 
++ (BOOL)beecloudCanMakeApplePayments {
+    id adapter = [[NSClassFromString(kAdapterApplePay) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(canMakeApplePayments)]) {
+       return [adapter canMakeApplePayments];
+    }
+    return NO;
+}
+
 + (BOOL)beeCloudApplePay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterApplePay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(applePay:)]) {

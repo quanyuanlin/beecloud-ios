@@ -114,6 +114,13 @@
 + (BOOL)getCurrentMode;
 
 /**
+ *  判断手机是否支持Apple Pay
+ *
+ *  @return YES表示支持
+ */
++ (BOOL)canMakeApplePayments;
+
+/**
  *  获取API版本号
  *
  *  @return 版本号

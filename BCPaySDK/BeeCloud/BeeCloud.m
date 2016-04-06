@@ -91,6 +91,10 @@
     return NO;
 }
 
++ (BOOL)canMakeApplePayments {
+    return [BeeCloudAdapter beecloudCanMakeApplePayments];
+}
+
 + (NSString *)getBCApiVersion {
     return kApiVersion;
 }

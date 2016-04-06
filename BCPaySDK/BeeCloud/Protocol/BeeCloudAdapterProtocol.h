@@ -26,6 +26,7 @@
 - (BOOL)applePay:(NSMutableDictionary *)dic;
 - (NSString *)baiduPay:(NSMutableDictionary *)dic;
 - (BOOL)sandboxPay;
+- (BOOL)canMakeApplePayments;
 
 - (void)payPal:(NSMutableDictionary *)dic;
 - (void)payPalVerify:(NSMutableDictionary *)dic;

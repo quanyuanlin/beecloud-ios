@@ -71,7 +71,7 @@
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
     NSString *verHost = [NSString stringWithFormat:@"%@%@", kBCHosts[arc4random()%kBCHostCount], reqApiVersion];
-//    verHost = @"http://192.168.1.22:8080/2/rest";
+    verHost = @"http://192.168.1.108:8080/2/rest";
     return [NSString stringWithFormat:format, verHost, [BCPayCache sharedInstance].sandbox ? @"/sandbox" : @""];
 }
 
