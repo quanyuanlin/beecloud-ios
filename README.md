@@ -723,28 +723,5 @@ req.refundno = @"20150709173629127";
 - iOS跳转到微信后立刻返回原APP？  
 可能是由于微信中还保持上次等待支付的场景导致的。后台关闭微信，重新发起微信支付就正常了。
 
-## 代码贡献
-我们非常欢迎大家来贡献代码，我们会向贡献者致以最诚挚的敬意。
-
-一般可以通过在Github上提交[Pull Request](https://github.com/beecloud/beecloud-dotnet-sdk)来贡献代码。
-
-Pull Request要求
-
-- 代码规范 
-
-- 代码格式化 
-
-- 必须添加测试！ - 如果没有测试（单元测试、集成测试都可以），那么提交的补丁是不会通过的。
-
-- 记得更新文档 - 保证`README.md`以及其他相关文档及时更新，和代码的变更保持一致性。
-
-- 创建feature分支 - 最好不要从你的master分支提交 pull request。
-
-- 一个feature提交一个pull请求 - 如果你的代码变更了多个操作，那就提交多个pull请求吧。
-
-- 清晰的commit历史 - 保证你的pull请求的每次commit操作都是有意义的。如果你开发中需要执行多次的即时commit操作，那么请把它们放到一起再提交pull请求。
-
-## [联系我们](https://beecloud.cn/about/contact.php)  
-
 ## 代码许可
 The MIT License (MIT).
