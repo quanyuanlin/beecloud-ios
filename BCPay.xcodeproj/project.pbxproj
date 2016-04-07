@@ -151,8 +151,6 @@
 		3602F9461BA07C3000A28ADC /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		3602F9471BA07C3000A28ADC /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		3602F9491BA07C3000A28ADC /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
-		3602F94A1BA07C3000A28ADC /* AlipaySDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlipaySDK.h; sourceTree = "<group>"; };
-		3602F94B1BA07C3000A28ADC /* APayAuthInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APayAuthInfo.h; sourceTree = "<group>"; };
 		3602F94D1BA07C3000A28ADC /* BCAliPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCAliPayAdapter.h; sourceTree = "<group>"; };
 		3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCAliPayAdapter.m; sourceTree = "<group>"; };
 		361877091C2D134B00CE4AED /* BeeCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BeeCloud.bundle; sourceTree = "<group>"; };
@@ -505,8 +503,6 @@
 			isa = PBXGroup;
 			children = (
 				3602F9491BA07C3000A28ADC /* AlipaySDK.framework */,
-				3602F94A1BA07C3000A28ADC /* AlipaySDK.h */,
-				3602F94B1BA07C3000A28ADC /* APayAuthInfo.h */,
 				3602F94C1BA07C3000A28ADC /* BCAliPayAdapter */,
 			);
 			path = AliPay;
