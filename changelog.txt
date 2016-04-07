@@ -1,5 +1,9 @@
 BeeCloud iOS SDK Changelog
 ==========================
+v3.4.2 2016年03月24日
++ 修复引入SDK后AFNetworking冲突问题
++ 优化Demo
+
 v3.4.1 2015年12月29日
 + 修改PayPal支付bug
 

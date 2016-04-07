@@ -1,5 +1,5 @@
-// AFURLSessionManager.h
-// Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
+// BCURLSessionManager.h
+// Copyright (c) 2011–2016 Alamofire Software Foundation ( http://alamofire.org/ )
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,31 +19,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+
 #import <Foundation/Foundation.h>
 
-#import "AFURLResponseSerialization.h"
-#import "AFURLRequestSerialization.h"
-#import "AFSecurityPolicy.h"
-#import "AFNetworkReachabilityManager.h"
-
-#ifndef NS_DESIGNATED_INITIALIZER
-#if __has_attribute(objc_designated_initializer)
-#define NS_DESIGNATED_INITIALIZER __attribute__((objc_designated_initializer))
-#else
-#define NS_DESIGNATED_INITIALIZER
-#endif
+#import "BCURLResponseSerialization.h"
+#import "BCURLRequestSerialization.h"
+#import "BCSecurityPolicy.h"
+#if !TARGET_OS_WATCH
+#import "BCNetworkReachabilityManager.h"
 #endif
 
 /**
- `AFURLSessionManager` creates and manages an `NSURLSession` object based on a specified `NSURLSessionConfiguration` object, which conforms to `<NSURLSessionTaskDelegate>`, `<NSURLSessionDataDelegate>`, `<NSURLSessionDownloadDelegate>`, and `<NSURLSessionDelegate>`.
+ `BCURLSessionManager` creates and manages an `NSURLSession` object based on a specified `NSURLSessionConfiguration` object, which conforms to `<NSURLSessionTaskDelegate>`, `<NSURLSessionDataDelegate>`, `<NSURLSessionDownloadDelegate>`, and `<NSURLSessionDelegate>`.
 
  ## Subclassing Notes
 
- This is the base class for `AFHTTPSessionManager`, which adds functionality specific to making HTTP requests. If you are looking to extend `AFURLSessionManager` specifically for HTTP, consider subclassing `AFHTTPSessionManager` instead.
+ This is the base class for `BCHTTPSessionManager`, which adds functionality specific to making HTTP requests. If you are looking to extend `BCURLSessionManager` specifically for HTTP, consider subclassing `BCHTTPSessionManager` instead.
 
  ## NSURLSession & NSURLSessionTask Delegate Methods
 
- `AFURLSessionManager` implements the following delegate methods:
+ `BCURLSessionManager` implements the following delegate methods:
 
  ### `NSURLSessionDelegate`
 
@@ -56,6 +51,7 @@
  - `URLSession:willPerformHTTPRedirection:newRequest:completionHandler:`
  - `URLSession:task:didReceiveChallenge:completionHandler:`
  - `URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:`
+ - `URLSession:task:needNewBodyStream:`
  - `URLSession:task:didCompleteWithError:`
 
  ### `NSURLSessionDataDelegate`
@@ -75,7 +71,7 @@
 
  ## Network Reachability Monitoring
 
- Network reachability status and change monitoring is available through the `reachabilityManager` property. Applications may choose to monitor network reachability conditions in order to prevent or suspend any outbound requests. See `AFNetworkReachabilityManager` for more details.
+ Network reachability status and change monitoring is available through the `reachabilityManager` property. Applications may choose to monitor network reachability conditions in order to prevent or suspend any outbound requests. See `BCNetworkReachabilityManager` for more details.
 
  ## NSCoding Caveats
 
@@ -91,9 +87,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if (defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000) || (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1090)
-
-@interface AFURLSessionManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSSecureCoding, NSCopying>
+@interface BCURLSessionManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSSecureCoding, NSCopying>
 
 /**
  The managed session.
@@ -106,29 +100,31 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, nonatomic, strong) NSOperationQueue *operationQueue;
 
 /**
- Responses sent from the server in data tasks created with `dataTaskWithRequest:success:failure:` and run using the `GET` / `POST` / et al. convenience methods are automatically validated and serialized by the response serializer. By default, this property is set to an instance of `AFJSONResponseSerializer`.
+ Responses sent from the server in data tasks created with `dataTaskWithRequest:success:failure:` and run using the `GET` / `POST` / et al. convenience methods are automatically validated and serialized by the response serializer. By default, this property is set to an instance of `BCJSONResponseSerializer`.
 
  @warning `responseSerializer` must not be `nil`.
  */
-@property (nonatomic, strong) id <AFURLResponseSerialization> responseSerializer;
+@property (nonatomic, strong) id <BCURLResponseSerialization> responseSerializer;
 
 ///-------------------------------
 /// @name Managing Security Policy
 ///-------------------------------
 
 /**
- The security policy used by created request operations to evaluate server trust for secure connections. `AFURLSessionManager` uses the `defaultPolicy` unless otherwise specified.
+ The security policy used by created session to evaluate server trust for secure connections. `BCURLSessionManager` uses the `defaultPolicy` unless otherwise specified.
  */
-@property (nonatomic, strong) AFSecurityPolicy *securityPolicy;
+@property (nonatomic, strong) BCSecurityPolicy *securityPolicy;
 
+#if !TARGET_OS_WATCH
 ///--------------------------------------
 /// @name Monitoring Network Reachability
 ///--------------------------------------
 
 /**
- The network reachability manager. `AFURLSessionManager` uses the `sharedManager` by default.
+ The network reachability manager. `BCURLSessionManager` uses the `sharedManager` by default.
  */
-@property (readwrite, nonatomic, strong) AFNetworkReachabilityManager *reachabilityManager;
+@property (readwrite, nonatomic, strong) BCNetworkReachabilityManager *reachabilityManager;
+#endif
 
 ///----------------------------
 /// @name Getting Session Tasks
@@ -137,22 +133,22 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The data, upload, and download tasks currently run by the managed session.
  */
-@property (readonly, nonatomic, strong) NSArray *tasks;
+@property (readonly, nonatomic, strong) NSArray <NSURLSessionTask *> *tasks;
 
 /**
  The data tasks currently run by the managed session.
  */
-@property (readonly, nonatomic, strong) NSArray *dataTasks;
+@property (readonly, nonatomic, strong) NSArray <NSURLSessionDataTask *> *dataTasks;
 
 /**
  The upload tasks currently run by the managed session.
  */
-@property (readonly, nonatomic, strong) NSArray *uploadTasks;
+@property (readonly, nonatomic, strong) NSArray <NSURLSessionUploadTask *> *uploadTasks;
 
 /**
  The download tasks currently run by the managed session.
  */
-@property (readonly, nonatomic, strong) NSArray *downloadTasks;
+@property (readonly, nonatomic, strong) NSArray <NSURLSessionDownloadTask *> *downloadTasks;
 
 ///-------------------------------
 /// @name Managing Callback Queues
@@ -161,20 +157,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The dispatch queue for `completionBlock`. If `NULL` (default), the main queue is used.
  */
-#if OS_OBJECT_HAVE_OBJC_SUPPORT
 @property (nonatomic, strong, nullable) dispatch_queue_t completionQueue;
-#else
-@property (nonatomic, assign, nullable) dispatch_queue_t completionQueue;
-#endif
 
 /**
  The dispatch group for `completionBlock`. If `NULL` (default), a private dispatch group is used.
  */
-#if OS_OBJECT_HAVE_OBJC_SUPPORT
 @property (nonatomic, strong, nullable) dispatch_group_t completionGroup;
-#else
-@property (nonatomic, assign, nullable) dispatch_group_t completionGroup;
-#endif
 
 ///---------------------------------
 /// @name Working Around System Bugs
@@ -183,9 +171,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Whether to attempt to retry creation of upload tasks for background sessions when initial call returns `nil`. `NO` by default.
 
- @bug As of iOS 7.0, there is a bug where upload tasks created for background tasks are sometimes `nil`. As a workaround, if this property is `YES`, AFNetworking will follow Apple's recommendation to try creating the task again.
+ @bug As of iOS 7.0, there is a bug where upload tasks created for background tasks are sometimes `nil`. As a workaround, if this property is `YES`, BCNetworking will follow Apple's recommendation to try creating the task again.
 
- @see https://github.com/AFNetworking/AFNetworking/issues/1675
+ @see https://github.com/BCNetworking/BCNetworking/issues/1675
  */
 @property (nonatomic, assign) BOOL attemptsToRecreateUploadTasksForBackgroundSessions;
 
@@ -220,7 +208,20 @@ NS_ASSUME_NONNULL_BEGIN
  @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
  */
 - (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request
-                            completionHandler:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
+                            completionHandler:(nullable void (^)(NSURLResponse *response, id _Nullable responseObject,  NSError * _Nullable error))completionHandler;
+
+/**
+ Creates an `NSURLSessionDataTask` with the specified request.
+
+ @param request The HTTP request for the request.
+ @param uploadProgressBlock A block object to be executed when the upload progress is updated. Note this block is called on the session queue, not the main queue.
+ @param downloadProgressBlock A block object to be executed when the download progress is updated. Note this block is called on the session queue, not the main queue.
+ @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
+ */
+- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request
+                               uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgressBlock
+                             downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
+                            completionHandler:(nullable void (^)(NSURLResponse *response, id _Nullable responseObject,  NSError * _Nullable error))completionHandler;
 
 ///---------------------------
 /// @name Running Upload Tasks
@@ -231,39 +232,39 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param request The HTTP request for the request.
  @param fileURL A URL to the local file to be uploaded.
- @param progress A progress object monitoring the current upload progress.
+ @param uploadProgressBlock A block object to be executed when the upload progress is updated. Note this block is called on the session queue, not the main queue.
  @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
 
  @see `attemptsToRecreateUploadTasksForBackgroundSessions`
  */
 - (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request
                                          fromFile:(NSURL *)fileURL
-                                         progress:(NSProgress * __nullable __autoreleasing * __nullable)progress
-                                completionHandler:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
+                                         progress:(nullable void (^)(NSProgress *uploadProgress))uploadProgressBlock
+                                completionHandler:(nullable void (^)(NSURLResponse *response, id _Nullable responseObject, NSError  * _Nullable error))completionHandler;
 
 /**
  Creates an `NSURLSessionUploadTask` with the specified request for an HTTP body.
 
  @param request The HTTP request for the request.
  @param bodyData A data object containing the HTTP body to be uploaded.
- @param progress A progress object monitoring the current upload progress.
+ @param uploadProgressBlock A block object to be executed when the upload progress is updated. Note this block is called on the session queue, not the main queue.
  @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
  */
 - (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request
                                          fromData:(nullable NSData *)bodyData
-                                         progress:(NSProgress * __nullable __autoreleasing * __nullable)progress
-                                completionHandler:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
+                                         progress:(nullable void (^)(NSProgress *uploadProgress))uploadProgressBlock
+                                completionHandler:(nullable void (^)(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error))completionHandler;
 
 /**
  Creates an `NSURLSessionUploadTask` with the specified streaming request.
 
  @param request The HTTP request for the request.
- @param progress A progress object monitoring the current upload progress.
+ @param uploadProgressBlock A block object to be executed when the upload progress is updated. Note this block is called on the session queue, not the main queue.
  @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.
  */
 - (NSURLSessionUploadTask *)uploadTaskWithStreamedRequest:(NSURLRequest *)request
-                                                 progress:(NSProgress * __nullable __autoreleasing * __nullable)progress
-                                        completionHandler:(nullable void (^)(NSURLResponse *response, id responseObject, NSError *error))completionHandler;
+                                                 progress:(nullable void (^)(NSProgress *uploadProgress))uploadProgressBlock
+                                        completionHandler:(nullable void (^)(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error))completionHandler;
 
 ///-----------------------------
 /// @name Running Download Tasks
@@ -273,29 +274,29 @@ NS_ASSUME_NONNULL_BEGIN
  Creates an `NSURLSessionDownloadTask` with the specified request.
 
  @param request The HTTP request for the request.
- @param progress A progress object monitoring the current download progress.
- @param destination A block object to be executed in order to determine the destination of the downloaded file. This block takes two arguments, the target path & the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted after being moved to the returned URL.
+ @param downloadProgressBlock A block object to be executed when the download progress is updated. Note this block is called on the session queue, not the main queue.
+ @param destination A block object to be executed in order to determine the destination of the downloaded file. This block takes two arguments, the target path & the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted BCter being moved to the returned URL.
  @param completionHandler A block to be executed when a task finishes. This block has no return value and takes three arguments: the server response, the path of the downloaded file, and the error describing the network or parsing error that occurred, if any.
 
  @warning If using a background `NSURLSessionConfiguration` on iOS, these blocks will be lost when the app is terminated. Background sessions may prefer to use `-setDownloadTaskDidFinishDownloadingBlock:` to specify the URL for saving the downloaded file, rather than the destination block of this method.
  */
 - (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request
-                                             progress:(NSProgress * __nullable __autoreleasing * __nullable)progress
+                                             progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
                                           destination:(nullable NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
-                                    completionHandler:(nullable void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler;
+                                    completionHandler:(nullable void (^)(NSURLResponse *response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
 
 /**
  Creates an `NSURLSessionDownloadTask` with the specified resume data.
 
  @param resumeData The data used to resume downloading.
- @param progress A progress object monitoring the current download progress.
- @param destination A block object to be executed in order to determine the destination of the downloaded file. This block takes two arguments, the target path & the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted after being moved to the returned URL.
+ @param downloadProgressBlock A block object to be executed when the download progress is updated. Note this block is called on the session queue, not the main queue.
+ @param destination A block object to be executed in order to determine the destination of the downloaded file. This block takes two arguments, the target path & the server response, and returns the desired file URL of the resulting download. The temporary file used during the download will be automatically deleted BCter being moved to the returned URL.
  @param completionHandler A block to be executed when a task finishes. This block has no return value and takes three arguments: the server response, the path of the downloaded file, and the error describing the network or parsing error that occurred, if any.
  */
 - (NSURLSessionDownloadTask *)downloadTaskWithResumeData:(NSData *)resumeData
-                                                progress:(NSProgress * __nullable __autoreleasing * __nullable)progress
+                                                progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
                                              destination:(nullable NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
-                                       completionHandler:(nullable void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler;
+                                       completionHandler:(nullable void (^)(NSURLResponse *response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
 
 ///---------------------------------
 /// @name Getting Progress for Tasks
@@ -304,20 +305,20 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Returns the upload progress of the specified task.
 
- @param uploadTask The session upload task. Must not be `nil`.
+ @param task The session task. Must not be `nil`.
 
  @return An `NSProgress` object reporting the upload progress of a task, or `nil` if the progress is unavailable.
  */
-- (nullable NSProgress *)uploadProgressForTask:(NSURLSessionUploadTask *)uploadTask;
+- (nullable NSProgress *)uploadProgressForTask:(NSURLSessionTask *)task;
 
 /**
  Returns the download progress of the specified task.
 
- @param downloadTask The session download task. Must not be `nil`.
+ @param task The session task. Must not be `nil`.
 
  @return An `NSProgress` object reporting the download progress of a task, or `nil` if the progress is unavailable.
  */
-- (nullable NSProgress *)downloadProgressForTask:(NSURLSessionDownloadTask *)downloadTask;
+- (nullable NSProgress *)downloadProgressForTask:(NSURLSessionTask *)task;
 
 ///-----------------------------------------
 /// @name Setting Session Delegate Callbacks
@@ -335,7 +336,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param block A block object to be executed when a connection level authentication challenge has occurred. The block returns the disposition of the authentication challenge, and takes three arguments: the session, the authentication challenge, and a pointer to the credential that should be used to resolve the challenge.
  */
-- (void)setSessionDidReceiveAuthenticationChallengeBlock:(nullable NSURLSessionAuthChallengeDisposition (^)(NSURLSession *session, NSURLAuthenticationChallenge *challenge, NSURLCredential * __nullable __autoreleasing * __nullable credential))block;
+- (void)setSessionDidReceiveAuthenticationChallengeBlock:(nullable NSURLSessionAuthChallengeDisposition (^)(NSURLSession *session, NSURLAuthenticationChallenge *challenge, NSURLCredential * _Nullable __autoreleasing * _Nullable credential))block;
 
 ///--------------------------------------
 /// @name Setting Task Delegate Callbacks
@@ -360,7 +361,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param block A block object to be executed when a session task has received a request specific authentication challenge. The block returns the disposition of the authentication challenge, and takes four arguments: the session, the task, the authentication challenge, and a pointer to the credential that should be used to resolve the challenge.
  */
-- (void)setTaskDidReceiveAuthenticationChallengeBlock:(nullable NSURLSessionAuthChallengeDisposition (^)(NSURLSession *session, NSURLSessionTask *task, NSURLAuthenticationChallenge *challenge, NSURLCredential * __nullable __autoreleasing * __nullable credential))block;
+- (void)setTaskDidReceiveAuthenticationChallengeBlock:(nullable NSURLSessionAuthChallengeDisposition (^)(NSURLSession *session, NSURLSessionTask *task, NSURLAuthenticationChallenge *challenge, NSURLCredential * _Nullable __autoreleasing * _Nullable credential))block;
 
 /**
  Sets a block to be executed periodically to track upload progress, as handled by the `NSURLSessionTaskDelegate` method `URLSession:task:didSendBodyData:totalBytesSent:totalBytesExpectedToSend:`.
@@ -374,7 +375,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param block A block object to be executed when a session task is completed. The block has no return value, and takes three arguments: the session, the task, and any error that occurred in the process of executing the task.
  */
-- (void)setTaskDidCompleteBlock:(nullable void (^)(NSURLSession *session, NSURLSessionTask *task, NSError *error))block;
+- (void)setTaskDidCompleteBlock:(nullable void (^)(NSURLSession *session, NSURLSessionTask *task, NSError * _Nullable error))block;
 
 ///-------------------------------------------
 /// @name Setting Data Task Delegate Callbacks
@@ -422,9 +423,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Sets a block to be executed when a download task has completed a download, as handled by the `NSURLSessionDownloadDelegate` method `URLSession:downloadTask:didFinishDownloadingToURL:`.
 
- @param block A block object to be executed when a download task has completed. The block returns the URL the download should be moved to, and takes three arguments: the session, the download task, and the temporary location of the downloaded file. If the file manager encounters an error while attempting to move the temporary file to the destination, an `AFURLSessionDownloadTaskDidFailToMoveFileNotification` will be posted, with the download task as its object, and the user info of the error.
+ @param block A block object to be executed when a download task has completed. The block returns the URL the download should be moved to, and takes three arguments: the session, the download task, and the temporary location of the downloaded file. If the file manager encounters an error while attempting to move the temporary file to the destination, an `BCURLSessionDownloadTaskDidFailToMoveFileNotification` will be posted, with the download task as its object, and the user info of the error.
  */
-- (void)setDownloadTaskDidFinishDownloadingBlock:(nullable NSURL * (^)(NSURLSession *session, NSURLSessionDownloadTask *downloadTask, NSURL *location))block;
+- (void)setDownloadTaskDidFinishDownloadingBlock:(nullable NSURL * _Nullable  (^)(NSURLSession *session, NSURLSessionDownloadTask *downloadTask, NSURL *location))block;
 
 /**
  Sets a block to be executed periodically to track download progress, as handled by the `NSURLSessionDownloadDelegate` method `URLSession:downloadTask:didWriteData:totalBytesWritten:totalBytesWritten:totalBytesExpectedToWrite:`.
@@ -442,109 +443,58 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#endif
-
 ///--------------------
 /// @name Notifications
 ///--------------------
 
 /**
- Posted when a task begins executing.
-
- @deprecated Use `AFNetworkingTaskDidResumeNotification` instead.
- */
-extern NSString * const AFNetworkingTaskDidStartNotification DEPRECATED_ATTRIBUTE;
-
-/**
  Posted when a task resumes.
  */
-extern NSString * const AFNetworkingTaskDidResumeNotification;
-
-/**
- Posted when a task finishes executing. Includes a userInfo dictionary with additional information about the task.
-
- @deprecated Use `AFNetworkingTaskDidCompleteNotification` instead.
- */
-extern NSString * const AFNetworkingTaskDidFinishNotification DEPRECATED_ATTRIBUTE;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidResumeNotification;
 
 /**
  Posted when a task finishes executing. Includes a userInfo dictionary with additional information about the task.
  */
-extern NSString * const AFNetworkingTaskDidCompleteNotification;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidCompleteNotification;
 
 /**
  Posted when a task suspends its execution.
  */
-extern NSString * const AFNetworkingTaskDidSuspendNotification;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidSuspendNotification;
 
 /**
  Posted when a session is invalidated.
  */
-extern NSString * const AFURLSessionDidInvalidateNotification;
+FOUNDATION_EXPORT NSString * const BCURLSessionDidInvalidateNotification;
 
 /**
  Posted when a session download task encountered an error when moving the temporary download file to a specified destination.
  */
-extern NSString * const AFURLSessionDownloadTaskDidFailToMoveFileNotification;
+FOUNDATION_EXPORT NSString * const BCURLSessionDownloadTaskDidFailToMoveFileNotification;
 
 /**
- The raw response data of the task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if response data exists for the task.
-
- @deprecated Use `AFNetworkingTaskDidCompleteResponseDataKey` instead.
+ The raw response data of the task. Included in the userInfo dictionary of the `BCNetworkingTaskDidCompleteNotification` if response data exists for the task.
  */
-extern NSString * const AFNetworkingTaskDidFinishResponseDataKey DEPRECATED_ATTRIBUTE;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidCompleteResponseDataKey;
 
 /**
- The raw response data of the task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if response data exists for the task.
+ The serialized response object of the task. Included in the userInfo dictionary of the `BCNetworkingTaskDidCompleteNotification` if the response was serialized.
  */
-extern NSString * const AFNetworkingTaskDidCompleteResponseDataKey;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidCompleteSerializedResponseKey;
 
 /**
- The serialized response object of the task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if the response was serialized.
-
- @deprecated Use `AFNetworkingTaskDidCompleteSerializedResponseKey` instead.
+ The response serializer used to serialize the response. Included in the userInfo dictionary of the `BCNetworkingTaskDidCompleteNotification` if the task has an associated response serializer.
  */
-extern NSString * const AFNetworkingTaskDidFinishSerializedResponseKey DEPRECATED_ATTRIBUTE;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidCompleteResponseSerializerKey;
 
 /**
- The serialized response object of the task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if the response was serialized.
+ The file path associated with the download task. Included in the userInfo dictionary of the `BCNetworkingTaskDidCompleteNotification` if an the response data has been stored directly to disk.
  */
-extern NSString * const AFNetworkingTaskDidCompleteSerializedResponseKey;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidCompleteAssetPathKey;
 
 /**
- The response serializer used to serialize the response. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if the task has an associated response serializer.
-
- @deprecated Use `AFNetworkingTaskDidCompleteResponseSerializerKey` instead.
+ Any error associated with the task, or the serialization of the response. Included in the userInfo dictionary of the `BCNetworkingTaskDidCompleteNotification` if an error exists.
  */
-extern NSString * const AFNetworkingTaskDidFinishResponseSerializerKey DEPRECATED_ATTRIBUTE;
-
-/**
- The response serializer used to serialize the response. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if the task has an associated response serializer.
- */
-extern NSString * const AFNetworkingTaskDidCompleteResponseSerializerKey;
-
-/**
- The file path associated with the download task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if an the response data has been stored directly to disk.
-
- @deprecated Use `AFNetworkingTaskDidCompleteAssetPathKey` instead.
- */
-extern NSString * const AFNetworkingTaskDidFinishAssetPathKey DEPRECATED_ATTRIBUTE;
-
-/**
- The file path associated with the download task. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if an the response data has been stored directly to disk.
- */
-extern NSString * const AFNetworkingTaskDidCompleteAssetPathKey;
-
-/**
- Any error associated with the task, or the serialization of the response. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if an error exists.
-
- @deprecated Use `AFNetworkingTaskDidCompleteErrorKey` instead.
- */
-extern NSString * const AFNetworkingTaskDidFinishErrorKey DEPRECATED_ATTRIBUTE;
-
-/**
- Any error associated with the task, or the serialization of the response. Included in the userInfo dictionary of the `AFNetworkingTaskDidFinishNotification` if an error exists.
- */
-extern NSString * const AFNetworkingTaskDidCompleteErrorKey;
+FOUNDATION_EXPORT NSString * const BCNetworkingTaskDidCompleteErrorKey;
 
 NS_ASSUME_NONNULL_END

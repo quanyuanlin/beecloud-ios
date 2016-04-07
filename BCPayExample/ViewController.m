@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "QueryResultViewController.h"
-#import "AFNetworking.h"
+#import "BCNetworking.h"
 #import "PayPalMobile.h"
 #import "BCOffinePay.h"
 #import "GenQrCode.h"
@@ -80,7 +80,7 @@
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel; //支付渠道
     payReq.title = billTitle;//订单标题
-    payReq.totalFee = @"1";//订单价格
+    payReq.totalFee = @"10";//订单价格
     payReq.billNo = billno;//商户自定义订单号
     payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
     payReq.billTimeOut = 300;//订单超时时间
