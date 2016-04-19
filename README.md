@@ -8,8 +8,17 @@
 
 本项目的官方GitHub地址是 [https://github.com/beecloud/beecloud-ios](https://github.com/beecloud/beecloud-ios)
 
-目前已经包含微信APP、支付宝APP、银联在线APP、PayPal、百度钱包 APP支付功能，以及支付订单和退款订单的查询功能。还包含了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，以及订单状态的查询与订单撤销。  
-本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 iOS6 及以上版本。可以作为调用BeeCloud Rest API的示例或者直接用于生产。
+SDK支持以下支付渠道: 
+ 
+ * 微信APP
+ * 支付宝APP
+ * 银联在线APP
+ * PayPal
+ * 百度钱包   
+
+提供支付、支付订单以及退款订单的查询功能。  
+还提供了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，订单状态的查询以及订单撤销。  
+本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 **iOS 6** 及以上版本。
 
 </br>
 ## 流程
@@ -36,7 +45,7 @@
 在开始coding前，您还需要做**申请支付参数**、**配置支付参数**这两项工作，具体请仔细阅读[快速开始](https://beecloud.cn/apply/)
 
 </br>
-## 安装
+## 导入SDK
 
 方法一、[下载本工程源码](https://beecloud.cn/download/)，将`BCPaySDK`文件夹中的代码拷贝进自己项目，并按照下文的3个步骤导入相应文件进自己工程即可。
 
@@ -45,7 +54,6 @@
 - 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib`。  
 > iOS9 加入`libz.1.2.5.tbd`、`libc++.tbd`、`libsqlite3.tbd` 
  
-
 - 使用PayPal支付，需要添加以下系统库：  
  `AudioToolbox.framework`  
  `CoreLocation.framework`  
@@ -129,8 +137,8 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 请到 Xcode 项目的 Build Settings 页搜索 bitcode，将 Enable Bitcode 设置为 NO。
 
 </br>
-## 注册  
-
+## 加入BeeCloud支付 
+###  初始化
 ① 初始化BeeCloud  
 
 **初始化分为生产模式(LiveMode)、沙箱环境(SandboxMode)；沙箱测试模式下不产生真实交易**  
@@ -164,44 +172,11 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 [BeeCloud initWeChatPay:@"微信开放平台appid"];
 ```
 
-初始化示例：
+③ handleOpenUrl
+此方法用于处理从第三方应用回到本应用时的回调
 
 ```objc
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
-   /* 
-    如果使用BeeCloud控制台的APP Secret初始化，代表初始化生产环境；
-    如果使用BeeCloud控制台的Test Secret初始化，代表初始化沙箱测试环境;
-    Demo账号:
-    appid: c5d1cba1-5e3f-4ba0-941d-9b0a371fe719
-    appSecret: 39a7a518-9ac8-4a9e-87bc-7885f33cf18c  
-    testSecret: 4bfdd244-574d-4bf3-b034-0c751ed34fee
-    由于支付宝的政策原因，测试账号的支付宝支付不能在生产环境中使用，带来不便，敬请原谅！
-    */
-    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
-    
-    /* 沙箱测试模式 */
-//  [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee" sandbox:YES];
-    
-    //开启/关闭沙箱测试模式;
-    //可通过[BeeCloud getCurrentMode]查看当前模式，返回YES代表当前是sandbox环境，返回NO代表当前是生产环境
-	//[BeeCloud setSandboxMode:YES];
-    
-    //初始化微信
-    [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
-    
-    //初始化PayPal
-    [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR"
-                  secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF"
-                 sandbox:YES];
-    return YES;
-}
-```
-
-② handleOpenUrl
-
-```objc
-//为保证从支付宝，微信返回本应用，须绑定openUrl.
+//为保证从支付宝，微信返回本应用，须绑定openUrl. 用于iOS9之前版本
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if (![BeeCloud handleOpenUrl:url]) {
         //handle其他类型的url
@@ -217,152 +192,6 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
     return YES;
 }
 ```
- 
-
-## 使用方法
->具体使用请参考项目中的`BCPayExample`工程
-
-实现接口`BeeCloudDelegate`，获取不同类型的请求对应的响应。  
-
-*  使用以下方法设置delegate:
-
-```objc
-[BeeCloud setBeeCloudDelegate:self];
-```
-
-*  实现BeeCloudDelegate:
-
-```objc
-- (void)onBeeCloudResp:(BCBaseResp *)resp {
-    
-    switch (resp.type) {
-        case BCObjsTypePayResp:
-        {
-            // 支付请求响应
-            BCPayResp *tempResp = (BCPayResp *)resp;
-            if (tempResp.resultCode == 0) {
-                BCPayReq *payReq = (BCPayReq *)resp.request;
-                //百度钱包比较特殊需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
-                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
-                    [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
-                } else {
-                    //微信、支付宝、银联支付成功
-                    [self showAlertView:resp.resultMsg];
-                }
-            } else {
-                //支付取消或者支付失败
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        case BCObjsTypeQueryBillsResp:
-        {
-            BCQueryBillsResp *tempResp = (BCQueryBillsResp *)resp;
-            if (resp.resultCode == 0) {
-                if (tempResp.count == 0) {
-                    [self showAlertView:@"未找到相关订单信息"];
-                } else {
-                    self.orderList = tempResp;
-                    [self performSegueWithIdentifier:@"queryResult" sender:self];
-                }
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        case BCObjsTypeQueryRefundsResp:
-        {
-            BCQueryRefundsResp *tempResp = (BCQueryRefundsResp *)resp;
-            if (resp.resultCode == 0) {
-                if (tempResp.count == 0) {
-                    [self showAlertView:@"未找到相关订单信息"];
-                } else {
-                    self.orderList = tempResp;
-                    [self performSegueWithIdentifier:@"queryResult" sender:self];
-                }
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        
-        case BCObjsTypeOfflinePayResp:
-        {
-            BCOfflinePayResp *tempResp = (BCOfflinePayResp *)resp;
-            if (resp.resultCode == 0) {
-                BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
-                switch (payReq.channel) {
-                    case PayChannelAliOfflineQrCode:
-                    case PayChannelWxNative:
-                        if (tempResp.codeurl.isValid) {
-                            QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
-                            qrCodeView.resp = tempResp;
-                            qrCodeView.delegate = self;
-                            [self.navigationController pushViewController:qrCodeView animated:YES];
-                        }
-                        break;
-                    case PayChannelAliScan:
-                    case PayChannelWxScan:
-                    {
-                        BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
-                        req.channel = payReq.channel;
-                        req.billNo = payReq.billNo;
-                        [BeeCloud sendBCReq:req];
-                    }
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        case BCObjsTypeOfflineBillStatusResp:
-        {
-            static int queryTimes = 1;
-            BCOfflineStatusResp *tempResp = (BCOfflineStatusResp *)resp;
-            if (tempResp.resultCode == 0) {
-                if (!tempResp.payResult && queryTimes < 3) {
-                    queryTimes++;
-                    [BeeCloud sendBCReq:tempResp.request];
-                } else {
-                    [self showAlertView:tempResp.payResult?@"支付成功":@"支付失败"];
-                    //                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
-                    //                req.channel = tempResp.request.channel;
-                    //                req.billno = tempResp.request.billno;
-                    //                [BeeCloud sendBCReq:req];
-                    queryTimes = 1;
-                }
-                
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        case BCObjsTypeOfflineRevertResp:
-        {
-#pragma mark - 线下撤销订单响应事件类型，包含WX_SCAN,ALI_SCAN,ALI_OFFLINE_QRCODE
-            BCOfflineRevertResp *tempResp = (BCOfflineRevertResp *)resp;
-            if (resp.resultCode == 0) {
-                [self showAlertView:tempResp.revertStatus?@"撤销成功":@"撤销失败"];
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        default:
-        {
-            if (resp.resultCode == 0) {
-                [self showAlertView:resp.resultMsg];
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",resp.resultMsg, resp.errDetail]];
-            }
-        }
-            break;
-    }
-}
-```
 
 *  请求与响应事件说明  
    BeeCloud iOS SDK 的功能以事件为单元划分为：
@@ -374,7 +203,7 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
      
      - 公共返回参数  
 
-		参数名 | 类型 | 含义 
+		参数名 | 类型 | 含义   
 	---- | ---- | ----
 	resultCode | Integer| 返回码，0为正常
 	resultMsg  | String | 返回信息， OK为正常
@@ -385,8 +214,7 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 
 ### 支付
 
-#### 微信&支付宝&银联&百度
-通过构造`BCPayReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。  
+通过构造`BCPayReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。具体请参考Demo。    
 **响应事件对象为`BCPayResp`**
 
 ```objc
@@ -394,207 +222,21 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 - (void)doPay:(PayChannel)channel {
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-    
+    /**
+        按住键盘上的option键，点击参数名称，可以查看参数说明
+     **/
     BCPayReq *payReq = [[BCPayReq alloc] init];
-    payReq.channel = channel;
-    payReq.title = billTitle;
-    payReq.totalFee = @"1";
-    payReq.billNo = billno;
-    payReq.scheme = @"payDemo";
-    payReq.billTimeOut = 360;
-    payReq.viewController = self;
-    payReq.optional = dict;
-    [BeeCloud sendBCReq:payReq];
-}
-
-```
-
-#### PayPal
-通过构造`BCPayPalReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。  
-**响应事件对象为`BCBaseResp`**
- 
- ```objc
-- (void)doPayPal {
-    BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
-    
-    _payPalConfig = [[PayPalConfiguration alloc] init];
-    _payPalConfig.acceptCreditCards = YES;
-    _payPalConfig.merchantName = @"Awesome Shirts, Inc.";
-    _payPalConfig.merchantPrivacyPolicyURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/privacy-full"];
-    _payPalConfig.merchantUserAgreementURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/useragreement-full"];
-    
-    _payPalConfig.languageOrLocale = [NSLocale preferredLanguages][0];
-    
-    _payPalConfig.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
-    
-    PayPalItem *item1 = [PayPalItem itemWithName:@"Old jeans with holes"
-                                    withQuantity:2
-                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"84.99"]
-                                    withCurrency:@"USD"
-                                         withSku:@"Hip-00037"];
-    
-    PayPalItem *item2 = [PayPalItem itemWithName:@"Free rainbow patch"
-                                    withQuantity:1
-                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"0.00"]
-                                    withCurrency:@"USD"
-                                         withSku:@"Hip-00066"];
-    
-    PayPalItem *item3 = [PayPalItem itemWithName:@"Long-sleeve plaid shirt (mustache not included)"
-                                    withQuantity:1
-                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"37.99"]
-                                    withCurrency:@"USD"
-                                         withSku:@"Hip-00291"];
-    
-    payReq.items = @[item1, item2, item3];
-    payReq.shipping = @"5.00";
-    payReq.tax = @"2.50";
-    payReq.shortDesc = @"paypal test";
-    payReq.viewController = self;
-    payReq.payConfig = _payPalConfig;
-    
-    [BeeCloud sendBCReq:payReq]; 
-}
- ```
-##### 实现`PayPalPaymentDelegate`
-  
-> **支付完成后必须进行Verify的操作**
-
-```objc
-//支付完成
-- (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
-
-	//使用`completedPayment`完成Payment Verify操作
-	BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
-   req.payment = _completedPayment;
-   [BeeCloud sendBCReq:req];
-   
-   [self dismissViewControllerAnimated:YES completion:nil];
-}
-//支付取消
-- (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
-   
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-```
-
-#### 百度钱包  
-通过构造`BCPayReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付查询。
-**响应事件类型对象：`BCPayResp`**
-
-```objc
-
-//向BeeCloud获取orderInfo
-- (void)doPay:(PayChannel)channel {
-    NSString *billno = [self genBillNo];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-
-    BCPayReq *payReq = [[BCPayReq alloc] init];
-    payReq.channel = channel;//渠道
-    payReq.title = @"BeeCloud自制白开水";//订单标题
-    payReq.totalfee = @"1";//订单金额
-    payReq.billTimeOut = 360; //订单超时时间，秒位单位，建议大于6分钟
-    payReq.billno = billno;//商户自定义订单号，必须保证唯一性
-    payReq.optional = dict;//商户业务扩展参数
-    [BeeCloud sendBCReq:payReq];
-}
-//发起支付
-- (void)onBeeCloudResp:(BCBaseResp *)resp {
-    
-    switch (resp.type) {
-        case BCObjsTypePayResp:
-        {
-            BCPayResp *tempResp = (BCPayResp *)resp;
-            if (tempResp.resultCode == 0) {
-                BCPayReq *payReq = (BCPayReq *)resp.request;
-                if (payReq.channel == PayChannelBaiduApp) {
-                    [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
-                } else {
-                    [self showAlertView:resp.resultMsg];
-                }
-            } else {
-                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
-            }
-        }
-            break;
-        default:
-        {
-            if (resp.result_code == 0) {
-                [self showAlertView:resp.result_msg];
-            } else {
-                [self showAlertView:resp.err_detail];
-            }
-        }
-            break;
-    }
-}
-实现BDWalletSDKMainManagerDelegate
-- (void)BDWalletPayResultWithCode:(int)statusCode payDesc:(NSString *)payDescs {
-    NSString *status = @"";
-    switch (statusCode) {
-        case 0:
-            status = @"支付成功";
-            break;
-        case 1:
-            status = @"支付中";
-            break;
-        case 2:
-            status = @"支付取消";
-            break;
-        default:
-            break;
-    }
-    [self showAlertView:status];
-}
-
-- (void)logEventId:(NSString *)eventId eventDesc:(NSString *)eventDesc {
-    
-}
-```
-
-#### OfflinePay
-通过构造`BCOfflinePayReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付订单查询。  
-**响应事件类型对象：`BCOfflinePayResp`**
-
-```objc
-- (void)doOfflinePay:(PayChannel)channel authCode:(NSString *)authcode {
-    NSString *billno = [self genBillNo];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
-    
-    BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
-    payReq.channel = channel;
-    payReq.title = @"Offline Pay";
-    payReq.totalfee = @"1";
-    payReq.billno = billno;
-    payReq.authcode = authcode;
-    payReq.terminalid = @"BeeCloud617"; 
-    payReq.storeid = @"BeeCloud618";
-    payReq.optional = dict;
+    payReq.channel = channel; //支付渠道
+    payReq.title = billTitle;//订单标题
+    payReq.totalFee = @"10";//订单价格
+    payReq.billNo = billno;//商户自定义订单号
+    payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
+    payReq.billTimeOut = 300;//订单超时时间
+    payReq.viewController = self; //银联支付和Sandbox环境必填
+    payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }
 ```
-
-##### 订单状态查询
-通过构造`BCOfflineStatusReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付订单查询。  
-**响应事件类型对象：`BCOfflineStatusResp`**
-
-```objc
-BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
-req.channel = PayChannelWxScan;
-req.billno = @"2015091821320048";
-[BeeCloud sendBCReq:req];               
-```
-
-##### 订单撤销
-通过构造`BCOfflineRevertReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起支付订单撤销。目前仅支持`WX_SCAN`、`ALI_OFFLINE_QRCODE`、`ALI_SCAN`  
-**响应事件类型对象：`BCOfflineRevertResp`**
-
-```objc
-BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
-req.channel = PayChannelWxScan;
-req.billno = @"2015091821320048";
-[BeeCloud sendBCReq:req];
-```
-
 
 ### 查询
 
@@ -691,6 +333,53 @@ BCQueryRefundByIdReq *req = [[BCQueryRefundByIdReq alloc] initWithObjectId:bcId]
 BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
 req.refundno = @"20150709173629127";
 [BeeCloud sendBCReq:req];
+```
+## 处理回调
+
+实现接口`BeeCloudDelegate`，获取不同类型的请求对应的响应。  
+
+*  使用以下方法设置delegate:
+
+```objc
+[BeeCloud setBeeCloudDelegate:self];
+```
+
+*  实现BeeCloudDelegate:
+
+```objc
+- (void)onBeeCloudResp:(BCBaseResp *)resp {
+    
+    switch (resp.type) {
+        case BCObjsTypePayResp:
+        {
+            // 支付请求响应
+            BCPayResp *tempResp = (BCPayResp *)resp;
+            if (tempResp.resultCode == 0) {
+                BCPayReq *payReq = (BCPayReq *)resp.request;
+                //百度钱包比较特殊需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
+                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
+                    [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
+                } else {
+                    //微信、支付宝、银联支付成功
+                    [self showAlertView:resp.resultMsg];
+                }
+            } else {
+                //支付取消或者支付失败
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
+        default:
+        {
+            if (resp.resultCode == 0) {
+                [self showAlertView:resp.resultMsg];
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",resp.resultMsg, resp.errDetail]];
+            }
+        }
+            break;
+    }
+}
 ```
 
 ## Demo

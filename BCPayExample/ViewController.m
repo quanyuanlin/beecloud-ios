@@ -74,9 +74,12 @@
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     /**
-     按住键盘上的option键，点击参数名称，可以查看参数说明
+        按住键盘上的option键，点击参数名称，可以查看参数说明
      **/
     BCPayReq *payReq = [[BCPayReq alloc] init];
+    /**
+     *  支付渠道，PayChannelWxApp,PayChannelAliApp,PayChannelUnApp,PayChannelBaiduApp
+     */
     payReq.channel = channel; //支付渠道
     payReq.title = billTitle;//订单标题
     payReq.totalFee = @"10";//订单价格
