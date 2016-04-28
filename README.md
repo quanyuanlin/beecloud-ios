@@ -18,31 +18,34 @@ SDK支持以下支付渠道:
 
 提供支付、支付订单以及退款订单的查询功能。  
 还提供了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，订单状态的查询以及订单撤销。  
-本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 **iOS 6** 及以上版本。
+本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 **iOS 6** 及以上版本。   
+
 
 </br>
 ## 流程
 
 下图为整个支付的流程:
-![pic](http://7xavqo.com1.z0.glb.clouddn.com/UML.png)
+![pic](http://7xavqo.com1.z0.glb.clouddn.com/UML01.png)
 
 其中需要开发者开发的只有：
 
-步骤①**（在App端）发送支付要素**
+步骤①**（在App端）发送订单信息**
 
 做完这一步之后就会跳到相应的支付页面（如微信app中），让用户继续后续的支付步骤
 
-步骤⑤：**（在App端）处理同步回调结果**
+步骤②：**（在App端）处理同步回调结果**
 
 付款完成或取消之后，会回到客户app中，需要做相应界面展示的更新（比如弹出框告诉用户"支付成功"或"支付失败")。非常不推荐用同步回调的结果来作为最终的支付结果，因为同步回调可能（虽然可能性不大）出现结果不准确的情况，最终支付结果应以下面的异步回调为准。
 
-步骤⑦：**（在客户服务端）处理异步回调结果（[Webhook](https://beecloud.cn/doc/?index=webhook)）**
+步骤③：**（在客户服务端）处理异步回调结果（[Webhook](https://beecloud.cn/doc/?index=webhook)）**
  
 付款完成之后，根据客户在BeeCloud后台的设置，BeeCloud会向客户服务端发送一个Webhook请求，里面包括了数字签名，订单号，订单金额等一系列信息。客户需要在服务端依据规则要验证**数字签名是否正确，购买的产品与订单金额是否匹配，这两个验证缺一不可**。验证结束后即可开始走支付完成后的逻辑。
 
+了解更多关于BeeCloud，请前往[帮助中心](http://help.beecloud.cn/hc/) 
+
 <br>
 ## 准备
-在开始coding前，您还需要做**申请支付参数**、**配置支付参数**这两项工作，具体请仔细阅读[快速开始](https://beecloud.cn/apply/)
+参考[快速开始](https://beecloud.cn/apply/)，完成开发准备工作。
 
 </br>
 ## 导入SDK
@@ -75,7 +78,6 @@ pod 'BeeCloud/Alipay' //只包含支付宝
 pod 'BeeCloud/Wx' //只包括微信
 pod 'BeeCloud/UnionPay' //只包括银联
 pod 'BeeCloud/PayPal' //只包括paypal
-pod 'BeeCloud/Offline' //只包括线下收款
 pod 'BeeCloud/Baidu' //只包括百度钱包
 ```
 
@@ -192,25 +194,6 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
     return YES;
 }
 ```
-
-*  请求与响应事件说明  
-   BeeCloud iOS SDK 的功能以事件为单元划分为：
-   > 事件类型被定义在`/BCPaySDK/BeeCloud/Internal/BCPayConstant.h`
-   * **请求事件**  
-     `/BCPaySDK/BeeCloud/Classes/BCRequest/`目录下包含所有请求事件对象。  
-   * **响应事件**  
-     `/BCPaySDK/BeeCloud/Classes/BCResponse/`目录下包含所有响应事件对象。
-     
-     - 公共返回参数  
-
-		参数名 | 类型 | 含义   
-	---- | ---- | ----
-	resultCode | Integer| 返回码，0为正常
-	resultMsg  | String | 返回信息， OK为正常
-	errDetail  | String | 具体错误信息
-	bcId       | String | 成功发起支付后返回支付订单表记录唯一标识
-	request    | BCBaseReq| 请求事件对象
-
 
 ### 支付
 
@@ -334,9 +317,9 @@ BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
 req.refundno = @"20150709173629127";
 [BeeCloud sendBCReq:req];
 ```
-## 处理回调
+## 处理请求回调
 
-实现接口`BeeCloudDelegate`，获取不同类型的请求对应的响应。  
+实现接口`BeeCloudDelegate`，获取不同类型的请求对应的响应；更多内容请参考[Demo](https://github.com/beecloud/beecloud-ios/tree/master/BCPayExample)。  
 
 *  使用以下方法设置delegate:
 
@@ -390,24 +373,3 @@ req.refundno = @"20150709173629127";
 ## 测试
 项目根目录命令行运行`bash runTest.sh`, 就可以完成Unit Test。
 
-## 附录
-**错误码**请点击[这里](https://beecloud.cn/faq/?index=2)
-
-## 常见问题
-- 关于weekhook的接收  
-文档请阅读 [webhook](https://github.com/beecloud/beecloud-webhook)
-
-- 支付宝支付时，提示“ALI69”，“ALI64”？  
-一般是因为RSA公钥不正确或未上传导致的。解决方法：在[支付宝商家服务平台](https://b.alipay.com/order/serviceIndex.htm)检查RSA公钥是否生成错误或者没上传。
-
-- BCPayExample中支付宝支付，跳转到支付后提示“系统繁忙”？    
-由于支付宝政策原因，故不再提供支付宝支付的测试功能，请在BeeCloud平台配置正确参数后，使用自行创建的APP的appID和appSecret。给您带来的不便，敬请谅解。
-
-- 在iPhone上未安装支付宝钱包客户端的情况下，APP内发起支付宝支付，会是怎么样的？  
-正常情况下，会跳到支付宝网页收银台。如果你是从webview发起的支付请求，则不会跳转，请提示用户当前手机没安装APP。
-
-- iPhone未安装支付宝钱包不跳转支付？  
-在调用支付的时候取下[[[UIApplication shareApplication] windows] index:0] 看看hidden属性是否为YES 如果是就隐藏了window，H5就出不来了设置为NO就可以了 [[[UIApplication sharedApplication] windows] objectAtIndex:0]; 或 把您的App中把第0个window的hidden属性改成NO，就可以了。
-
-- iOS跳转到微信后立刻返回原APP？  
-可能是由于微信中还保持上次等待支付的场景导致的。后台关闭微信，重新发起微信支付就正常了。
