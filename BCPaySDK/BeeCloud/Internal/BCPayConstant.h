@@ -85,6 +85,8 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
 typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelNone = 0,
     
+    PayChannelBCApp,
+    
     PayChannelWx = 10, //微信
     PayChannelWxApp,//微信APP
     PayChannelWxNative,//微信扫码

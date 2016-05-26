@@ -77,6 +77,9 @@
 + (NSString *)getChannelString:(PayChannel)channel {
     NSString *cType = @"";
     switch (channel) {
+        case PayChannelBCApp:
+            cType = @"BC_APP";
+            break;
 #pragma mark PayChannel_WX
         case PayChannelWx:
             cType = @"WX";
