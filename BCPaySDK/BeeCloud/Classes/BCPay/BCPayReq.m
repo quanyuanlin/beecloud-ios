@@ -87,7 +87,7 @@
                                     (NSDictionary *)response];
         if (self.channel == PayChannelAliApp) {
             [dic setObject:self.scheme forKey:@"scheme"];
-        } else if (self.channel == PayChannelUnApp) {
+        } else if (self.channel == PayChannelUnApp || self.channel == PayChannelBCApp) {
             [dic setObject:self.viewController forKey:@"viewController"];
         }
         [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
@@ -98,6 +98,7 @@
             case PayChannelAliApp:
                 bSendPay = [BeeCloudAdapter beeCloudAliPay:dic];
                 break;
+            case PayChannelBCApp:
             case PayChannelUnApp:
                 bSendPay = [BeeCloudAdapter beeCloudUnionPay:dic];
                 break;
@@ -136,7 +137,7 @@
     } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
         [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
         return NO;
-    } else if (self.channel == PayChannelUnApp && (self.viewController == nil)) {
+    } else if ((self.channel == PayChannelUnApp || self.channel == PayChannelBCApp) && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常执行银联支付"];
         return NO;
     } else if ([BeeCloud getCurrentMode] && (self.viewController == nil)) {

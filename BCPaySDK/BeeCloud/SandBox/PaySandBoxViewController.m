@@ -138,7 +138,7 @@
     if (channel == PayChannelAliApp) {
         return [self imagesNamedFromCustomBundle:@"ali"];
     }
-    if (channel == PayChannelUnApp) {
+    if (channel == PayChannelUnApp || channel == PayChannelBCApp) {
         return [self imagesNamedFromCustomBundle:@"un"];
     }
     if (channel == PayChannelBaiduApp) {
