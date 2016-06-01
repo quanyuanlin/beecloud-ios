@@ -33,6 +33,7 @@
 - (BOOL)applePay:(NSMutableDictionary *)dic {
     if ([self canMakeApplePayments]) {
         NSString *tn = [dic stringValueForKey:@"tn" defaultValue:@""];
+        NSLog(@"apple tn = %@", dic);
         if (tn.isValid) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UPAPayPlugin startPay:tn mode:@"01" viewController:dic[@"viewController"] delegate:[BCApplePayAdapter sharedInstance] andAPMechantID:dic[@"apple_mer_id"]];
@@ -43,25 +44,7 @@
     return NO;
 }
 
-#pragma mark - Implementation UnionPayDelegate
-
-- (void)UPPayPluginResult:(NSString *)result {
-    int errcode = BCErrCodeSentFail;
-    NSString *strMsg = @"支付失败";
-    if ([result isEqualToString:@"success"]) {
-        errcode = BCErrCodeSuccess;
-        strMsg = @"支付成功";
-    } else if ([result isEqualToString:@"cancel"]) {
-        errcode = BCErrCodeUserCancel;
-        strMsg = @"支付取消";
-    }
-    
-    BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
-    resp.resultCode = errcode;
-    resp.resultMsg = strMsg;
-    resp.errDetail = strMsg;
-    [BCPayCache beeCloudDoResponse];
-}
+#pragma mark - Implementation ApplePayDelegate
 
 - (void)UPAPayPluginResult:(UPPayResult *)payResult {
     int errcode = BCErrCodeSentFail;
@@ -88,7 +71,7 @@
     BCPayResp *resp = (BCPayResp *)[BCPayCache sharedInstance].bcResp;
     resp.resultCode = errcode;
     resp.resultMsg = strMsg;
-    resp.errDetail = payResult.errorDescription;
+    resp.errDetail = payResult.errorDescription.isValid?payResult.errorDescription:strMsg;
     resp.paySource = @{@"otherInfo": payResult.otherInfo.isValid?payResult.otherInfo:@""};
     [BCPayCache beeCloudDoResponse];
     

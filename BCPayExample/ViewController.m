@@ -35,18 +35,20 @@
     
     if (self.actionType == 0) {
         self.title = @"支付";
+        self.title = @"我的订单";
     } else if (self.actionType == 1) {
         self.title = @"查询支付订单";
     } else if (self.actionType == 2) {
         self.title = @"查询退款订单";
     }
+    
     NSArray *tempArray = @[@{@"channel":@"线上支付",
                       @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
                                       @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
                                       @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
-                                      @{@"sub":@(PayChannelApplePay), @"img":@"paypal", @"title":@"ApplePay"}
+                                      @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"}
                                       ]},
                     @{@"channel":@"线下收款",
                       @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码"},
