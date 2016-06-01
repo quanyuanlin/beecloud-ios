@@ -1,5 +1,8 @@
 BeeCloud iOS SDK Changelog
 ==========================
+v3.4.3 2016年05月31日
++ 增加支付渠道BC_APP
+
 v3.4.2 2016年03月24日
 + 修复引入SDK后AFNetworking冲突问题
 + 优化Demo

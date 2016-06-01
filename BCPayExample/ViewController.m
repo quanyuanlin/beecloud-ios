@@ -46,6 +46,7 @@
                       @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
+                                      @{@"sub":@(PayChannelBCApp), @"img":@"beepay", @"title":@"BeePay"},
                                       @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
                                       @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
                                       @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"}
@@ -77,12 +78,15 @@
     NSString *billno = [self genBillNo];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"value",@"key", nil];
     /**
-     按住键盘上的option键，点击参数名称，可以查看参数说明
+        按住键盘上的option键，点击参数名称，可以查看参数说明
      **/
     BCPayReq *payReq = [[BCPayReq alloc] init];
+    /**
+     *  支付渠道，PayChannelWxApp,PayChannelAliApp,PayChannelUnApp,PayChannelBaiduApp
+     */
     payReq.channel = channel; //支付渠道
     payReq.title = billTitle;//订单标题
-    payReq.totalFee = @"10";//订单价格
+    payReq.totalFee = @"100";//订单价格; channel为BC_APP的时候最小值为100，即1元
     payReq.billNo = billno;//商户自定义订单号
     payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
     payReq.billTimeOut = 300;//订单超时时间
@@ -392,6 +396,7 @@
             case PayChannelUnApp:
             case PayChannelBaiduApp:
             case PayChannelApplePay:
+            case PayChannelBCApp:
                 [self doPay:channel];
                 break;
             case PayChannelWxNative:
