@@ -87,7 +87,6 @@
                                     (NSDictionary *)response];
         if (self.channel == PayChannelAliApp) {
             [dic setObject:self.scheme forKey:@"scheme"];
-
         } else if (self.channel == PayChannelUnApp || self.channel == PayChannelApplePay || self.channel == PayChannelBCApp) {
             [dic setObject:self.viewController forKey:@"viewController"];
         }
