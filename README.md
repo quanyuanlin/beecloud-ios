@@ -138,6 +138,9 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 ```
 请到 Xcode 项目的 Build Settings 页搜索 bitcode，将 Enable Bitcode 设置为 NO。
 
+⑤ 如果使用银联支付，请添加以下配置：  
+`选择工程`->`targets`->`build settings`->`linking`->`other linker flags`, 配置 **-ObjC**
+
 </br>
 ## 加入BeeCloud支付 
 ###  初始化
