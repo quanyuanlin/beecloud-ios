@@ -94,13 +94,13 @@
     if (result.type == BCObjsTypeBillResults) {
        
         BCQueryBillResult *bill = (BCQueryBillResult *)result;
-//        [BeeCloud sendBCReq:[[BCQueryBillByIdReq alloc] initWithObjectId:bill.objectId]];
+        [BeeCloud sendBCReq:[[BCQueryBillByIdReq alloc] initWithObjectId:bill.objectId]];
         
-        BCPreRefundReq *req = [[BCPreRefundReq alloc] init];
-        req.billNo = bill.billNo;
-        req.refundNo = @"201606241290120";
-        req.refundFee = [NSString stringWithFormat:@"%@", @(bill.totalFee)];
-        [BeeCloud sendBCReq:req];
+//        BCPreRefundReq *req = [[BCPreRefundReq alloc] init];
+//        req.billNo = bill.billNo;
+//        req.refundNo = @"201606241290120";
+//        req.refundFee = [NSString stringWithFormat:@"%@", @(bill.totalFee)];
+//        [BeeCloud sendBCReq:req];
         
     } else if (result.type == BCObjsTypeRefundResults) {
         
@@ -137,10 +137,11 @@
         if (tempResp.resultCode == 0) {
             self.title = [NSString stringWithFormat:@"满足条件的订单共 %lu", (unsigned long)tempResp.count];
         }
-    } else {
+    } else if (resp.type == BCObjsTypePreRefundResp) {
         BCPreRefundResp *tempResp = (BCPreRefundResp *)resp;
         NSString *string = [NSString stringWithFormat:@"%@, %@, %@", tempResp.resultMsg, tempResp.errDetail, tempResp.bcId];
-        NSLog(@"%@", string);
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"preRefund" message:string delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 

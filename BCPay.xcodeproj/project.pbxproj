@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360108A11D1D197200BDA7E6 /* BCPreRefundReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3601089E1D1D197200BDA7E6 /* BCPreRefundReq.m */; };
+		360108A21D1D197200BDA7E6 /* BCPreRefundResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 360108A01D1D197200BDA7E6 /* BCPreRefundResp.m */; };
 		3602F92A1BA031E800A28ADC /* BCPayCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D21BA031E800A28ADC /* BCPayCache.m */; };
 		3602F92B1BA031E800A28ADC /* BCPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D51BA031E800A28ADC /* BCPayUtil.m */; };
 		3602F92C1BA031E800A28ADC /* NSString+IsValid.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D71BA031E800A28ADC /* NSString+IsValid.m */; };
@@ -25,8 +27,6 @@
 		36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D341BC66A0700CA6C81 /* libsqlite3.tbd */; };
 		36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D361BC66A1300CA6C81 /* libc++.tbd */; };
 		36383E6D1D1D140E00CB6DBD /* BCPreRefundTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */; };
-		36383E731D1D142700CB6DBD /* BCPreRefundReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 36383E701D1D142700CB6DBD /* BCPreRefundReq.m */; };
-		36383E741D1D142700CB6DBD /* BCPreRefundResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 36383E721D1D142700CB6DBD /* BCPreRefundResp.m */; };
 		363B89391C97A79500DD2AB1 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3639726E1C7AB60300412108 /* PassKit.framework */; };
 		363B89411C97BD4B00DD2AB1 /* BCApplePayAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */; };
 		363B89421C97BD4B00DD2AB1 /* libUPAPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */; };
@@ -136,6 +136,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3601089D1D1D197200BDA7E6 /* BCPreRefundReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundReq.h; sourceTree = "<group>"; };
+		3601089E1D1D197200BDA7E6 /* BCPreRefundReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundReq.m; sourceTree = "<group>"; };
+		3601089F1D1D197200BDA7E6 /* BCPreRefundResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundResp.h; sourceTree = "<group>"; };
+		360108A01D1D197200BDA7E6 /* BCPreRefundResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundResp.m; sourceTree = "<group>"; };
 		3602F8D11BA031E800A28ADC /* BCPayCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayCache.h; sourceTree = "<group>"; };
 		3602F8D21BA031E800A28ADC /* BCPayCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayCache.m; sourceTree = "<group>"; };
 		3602F8D31BA031E800A28ADC /* BCPayConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayConstant.h; sourceTree = "<group>"; };
@@ -172,10 +176,6 @@
 		36379D361BC66A1300CA6C81 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		3637DD681C7AAFAC007EC5A7 /* BCPay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BCPay.entitlements; sourceTree = "<group>"; };
 		36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundTest.m; sourceTree = "<group>"; };
-		36383E6F1D1D142700CB6DBD /* BCPreRefundReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundReq.h; sourceTree = "<group>"; };
-		36383E701D1D142700CB6DBD /* BCPreRefundReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundReq.m; sourceTree = "<group>"; };
-		36383E711D1D142700CB6DBD /* BCPreRefundResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundResp.h; sourceTree = "<group>"; };
-		36383E721D1D142700CB6DBD /* BCPreRefundResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundResp.m; sourceTree = "<group>"; };
 		3639726E1C7AB60300412108 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		363B893C1C97BD4B00DD2AB1 /* BCApplePayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCApplePayAdapter.h; sourceTree = "<group>"; };
 		363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCApplePayAdapter.mm; sourceTree = "<group>"; };
@@ -412,6 +412,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3601089C1D1D197200BDA7E6 /* BCPreRefund */ = {
+			isa = PBXGroup;
+			children = (
+				3601089D1D1D197200BDA7E6 /* BCPreRefundReq.h */,
+				3601089E1D1D197200BDA7E6 /* BCPreRefundReq.m */,
+				3601089F1D1D197200BDA7E6 /* BCPreRefundResp.h */,
+				360108A01D1D197200BDA7E6 /* BCPreRefundResp.m */,
+			);
+			path = BCPreRefund;
+			sourceTree = "<group>";
+		};
 		3602F8AE1BA031E800A28ADC /* BCPaySDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,17 +579,6 @@
 			path = BCSandBoxAdapter;
 			sourceTree = "<group>";
 		};
-		36383E6E1D1D142700CB6DBD /* BCPreRefund */ = {
-			isa = PBXGroup;
-			children = (
-				36383E6F1D1D142700CB6DBD /* BCPreRefundReq.h */,
-				36383E701D1D142700CB6DBD /* BCPreRefundReq.m */,
-				36383E711D1D142700CB6DBD /* BCPreRefundResp.h */,
-				36383E721D1D142700CB6DBD /* BCPreRefundResp.m */,
-			);
-			path = BCPreRefund;
-			sourceTree = "<group>";
-		};
 		363B893A1C97BD4B00DD2AB1 /* ApplePay */ = {
 			isa = PBXGroup;
 			children = (
@@ -648,7 +648,7 @@
 		36501DF91C06E87300BC8B8A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				36383E6E1D1D142700CB6DBD /* BCPreRefund */,
+				3601089C1D1D197200BDA7E6 /* BCPreRefund */,
 				36501E6F1C06FBE000BC8B8A /* BCBase */,
 				36501E0D1C06E87300BC8B8A /* BCPay */,
 				36501E2D1C06E9A000BC8B8A /* BCPayPal */,
@@ -1174,6 +1174,7 @@
 				368204B11CB6088B00B0B0A1 /* BCSecurityPolicy.m in Sources */,
 				36501E4B1C06EDA800BC8B8A /* BCRefundStatusReq.m in Sources */,
 				3697502C1B68C659009FAEDB /* ViewController.m in Sources */,
+				360108A11D1D197200BDA7E6 /* BCPreRefundReq.m in Sources */,
 				368204B41CB6088B00B0B0A1 /* BCURLSessionManager.m in Sources */,
 				369750291B68C659009FAEDB /* AppDelegate.m in Sources */,
 				36501E531C06EE6500BC8B8A /* BCQueryBillsCountReq.m in Sources */,
@@ -1192,6 +1193,7 @@
 				369110691BB3F130003FE49D /* BCBaiduAdapter.m in Sources */,
 				36501E591C06F0E300BC8B8A /* BCQueryRefundsResp.m in Sources */,
 				363464041C15842C00C724B2 /* BCSandBoxAdapter.m in Sources */,
+				360108A21D1D197200BDA7E6 /* BCPreRefundResp.m in Sources */,
 				36501E6E1C06F38100BC8B8A /* BCQueryRefundByIdResp.m in Sources */,
 				36501E6B1C06F34A00BC8B8A /* BCQueryBillByIdResp.m in Sources */,
 				36501E501C06EE4D00BC8B8A /* BCQueryRefundsCountReq.m in Sources */,
@@ -1248,13 +1250,11 @@
 				369462501C03FE3B002A35D0 /* BeeCloudTest.m in Sources */,
 				36E66DF01C08508300A6F62B /* BCQueryBillsCountReqTest.m in Sources */,
 				7C43BF941BEDE26F0039B4E4 /* BCPayUtilTest.m in Sources */,
-				36383E731D1D142700CB6DBD /* BCPreRefundReq.m in Sources */,
 				7C43BF9C1BEDED200039B4E4 /* NSDictionaryUtilsTest.m in Sources */,
 				7C43BF951BEDE26F0039B4E4 /* BeeCloudUtilsTest.m in Sources */,
 				36383E6D1D1D140E00CB6DBD /* BCPreRefundTest.m in Sources */,
 				36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */,
 				36E66DE31C0837AC00A6F62B /* BCPayReqTest.m in Sources */,
-				36383E741D1D142700CB6DBD /* BCPreRefundResp.m in Sources */,
 				36E66DEB1C08431C00A6F62B /* BCQueryBillByIdReqTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
