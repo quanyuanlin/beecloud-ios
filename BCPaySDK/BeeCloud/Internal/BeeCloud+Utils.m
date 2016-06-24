@@ -17,6 +17,10 @@
     [req payReq];
 }
 
+- (void)reqPreRefund:(BCPreRefundReq *)req {
+    [req preRefundReq];
+}
+
 #pragma mark - 条件查询支付订单
 
 - (void)reqQueryBills:(BCQueryBillsReq *)req {

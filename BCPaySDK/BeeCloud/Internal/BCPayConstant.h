@@ -137,6 +137,7 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeOfflinePayReq,
     BCObjsTypeOfflineBillStatusReq,
     BCObjsTypeOfflineRevertReq,
+    BCObjsTypePreRefundReq,
     
     BCObjsTypeBaseResp = 200,
     BCObjsTypePayResp,
@@ -150,6 +151,7 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeOfflinePayResp,
     BCObjsTypeOfflineBillStatusResp,
     BCObjsTypeOfflineRevertResp,
+    BCObjsTypePreRefundResp,
     
     BCObjsTypeBaseResults = 300,
     BCObjsTypeBillResults,

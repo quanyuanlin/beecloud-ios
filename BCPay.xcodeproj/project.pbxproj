@@ -24,6 +24,9 @@
 		363464051C15842C00C724B2 /* PaySandBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 363464031C15842C00C724B2 /* PaySandBoxViewController.m */; };
 		36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D341BC66A0700CA6C81 /* libsqlite3.tbd */; };
 		36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D361BC66A1300CA6C81 /* libc++.tbd */; };
+		36383E6D1D1D140E00CB6DBD /* BCPreRefundTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */; };
+		36383E731D1D142700CB6DBD /* BCPreRefundReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 36383E701D1D142700CB6DBD /* BCPreRefundReq.m */; };
+		36383E741D1D142700CB6DBD /* BCPreRefundResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 36383E721D1D142700CB6DBD /* BCPreRefundResp.m */; };
 		363B89391C97A79500DD2AB1 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3639726E1C7AB60300412108 /* PassKit.framework */; };
 		363B89411C97BD4B00DD2AB1 /* BCApplePayAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */; };
 		363B89421C97BD4B00DD2AB1 /* libUPAPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */; };
@@ -168,6 +171,11 @@
 		36379D341BC66A0700CA6C81 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		36379D361BC66A1300CA6C81 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		3637DD681C7AAFAC007EC5A7 /* BCPay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BCPay.entitlements; sourceTree = "<group>"; };
+		36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundTest.m; sourceTree = "<group>"; };
+		36383E6F1D1D142700CB6DBD /* BCPreRefundReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundReq.h; sourceTree = "<group>"; };
+		36383E701D1D142700CB6DBD /* BCPreRefundReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundReq.m; sourceTree = "<group>"; };
+		36383E711D1D142700CB6DBD /* BCPreRefundResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundResp.h; sourceTree = "<group>"; };
+		36383E721D1D142700CB6DBD /* BCPreRefundResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundResp.m; sourceTree = "<group>"; };
 		3639726E1C7AB60300412108 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		363B893C1C97BD4B00DD2AB1 /* BCApplePayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCApplePayAdapter.h; sourceTree = "<group>"; };
 		363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCApplePayAdapter.mm; sourceTree = "<group>"; };
@@ -560,6 +568,17 @@
 			path = BCSandBoxAdapter;
 			sourceTree = "<group>";
 		};
+		36383E6E1D1D142700CB6DBD /* BCPreRefund */ = {
+			isa = PBXGroup;
+			children = (
+				36383E6F1D1D142700CB6DBD /* BCPreRefundReq.h */,
+				36383E701D1D142700CB6DBD /* BCPreRefundReq.m */,
+				36383E711D1D142700CB6DBD /* BCPreRefundResp.h */,
+				36383E721D1D142700CB6DBD /* BCPreRefundResp.m */,
+			);
+			path = BCPreRefund;
+			sourceTree = "<group>";
+		};
 		363B893A1C97BD4B00DD2AB1 /* ApplePay */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +648,7 @@
 		36501DF91C06E87300BC8B8A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				36383E6E1D1D142700CB6DBD /* BCPreRefund */,
 				36501E6F1C06FBE000BC8B8A /* BCBase */,
 				36501E0D1C06E87300BC8B8A /* BCPay */,
 				36501E2D1C06E9A000BC8B8A /* BCPayPal */,
@@ -1004,21 +1024,22 @@
 		7C43BF861BEDE22B0039B4E4 /* BCPayTest */ = {
 			isa = PBXGroup;
 			children = (
-				7C43BF971BEDE52E0039B4E4 /* XCTestCase */,
-				3694624F1C03FE3B002A35D0 /* BeeCloudTest.m */,
-				7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */,
-				7C43BF911BEDE26F0039B4E4 /* BeeCloudUtilsTest.m */,
-				7C43BF991BEDE8D00039B4E4 /* NSStringIsValidTest.m */,
-				7C43BF9B1BEDED200039B4E4 /* NSDictionaryUtilsTest.m */,
+				36E556A31C2B8E1C00DACE7C /* BCPayCacheTest.m */,
 				36E66DE21C0837AC00A6F62B /* BCPayReqTest.m */,
+				7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */,
+				36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */,
+				36E66DEA1C08431C00A6F62B /* BCQueryBillByIdReqTest.m */,
+				36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */,
 				36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */,
+				36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */,
+				36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */,
 				36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */,
 				36E66DE81C083C5800A6F62B /* BCRefundStatusReqTest.m */,
-				36E66DEA1C08431C00A6F62B /* BCQueryBillByIdReqTest.m */,
-				36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */,
-				36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */,
-				36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */,
-				36E556A31C2B8E1C00DACE7C /* BCPayCacheTest.m */,
+				3694624F1C03FE3B002A35D0 /* BeeCloudTest.m */,
+				7C43BF911BEDE26F0039B4E4 /* BeeCloudUtilsTest.m */,
+				7C43BF9B1BEDED200039B4E4 /* NSDictionaryUtilsTest.m */,
+				7C43BF991BEDE8D00039B4E4 /* NSStringIsValidTest.m */,
+				7C43BF971BEDE52E0039B4E4 /* XCTestCase */,
 			);
 			path = BCPayTest;
 			sourceTree = "<group>";
@@ -1227,10 +1248,13 @@
 				369462501C03FE3B002A35D0 /* BeeCloudTest.m in Sources */,
 				36E66DF01C08508300A6F62B /* BCQueryBillsCountReqTest.m in Sources */,
 				7C43BF941BEDE26F0039B4E4 /* BCPayUtilTest.m in Sources */,
+				36383E731D1D142700CB6DBD /* BCPreRefundReq.m in Sources */,
 				7C43BF9C1BEDED200039B4E4 /* NSDictionaryUtilsTest.m in Sources */,
 				7C43BF951BEDE26F0039B4E4 /* BeeCloudUtilsTest.m in Sources */,
+				36383E6D1D1D140E00CB6DBD /* BCPreRefundTest.m in Sources */,
 				36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */,
 				36E66DE31C0837AC00A6F62B /* BCPayReqTest.m in Sources */,
+				36383E741D1D142700CB6DBD /* BCPreRefundResp.m in Sources */,
 				36E66DEB1C08431C00A6F62B /* BCQueryBillByIdReqTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

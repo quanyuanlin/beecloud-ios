@@ -94,7 +94,13 @@
     if (result.type == BCObjsTypeBillResults) {
        
         BCQueryBillResult *bill = (BCQueryBillResult *)result;
-        [BeeCloud sendBCReq:[[BCQueryBillByIdReq alloc] initWithObjectId:bill.objectId]];
+//        [BeeCloud sendBCReq:[[BCQueryBillByIdReq alloc] initWithObjectId:bill.objectId]];
+        
+        BCPreRefundReq *req = [[BCPreRefundReq alloc] init];
+        req.billNo = bill.billNo;
+        req.refundNo = @"201606241290120";
+        req.refundFee = [NSString stringWithFormat:@"%@", @(bill.totalFee)];
+        [BeeCloud sendBCReq:req];
         
     } else if (result.type == BCObjsTypeRefundResults) {
         
@@ -124,13 +130,17 @@
     } else if (resp.type == BCObjsTypeQueryBillsCountResp) {
         BCQueryBillsCountResp *tempResp = (BCQueryBillsCountResp *)resp;
         if (tempResp.resultCode == 0) {
-            self.title = [NSString stringWithFormat:@"满足条件的订单共 %ld", tempResp.count];
+            self.title = [NSString stringWithFormat:@"满足条件的订单共 %lu", (unsigned long)tempResp.count];
         }
     } else if (resp.type == BCObjsTypeQueryRefundsCountResp) {
         BCQueryRefundsCountResp *tempResp = (BCQueryRefundsCountResp *)resp;
         if (tempResp.resultCode == 0) {
-            self.title = [NSString stringWithFormat:@"满足条件的订单共 %ld", tempResp.count];
+            self.title = [NSString stringWithFormat:@"满足条件的订单共 %lu", (unsigned long)tempResp.count];
         }
+    } else {
+        BCPreRefundResp *tempResp = (BCPreRefundResp *)resp;
+        NSString *string = [NSString stringWithFormat:@"%@, %@, %@", tempResp.resultMsg, tempResp.errDetail, tempResp.bcId];
+        NSLog(@"%@", string);
     }
 }
 

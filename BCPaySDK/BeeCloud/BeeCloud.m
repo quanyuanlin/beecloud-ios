@@ -114,6 +114,9 @@
         case BCObjsTypePayReq: //支付(微信、支付宝、银联、百度钱包)
             [instance reqPay:(BCPayReq *)req];
             break;
+        case BCObjsTypePreRefundReq: //预退款
+            [instance reqPreRefund:(BCPreRefundReq *)req];
+            break;
         case BCObjsTypeQueryBillsReq://条件查询支付订单
             [instance reqQueryBills:(BCQueryBillsReq *)req];
             break;
