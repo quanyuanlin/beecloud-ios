@@ -46,6 +46,7 @@
 		36501E6E1C06F38100BC8B8A /* BCQueryRefundByIdResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E6D1C06F38100BC8B8A /* BCQueryRefundByIdResp.m */; };
 		36501E7A1C06FC5300BC8B8A /* BCBaseReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E771C06FC5300BC8B8A /* BCBaseReq.m */; };
 		36501E7B1C06FC5300BC8B8A /* BCBaseResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E791C06FC5300BC8B8A /* BCBaseResp.m */; };
+		3653EC7A1D1D0A14004BF933 /* BCPreRefundTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3653EC791D1D0A14004BF933 /* BCPreRefundTest.m */; };
 		3658AFCB1BB28B9400183C28 /* BCOfflineAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658AF591BB28B9400183C28 /* BCOfflineAdapter.m */; };
 		3658AFCC1BB28B9400183C28 /* BCOfflinePayReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658AF5C1BB28B9400183C28 /* BCOfflinePayReq.m */; };
 		3658AFCD1BB28B9400183C28 /* BCOfflineRevertReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658AF5E1BB28B9400183C28 /* BCOfflineRevertReq.m */; };
@@ -58,6 +59,8 @@
 		3658AFDC1BB28B9400183C28 /* libBaiduMobStatForSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3658AF861BB28B9400183C28 /* libBaiduMobStatForSDK.a */; };
 		3658AFFF1BB295F700183C28 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3658AFFE1BB295F700183C28 /* CoreTelephony.framework */; };
 		3658B0021BB2A0DA00183C28 /* PayChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658B0011BB2A0DA00183C28 /* PayChannelCell.m */; };
+		3660B9761D1A91C500E1C885 /* BCPreRefundReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3660B9751D1A91C500E1C885 /* BCPreRefundReq.m */; };
+		3660B9791D1A91DC00E1C885 /* BCPreRefundResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 3660B9781D1A91DC00E1C885 /* BCPreRefundResp.m */; };
 		366D287E1CA3D8660062C292 /* BCHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D28721CA3D8660062C292 /* BCHTTPSessionManager.m */; };
 		366D287F1CA3D8660062C292 /* BCNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D28751CA3D8660062C292 /* BCNetworkReachabilityManager.m */; };
 		366D28801CA3D8660062C292 /* BCSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D28771CA3D8660062C292 /* BCSecurityPolicy.m */; };
@@ -208,6 +211,7 @@
 		36501E771C06FC5300BC8B8A /* BCBaseReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCBaseReq.m; path = BCBase/BCBaseReq.m; sourceTree = "<group>"; };
 		36501E781C06FC5300BC8B8A /* BCBaseResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCBaseResp.h; path = BCBase/BCBaseResp.h; sourceTree = "<group>"; };
 		36501E791C06FC5300BC8B8A /* BCBaseResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCBaseResp.m; path = BCBase/BCBaseResp.m; sourceTree = "<group>"; };
+		3653EC791D1D0A14004BF933 /* BCPreRefundTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundTest.m; sourceTree = "<group>"; };
 		3658AF561BB28B9400183C28 /* BCOffinePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOffinePay.h; sourceTree = "<group>"; };
 		3658AF581BB28B9400183C28 /* BCOfflineAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOfflineAdapter.h; sourceTree = "<group>"; };
 		3658AF591BB28B9400183C28 /* BCOfflineAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCOfflineAdapter.m; sourceTree = "<group>"; };
@@ -230,6 +234,10 @@
 		3658AFFE1BB295F700183C28 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		3658B0001BB2A0DA00183C28 /* PayChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayChannelCell.h; sourceTree = "<group>"; };
 		3658B0011BB2A0DA00183C28 /* PayChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayChannelCell.m; sourceTree = "<group>"; };
+		3660B9741D1A91C500E1C885 /* BCPreRefundReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCPreRefundReq.h; path = BCPreRefund/BCPreRefundReq.h; sourceTree = "<group>"; };
+		3660B9751D1A91C500E1C885 /* BCPreRefundReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCPreRefundReq.m; path = BCPreRefund/BCPreRefundReq.m; sourceTree = "<group>"; };
+		3660B9771D1A91DC00E1C885 /* BCPreRefundResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BCPreRefundResp.h; path = BCPreRefund/BCPreRefundResp.h; sourceTree = "<group>"; };
+		3660B9781D1A91DC00E1C885 /* BCPreRefundResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BCPreRefundResp.m; path = BCPreRefund/BCPreRefundResp.m; sourceTree = "<group>"; };
 		366D28711CA3D8660062C292 /* BCHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHTTPSessionManager.h; sourceTree = "<group>"; };
 		366D28721CA3D8660062C292 /* BCHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHTTPSessionManager.m; sourceTree = "<group>"; };
 		366D28731CA3D8660062C292 /* BCNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNetworking.h; sourceTree = "<group>"; };
@@ -595,6 +603,7 @@
 		36501DF91C06E87300BC8B8A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3660B9731D1A918600E1C885 /* BCPreRefund */,
 				36501E6F1C06FBE000BC8B8A /* BCBase */,
 				36501E0D1C06E87300BC8B8A /* BCPay */,
 				36501E2D1C06E9A000BC8B8A /* BCPayPal */,
@@ -828,6 +837,17 @@
 			path = BaiduMobStat;
 			sourceTree = "<group>";
 		};
+		3660B9731D1A918600E1C885 /* BCPreRefund */ = {
+			isa = PBXGroup;
+			children = (
+				3660B9741D1A91C500E1C885 /* BCPreRefundReq.h */,
+				3660B9751D1A91C500E1C885 /* BCPreRefundReq.m */,
+				3660B9771D1A91DC00E1C885 /* BCPreRefundResp.h */,
+				3660B9781D1A91DC00E1C885 /* BCPreRefundResp.m */,
+			);
+			name = BCPreRefund;
+			sourceTree = "<group>";
+		};
 		366D28701CA3D8660062C292 /* BCNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -971,6 +991,7 @@
 			children = (
 				7C43BF971BEDE52E0039B4E4 /* XCTestCase */,
 				3694624F1C03FE3B002A35D0 /* BeeCloudTest.m */,
+				3653EC791D1D0A14004BF933 /* BCPreRefundTest.m */,
 				7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */,
 				7C43BF911BEDE26F0039B4E4 /* BeeCloudUtilsTest.m */,
 				7C43BF991BEDE8D00039B4E4 /* NSStringIsValidTest.m */,
@@ -1106,6 +1127,7 @@
 			files = (
 				36501E4B1C06EDA800BC8B8A /* BCRefundStatusReq.m in Sources */,
 				3697502C1B68C659009FAEDB /* ViewController.m in Sources */,
+				3660B9791D1A91DC00E1C885 /* BCPreRefundResp.m in Sources */,
 				369750291B68C659009FAEDB /* AppDelegate.m in Sources */,
 				36501E531C06EE6500BC8B8A /* BCQueryBillsCountReq.m in Sources */,
 				3602F92C1BA031E800A28ADC /* NSString+IsValid.m in Sources */,
@@ -1131,6 +1153,7 @@
 				367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */,
 				3658AFD01BB28B9400183C28 /* BCOfflineRevertResp.m in Sources */,
 				36501E651C06F2DF00BC8B8A /* BCQueryRefundsCountResp.m in Sources */,
+				3660B9761D1A91C500E1C885 /* BCPreRefundReq.m in Sources */,
 				36501E681C06F30100BC8B8A /* BCQueryBillsCountResp.m in Sources */,
 				7CD455551BEC889F00E0EC4A /* BeeCloud+Utils.m in Sources */,
 				363464051C15842C00C724B2 /* PaySandBoxViewController.m in Sources */,
@@ -1182,6 +1205,7 @@
 				7C43BF941BEDE26F0039B4E4 /* BCPayUtilTest.m in Sources */,
 				7C43BF9C1BEDED200039B4E4 /* NSDictionaryUtilsTest.m in Sources */,
 				7C43BF951BEDE26F0039B4E4 /* BeeCloudUtilsTest.m in Sources */,
+				3653EC7A1D1D0A14004BF933 /* BCPreRefundTest.m in Sources */,
 				36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */,
 				36E66DE31C0837AC00A6F62B /* BCPayReqTest.m in Sources */,
 				36E66DEB1C08431C00A6F62B /* BCQueryBillByIdReqTest.m in Sources */,

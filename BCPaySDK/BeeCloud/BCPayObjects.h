@@ -15,6 +15,9 @@
 #import "BCPayReq.h"
 #import "BCPayResp.h"
 
+#import "BCPreRefundReq.h"
+#import "BCPreRefundResp.h"
+
 #import "BCQueryBillsReq.h"
 #import "BCQueryBillsResp.h"
 
@@ -44,5 +47,7 @@
 #import "BCPayPalVerifyReq.h"
 
 #import "BCCategory.h"
+
+
 
 #endif

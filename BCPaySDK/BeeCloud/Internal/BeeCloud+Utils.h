@@ -18,6 +18,13 @@
 - (void)reqPay:(BCPayReq *)req;
 
 /**
+ *  发起预退款
+ *
+ *  @param req 预退款请求
+ */
+- (void)reqPreRefund:(BCPreRefundReq *)req;
+
+/**
  *  线下支付事件。支持WX_NATIVE、WX_SCAN、ALI_OFFLINE_QRCODE、ALI_SCAN
  *
  *  @param req 线下支付请求

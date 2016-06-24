@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.4.3";//api版本号
+static NSString * const kApiVersion = @"3.5.0";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kUnknownError = @"未知错误";
@@ -136,6 +136,7 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeOfflinePayReq,
     BCObjsTypeOfflineBillStatusReq,
     BCObjsTypeOfflineRevertReq,
+    BCObjsTypePreRefundReq,
     
     BCObjsTypeBaseResp = 200,
     BCObjsTypePayResp,
@@ -149,6 +150,7 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeOfflinePayResp,
     BCObjsTypeOfflineBillStatusResp,
     BCObjsTypeOfflineRevertResp,
+    BCObjsTypePreRefundResp,
     
     BCObjsTypeBaseResults = 300,
     BCObjsTypeBillResults,
