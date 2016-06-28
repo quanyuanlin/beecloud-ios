@@ -42,14 +42,14 @@
         self.title = @"查询退款订单";
     }
     
-    NSArray *tempArray = @[@{@"channel":@"线上支付",
+    NSArray *live = @[@{@"channel":@"线上支付",
                       @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
                                       @{@"sub":@(PayChannelBCApp), @"img":@"beepay", @"title":@"BeePay"},
                                       @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
                                       @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
-                                      @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"}
+                                      @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"} //相关文档 http://help.beecloud.cn/hc/kb/article/177410/?from=draft
                                       ]},
                     @{@"channel":@"线下收款",
                       @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码"},
@@ -57,11 +57,16 @@
                                       @{@"sub":@(PayChannelAliOfflineQrCode), @"img":@"ali", @"title":@"支付宝扫码"},
                                       @{@"sub":@(PayChannelAliScan), @"img":@"ali", @"title":@"支付宝刷卡"}]}
                 ];
-    channelList = [NSMutableArray arrayWithArray:tempArray];
     
-    if ([BeeCloud getCurrentMode]) {
-        [channelList removeLastObject];
-    }
+    NSArray *sandbox = @[@{@"channel":@"线上支付",
+                        @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
+                                        @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
+                                        @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
+                                        @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
+                                        @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"}
+                                        ]}];
+    channelList = [NSMutableArray arrayWithArray:[BeeCloud getCurrentMode] ? sandbox : live];
+    
     billTitle = [BeeCloud getCurrentMode] ? @"iOS Demo Sandbox" : @"iOS Demo Live";
     self.orderList = nil;
     
@@ -91,6 +96,7 @@
     payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
     payReq.billTimeOut = 300;//订单超时时间
     payReq.viewController = self; //银联支付和Sandbox环境必填
+    payReq.cardType = 0; //0 表示不区分卡类型；1 表示只支持借记卡；2 表示支持信用卡；默认为0
     payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
 }

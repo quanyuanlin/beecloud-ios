@@ -91,8 +91,8 @@
     return NO;
 }
 
-+ (BOOL)canMakeApplePayments {
-    return [BeeCloudAdapter beecloudCanMakeApplePayments];
++ (BOOL)canMakeApplePayments:(NSUInteger)cardType {
+    return [BeeCloudAdapter beecloudCanMakeApplePayments:cardType];
 }
 
 + (NSString *)getBCApiVersion {

@@ -114,11 +114,12 @@
 + (BOOL)getCurrentMode;
 
 /**
- *  判断手机是否支持Apple Pay
+ *  判断手机是否支持Apple Pay；商户可以根据此方法返回的值来决定是否显示Apple Pay的支付图标
  *
+ *  @param cardType  0 表示不区分卡类型；1 表示只支持借记卡；2 表示支持信用卡；
  *  @return YES表示支持
  */
-+ (BOOL)canMakeApplePayments;
++ (BOOL)canMakeApplePayments:(NSUInteger)cardType;
 
 /**
  *  获取API版本号

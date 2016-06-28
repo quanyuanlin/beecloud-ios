@@ -26,12 +26,35 @@
     return instance;
 }
 
-- (BOOL)canMakeApplePayments {
-    return [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkChinaUnionPay]] ;
+- (BOOL)canMakeApplePayments:(NSUInteger)cardType {
+    BOOL status = NO;
+    switch(cardType) {
+        case 0:
+        {
+            status = [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkChinaUnionPay]] ;
+            break;
+        }
+        case 1:
+        {
+            PKMerchantCapability merchantCapabilities = PKMerchantCapability3DS | PKMerchantCapabilityEMV | PKMerchantCapabilityDebit;
+            status = [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkChinaUnionPay] capabilities:merchantCapabilities];
+            break;
+        }
+        case 2:
+        {
+            PKMerchantCapability merchantCapabilities = PKMerchantCapability3DS | PKMerchantCapabilityEMV | PKMerchantCapabilityCredit;
+            status = [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkChinaUnionPay] capabilities:merchantCapabilities];
+            break;
+        }
+        default:
+            status = [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkChinaUnionPay]];
+            break;
+    }
+    return status;
 }
 
 - (BOOL)applePay:(NSMutableDictionary *)dic {
-    if ([self canMakeApplePayments]) {
+    if ([self canMakeApplePayments:0]) {
         NSString *tn = [dic stringValueForKey:@"tn" defaultValue:@""];
         NSLog(@"apple tn = %@", dic);
         if (tn.isValid) {

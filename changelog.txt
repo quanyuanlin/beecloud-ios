@@ -1,5 +1,10 @@
 BeeCloud iOS SDK Changelog
 ==========================
+v3.5.0 2016年06月29日
++ 支持Apple Pay
++ 支持判断设备是否支持Apple Pay
++ 增加预退款功能
+
 v3.4.3 2016年05月31日
 + 增加支付渠道BC_APP
 

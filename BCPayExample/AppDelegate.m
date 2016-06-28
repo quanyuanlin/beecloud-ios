@@ -27,14 +27,8 @@
      由于支付宝的政策原因，测试账号的支付宝支付不能在生产环境中使用，带来不便，敬请原谅！
      */ 
     [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
-//    [BeeCloud initWithAppID:@"f86097f8-e9f5-49f6-a352-42031696dd29" andAppSecret:@"ba1ce9db-1bf5-46ab-b66c-243c109bce08"];
-   //  [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee" sandbox:YES];
-    NSLog(@"test canMakePayments %@", [BeeCloud canMakeApplePayments]?@"YES":@"NO");
     
-    //开启/关闭沙箱测试模式;
-    //可通过[BeeCloud getCurrentMode]查看当前模式，返回YES代表当前是sandbox环境，返回NO代表当前是生产环境
-    //开启沙箱测试模式，请使用Test Secret初始化
-//    [BeeCloud setSandboxMode:YES];
+//    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee" sandbox:YES];
     
     //初始化微信
     //此处的微信appid必须是在微信开放平台创建的移动应用的appid，且必须与在『BeeCloud控制台-》微信APP支付』配置的"应用APPID"一致，否则会出现『跳转到微信客户端后只显示一个确定按钮的现象』。

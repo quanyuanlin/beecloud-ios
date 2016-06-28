@@ -1,7 +1,7 @@
 ## BeeCloud iOS SDK (Open Source)
 
 [![Build Status](https://travis-ci.org/beecloud/beecloud-ios.svg)](https://travis-ci.org/beecloud/beecloud-ios) 
-![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.4.2-blue.svg) 
+![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.5.0-blue.svg) 
 
 </br>
 ## 简介
@@ -14,7 +14,8 @@ SDK支持以下支付渠道:
  * 支付宝APP
  * 银联在线APP
  * PayPal
- * 百度钱包   
+ * 百度钱包  
+ * Apple Pay   
 
 提供支付、支付订单以及退款订单的查询功能。  
 还提供了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，订单状态的查询以及订单撤销。  
@@ -79,6 +80,7 @@ pod 'BeeCloud/Wx' //只包括微信
 pod 'BeeCloud/UnionPay' //只包括银联
 pod 'BeeCloud/PayPal' //只包括paypal
 pod 'BeeCloud/Baidu' //只包括百度钱包
+pod 'BeeCloud/Apple' //只包括Apple Pay
 ```
 
 </br>
@@ -138,8 +140,11 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 ```
 请到 Xcode 项目的 Build Settings 页搜索 bitcode，将 Enable Bitcode 设置为 NO。
 
-⑤ 如果使用银联支付，请添加以下配置：  
-`选择工程`->`targets`->`build settings`->`linking`->`other linker flags`, 配置 **-ObjC**
+⑤ 如果使用`银联支付`或`Apple Pay`，请添加以下配置：  
+`选择工程`->`targets`->`build settings`->`linking`->`other linker flags`, 配置 **-ObjC**  
+
+⑥ 使用Apple Pay请查看  [银联Apple Pay相关](http://help.beecloud.cn/hc/kb/article/177410/?from=draft)
+
 
 </br>
 ## 加入BeeCloud支付 
@@ -177,8 +182,16 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 [BeeCloud initWeChatPay:@"微信开放平台appid"];
 ```
 
+③ 初始化PayPal  
+如果你需要使用PayPal，使用以下方式初始化  
+
+```objc
+//初始化PayPal
+[BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sandbox:YES];
+```
+
 ③ handleOpenUrl
-此方法用于处理从第三方应用回到本应用时的回调
+此方法用于处理从微信、支付宝钱包回到本应用时的回调
 
 ```objc
 //为保证从支付宝，微信返回本应用，须绑定openUrl. 用于iOS9之前版本
@@ -198,12 +211,21 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 }
 ```
 
+④ 判断手机是否支持Apple Pay功能,以及是否已加载有可用的支付卡片
+
+```objc
+	//0 表示不区分卡类型；1 表示只支持借记卡；2 表示支持信用卡；默认为0
+	[BeeCloud canMakeApplePayments: 0];
+```
+
 ### 支付
 
 通过构造`BCPayReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。具体请参考Demo。    
 **响应事件对象为`BCPayResp`**
 
-```objc
+#### 微信、支付宝、银联、百度钱包
+
+```objc 
 //微信、支付宝、银联、百度钱包
 - (void)doPay:(PayChannel)channel {
     NSString *billno = [self genBillNo];
@@ -213,14 +235,140 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
      **/
     BCPayReq *payReq = [[BCPayReq alloc] init];
     payReq.channel = channel; //支付渠道
-    payReq.title = billTitle;//订单标题
-    payReq.totalFee = @"10";//订单价格
-    payReq.billNo = billno;//商户自定义订单号
-    payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
-    payReq.billTimeOut = 300;//订单超时时间
+    payReq.title = billTitle; //订单标题
+    payReq.totalFee = @"10"; //订单价格
+    payReq.billNo = billno; //商户自定义订单号
+    payReq.scheme = @"payDemo"; //URL Scheme,在Info.plist中配置; 支付宝必有参数
+    payReq.billTimeOut = 300; //订单超时时间
+    payReq.cardType = 0; // 0 表示不区分卡类型；1 表示只支持借记卡；2 表示支持信用卡；默认为0
     payReq.viewController = self; //银联支付和Sandbox环境必填
     payReq.optional = dict;//商户业务扩展参数，会在webhook回调时返回
     [BeeCloud sendBCReq:payReq];
+}
+```
+
+百度钱包需要用回调的参数在当前的viewController使用百度钱包SDK发起支付，并实现BDWalletSDKMainManagerDelegate
+
+```objc
+	/发起支付
+- (void)onBeeCloudResp:(BCBaseResp *)resp {
+
+    switch (resp.type) {
+        case BCObjsTypePayResp:
+        {
+            BCPayResp *tempResp = (BCPayResp *)resp;
+            if (tempResp.resultCode == 0) {
+                BCPayReq *payReq = (BCPayReq *)resp.request;
+                if (payReq.channel == PayChannelBaiduApp) {
+                    [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
+                } else {
+                    [self showAlertView:resp.resultMsg];
+                }
+            } else {
+                [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
+            }
+        }
+            break;
+        default:
+        {
+            if (resp.result_code == 0) {
+                [self showAlertView:resp.result_msg];
+            } else {
+                [self showAlertView:resp.err_detail];
+            }
+        }
+            break;
+    }
+}
+实现BDWalletSDKMainManagerDelegate
+- (void)BDWalletPayResultWithCode:(int)statusCode payDesc:(NSString *)payDescs {
+    NSString *status = @"";
+    switch (statusCode) {
+        case 0:
+            status = @"支付成功";
+            break;
+        case 1:
+            status = @"支付中";
+            break;
+        case 2:
+            status = @"支付取消";
+            break;
+        default:
+            break;
+    }
+    [self showAlertView:status];
+}
+
+- (void)logEventId:(NSString *)eventId eventDesc:(NSString *)eventDesc {
+
+}
+```
+
+#### PayPal
+
+通过构造`BCPayPalReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。  
+响应事件对象为`BCBaseResp`
+
+```objc
+- (void)doPayPal {
+    BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
+
+    _payPalConfig = [[PayPalConfiguration alloc] init];
+    _payPalConfig.acceptCreditCards = YES;
+    _payPalConfig.merchantName = @"Awesome Shirts, Inc.";
+    _payPalConfig.merchantPrivacyPolicyURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/privacy-full"];
+    _payPalConfig.merchantUserAgreementURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/useragreement-full"];
+
+    _payPalConfig.languageOrLocale = [NSLocale preferredLanguages][0];
+
+    _payPalConfig.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
+
+    PayPalItem *item1 = [PayPalItem itemWithName:@"Old jeans with holes"
+                                    withQuantity:2
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"84.99"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00037"];
+
+    PayPalItem *item2 = [PayPalItem itemWithName:@"Free rainbow patch"
+                                    withQuantity:1
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"0.00"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00066"];
+
+    PayPalItem *item3 = [PayPalItem itemWithName:@"Long-sleeve plaid shirt (mustache not included)"
+                                    withQuantity:1
+                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"37.99"]
+                                    withCurrency:@"USD"
+                                         withSku:@"Hip-00291"];
+
+    payReq.items = @[item1, item2, item3];
+    payReq.shipping = @"5.00";
+    payReq.tax = @"2.50";
+    payReq.shortDesc = @"paypal test";
+    payReq.viewController = self;
+    payReq.payConfig = _payPalConfig;
+
+    [BeeCloud sendBCReq:payReq]; 
+}
+```
+
+实现PayPalPaymentDelegate，并在支付完成后必须进行Verify的操作 
+ 
+```objc
+//支付完成
+- (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
+
+    //使用`completedPayment`完成Payment Verify操作
+    BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
+   req.payment = _completedPayment;
+   [BeeCloud sendBCReq:req];
+
+   [self dismissViewControllerAnimated:YES completion:nil];
+}
+//支付取消
+- (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
+
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 ```
 
@@ -320,6 +468,26 @@ BCRefundStatusReq *req = [[BCRefundStatusReq alloc] init];
 req.refundno = @"20150709173629127";
 [BeeCloud sendBCReq:req];
 ```
+
+### 发起预退款
+通过构造`BCPreRefundReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询。  
+**响应事件类型对象：`BCPreRefundResp`**
+
+说明：
+ 
+* 移动应用内正确的退款流程：  
+* 用户在客户端发起预退款请求  
+* 商户在管理端审核预退款请求，满足条件即调用退款接口完成退款；
+
+```objc
+// 具体请查看SDK中代码说明
+BCPreRefundReq *req = [[BCPreRefundReq alloc] init];
+req.billNo = @"2016052412121120"; //支付时商户自定义的订单号
+req.refundNo = @"201606241290120"; // 商户按规则自定义退款订单号
+req.refundFee = @"10"; //以分为单位，小于等于订单的支付金额
+[BeeCloud sendBCReq:req];
+```
+
 ## 处理请求回调
 
 实现接口`BeeCloudDelegate`，获取不同类型的请求对应的响应；更多内容请参考[Demo](https://github.com/beecloud/beecloud-ios/tree/master/BCPayExample)。  

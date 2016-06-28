@@ -67,10 +67,10 @@
     return NO;
 }
 
-+ (BOOL)beecloudCanMakeApplePayments {
++ (BOOL)beecloudCanMakeApplePayments:(NSUInteger)cardType {
     id adapter = [[NSClassFromString(kAdapterApplePay) alloc] init];
-    if (adapter && [adapter respondsToSelector:@selector(canMakeApplePayments)]) {
-       return [adapter canMakeApplePayments];
+    if (adapter && [adapter respondsToSelector:@selector(canMakeApplePayments:)]) {
+        return [adapter canMakeApplePayments:cardType];
     }
     return NO;
 }

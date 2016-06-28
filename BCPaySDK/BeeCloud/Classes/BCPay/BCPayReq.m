@@ -24,6 +24,7 @@
         self.billNo = @"";
         self.scheme = @"";
         self.viewController = nil;
+        self.cardType = 0;
         self.billTimeOut = 0;
     }
     return self;
@@ -149,6 +150,19 @@
         return NO;
     } else if ((self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getCurrentMode]) {
         [BCPayUtil doErrorResponse:@"未找到微信客户端，请先下载安装"];
+        return NO;
+    } else if (self.channel == PayChannelApplePay && ![BeeCloud canMakeApplePayments:self.cardType]) {
+        switch (self.cardType) {
+            case 0:
+                [BCPayUtil doErrorResponse:@"此设备不支持Apple Pay"];
+                break;
+            case 1:
+                [BCPayUtil doErrorResponse:@"不支持信用卡"];
+                break;
+            case 2:
+                [BCPayUtil doErrorResponse:@"不支持借记卡"];
+                break;
+        }
         return NO;
     }
     return YES;
