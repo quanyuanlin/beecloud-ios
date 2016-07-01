@@ -59,7 +59,7 @@
         NSLog(@"apple tn = %@", dic);
         if (tn.isValid) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [UPAPayPlugin startPay:tn mode:@"01" viewController:dic[@"viewController"] delegate:[BCApplePayAdapter sharedInstance] andAPMechantID:dic[@"apple_mer_id"]];
+                [UPAPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCApplePayAdapter sharedInstance] andAPMechantID:dic[@"apple_mer_id"]];
             });
             return YES;
         }
