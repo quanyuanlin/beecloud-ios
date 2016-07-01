@@ -7,22 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360108A11D1D197200BDA7E6 /* BCPreRefundReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3601089E1D1D197200BDA7E6 /* BCPreRefundReq.m */; };
+		360108A21D1D197200BDA7E6 /* BCPreRefundResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 360108A01D1D197200BDA7E6 /* BCPreRefundResp.m */; };
 		3602F92A1BA031E800A28ADC /* BCPayCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D21BA031E800A28ADC /* BCPayCache.m */; };
 		3602F92B1BA031E800A28ADC /* BCPayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D51BA031E800A28ADC /* BCPayUtil.m */; };
 		3602F92C1BA031E800A28ADC /* NSString+IsValid.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8D71BA031E800A28ADC /* NSString+IsValid.m */; };
 		3602F92D1BA031E800A28ADC /* BeeCloudAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F8DA1BA031E800A28ADC /* BeeCloudAdapter.m */; };
-		3602F93D1BA031E800A28ADC /* BCUnionPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F9111BA031E800A28ADC /* BCUnionPayAdapter.m */; };
-		3602F93E1BA031E800A28ADC /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9121BA031E800A28ADC /* libUPPayPlugin.a */; };
 		3602F94F1BA07C3000A28ADC /* BCWXPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F9441BA07C3000A28ADC /* BCWXPayAdapter.m */; };
 		3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9451BA07C3000A28ADC /* libWeChatSDK.a */; };
 		3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3602F9491BA07C3000A28ADC /* AlipaySDK.framework */; };
 		3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */; };
+		361778F51CB666D800C4CCB0 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 361778F41CB666D800C4CCB0 /* CoreTelephony.framework */; };
 		3618770A1C2D134B00CE4AED /* BeeCloud.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 361877091C2D134B00CE4AED /* BeeCloud.bundle */; };
 		362FC8EF1BF5DE5F007450FF /* XCTestCase+AsyncTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 362FC8E11BF5DE5F007450FF /* XCTestCase+AsyncTesting.m */; };
+		36326D581D0E502500E5AAD3 /* BCUnionPayAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 36326D541D0E502500E5AAD3 /* BCUnionPayAdapter.m */; };
+		36326D591D0E502500E5AAD3 /* libUPPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36326D551D0E502500E5AAD3 /* libUPPayPlugin.a */; };
 		363464041C15842C00C724B2 /* BCSandBoxAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 363464011C15842C00C724B2 /* BCSandBoxAdapter.m */; };
 		363464051C15842C00C724B2 /* PaySandBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 363464031C15842C00C724B2 /* PaySandBoxViewController.m */; };
 		36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D341BC66A0700CA6C81 /* libsqlite3.tbd */; };
 		36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36379D361BC66A1300CA6C81 /* libc++.tbd */; };
+		36383E6D1D1D140E00CB6DBD /* BCPreRefundTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */; };
+		363B89391C97A79500DD2AB1 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3639726E1C7AB60300412108 /* PassKit.framework */; };
+		363B89411C97BD4B00DD2AB1 /* BCApplePayAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */; };
+		363B89421C97BD4B00DD2AB1 /* libUPAPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */; };
 		36501E2A1C06E87300BC8B8A /* BCBaseResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E181C06E87300BC8B8A /* BCBaseResult.m */; };
 		36501E2B1C06E87300BC8B8A /* BCQueryBillResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E1A1C06E87300BC8B8A /* BCQueryBillResult.m */; };
 		36501E2C1C06E87300BC8B8A /* BCQueryRefundResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 36501E1C1C06E87300BC8B8A /* BCQueryRefundResult.m */; };
@@ -56,14 +63,7 @@
 		3658AFD21BB28B9400183C28 /* BaiduWalletSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3658AF6B1BB28B9400183C28 /* BaiduWalletSDKBundle.bundle */; };
 		3658AFD31BB28B9400183C28 /* libBaiduWalletSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3658AF6D1BB28B9400183C28 /* libBaiduWalletSDK.a */; };
 		3658AFDC1BB28B9400183C28 /* libBaiduMobStatForSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3658AF861BB28B9400183C28 /* libBaiduMobStatForSDK.a */; };
-		3658AFFF1BB295F700183C28 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3658AFFE1BB295F700183C28 /* CoreTelephony.framework */; };
 		3658B0021BB2A0DA00183C28 /* PayChannelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658B0011BB2A0DA00183C28 /* PayChannelCell.m */; };
-		366D287E1CA3D8660062C292 /* BCHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D28721CA3D8660062C292 /* BCHTTPSessionManager.m */; };
-		366D287F1CA3D8660062C292 /* BCNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D28751CA3D8660062C292 /* BCNetworkReachabilityManager.m */; };
-		366D28801CA3D8660062C292 /* BCSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D28771CA3D8660062C292 /* BCSecurityPolicy.m */; };
-		366D28811CA3D8660062C292 /* BCURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D28791CA3D8660062C292 /* BCURLRequestSerialization.m */; };
-		366D28821CA3D8660062C292 /* BCURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D287B1CA3D8660062C292 /* BCURLResponseSerialization.m */; };
-		366D28831CA3D8660062C292 /* BCURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 366D287D1CA3D8660062C292 /* BCURLSessionManager.m */; };
 		367179AE1BCDF3F000A128DC /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 367179AD1BCDF3F000A128DC /* libASIHTTPRequest.a */; };
 		367179F81BCDF8CF00A128DC /* libTouchJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 367179F71BCDF8CF00A128DC /* libTouchJSON.a */; };
 		36717A181BCDFA0700A128DC /* libJSONKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36717A171BCDFA0700A128DC /* libJSONKit.a */; };
@@ -73,6 +73,12 @@
 		367267DE1BAA63BC007D7C64 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367267DB1BAA63BC007D7C64 /* line@2x.png */; };
 		367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 367F66821BAAB48900B3466F /* BCPayPalAdapter.m */; };
 		367F668C1BAAB48900B3466F /* libPayPalMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 367F66831BAAB48900B3466F /* libPayPalMobile.a */; };
+		368204AF1CB6088B00B0B0A1 /* BCHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 368204A31CB6088B00B0B0A1 /* BCHTTPSessionManager.m */; };
+		368204B01CB6088B00B0B0A1 /* BCNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 368204A61CB6088B00B0B0A1 /* BCNetworkReachabilityManager.m */; };
+		368204B11CB6088B00B0B0A1 /* BCSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 368204A81CB6088B00B0B0A1 /* BCSecurityPolicy.m */; };
+		368204B21CB6088B00B0B0A1 /* BCURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 368204AA1CB6088B00B0B0A1 /* BCURLRequestSerialization.m */; };
+		368204B31CB6088B00B0B0A1 /* BCURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 368204AC1CB6088B00B0B0A1 /* BCURLResponseSerialization.m */; };
+		368204B41CB6088B00B0B0A1 /* BCURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 368204AE1CB6088B00B0B0A1 /* BCURLSessionManager.m */; };
 		368EA8D61BB3922800F1F9D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8D51BB3922800F1F9D3 /* Security.framework */; };
 		368EA8D91BB3923F00F1F9D3 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8D71BB3923F00F1F9D3 /* AddressBook.framework */; };
 		368EA8DA1BB3923F00F1F9D3 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8D81BB3923F00F1F9D3 /* AddressBookUI.framework */; };
@@ -81,7 +87,6 @@
 		368EA8E01BB3927700F1F9D3 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8DF1BB3927700F1F9D3 /* ImageIO.framework */; };
 		368EA8E21BB3929000F1F9D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8E11BB3929000F1F9D3 /* CoreGraphics.framework */; };
 		368EA8E41BB392AF00F1F9D3 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8E31BB392AF00F1F9D3 /* libz.1.2.5.tbd */; };
-		368EA8E61BB392C100F1F9D3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8E51BB392C100F1F9D3 /* MapKit.framework */; };
 		369110691BB3F130003FE49D /* BCBaiduAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 369110681BB3F130003FE49D /* BCBaiduAdapter.m */; };
 		369462501C03FE3B002A35D0 /* BeeCloudTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3694624F1C03FE3B002A35D0 /* BeeCloudTest.m */; };
 		369750261B68C659009FAEDB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 369750251B68C659009FAEDB /* main.m */; };
@@ -131,6 +136,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3601089D1D1D197200BDA7E6 /* BCPreRefundReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundReq.h; sourceTree = "<group>"; };
+		3601089E1D1D197200BDA7E6 /* BCPreRefundReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundReq.m; sourceTree = "<group>"; };
+		3601089F1D1D197200BDA7E6 /* BCPreRefundResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPreRefundResp.h; sourceTree = "<group>"; };
+		360108A01D1D197200BDA7E6 /* BCPreRefundResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundResp.m; sourceTree = "<group>"; };
 		3602F8D11BA031E800A28ADC /* BCPayCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayCache.h; sourceTree = "<group>"; };
 		3602F8D21BA031E800A28ADC /* BCPayCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayCache.m; sourceTree = "<group>"; };
 		3602F8D31BA031E800A28ADC /* BCPayConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCPayConstant.h; sourceTree = "<group>"; };
@@ -140,11 +149,6 @@
 		3602F8D71BA031E800A28ADC /* NSString+IsValid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IsValid.m"; sourceTree = "<group>"; };
 		3602F8D91BA031E800A28ADC /* BeeCloudAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCloudAdapter.h; sourceTree = "<group>"; };
 		3602F8DA1BA031E800A28ADC /* BeeCloudAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCloudAdapter.m; sourceTree = "<group>"; };
-		3602F9101BA031E800A28ADC /* BCUnionPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCUnionPayAdapter.h; sourceTree = "<group>"; };
-		3602F9111BA031E800A28ADC /* BCUnionPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCUnionPayAdapter.m; sourceTree = "<group>"; };
-		3602F9121BA031E800A28ADC /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
-		3602F9131BA031E800A28ADC /* UPPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPlugin.h; sourceTree = "<group>"; };
-		3602F9141BA031E800A28ADC /* UPPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPluginDelegate.h; sourceTree = "<group>"; };
 		3602F9431BA07C3000A28ADC /* BCWXPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCWXPayAdapter.h; sourceTree = "<group>"; };
 		3602F9441BA07C3000A28ADC /* BCWXPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCWXPayAdapter.m; sourceTree = "<group>"; };
 		3602F9451BA07C3000A28ADC /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
@@ -153,15 +157,28 @@
 		3602F9491BA07C3000A28ADC /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		3602F94D1BA07C3000A28ADC /* BCAliPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCAliPayAdapter.h; sourceTree = "<group>"; };
 		3602F94E1BA07C3000A28ADC /* BCAliPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCAliPayAdapter.m; sourceTree = "<group>"; };
+		361778F41CB666D800C4CCB0 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		361877091C2D134B00CE4AED /* BeeCloud.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BeeCloud.bundle; sourceTree = "<group>"; };
 		362FC8E01BF5DE5F007450FF /* XCTestCase+AsyncTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+AsyncTesting.h"; sourceTree = "<group>"; };
 		362FC8E11BF5DE5F007450FF /* XCTestCase+AsyncTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+AsyncTesting.m"; sourceTree = "<group>"; };
+		36326D531D0E502500E5AAD3 /* BCUnionPayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCUnionPayAdapter.h; sourceTree = "<group>"; };
+		36326D541D0E502500E5AAD3 /* BCUnionPayAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCUnionPayAdapter.m; sourceTree = "<group>"; };
+		36326D551D0E502500E5AAD3 /* libUPPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPPayPlugin.a; sourceTree = "<group>"; };
+		36326D561D0E502500E5AAD3 /* UPPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPlugin.h; sourceTree = "<group>"; };
+		36326D571D0E502500E5AAD3 /* UPPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPPayPluginDelegate.h; sourceTree = "<group>"; };
 		363464001C15842C00C724B2 /* BCSandBoxAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCSandBoxAdapter.h; sourceTree = "<group>"; };
 		363464011C15842C00C724B2 /* BCSandBoxAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCSandBoxAdapter.m; sourceTree = "<group>"; };
 		363464021C15842C00C724B2 /* PaySandBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaySandBoxViewController.h; sourceTree = "<group>"; };
 		363464031C15842C00C724B2 /* PaySandBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaySandBoxViewController.m; sourceTree = "<group>"; };
 		36379D341BC66A0700CA6C81 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		36379D361BC66A1300CA6C81 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPreRefundTest.m; sourceTree = "<group>"; };
+		3639726E1C7AB60300412108 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		363B893C1C97BD4B00DD2AB1 /* BCApplePayAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCApplePayAdapter.h; sourceTree = "<group>"; };
+		363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCApplePayAdapter.mm; sourceTree = "<group>"; };
+		363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPAPayPlugin.a; sourceTree = "<group>"; };
+		363B893F1C97BD4B00DD2AB1 /* UPAPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAPayPlugin.h; sourceTree = "<group>"; };
+		363B89401C97BD4B00DD2AB1 /* UPAPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAPayPluginDelegate.h; sourceTree = "<group>"; };
 		36501E171C06E87300BC8B8A /* BCBaseResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCBaseResult.h; sourceTree = "<group>"; };
 		36501E181C06E87300BC8B8A /* BCBaseResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCBaseResult.m; sourceTree = "<group>"; };
 		36501E191C06E87300BC8B8A /* BCQueryBillResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCQueryBillResult.h; sourceTree = "<group>"; };
@@ -227,22 +244,9 @@
 		3658AF6C1BB28B9400183C28 /* BDWalletSDKMainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDWalletSDKMainManager.h; sourceTree = "<group>"; };
 		3658AF6D1BB28B9400183C28 /* libBaiduWalletSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduWalletSDK.a; sourceTree = "<group>"; };
 		3658AF861BB28B9400183C28 /* libBaiduMobStatForSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStatForSDK.a; sourceTree = "<group>"; };
-		3658AFFE1BB295F700183C28 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		3658B0001BB2A0DA00183C28 /* PayChannelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayChannelCell.h; sourceTree = "<group>"; };
 		3658B0011BB2A0DA00183C28 /* PayChannelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayChannelCell.m; sourceTree = "<group>"; };
-		366D28711CA3D8660062C292 /* BCHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHTTPSessionManager.h; sourceTree = "<group>"; };
-		366D28721CA3D8660062C292 /* BCHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHTTPSessionManager.m; sourceTree = "<group>"; };
-		366D28731CA3D8660062C292 /* BCNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNetworking.h; sourceTree = "<group>"; };
-		366D28741CA3D8660062C292 /* BCNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		366D28751CA3D8660062C292 /* BCNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		366D28761CA3D8660062C292 /* BCSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCSecurityPolicy.h; sourceTree = "<group>"; };
-		366D28771CA3D8660062C292 /* BCSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCSecurityPolicy.m; sourceTree = "<group>"; };
-		366D28781CA3D8660062C292 /* BCURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLRequestSerialization.h; sourceTree = "<group>"; };
-		366D28791CA3D8660062C292 /* BCURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLRequestSerialization.m; sourceTree = "<group>"; };
-		366D287A1CA3D8660062C292 /* BCURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLResponseSerialization.h; sourceTree = "<group>"; };
-		366D287B1CA3D8660062C292 /* BCURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLResponseSerialization.m; sourceTree = "<group>"; };
-		366D287C1CA3D8660062C292 /* BCURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLSessionManager.h; sourceTree = "<group>"; };
-		366D287D1CA3D8660062C292 /* BCURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLSessionManager.m; sourceTree = "<group>"; };
+		365EFC1C1D23B54D001911A0 /* BCPay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BCPay.entitlements; sourceTree = "<group>"; };
 		367179AC1BCDF3F000A128DC /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
 		367179AD1BCDF3F000A128DC /* libASIHTTPRequest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libASIHTTPRequest.a; sourceTree = "<group>"; };
 		367179F71BCDF8CF00A128DC /* libTouchJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTouchJSON.a; path = BCPaySDK/Channel/Baidu/Dependency/BaiduMobStat/libTouchJSON.a; sourceTree = SOURCE_ROOT; };
@@ -278,6 +282,19 @@
 		367F66881BAAB48900B3466F /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
 		367F66891BAAB48900B3466F /* PayPalPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPaymentViewController.h; sourceTree = "<group>"; };
 		367F668A1BAAB48900B3466F /* PayPalProfileSharingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalProfileSharingViewController.h; sourceTree = "<group>"; };
+		368204A21CB6088B00B0B0A1 /* BCHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHTTPSessionManager.h; sourceTree = "<group>"; };
+		368204A31CB6088B00B0B0A1 /* BCHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHTTPSessionManager.m; sourceTree = "<group>"; };
+		368204A41CB6088B00B0B0A1 /* BCNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNetworking.h; sourceTree = "<group>"; };
+		368204A51CB6088B00B0B0A1 /* BCNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		368204A61CB6088B00B0B0A1 /* BCNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		368204A71CB6088B00B0B0A1 /* BCSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCSecurityPolicy.h; sourceTree = "<group>"; };
+		368204A81CB6088B00B0B0A1 /* BCSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCSecurityPolicy.m; sourceTree = "<group>"; };
+		368204A91CB6088B00B0B0A1 /* BCURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLRequestSerialization.h; sourceTree = "<group>"; };
+		368204AA1CB6088B00B0B0A1 /* BCURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLRequestSerialization.m; sourceTree = "<group>"; };
+		368204AB1CB6088B00B0B0A1 /* BCURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLResponseSerialization.h; sourceTree = "<group>"; };
+		368204AC1CB6088B00B0B0A1 /* BCURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLResponseSerialization.m; sourceTree = "<group>"; };
+		368204AD1CB6088B00B0B0A1 /* BCURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLSessionManager.h; sourceTree = "<group>"; };
+		368204AE1CB6088B00B0B0A1 /* BCURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLSessionManager.m; sourceTree = "<group>"; };
 		368EA8D51BB3922800F1F9D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		368EA8D71BB3923F00F1F9D3 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		368EA8D81BB3923F00F1F9D3 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -286,7 +303,6 @@
 		368EA8DF1BB3927700F1F9D3 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		368EA8E11BB3929000F1F9D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		368EA8E31BB392AF00F1F9D3 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
-		368EA8E51BB392C100F1F9D3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		369110671BB3F130003FE49D /* BCBaiduAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCBaiduAdapter.h; sourceTree = "<group>"; };
 		369110681BB3F130003FE49D /* BCBaiduAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCBaiduAdapter.m; sourceTree = "<group>"; };
 		3694624F1C03FE3B002A35D0 /* BeeCloudTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCloudTest.m; sourceTree = "<group>"; };
@@ -351,9 +367,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				361778F51CB666D800C4CCB0 /* CoreTelephony.framework in Frameworks */,
+				363B89391C97A79500DD2AB1 /* PassKit.framework in Frameworks */,
 				36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */,
 				36379D351BC66A0700CA6C81 /* libsqlite3.tbd in Frameworks */,
-				368EA8E61BB392C100F1F9D3 /* MapKit.framework in Frameworks */,
 				367179AE1BCDF3F000A128DC /* libASIHTTPRequest.a in Frameworks */,
 				368EA8E41BB392AF00F1F9D3 /* libz.1.2.5.tbd in Frameworks */,
 				368EA8E21BB3929000F1F9D3 /* CoreGraphics.framework in Frameworks */,
@@ -365,20 +382,20 @@
 				36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */,
 				368EA8D91BB3923F00F1F9D3 /* AddressBook.framework in Frameworks */,
 				368EA8DA1BB3923F00F1F9D3 /* AddressBookUI.framework in Frameworks */,
+				363B89421C97BD4B00DD2AB1 /* libUPAPayPlugin.a in Frameworks */,
 				368EA8D61BB3922800F1F9D3 /* Security.framework in Frameworks */,
-				3658AFFF1BB295F700183C28 /* CoreTelephony.framework in Frameworks */,
 				36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */,
 				36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */,
 				36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */,
 				367F668C1BAAB48900B3466F /* libPayPalMobile.a in Frameworks */,
 				3658AFDC1BB28B9400183C28 /* libBaiduMobStatForSDK.a in Frameworks */,
+				36326D591D0E502500E5AAD3 /* libUPPayPlugin.a in Frameworks */,
 				367179F81BCDF8CF00A128DC /* libTouchJSON.a in Frameworks */,
 				3602F9501BA07C3000A28ADC /* libWeChatSDK.a in Frameworks */,
 				36DCE4101B8F4A5E004BB25E /* CoreVideo.framework in Frameworks */,
 				36DCE40B1B8F4A19004BB25E /* Accelerate.framework in Frameworks */,
 				3602F9511BA07C3000A28ADC /* AlipaySDK.framework in Frameworks */,
 				36DCE40C1B8F4A19004BB25E /* AVFoundation.framework in Frameworks */,
-				3602F93E1BA031E800A28ADC /* libUPPayPlugin.a in Frameworks */,
 				3658AFD31BB28B9400183C28 /* libBaiduWalletSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +410,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3601089C1D1D197200BDA7E6 /* BCPreRefund */ = {
+			isa = PBXGroup;
+			children = (
+				3601089D1D1D197200BDA7E6 /* BCPreRefundReq.h */,
+				3601089E1D1D197200BDA7E6 /* BCPreRefundReq.m */,
+				3601089F1D1D197200BDA7E6 /* BCPreRefundResp.h */,
+				360108A01D1D197200BDA7E6 /* BCPreRefundResp.m */,
+			);
+			path = BCPreRefund;
+			sourceTree = "<group>";
+		};
 		3602F8AE1BA031E800A28ADC /* BCPaySDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,7 +447,7 @@
 		3602F8D01BA031E800A28ADC /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				366D28701CA3D8660062C292 /* BCNetworking */,
+				368204A11CB6088B00B0B0A1 /* BCNetworking */,
 				36D654CF1C20355E00E287C7 /* BCCategory.h */,
 				3602F8D11BA031E800A28ADC /* BCPayCache.h */,
 				3602F8D21BA031E800A28ADC /* BCPayCache.m */,
@@ -449,34 +477,15 @@
 		3602F8E61BA031E800A28ADC /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				36326D511D0E502500E5AAD3 /* UnionPay */,
+				363B893A1C97BD4B00DD2AB1 /* ApplePay */,
 				3658AF551BB28B9400183C28 /* OfflinePay */,
 				3658AF681BB28B9400183C28 /* Baidu */,
 				367F667F1BAAB48900B3466F /* PayPal */,
 				3602F9411BA07C3000A28ADC /* WXPay */,
 				3602F9481BA07C3000A28ADC /* AliPay */,
-				3602F90E1BA031E800A28ADC /* UnionPay */,
 			);
 			path = Channel;
-			sourceTree = "<group>";
-		};
-		3602F90E1BA031E800A28ADC /* UnionPay */ = {
-			isa = PBXGroup;
-			children = (
-				3602F90F1BA031E800A28ADC /* BCUnionPayAdapter */,
-				3602F9121BA031E800A28ADC /* libUPPayPlugin.a */,
-				3602F9131BA031E800A28ADC /* UPPayPlugin.h */,
-				3602F9141BA031E800A28ADC /* UPPayPluginDelegate.h */,
-			);
-			path = UnionPay;
-			sourceTree = "<group>";
-		};
-		3602F90F1BA031E800A28ADC /* BCUnionPayAdapter */ = {
-			isa = PBXGroup;
-			children = (
-				3602F9101BA031E800A28ADC /* BCUnionPayAdapter.h */,
-				3602F9111BA031E800A28ADC /* BCUnionPayAdapter.m */,
-			);
-			path = BCUnionPayAdapter;
 			sourceTree = "<group>";
 		};
 		3602F9411BA07C3000A28ADC /* WXPay */ = {
@@ -526,6 +535,26 @@
 			path = TestCategory;
 			sourceTree = "<group>";
 		};
+		36326D511D0E502500E5AAD3 /* UnionPay */ = {
+			isa = PBXGroup;
+			children = (
+				36326D521D0E502500E5AAD3 /* BCUnionPayAdapter */,
+				36326D551D0E502500E5AAD3 /* libUPPayPlugin.a */,
+				36326D561D0E502500E5AAD3 /* UPPayPlugin.h */,
+				36326D571D0E502500E5AAD3 /* UPPayPluginDelegate.h */,
+			);
+			path = UnionPay;
+			sourceTree = "<group>";
+		};
+		36326D521D0E502500E5AAD3 /* BCUnionPayAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				36326D531D0E502500E5AAD3 /* BCUnionPayAdapter.h */,
+				36326D541D0E502500E5AAD3 /* BCUnionPayAdapter.m */,
+			);
+			path = BCUnionPayAdapter;
+			sourceTree = "<group>";
+		};
 		363463FE1C15842C00C724B2 /* SandBox */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,6 +573,26 @@
 				363464011C15842C00C724B2 /* BCSandBoxAdapter.m */,
 			);
 			path = BCSandBoxAdapter;
+			sourceTree = "<group>";
+		};
+		363B893A1C97BD4B00DD2AB1 /* ApplePay */ = {
+			isa = PBXGroup;
+			children = (
+				363B893B1C97BD4B00DD2AB1 /* BCApplePayAdapter */,
+				363B893E1C97BD4B00DD2AB1 /* libUPAPayPlugin.a */,
+				363B893F1C97BD4B00DD2AB1 /* UPAPayPlugin.h */,
+				363B89401C97BD4B00DD2AB1 /* UPAPayPluginDelegate.h */,
+			);
+			path = ApplePay;
+			sourceTree = "<group>";
+		};
+		363B893B1C97BD4B00DD2AB1 /* BCApplePayAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				363B893C1C97BD4B00DD2AB1 /* BCApplePayAdapter.h */,
+				363B893D1C97BD4B00DD2AB1 /* BCApplePayAdapter.mm */,
+			);
+			path = BCApplePayAdapter;
 			sourceTree = "<group>";
 		};
 		364BC5A01B5E32FD00EAFCCE = {
@@ -569,9 +618,10 @@
 		364BC6E81B5F2AE700EAFCCE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				361778F41CB666D800C4CCB0 /* CoreTelephony.framework */,
+				3639726E1C7AB60300412108 /* PassKit.framework */,
 				36379D361BC66A1300CA6C81 /* libc++.tbd */,
 				36379D341BC66A0700CA6C81 /* libsqlite3.tbd */,
-				368EA8E51BB392C100F1F9D3 /* MapKit.framework */,
 				368EA8E31BB392AF00F1F9D3 /* libz.1.2.5.tbd */,
 				368EA8E11BB3929000F1F9D3 /* CoreGraphics.framework */,
 				368EA8DF1BB3927700F1F9D3 /* ImageIO.framework */,
@@ -580,7 +630,6 @@
 				368EA8D71BB3923F00F1F9D3 /* AddressBook.framework */,
 				368EA8D81BB3923F00F1F9D3 /* AddressBookUI.framework */,
 				368EA8D51BB3922800F1F9D3 /* Security.framework */,
-				3658AFFE1BB295F700183C28 /* CoreTelephony.framework */,
 				36DCE4151B8F4ACA004BB25E /* AudioToolbox.framework */,
 				36DCE4131B8F4A93004BB25E /* CoreLocation.framework */,
 				36DCE4111B8F4A78004BB25E /* MessageUI.framework */,
@@ -595,6 +644,7 @@
 		36501DF91C06E87300BC8B8A /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3601089C1D1D197200BDA7E6 /* BCPreRefund */,
 				36501E6F1C06FBE000BC8B8A /* BCBase */,
 				36501E0D1C06E87300BC8B8A /* BCPay */,
 				36501E2D1C06E9A000BC8B8A /* BCPayPal */,
@@ -828,26 +878,6 @@
 			path = BaiduMobStat;
 			sourceTree = "<group>";
 		};
-		366D28701CA3D8660062C292 /* BCNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				366D28711CA3D8660062C292 /* BCHTTPSessionManager.h */,
-				366D28721CA3D8660062C292 /* BCHTTPSessionManager.m */,
-				366D28731CA3D8660062C292 /* BCNetworking.h */,
-				366D28741CA3D8660062C292 /* BCNetworkReachabilityManager.h */,
-				366D28751CA3D8660062C292 /* BCNetworkReachabilityManager.m */,
-				366D28761CA3D8660062C292 /* BCSecurityPolicy.h */,
-				366D28771CA3D8660062C292 /* BCSecurityPolicy.m */,
-				366D28781CA3D8660062C292 /* BCURLRequestSerialization.h */,
-				366D28791CA3D8660062C292 /* BCURLRequestSerialization.m */,
-				366D287A1CA3D8660062C292 /* BCURLResponseSerialization.h */,
-				366D287B1CA3D8660062C292 /* BCURLResponseSerialization.m */,
-				366D287C1CA3D8660062C292 /* BCURLSessionManager.h */,
-				366D287D1CA3D8660062C292 /* BCURLSessionManager.m */,
-			);
-			path = BCNetworking;
-			sourceTree = "<group>";
-		};
 		367179AB1BCDF3F000A128DC /* ASIHTTPRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -917,6 +947,26 @@
 			path = BCPayPalAdapter;
 			sourceTree = "<group>";
 		};
+		368204A11CB6088B00B0B0A1 /* BCNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				368204A21CB6088B00B0B0A1 /* BCHTTPSessionManager.h */,
+				368204A31CB6088B00B0B0A1 /* BCHTTPSessionManager.m */,
+				368204A41CB6088B00B0B0A1 /* BCNetworking.h */,
+				368204A51CB6088B00B0B0A1 /* BCNetworkReachabilityManager.h */,
+				368204A61CB6088B00B0B0A1 /* BCNetworkReachabilityManager.m */,
+				368204A71CB6088B00B0B0A1 /* BCSecurityPolicy.h */,
+				368204A81CB6088B00B0B0A1 /* BCSecurityPolicy.m */,
+				368204A91CB6088B00B0B0A1 /* BCURLRequestSerialization.h */,
+				368204AA1CB6088B00B0B0A1 /* BCURLRequestSerialization.m */,
+				368204AB1CB6088B00B0B0A1 /* BCURLResponseSerialization.h */,
+				368204AC1CB6088B00B0B0A1 /* BCURLResponseSerialization.m */,
+				368204AD1CB6088B00B0B0A1 /* BCURLSessionManager.h */,
+				368204AE1CB6088B00B0B0A1 /* BCURLSessionManager.m */,
+			);
+			path = BCNetworking;
+			sourceTree = "<group>";
+		};
 		369110661BB3F130003FE49D /* BCBaiduAdapter */ = {
 			isa = PBXGroup;
 			children = (
@@ -929,6 +979,7 @@
 		369750221B68C659009FAEDB /* BCPayExample */ = {
 			isa = PBXGroup;
 			children = (
+				365EFC1C1D23B54D001911A0 /* BCPay.entitlements */,
 				367267D81BAA63BC007D7C64 /* ScanViewController.m */,
 				367267D91BAA63BC007D7C64 /* ScanViewController.h */,
 				367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */,
@@ -969,21 +1020,22 @@
 		7C43BF861BEDE22B0039B4E4 /* BCPayTest */ = {
 			isa = PBXGroup;
 			children = (
-				7C43BF971BEDE52E0039B4E4 /* XCTestCase */,
-				3694624F1C03FE3B002A35D0 /* BeeCloudTest.m */,
-				7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */,
-				7C43BF911BEDE26F0039B4E4 /* BeeCloudUtilsTest.m */,
-				7C43BF991BEDE8D00039B4E4 /* NSStringIsValidTest.m */,
-				7C43BF9B1BEDED200039B4E4 /* NSDictionaryUtilsTest.m */,
+				36E556A31C2B8E1C00DACE7C /* BCPayCacheTest.m */,
 				36E66DE21C0837AC00A6F62B /* BCPayReqTest.m */,
+				7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */,
+				36383E6C1D1D140E00CB6DBD /* BCPreRefundTest.m */,
+				36E66DEA1C08431C00A6F62B /* BCQueryBillByIdReqTest.m */,
+				36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */,
 				36E66DE41C08397300A6F62B /* BCQueryBillsReqTest.m */,
+				36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */,
+				36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */,
 				36E66DE61C083BC300A6F62B /* BCQueryRefundsReqTest.m */,
 				36E66DE81C083C5800A6F62B /* BCRefundStatusReqTest.m */,
-				36E66DEA1C08431C00A6F62B /* BCQueryBillByIdReqTest.m */,
-				36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */,
-				36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */,
-				36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */,
-				36E556A31C2B8E1C00DACE7C /* BCPayCacheTest.m */,
+				3694624F1C03FE3B002A35D0 /* BeeCloudTest.m */,
+				7C43BF911BEDE26F0039B4E4 /* BeeCloudUtilsTest.m */,
+				7C43BF9B1BEDED200039B4E4 /* NSDictionaryUtilsTest.m */,
+				7C43BF991BEDE8D00039B4E4 /* NSStringIsValidTest.m */,
+				7C43BF971BEDE52E0039B4E4 /* XCTestCase */,
 			);
 			path = BCPayTest;
 			sourceTree = "<group>";
@@ -1048,6 +1100,20 @@
 					369750201B68C659009FAEDB = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = WZ3C6S544H;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+							com.apple.OMC = {
+								enabled = 1;
+							};
+							com.apple.Wallet = {
+								enabled = 0;
+							};
+						};
 					};
 					7C43BF841BEDE22B0039B4E4 = {
 						CreatedOnToolsVersion = 7.1;
@@ -1104,50 +1170,53 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				368204B11CB6088B00B0B0A1 /* BCSecurityPolicy.m in Sources */,
 				36501E4B1C06EDA800BC8B8A /* BCRefundStatusReq.m in Sources */,
 				3697502C1B68C659009FAEDB /* ViewController.m in Sources */,
+				360108A11D1D197200BDA7E6 /* BCPreRefundReq.m in Sources */,
+				368204B41CB6088B00B0B0A1 /* BCURLSessionManager.m in Sources */,
 				369750291B68C659009FAEDB /* AppDelegate.m in Sources */,
 				36501E531C06EE6500BC8B8A /* BCQueryBillsCountReq.m in Sources */,
 				3602F92C1BA031E800A28ADC /* NSString+IsValid.m in Sources */,
+				368204B31CB6088B00B0B0A1 /* BCURLResponseSerialization.m in Sources */,
 				36501E2A1C06E87300BC8B8A /* BCBaseResult.m in Sources */,
-				366D287F1CA3D8660062C292 /* BCNetworkReachabilityManager.m in Sources */,
+				363B89411C97BD4B00DD2AB1 /* BCApplePayAdapter.mm in Sources */,
 				36501E381C06EC9000BC8B8A /* BCPayReq.m in Sources */,
-				366D287E1CA3D8660062C292 /* BCHTTPSessionManager.m in Sources */,
 				3602F92A1BA031E800A28ADC /* BCPayCache.m in Sources */,
 				3697504C1B68C6D5009FAEDB /* GuideViewController.m in Sources */,
 				3658B0021BB2A0DA00183C28 /* PayChannelCell.m in Sources */,
 				3658AFCF1BB28B9400183C28 /* BCOfflinePayResp.m in Sources */,
 				36501E3E1C06ECA600BC8B8A /* BCPayPalReq.m in Sources */,
 				3658AFCC1BB28B9400183C28 /* BCOfflinePayReq.m in Sources */,
+				368204B21CB6088B00B0B0A1 /* BCURLRequestSerialization.m in Sources */,
 				369110691BB3F130003FE49D /* BCBaiduAdapter.m in Sources */,
 				36501E591C06F0E300BC8B8A /* BCQueryRefundsResp.m in Sources */,
 				363464041C15842C00C724B2 /* BCSandBoxAdapter.m in Sources */,
+				360108A21D1D197200BDA7E6 /* BCPreRefundResp.m in Sources */,
 				36501E6E1C06F38100BC8B8A /* BCQueryRefundByIdResp.m in Sources */,
 				36501E6B1C06F34A00BC8B8A /* BCQueryBillByIdResp.m in Sources */,
 				36501E501C06EE4D00BC8B8A /* BCQueryRefundsCountReq.m in Sources */,
-				3602F93D1BA031E800A28ADC /* BCUnionPayAdapter.m in Sources */,
+				368204B01CB6088B00B0B0A1 /* BCNetworkReachabilityManager.m in Sources */,
 				3602F92D1BA031E800A28ADC /* BeeCloudAdapter.m in Sources */,
 				36501E451C06ED8300BC8B8A /* BCQueryBillByIdReq.m in Sources */,
 				367F668B1BAAB48900B3466F /* BCPayPalAdapter.m in Sources */,
 				3658AFD01BB28B9400183C28 /* BCOfflineRevertResp.m in Sources */,
+				36326D581D0E502500E5AAD3 /* BCUnionPayAdapter.m in Sources */,
 				36501E651C06F2DF00BC8B8A /* BCQueryRefundsCountResp.m in Sources */,
 				36501E681C06F30100BC8B8A /* BCQueryBillsCountResp.m in Sources */,
 				7CD455551BEC889F00E0EC4A /* BeeCloud+Utils.m in Sources */,
 				363464051C15842C00C724B2 /* PaySandBoxViewController.m in Sources */,
-				366D28821CA3D8660062C292 /* BCURLResponseSerialization.m in Sources */,
-				366D28811CA3D8660062C292 /* BCURLRequestSerialization.m in Sources */,
 				3697504B1B68C6D5009FAEDB /* QueryResultViewController.m in Sources */,
 				3658AFCD1BB28B9400183C28 /* BCOfflineRevertReq.m in Sources */,
 				3602F94F1BA07C3000A28ADC /* BCWXPayAdapter.m in Sources */,
 				3602F9521BA07C3000A28ADC /* BCAliPayAdapter.m in Sources */,
-				366D28801CA3D8660062C292 /* BCSecurityPolicy.m in Sources */,
 				3658AFCE1BB28B9400183C28 /* BCOfflineStatusReq.m in Sources */,
 				367267DC1BAA63BC007D7C64 /* ScanViewController.m in Sources */,
 				36501E5C1C06F0FF00BC8B8A /* BCQueryBillsReq.m in Sources */,
 				36501E391C06EC9000BC8B8A /* BCPayResp.m in Sources */,
 				36501E3F1C06ECA600BC8B8A /* BCPayPalVerifyReq.m in Sources */,
-				366D28831CA3D8660062C292 /* BCURLSessionManager.m in Sources */,
 				36501E481C06ED9A00BC8B8A /* BCQueryRefundByIdReq.m in Sources */,
+				368204AF1CB6088B00B0B0A1 /* BCHTTPSessionManager.m in Sources */,
 				36A3C0801BB535B2003E82B1 /* NSDictionary+Utils.m in Sources */,
 				369B3A1C1BA9646300051CCE /* QRCodeViewController.m in Sources */,
 				36501E5F1C06F13200BC8B8A /* BCQueryBillsResp.m in Sources */,
@@ -1182,6 +1251,7 @@
 				7C43BF941BEDE26F0039B4E4 /* BCPayUtilTest.m in Sources */,
 				7C43BF9C1BEDED200039B4E4 /* NSDictionaryUtilsTest.m in Sources */,
 				7C43BF951BEDE26F0039B4E4 /* BeeCloudUtilsTest.m in Sources */,
+				36383E6D1D1D140E00CB6DBD /* BCPreRefundTest.m in Sources */,
 				36E66DE71C083BC300A6F62B /* BCQueryRefundsReqTest.m in Sources */,
 				36E66DE31C0837AC00A6F62B /* BCPayReqTest.m in Sources */,
 				36E66DEB1C08431C00A6F62B /* BCQueryBillByIdReqTest.m in Sources */,
@@ -1304,6 +1374,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_ENTITLEMENTS = BCPayExample/BCPay.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1311,6 +1384,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/AliPay",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1331,13 +1405,16 @@
 					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/BaiduMobStat",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/JSONKit",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/SDWebImage",
+					"$(PROJECT_DIR)/BCPaySDK/Channel/ApplePay",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.beecloud.BCPay;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.beecloud.BeeCloud;
 				PRODUCT_NAME = BCPay;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64";
 			};
 			name = Debug;
 		};
@@ -1346,6 +1423,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_ENTITLEMENTS = BCPayExample/BCPay.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1353,6 +1433,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/AliPay",
 				);
+				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = BCPayExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1369,13 +1450,16 @@
 					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/BaiduMobStat",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/JSONKit",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/SDWebImage",
+					"$(PROJECT_DIR)/BCPaySDK/Channel/ApplePay",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.beecloud.BCPay;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.beecloud.BeeCloud;
 				PRODUCT_NAME = BCPay;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/**";
+				VALID_ARCHS = "arm64 armv7 armv7s x86_64";
 			};
 			name = Release;
 		};
@@ -1387,13 +1471,15 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BCPayTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.beecloud.BCPayTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BCPay.app/BCPay";
+				VALID_ARCHS = "arm64 armv7 x86_64 armv7s";
 			};
 			name = Debug;
 		};
@@ -1404,13 +1490,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BCPayTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.beecloud.BCPayTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BCPay.app/BCPay";
+				VALID_ARCHS = "arm64 armv7 x86_64 armv7s";
 			};
 			name = Release;
 		};

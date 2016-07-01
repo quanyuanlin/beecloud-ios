@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = '3.4.3'
+	s.version      = '3.5.0'
 	s.summary      = 'BeeCloud 让支付更简单'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
 	s.platform     = :ios, '7.0'
-	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.4.3'}
+	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.5.0'}
 	s.requires_arc = true
 	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
 	
@@ -37,6 +37,13 @@ Pod::Spec.new do |s|
 		unionpay.vendored_libraries = 'BCPaySDK/Channel/UnionPay/libUPPayPlugin.a'
 		unionpay.source_files = 'BCPaySDK/Channel/UnionPay/BCUnionPayAdapter/*.{h,m}', 'BCPaySDK/Channel/UnionPay/*.h'
 		unionpay.dependency 'BeeCloud/Core'
+	end
+
+	s.subspec 'ApplePay' do |apple|
+	    apple.frameworks = 'Security','QuartzCore','PassKit'
+		apple.vendored_libraries = 'BCPaySDK/Channel/ApplePay/libUPAPayPlugin.a'
+		apple.source_files = 'BCPaySDK/Channel/ApplePay/BCApplePayAdapter/*.{h,m}', 'BCPaySDK/Channel/ApplePay/*.h'
+		apple.dependency 'BeeCloud/Core'
 	end
 
 	s.subspec 'PayPal' do |paypal|

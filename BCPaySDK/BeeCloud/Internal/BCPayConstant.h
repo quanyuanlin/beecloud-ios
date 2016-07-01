@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.4.3";//api版本号
+static NSString * const kApiVersion = @"3.5.0";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kUnknownError = @"未知错误";
@@ -58,6 +58,7 @@ static NSString * const kRestApiSandboxNotify = @"%@%@/notify/";
 static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
 static NSString * const kAdapterAliPay = @"BCAliPayAdapter";
 static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
+static NSString * const kAdapterApplePay = @"BCApplePayAdapter";
 static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
 static NSString * const kAdapterOffline = @"BCOfflineAdapter";
 static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
@@ -84,7 +85,6 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
 
 typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelNone = 0,
-    
     PayChannelBCApp,
     
     PayChannelWx = 10, //微信
@@ -104,6 +104,7 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelUn = 30,//银联
     PayChannelUnApp,//银联APP
     PayChannelUnWeb,//银联网页
+    PayChannelApplePay,
     
     PayChannelPayPal = 40,
     PayChannelPayPalLive,
@@ -136,6 +137,7 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeOfflinePayReq,
     BCObjsTypeOfflineBillStatusReq,
     BCObjsTypeOfflineRevertReq,
+    BCObjsTypePreRefundReq,
     
     BCObjsTypeBaseResp = 200,
     BCObjsTypePayResp,
@@ -149,6 +151,7 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeOfflinePayResp,
     BCObjsTypeOfflineBillStatusResp,
     BCObjsTypeOfflineRevertResp,
+    BCObjsTypePreRefundResp,
     
     BCObjsTypeBaseResults = 300,
     BCObjsTypeBillResults,

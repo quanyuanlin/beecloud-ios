@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bWb-n2-sYm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bWb-n2-sYm">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -135,8 +135,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bc" translatesAutoresizingMaskIntoConstraints="NO" id="fsv-ye-afI">
-                                <rect key="frame" x="240" y="98" width="120" height="120"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bc" translatesAutoresizingMaskIntoConstraints="NO" id="fsv-ye-afI">
+                                <rect key="frame" x="240" y="54" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="KOJ-YK-kHx"/>
                                     <constraint firstAttribute="width" constant="120" id="gFg-EJ-hY1"/>
@@ -153,7 +153,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Imn-LI-q63" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-47" y="455"/>
+            <point key="canvasLocation" x="-187" y="548"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Jon-GA-0VR">
@@ -168,7 +168,7 @@
                                 <rect key="frame" x="0.0" y="86" width="600" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3dl-ec-nuI" id="bFU-cq-Emb">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="751-9Z-2E6">
@@ -216,7 +216,7 @@
                                 <rect key="frame" x="0.0" y="86" width="600" height="140"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DIp-h3-fr4" id="IdO-BZ-UPy">
-                                    <rect key="frame" x="0.0" y="0.0" width="553" height="139.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="553" height="139"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -224,7 +224,7 @@
                                 <rect key="frame" x="0.0" y="226" width="600" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hce-ou-YMa" id="kGf-fb-ro1">
-                                    <rect key="frame" x="0.0" y="0.0" width="553" height="159.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="553" height="159"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -249,6 +249,6 @@
         <image name="btn_highlight" width="278" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="t72-I7-gpS"/>
+        <segue reference="17r-uv-rln"/>
     </inferredMetricsTieBreakers>
 </document>

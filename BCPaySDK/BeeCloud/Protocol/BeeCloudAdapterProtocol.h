@@ -23,8 +23,10 @@
 - (BOOL)wxPay:(NSMutableDictionary *)dic;
 - (BOOL)aliPay:(NSMutableDictionary *)dic;
 - (BOOL)unionPay:(NSMutableDictionary *)dic;
+- (BOOL)applePay:(NSMutableDictionary *)dic;
 - (NSString *)baiduPay:(NSMutableDictionary *)dic;
 - (BOOL)sandboxPay;
+- (BOOL)canMakeApplePayments:(NSUInteger)cardType;
 
 - (void)payPal:(NSMutableDictionary *)dic;
 - (void)payPalVerify:(NSMutableDictionary *)dic;

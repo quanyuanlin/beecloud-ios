@@ -151,6 +151,9 @@
         case PayChannelBaiduWeb:
             cType = @"BD_WEB";
             break;
+        case PayChannelApplePay:
+            cType = @"APPLE";
+            break;
         default:
             break;
     }
