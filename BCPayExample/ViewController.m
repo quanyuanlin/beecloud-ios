@@ -61,6 +61,15 @@
     billTitle = [BeeCloud getCurrentMode] ? @"iOS Demo Sandbox" : @"iOS Demo Live";
     self.orderList = nil;
     
+//    BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
+//    req.channel = PayChannelWxNative;
+//    req.billNo = @"20160414190415474";
+//    [BeeCloud sendBCReq:req];
+    
+//    BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
+//    req.channel = PayChannelWxScan;
+//    req.billNo = @"20160414180136652";
+//    [BeeCloud sendBCReq:req];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,7 +106,7 @@
      **/
     BCOfflinePayReq *payReq = [[BCOfflinePayReq alloc] init];
     payReq.channel = channel; //支付渠道，支持WX_NATIVE、WX_SCAN、ALI_OFFLINE_QRCODE、ALI_SCAN
-    payReq.title = @"Offline Pay";//订单标题
+    payReq.title = @"订单标题";//订单标题
     payReq.totalFee = @"1"; //订单价格
     payReq.billNo = billno; //商户自定义订单号
     payReq.authcode = authcode; //支付授权码(ALI_SCAN,WX_SCAN时必需)，通过扫码用户的支付宝钱包(付款)、微信钱包(刷卡)获取
@@ -271,7 +280,7 @@
                     queryTimes++;
                     [BeeCloud sendBCReq:tempResp.request];
                 } else {
-                    [self showAlertView:tempResp.payResult?@"支付成功":@"支付失败"];
+                    [self showAlertView:tempResp.payResult ? @"支付成功" : @"支付失败"];
                     //                BCOfflineRevertReq *req = [[BCOfflineRevertReq alloc] init];
                     //                req.channel = tempResp.request.channel;
                     //                req.billno = tempResp.request.billno;
@@ -452,11 +461,11 @@
  *  @param resp 支付结果
  */
 - (void)qrCodeBeScaned:(BCOfflinePayResp *)resp {
-    BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
-    BCOfflinePayReq *payReq = (BCOfflinePayReq *)resp.request;
-    req.channel = payReq.channel;
-    req.billNo = payReq.billNo;
-    [BeeCloud sendBCReq:req];
+//    BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
+//    BCOfflinePayReq *payReq = (BCOfflinePayReq *)resp.request;
+//    req.channel = payReq.channel;
+//    req.billNo = payReq.billNo;
+//    [BeeCloud sendBCReq:req];
 }
 
 #pragma mark - prepare segue

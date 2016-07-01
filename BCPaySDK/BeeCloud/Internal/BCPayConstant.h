@@ -43,9 +43,17 @@ static NSString * const kRestApiQueryBillsCount = @"%@%@/bills/count";
 static NSString * const kRestApiQueryRefundsCount = @"%@%@/refunds/count";
 
 //rest api offline
-static NSString * const kRestApiOfflinePay = @"%@%@/offline/bill";
-static NSString * const kRestApiOfflineBillStatus = @"%@%@/offline/bill/status";
-static NSString * const kRestApiOfflineBillRevert = @"%@%@/offline/bill/";
+//static NSString * const kRestApiOfflinePay = @"%@%@/offline/bill";
+//static NSString * const kRestApiOfflineBillStatus = @"%@%@/offline/bill/status";
+//static NSString * const kRestApiOfflineBillRevert = @"%@%@/offline/bill/";
+//offline agent
+static NSString * const kRestApiOfflinePay = @"%@%@/offline/agent/bill";
+static NSString * const kRestApiOfflineBillStatus = @"%@%@/offline/agent/bill/status";
+static NSString * const kRestApiOfflineBillRevert = @"%@%@/offline/agent/bill/";
+
+//static NSString * const kRestApiOfflineAgentPay = @"%@%@/offline/agent/bill";
+//static NSString * const kRestApiOfflineAgentBillStatus = @"%@%@/offline/agent/bill/status";
+//static NSString * const kRestApiOfflineAgentBillRevert = @"%@%@/offline/agent/bill/";
 
 //paypal accesstoken
 static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";

@@ -27,7 +27,9 @@
      由于支付宝的政策原因，测试账号的支付宝支付不能在生产环境中使用，带来不便，敬请原谅！
      */ 
     [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
-    
+//    [BeeCloud initWithAppID:@"62706f51-7d90-4383-8031-b6367e86189b" andAppSecret:@"8d4ca8ff-cf52-4a40-8e65-429ba719a08a"];
+    [BeeCloud initWithAppID:@"65984952-a6ab-43d1-990f-4b1d1e589ad1" andAppSecret:@"d84c4f0c-ff08-4a83-948b-40c093c8c027"];
+
 //    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee" sandbox:YES];
     
     //开启/关闭沙箱测试模式;
