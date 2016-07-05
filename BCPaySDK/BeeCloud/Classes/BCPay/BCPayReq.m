@@ -157,10 +157,10 @@
                 [BCPayUtil doErrorResponse:@"此设备不支持Apple Pay"];
                 break;
             case 1:
-                [BCPayUtil doErrorResponse:@"不支持信用卡"];
+                [BCPayUtil doErrorResponse:@"不支持借记卡"];
                 break;
             case 2:
-                [BCPayUtil doErrorResponse:@"不支持借记卡"];
+                [BCPayUtil doErrorResponse:@"不支持信用卡"];
                 break;
         }
         return NO;
