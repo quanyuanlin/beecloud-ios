@@ -470,7 +470,7 @@ req.refundno = @"20150709173629127";
 ```
 
 ### 发起预退款
-通过构造`BCPreRefundReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起退款查询。  
+通过构造`BCPreRefundReq`的实例，使用`[BeeCloud sendBCReq:req]`方法发起预退款。  
 **响应事件类型对象：`BCPreRefundResp`**
 
 说明：
