@@ -1,8 +1,11 @@
 BeeCloud iOS SDK Changelog
 ==========================
+
+v3.5.2 2016年07月12日
++ 更新支付宝SDK，支持ipv6
+
 v3.5.1 2016年07月08日
 + 修复canMakeApplePayments在iOS 9.2以下版本crash的问题
-+ 更新支付宝SDK，支持ipv6
 
 v3.5.0 2016年06月29日
 + 支持Apple Pay
