@@ -33,7 +33,7 @@
     switch(cardType) {
         case 0:
         {
-            status = [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkChinaUnionPay]] ;
+            status = [PKPaymentAuthorizationViewController canMakePaymentsUsingNetworks:@[PKPaymentNetworkChinaUnionPay]];
             break;
         }
         case 1:

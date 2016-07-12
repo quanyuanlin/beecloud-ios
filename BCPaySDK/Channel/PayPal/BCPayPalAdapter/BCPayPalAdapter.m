@@ -105,19 +105,19 @@
         NSDictionary *dic = (NSDictionary *)response;
         [weakSelf doPayPalVerify:req accessToken:[NSString stringWithFormat:@"%@ %@", [dic stringValueForKey:@"token_type" defaultValue:@""],[dic stringValueForKey:@"access_token" defaultValue:@""]]];
     }  failure:^(NSURLSessionTask *operation, NSError *error) {
-        [weakSelf doErrorResponse:kNetWorkError];
+        [BCPayUtil doErrorResponse:kNetWorkError];
     }];
 }
 
 - (void)doPayPalVerify:(BCPayPalVerifyReq *)req accessToken:(NSString *)accessToken {
     
     if (req == nil || req.payment == nil) {
-        [self doErrorResponse:@"请求参数格式不合法"];
+        [BCPayUtil doErrorResponse:@"请求参数格式不合法"];
         return ;
     }
     NSMutableDictionary *parameters = [BCPayUtil prepareParametersForRequest];
     if (parameters == nil) {
-        [self doErrorResponse:@"请检查是否全局初始化"];
+        [BCPayUtil doErrorResponse:@"请检查是否全局初始化"];
         return;
     }
     if ([BCPayCache sharedInstance].isPayPalSandbox) {
@@ -136,12 +136,12 @@
     parameters[@"access_token"] = accessToken;
     
     BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
-    __weak BCPayPalAdapter *weakSelf = [BCPayPalAdapter sharedInstance];
+    
     [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters progress:nil
           success:^(NSURLSessionTask *task, id response) {
-              [weakSelf getErrorInResponse:response];
+              [BCPayUtil getErrorInResponse:response];
           } failure:^(NSURLSessionTask *operation, NSError *error) {
-              [weakSelf doErrorResponse:kNetWorkError];
+              [BCPayUtil doErrorResponse:kNetWorkError];
           }];
 }
 
@@ -149,45 +149,28 @@
 - (BOOL)checkParameters:(BCBaseReq *)request {
     
     if (request == nil) {
-        [self doErrorResponse:@"请求结构体不合法"];
+        [BCPayUtil doErrorResponse:@"请求结构体不合法"];
     } else if (request.type == BCObjsTypePayPal) {
         BCPayPalReq *req = (BCPayPalReq *)request;
         if (req.items == nil || req.items.count == 0) {
-            [self doErrorResponse:@"payitem 格式不合法"];
+            [BCPayUtil doErrorResponse:@"payitem 格式不合法"];
             return NO;
         } else if (!req.shipping.isValid) {
-            [self doErrorResponse:@"shipping 格式不合法"];
+            [BCPayUtil doErrorResponse:@"shipping 格式不合法"];
             return NO;
         }  else if (!req.tax.isValid) {
-            [self doErrorResponse:@"tax 格式不合法"];
+            [BCPayUtil doErrorResponse:@"tax 格式不合法"];
             return NO;
         } else if (req.payConfig == nil || ![req.payConfig isKindOfClass:[PayPalConfiguration class]]) {
-            [self doErrorResponse:@"payConfig 格式不合法"];
+            [BCPayUtil doErrorResponse:@"payConfig 格式不合法"];
             return NO;
         } else if (req.viewController == nil) {
-            [self doErrorResponse:@"viewController 格式不合法"];
+            [BCPayUtil doErrorResponse:@"viewController 格式不合法"];
             return NO;
         }
         return YES;
     }
     return NO ;
-}
-
-- (void)doErrorResponse:(NSString *)errMsg {
-    BCBaseResp * resp = [BCPayCache sharedInstance].bcResp;
-    resp.resultCode = BCErrCodeCommon;
-    resp.resultMsg = errMsg;
-    resp.errDetail = errMsg;
-    [BCPayCache beeCloudDoResponse];
-}
-
-- (void)getErrorInResponse:(id)response {
-    NSDictionary *dic = (NSDictionary *)response;
-    BCBaseResp *resp = [BCPayCache sharedInstance].bcResp;
-    resp.resultCode = [dic[kKeyResponseResultCode] intValue];
-    resp.resultMsg = dic[kKeyResponseResultMsg];
-    resp.errDetail = dic[kKeyResponseErrDetail];
-    [BCPayCache beeCloudDoResponse];
 }
 
 @end

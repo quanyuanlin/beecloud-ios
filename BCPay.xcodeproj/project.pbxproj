@@ -118,6 +118,7 @@
 		36E66DED1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */; };
 		36E66DF01C08508300A6F62B /* BCQueryBillsCountReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */; };
 		36E66DF21C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */; };
+		36FAD4FB1D2FA5F000955FC0 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36FAD4FA1D2FA5F000955FC0 /* CoreMotion.framework */; };
 		7C43BF941BEDE26F0039B4E4 /* BCPayUtilTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */; };
 		7C43BF951BEDE26F0039B4E4 /* BeeCloudUtilsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C43BF911BEDE26F0039B4E4 /* BeeCloudUtilsTest.m */; };
 		7C43BF9A1BEDE8D00039B4E4 /* NSStringIsValidTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C43BF991BEDE8D00039B4E4 /* NSStringIsValidTest.m */; };
@@ -350,6 +351,7 @@
 		36E66DEC1C0849EC00A6F62B /* BCQueryRefundByIdReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryRefundByIdReqTest.m; sourceTree = "<group>"; };
 		36E66DEF1C08508300A6F62B /* BCQueryBillsCountReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryBillsCountReqTest.m; sourceTree = "<group>"; };
 		36E66DF11C0852CA00A6F62B /* BCQueryRefundsCountReqTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCQueryRefundsCountReqTest.m; sourceTree = "<group>"; };
+		36FAD4FA1D2FA5F000955FC0 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		7C43BF851BEDE22B0039B4E4 /* BCPayTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BCPayTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C43BF891BEDE22B0039B4E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C43BF8F1BEDE26F0039B4E4 /* BCPayUtilTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCPayUtilTest.m; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36FAD4FB1D2FA5F000955FC0 /* CoreMotion.framework in Frameworks */,
 				361778F51CB666D800C4CCB0 /* CoreTelephony.framework in Frameworks */,
 				363B89391C97A79500DD2AB1 /* PassKit.framework in Frameworks */,
 				36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */,
@@ -617,6 +620,7 @@
 		364BC6E81B5F2AE700EAFCCE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				36FAD4FA1D2FA5F000955FC0 /* CoreMotion.framework */,
 				361778F41CB666D800C4CCB0 /* CoreTelephony.framework */,
 				3639726E1C7AB60300412108 /* PassKit.framework */,
 				36379D361BC66A1300CA6C81 /* libc++.tbd */,

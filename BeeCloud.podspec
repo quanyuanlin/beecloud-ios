@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = '3.5.0'
+	s.version      = '3.5.1'
 	s.summary      = 'BeeCloud 让支付更简单'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
 	s.platform     = :ios, '7.0'
-	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.5.0'}
+	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.5.1'}
 	s.requires_arc = true
 	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
 	
@@ -20,6 +20,7 @@ Pod::Spec.new do |s|
 	end
 
 	s.subspec 'Alipay' do |alipay|
+		alipay.frameworks = 'CoreMotion'
 		alipay.vendored_frameworks = 'BCPaySDK/Channel/AliPay/AlipaySDK.framework'
 		alipay.source_files = 'BCPaySDK/Channel/AliPay/BCAliPayAdapter/*.{h,m}', 'BCPaySDK/Channel/AliPay/*.h'
 		alipay.dependency 'BeeCloud/Core'
