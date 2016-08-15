@@ -72,8 +72,8 @@
                 newSub.id_no = @"32072419881028005X";
                 newSub.id_name = @"黄文龙";
                 newSub.mobile = @"18654155015";
-                newSub.sms_id = @"10543e71-d64f-4183-9a1f-1064e0ad1046";//resp[@"sms_id"];
-                newSub.sms_code = @"889925";//resp[@"sms_code"];
+                newSub.sms_id = resp[@"sms_id"];
+                newSub.sms_code = @"sms_code";
                 
                 [newSub newSubscription];
             }

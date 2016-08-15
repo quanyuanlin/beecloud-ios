@@ -304,6 +304,79 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 }
 ```
 
+
+#### 订阅支付
+
+先访问[BeeCloud订阅支付说明](https://github.com/beecloud/beecloud-rest-api/blob/master/subscription/订阅系统说明文档.md)，了解BeeCloud订阅支付相关概念。  
+
+##### 发送短信验证码
+
+```objc
+	[BCSubscription smsReq:@"phone"];
+``` 
+
+##### 获取支持的银行列表
+
+```objc
+	[BCSubscription subscriptionBanks];
+```
+
+##### 查询订阅计划数目
+
+```objc
+BCSubscriptionQuery *query = [[BCSubscriptionQuery alloc] init];
+[query getPlansCount:@"" interval:@"" interval_count:1 trial_days:0];
+```
+
+##### 查询订阅计划详情
+
+```objc
+BCSubscriptionQuery *query = [[BCSubscriptionQuery alloc] init];
+[query getPlans:@"" interval:@"" interval_count:1 trial_days:0];
+```
+
+##### 查询订阅记录数目
+
+```objc
+BCSubscriptionQuery *query = [[BCSubscriptionQuery alloc] init];
+[query getSubscriptionsCount:@"" plan_id:@"" card_id:@""];
+```
+
+##### 查询订阅计划详情
+
+```objc
+BCSubscriptionQuery *query = [[BCSubscriptionQuery alloc] init];
+[query getSubscriptions:@"" plan_id:@"" card_id:@""];
+```
+
+##### 创建新的订阅
+
+```objc
+BCNewSubscription *newSub = [[BCNewSubscription alloc] init];
+newSub.buyer_id = @"hwl";
+newSub.plan_id = @"399df68d-04c7-4d19-9459-11098ed32add";
+newSub.bank_name = @"中国银行";
+newSub.card_no = @"6217856101016319795";
+newSub.id_no = @"32072419881028005X";
+newSub.id_name = @"黄文龙";
+newSub.mobile = @"18654155015";
+newSub.sms_id = @"sms_id";  //通过发短信验证码接口获取
+newSub.sms_code = @"sms_code";//界面上用户填写
+[newSub newSubscription];
+```
+
+##### 取消订阅
+
+```objc
+[BCSubscription subscriptionCancel:_cancel_id];
+```
+
+##### 以上请求的结果通过实现BCSubscriptionDelegate接收，具体请参考demo以及相关接口的说明
+
+```objc
+- (void)onBCSubscriptionResp:(NSMutableDictionary *)resp;
+```
+
 #### PayPal
 
 通过构造`BCPayPalReq`的实例，使用`[BeeCloud sendBCReq:payReq]`方法发起支付请求。  
