@@ -1,26 +1,27 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = '3.5.3'
+	s.version      = '3.5.4'
 	s.summary      = 'BeeCloud 让支付更简单'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
 	s.platform     = :ios, '7.0'
-	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.5.3'}
+	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.5.4'}
 	s.requires_arc = true
 	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
 	
 	s.subspec 'Core' do |core|
 		core.source_files = 'BCPaySDK/BeeCloud/**/*.{h,m}'
 		core.requires_arc = true
-		core.ios.library = 'c++', 'z'
+		core.ios.library = 'c++', 'stdc++', 'z'
+		core.frameworks = 'CFNetwork', 'SystemConfiguration', 'Security'
 		core.resource = 'BCPaySDK/BeeCloud/SandBox/*.bundle'
 		core.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
 	end
 
 	s.subspec 'Alipay' do |alipay|
-		alipay.frameworks = 'CoreMotion'
+		alipay.frameworks = 'CoreMotion' , 'CoreTelephony'
 		alipay.vendored_frameworks = 'BCPaySDK/Channel/AliPay/AlipaySDK.framework'
 		alipay.source_files = 'BCPaySDK/Channel/AliPay/BCAliPayAdapter/*.{h,m}', 'BCPaySDK/Channel/AliPay/*.h'
 		alipay.dependency 'BeeCloud/Core'
@@ -34,14 +35,14 @@ Pod::Spec.new do |s|
 	end
 
 	s.subspec 'UnionPay' do |unionpay|
-	    unionpay.frameworks = 'Security','QuartzCore'
+	    unionpay.frameworks = 'QuartzCore'
 		unionpay.vendored_libraries = 'BCPaySDK/Channel/UnionPay/libUPPayPlugin.a'
 		unionpay.source_files = 'BCPaySDK/Channel/UnionPay/BCUnionPayAdapter/*.{h,m}', 'BCPaySDK/Channel/UnionPay/*.h'
 		unionpay.dependency 'BeeCloud/Core'
 	end
 
 	s.subspec 'ApplePay' do |apple|
-	    apple.frameworks = 'Security','QuartzCore','PassKit'
+	    apple.frameworks = 'QuartzCore','PassKit'
 		apple.vendored_libraries = 'BCPaySDK/Channel/ApplePay/libUPAPayPlugin.a'
 		apple.source_files = 'BCPaySDK/Channel/ApplePay/BCApplePayAdapter/*.{h,m}', 'BCPaySDK/Channel/ApplePay/*.h'
 		apple.dependency 'BeeCloud/Core'

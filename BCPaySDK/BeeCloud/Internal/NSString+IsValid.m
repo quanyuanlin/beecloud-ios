@@ -51,4 +51,11 @@
     float val;
     return [scan scanFloat:&val] && [scan isAtEnd];
 }
+
+- (BOOL)isValidMobile {
+    NSString *phoneRegex = @"^([0|86|17951]?(13[0-9])|(15[^4,\\D])|(17[678])|(18[0,0-9]))\\d{8}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+    return [phoneTest evaluateWithObject:self];
+}
+
 @end

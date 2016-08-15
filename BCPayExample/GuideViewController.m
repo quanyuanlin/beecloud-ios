@@ -31,10 +31,12 @@
     ViewController *viewController = (ViewController *)segue.destinationViewController;
     if ([segue.identifier isEqualToString:@"doPay"]) {
         viewController.actionType = 0;
-    } else if ([segue.identifier isEqualToString:@"doQuery"]){
+    } else if ([segue.identifier isEqualToString:@"doQuery"]) {
         viewController.actionType = 1;
-    } else {
+    } else if ([segue.identifier isEqualToString:@"doQueryRefund"]) {
         viewController.actionType = 2;
+    } else if ([segue.identifier isEqualToString:@"doSub"]) {
+        viewController.actionType = 3;
     }
 }
 
