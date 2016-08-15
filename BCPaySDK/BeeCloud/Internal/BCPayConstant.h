@@ -23,11 +23,7 @@ static NSString * const kKeyResponseCodeUrl = @"code_url";
 static NSString * const KKeyResponsePayResult = @"pay_result";
 static NSString * const kKeyResponseRevertResult = @"revert_status";
 
-static NSUInteger const kBCHostCount = 4;
-static NSString * const kBCHosts[] = {@"https://apisz.beecloud.cn",
-    @"https://apiqd.beecloud.cn",
-    @"https://apibj.beecloud.cn",
-    @"https://apihz.beecloud.cn"};
+static NSString * const kBCHost = @"https://apidynamic.beecloud.cn";
 
 static NSString * const reqApiVersion = @"/2/rest";
 
@@ -158,7 +154,8 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeRefundResults,
     
     BCObjsTypePayPal = 400,
-    BCObjsTypePayPalVerify
+    BCObjsTypePayPalVerify,
+    
 };
 
 typedef NS_ENUM(NSUInteger, BillStatus) {

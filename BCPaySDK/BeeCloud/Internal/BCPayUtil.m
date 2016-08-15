@@ -70,7 +70,7 @@
 }
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
-    NSString *verHost = [NSString stringWithFormat:@"%@%@", kBCHosts[arc4random()%kBCHostCount], reqApiVersion];
+    NSString *verHost = [NSString stringWithFormat:@"%@%@", kBCHost, reqApiVersion];
     return [NSString stringWithFormat:format, verHost, [BCPayCache sharedInstance].sandbox ? @"/sandbox" : @""];
 }
 

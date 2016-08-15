@@ -15,5 +15,6 @@
 - (BOOL)isValidTraceNo;
 - (BOOL)isPureFloat;
 - (BOOL)isValidUUID;
+- (BOOL)isValidMobile;
 
 @end

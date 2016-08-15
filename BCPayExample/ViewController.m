@@ -121,6 +121,7 @@
 }
 
 #pragma mark - PayPal Pay
+/*
 - (void)doPayPal {
     BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
     
@@ -187,6 +188,7 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+ */
 
 #pragma mark - BCPay回调
 
@@ -420,7 +422,7 @@
                 break;
             case PayChannelPayPal:
             case PayChannelPayPalSandbox:
-                [self doPayPal];
+//                [self doPayPal];
                 break;
             default:
                 break;

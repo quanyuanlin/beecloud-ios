@@ -47,7 +47,6 @@
 #import "BCPayPalVerifyReq.h"
 
 #import "BCCategory.h"
-
-
+#import "BCSubscription.h"
 
 #endif
