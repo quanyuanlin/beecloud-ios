@@ -128,6 +128,12 @@
         case PayChannelUnWeb:
             cType = @"UN_WEB";
             break;
+        case PayChannelApplePay:
+            cType = @"APPLE";
+            break;
+        case PayChannelApplePayTest:
+            cType = @"APPLE_TEST";
+            break;
 #pragma mark PayChannel_PayPal
         case PayChannelPayPal:
             cType = @"PAYPAL";
@@ -150,9 +156,6 @@
             break;
         case PayChannelBaiduWeb:
             cType = @"BD_WEB";
-            break;
-        case PayChannelApplePay:
-            cType = @"APPLE";
             break;
         default:
             break;

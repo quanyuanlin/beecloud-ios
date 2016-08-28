@@ -1,6 +1,11 @@
 BeeCloud iOS SDK Changelog
 ==========================
 
+v3.5.5 2016年08月27日
++ 增加Apple Pay测试渠道APPLE_TEST
++ 修复CocoaPods导入apple pay文件缺失bug
++ 优化BCPayExample结构
+
 v3.5.4 2016年08月15日
 + 支持BeeCloud订阅支付
 + 优化BCPayExample结构，默认不添加PayPal和Apple功能

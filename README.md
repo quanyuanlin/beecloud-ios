@@ -1,7 +1,7 @@
 ## BeeCloud iOS SDK (Open Source)
 
 [![Build Status](https://travis-ci.org/beecloud/beecloud-ios.svg)](https://travis-ci.org/beecloud/beecloud-ios) 
-![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.5.4-blue.svg) 
+![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.5.5-blue.svg) 
 
 </br>
 ## 简介
@@ -216,6 +216,16 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 ```objc
 	//0 表示不区分卡类型；1 表示只支持借记卡；2 表示支持信用卡；默认为0
 	[BeeCloud canMakeApplePayments: 0];
+```
+⑤ 目前支持的支付渠道  
+
+```
+WX_APP  	 ->  微信APP支付
+ALI_APP 	 ->  支付宝APP支付
+UN_APP  	 ->  银联APP支付
+BD_APP  	 ->  百度APP支付
+APPLE		 ->  Apple Pay生产渠道(银联生产环境)
+APPLE_TEST   ->  Apple Pay测试渠道(银联测试环境)
 ```
 
 ### 支付

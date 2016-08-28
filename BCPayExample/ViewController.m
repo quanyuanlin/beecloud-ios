@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "QueryResultViewController.h"
 #import "BCNetworking.h"
-#import "PayPalMobile.h"
 #import "BCOffinePay.h"
 #import "GenQrCode.h"
 #import "QRCodeViewController.h"
@@ -17,9 +16,9 @@
 #import "PayChannelCell.h"
 #import "BDWalletSDKMainManager.h"
 
-@interface ViewController ()<BeeCloudDelegate, PayPalPaymentDelegate, SCanViewDelegate, QRCodeDelegate,BDWalletSDKMainManagerDelegate> {
-    PayPalConfiguration * _payPalConfig;
-    PayPalPayment *_completedPayment;
+@interface ViewController ()<BeeCloudDelegate, SCanViewDelegate, QRCodeDelegate,BDWalletSDKMainManagerDelegate> {
+//    PayPalConfiguration * _payPalConfig;
+//    PayPalPayment *_completedPayment;
     PayChannel currentChannel;
     NSMutableArray *channelList;
     NSString * billTitle;
@@ -49,7 +48,7 @@
                                       @{@"sub":@(PayChannelBCApp), @"img":@"beepay", @"title":@"BeePay"},
                                       @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
                                       @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
-                                      @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"} //相关文档 http://help.beecloud.cn/hc/kb/article/177410/?from=draft
+                                      @{@"sub":@(PayChannelApplePayTest), @"img":@"apple", @"title":@"ApplePay"} //相关文档 http://help.beecloud.cn/hc/kb/article/177410/?from=draft
                                       ]},
                     @{@"channel":@"线下收款",
                       @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码"},
@@ -404,6 +403,7 @@
             case PayChannelUnApp:
             case PayChannelBaiduApp:
             case PayChannelApplePay:
+            case PayChannelApplePayTest:
             case PayChannelBCApp:
                 [self doPay:channel];
                 break;

@@ -59,9 +59,11 @@
     if ([self canMakeApplePayments:0]) {
         NSString *tn = [dic stringValueForKey:@"tn" defaultValue:@""];
         NSLog(@"apple tn = %@", dic);
+        PayChannel channel = (PayChannel)[dic integerValueForKey:@"channel" defaultValue:0];
+        NSString *mode = channel==PayChannelApplePay?@"00":@"01";
         if (tn.isValid) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [UPAPayPlugin startPay:tn mode:@"00" viewController:dic[@"viewController"] delegate:[BCApplePayAdapter sharedInstance] andAPMechantID:dic[@"apple_mer_id"]];
+                [UPAPayPlugin startPay:tn mode:mode viewController:dic[@"viewController"] delegate:[BCApplePayAdapter sharedInstance] andAPMechantID:dic[@"apple_mer_id"]];
             });
             return YES;
         }
