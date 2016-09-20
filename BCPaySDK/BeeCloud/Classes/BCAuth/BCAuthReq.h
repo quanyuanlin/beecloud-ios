@@ -18,17 +18,7 @@
  *  身份证号码
  */
 @property (nonatomic, retain) NSString *idNo;
-/**
- *  银行卡号
- */
-@property (nonatomic, retain) NSString *cardNo;
-/**
- *  手机号
- */
-@property (nonatomic, retain) NSString *mobile;
 
-- (void)authReqWithName:(NSString *)name idNo:(NSString *)idNo;
-
-- (void)authReq;
++ (void)authReqWithName:(NSString *)name idNo:(NSString *)idNo;
 
 @end

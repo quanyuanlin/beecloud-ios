@@ -16,10 +16,12 @@
         self.type = BCObjsTypeAuthReq;
         self.name = @"";
         self.idNo = @"";
-        self.cardNo = @"";
-        self.mobile = @"";
     }
     return self;
+}
+
++ (void)authReqWithName:(NSString *)name idNo:(NSString *)idNo {
+    [[BCAuthReq alloc] authReqWithName:name idNo:idNo];
 }
 
 - (void)authReqWithName:(NSString *)name idNo:(NSString *)idNo {
@@ -45,12 +47,6 @@
     }
     parameters[@"name"] = self.name;
     parameters[@"id_no"] = self.idNo;
-    if (self.cardNo.isValid) {
-        parameters[@"card_no"] = self.cardNo;
-    }
-    if (self.mobile.isValid) {
-        parameters[@"mobile"] = self.mobile;
-    }
     
     BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     
