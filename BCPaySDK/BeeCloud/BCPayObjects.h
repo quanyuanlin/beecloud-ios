@@ -48,5 +48,6 @@
 
 #import "BCCategory.h"
 #import "BCSubscription.h"
+#import "BCAuthReq.h"
 
 #endif
