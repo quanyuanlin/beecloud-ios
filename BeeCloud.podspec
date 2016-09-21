@@ -68,5 +68,12 @@ Pod::Spec.new do |s|
     baidu.vendored_libraries = 'BCPaySDK/Channel/Baidu/**/*.a'
     baidu.dependency 'BeeCloud/Core'
     end
+
+    s.subspec 'BCWXPay' do |bcWxPay|
+		bcWxPay.vendored_libraries = 'BCPaySDK/Channel/BCWXPay/libSPaySDK.a'
+		bcWxPay.source_files = 'BCPaySDK/Channel/BCWXPay/BCWXPayAdapter/*.{h,m}', 'BCPaySDK/Channel/BCWXPay/include/*.h',
+		bcWxPay.ios.library = 'sqlite3'		
+		bcWxPay.dependency 'BeeCloud/Wx','MBProgressHUD'
+	end
 	
 end

@@ -1,6 +1,11 @@
 BeeCloud iOS SDK Changelog
 ==========================
 
+v3.6.0 2016年09月21日
++ 增加BC_WX_APP支付渠道
++ 增加实名认证API
++ 优化代码结构
+
 v3.5.5 2016年08月27日
 + 增加Apple Pay测试渠道APPLE_TEST
 + 修复CocoaPods导入apple pay文件缺失bug
