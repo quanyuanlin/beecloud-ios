@@ -34,6 +34,9 @@
 - (void)offlinePay:(NSMutableDictionary *)dic;
 - (void)offlineStatus:(NSMutableDictionary *)dic;
 - (void)offlineRevert:(NSMutableDictionary *)dic;
+//BC_WX_APP
+- (void)initBCWXPay:(NSString *)wxAppId;
+- (void)bcWXPay:(NSMutableDictionary *)dic;
 
 @end
 

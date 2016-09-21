@@ -51,14 +51,15 @@ static NSString * const kPayPalAccessTokenSandbox = @"https://api.sandbox.paypal
 static NSString * const kRestApiSandboxNotify = @"%@%@/notify/";
 
 //Adapter
-static NSString * const kAdapterWXPay = @"BCWXPayAdapter";
-static NSString * const kAdapterAliPay = @"BCAliPayAdapter";
-static NSString * const kAdapterUnionPay = @"BCUnionPayAdapter";
-static NSString * const kAdapterApplePay = @"BCApplePayAdapter";
-static NSString * const kAdapterPayPal = @"BCPayPalAdapter";
-static NSString * const kAdapterOffline = @"BCOfflineAdapter";
-static NSString * const kAdapterBaidu = @"BCBaiduAdapter";
+static NSString * const kAdapterWXPay = @"WXPayAdapter";
+static NSString * const kAdapterAliPay = @"AliPayAdapter";
+static NSString * const kAdapterUnionPay = @"UnionPayAdapter";
+static NSString * const kAdapterApplePay = @"ApplePayAdapter";
+static NSString * const kAdapterPayPal = @"PayPalAdapter";
+static NSString * const kAdapterOffline = @"OfflineAdapter";
+static NSString * const kAdapterBaidu = @"BaiduAdapter";
 static NSString * const kAdapterSandbox = @"BCSandboxAdapter";
+static NSString * const kAdapterBCWXPay = @"BCWXPayAdapter";
 
 /**
  *  BCPay URL type for handling URLs.
@@ -82,6 +83,7 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
 typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelNone = 0,
     PayChannelBCApp,
+    PayChannelBCWXApp,
     
     PayChannelWx = 10, //微信
     PayChannelWxApp,//微信APP

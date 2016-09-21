@@ -27,11 +27,15 @@
      由于支付宝的政策原因，测试账号的支付宝支付不能在生产环境中使用，带来不便，敬请原谅！
      */ 
     [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"39a7a518-9ac8-4a9e-87bc-7885f33cf18c"];
+    [BeeCloud initWithAppID:@"e66e760b-0f78-44bb-a9ae-b22729d51678" andAppSecret:@"6fb7db77-96ed-46ef-ae10-1118ee564dd3"];
 //    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee" sandbox:YES];
     
-    //初始化微信
+    //初始化微信官方APP支付
     //此处的微信appid必须是在微信开放平台创建的移动应用的appid，且必须与在『BeeCloud控制台-》微信APP支付』配置的"应用APPID"一致，否则会出现『跳转到微信客户端后只显示一个确定按钮的现象』。
-    [BeeCloud initWeChatPay:@"wxf1aa465362b4c8f1"];
+    [BeeCloud initWeChatPay:@"wx97434eab140e3854"];
+    
+    //初始化BC微信APP支付
+    [BeeCloud initBCWXPay:@"wx97434eab140e3854"];
     
     //初始化PayPal
     [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR"

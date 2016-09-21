@@ -50,4 +50,17 @@
 #import "BCSubscription.h"
 #import "BCAuthReq.h"
 
+#pragma mark - BeeCloudDelegate
+
+@protocol BeeCloudDelegate <NSObject>
+@required
+/**
+ *  不同类型的请求，对应不同的响应
+ *
+ *  @param resp 响应体
+ */
+- (void)onBeeCloudResp:(BCBaseResp *)resp;
+
+@end
+
 #endif
