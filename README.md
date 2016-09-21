@@ -78,6 +78,7 @@ pod 'BeeCloud/UnionPay' //只包括银联
 pod 'BeeCloud/PayPal' //只包括paypal
 pod 'BeeCloud/Baidu' //只包括百度钱包
 pod 'BeeCloud/ApplePay' //只包括Apple Pay
+pod 'BeeCloud/BCWXPay' //包括BeeCloud/Wx
 ```
 
 </br>

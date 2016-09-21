@@ -23,13 +23,13 @@ Pod::Spec.new do |s|
 	s.subspec 'Alipay' do |alipay|
 		alipay.frameworks = 'CoreMotion' , 'CoreTelephony'
 		alipay.vendored_frameworks = 'BCPaySDK/Channel/AliPay/AlipaySDK.framework'
-		alipay.source_files = 'BCPaySDK/Channel/AliPay/BCAliPayAdapter/*.{h,m}', 'BCPaySDK/Channel/AliPay/*.h'
+		alipay.source_files = 'BCPaySDK/Channel/AliPay/AliPayAdapter/*.{h,m}', 'BCPaySDK/Channel/AliPay/*.h'
 		alipay.dependency 'BeeCloud/Core'
 	end
 
 	s.subspec 'Wx' do |wx|
 		wx.vendored_libraries = 'BCPaySDK/Channel/WXPay/libWeChatSDK.a'
-		wx.source_files = 'BCPaySDK/Channel/WXPay/BCWXPayAdapter/*.{h,m}', 'BCPaySDK/Channel/WXPay/*.h'
+		wx.source_files = 'BCPaySDK/Channel/WXPay/WXPayAdapter/*.{h,m}', 'BCPaySDK/Channel/WXPay/*.h'
 		wx.ios.library = 'sqlite3'		
 		wx.dependency 'BeeCloud/Core'
 	end
@@ -37,21 +37,21 @@ Pod::Spec.new do |s|
 	s.subspec 'UnionPay' do |unionpay|
 	    unionpay.frameworks = 'QuartzCore'
 		unionpay.vendored_libraries = 'BCPaySDK/Channel/UnionPay/libUPPayPlugin.a'
-		unionpay.source_files = 'BCPaySDK/Channel/UnionPay/BCUnionPayAdapter/*.{h,m}', 'BCPaySDK/Channel/UnionPay/*.h'
+		unionpay.source_files = 'BCPaySDK/Channel/UnionPay/UnionPayAdapter/*.{h,m}', 'BCPaySDK/Channel/UnionPay/*.h'
 		unionpay.dependency 'BeeCloud/Core'
 	end
 
 	s.subspec 'ApplePay' do |apple|
 	    apple.frameworks = 'QuartzCore','PassKit'
 		apple.vendored_libraries = 'BCPaySDK/Channel/ApplePay/libUPAPayPlugin.a'
-		apple.source_files = 'BCPaySDK/Channel/ApplePay/BCApplePayAdapter/*.{h,m,mm}', 'BCPaySDK/Channel/ApplePay/*.h'
+		apple.source_files = 'BCPaySDK/Channel/ApplePay/ApplePayAdapter/*.{h,m,mm}', 'BCPaySDK/Channel/ApplePay/*.h'
 		apple.dependency 'BeeCloud/Core'
 	end
 
 	s.subspec 'PayPal' do |paypal|
 		paypal.frameworks = 'AudioToolbox','CoreLocation','MessageUI','CoreMedia','CoreVideo','Accelerate','AVFoundation'
 		paypal.vendored_libraries = 'BCPaySDK/Channel/PayPal/libPayPalMobile.a'
-		paypal.source_files = 'BCPaySDK/Channel/PayPal/BCPayPalAdapter/*.{h,m}', 'BCPaySDK/Channel/PayPal/*.h'
+		paypal.source_files = 'BCPaySDK/Channel/PayPal/PayPalAdapter/*.{h,m}', 'BCPaySDK/Channel/PayPal/*.h'
 		paypal.dependency 'BeeCloud/Core'
 	end
 
@@ -73,7 +73,8 @@ Pod::Spec.new do |s|
 		bcWxPay.vendored_libraries = 'BCPaySDK/Channel/BCWXPay/libSPaySDK.a'
 		bcWxPay.source_files = 'BCPaySDK/Channel/BCWXPay/BCWXPayAdapter/*.{h,m}', 'BCPaySDK/Channel/BCWXPay/include/*.h',
 		bcWxPay.ios.library = 'sqlite3'		
-		bcWxPay.dependency 'BeeCloud/Wx','MBProgressHUD'
+		bcWxPay.dependency 'BeeCloud/Wx'
+		bcWxPay.dependency 'MBProgressHUD', '~> 0.9.1'
 	end
 	
 end
