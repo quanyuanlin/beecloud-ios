@@ -107,6 +107,11 @@
     [BCPayCache sharedInstance].networkTimeout = time;
 }
 
++ (void)initBCWXPay:(NSString *)wxAppId {
+    [BeeCloudAdapter beeCloudRegisterWeChat:wxAppId];
+    [BeeCloudAdapter beeCloudInitBCWXPay:wxAppId];
+}
+
 + (BOOL)sendBCReq:(BCBaseReq *)req {
     BeeCloud *instance = [BeeCloud sharedInstance];
     BOOL bSend = YES;

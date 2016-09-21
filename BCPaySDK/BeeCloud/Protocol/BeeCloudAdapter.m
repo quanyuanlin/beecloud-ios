@@ -134,4 +134,19 @@
     }
 }
 
++ (void)beeCloudInitBCWXPay:(NSString *)wxAppId {
+    id adapter = [[NSClassFromString(kAdapterBCWXPay) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(initBCWXPay:)]) {
+        [adapter initBCWXPay:wxAppId];
+    }
+}
+
++ (void)beeCloudBCWXPay:(NSMutableDictionary *)dic {
+    id adapter = [[NSClassFromString(kAdapterBCWXPay) alloc] init];
+    if (adapter && [adapter respondsToSelector:@selector(bcWXPay:)]) {
+        [adapter bcWXPay:dic];
+    }
+}
+
+
 @end

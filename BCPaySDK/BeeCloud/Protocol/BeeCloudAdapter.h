@@ -30,5 +30,8 @@
 + (void)beeCloudOfflineStatus:(NSMutableDictionary *)dic;
 + (void)beeCloudOfflineRevert:(NSMutableDictionary *)dic;
 
++ (void)beeCloudInitBCWXPay:(NSString *)wxAppId;
++ (void)beeCloudBCWXPay:(NSMutableDictionary *)dic;
+
 
 @end

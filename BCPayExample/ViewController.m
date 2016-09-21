@@ -43,6 +43,7 @@
     
     NSArray *live = @[@{@"channel":@"线上支付",
                       @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
+                                      @{@"sub":@(PayChannelBCWXApp), @"img":@"wx", @"title":@"BC微信支付"},
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
                                       @{@"sub":@(PayChannelBCApp), @"img":@"beepay", @"title":@"BeePay"},
@@ -59,6 +60,7 @@
     
     NSArray *sandbox = @[@{@"channel":@"线上支付",
                         @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
+                                        @{@"sub":@(PayChannelBCWXApp), @"img":@"wx", @"title":@"BC微信支付"},
                                         @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                         @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
                                         @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
@@ -405,6 +407,7 @@
             case PayChannelApplePay:
             case PayChannelApplePayTest:
             case PayChannelBCApp:
+            case PayChannelBCWXApp:
                 [self doPay:channel];
                 break;
             case PayChannelWxNative:

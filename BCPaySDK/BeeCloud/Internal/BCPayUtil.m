@@ -80,6 +80,9 @@
         case PayChannelBCApp:
             cType = @"BC_APP";
             break;
+        case PayChannelBCWXApp:
+            cType = @"BC_WX_APP";
+            break;
 #pragma mark PayChannel_WX
         case PayChannelWx:
             cType = @"WX";

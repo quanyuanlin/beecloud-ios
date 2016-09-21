@@ -1,7 +1,7 @@
 ## BeeCloud iOS SDK (Open Source)
 
 [![Build Status](https://travis-ci.org/beecloud/beecloud-ios.svg)](https://travis-ci.org/beecloud/beecloud-ios) 
-![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.5.5-blue.svg) 
+![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) ![version](https://img.shields.io/badge/version-v3.6.0-blue.svg) 
 
 </br>
 ## 简介
@@ -10,17 +10,13 @@
 
 SDK支持以下支付渠道: 
  
- * 微信APP
- * 支付宝APP
- * 银联在线APP
- * PayPal
- * 百度钱包  
- * Apple Pay   
+ 官方渠道：`微信(WX_APP)`、`支付宝(ALI_APP)`、`银联(UN_APP)`、`PayPal`、`百度钱包(BD_APP)`、`ApplePay(APPLE)`  
+ BeeCloud自有渠道：`BC_APP`、 `BC_WX_APP`（自有渠道的申请开通，请联系BeeCloud）  
 
 提供支付、支付订单以及退款订单的查询功能。  
 还提供了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，订单状态的查询以及订单撤销。    
-为应对Apple官方要求，BeeCloud iOS SDK 为开发者提供实名认证API。  
-本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 **iOS 6** 及以上版本。   
+**为应对Apple官方要求，BeeCloud iOS SDK 为开发者提供实名认证API。**  
+本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 **iOS 7** 及以上版本。   
 
 
 </br>
@@ -176,14 +172,21 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 [BeeCloud getCurrentMode];
 ```
 
-② 初始化微信  
-如果您使用了微信支付，需要用微信开放平台Appid初始化。  
+② 初始化官方微信支付  
+如果您使用了官方微信支付，需要用微信开放平台Appid初始化。  
 
 ```objc
 [BeeCloud initWeChatPay:@"微信开放平台appid"];
 ```
 
-③ 初始化PayPal  
+③ 初始化BeeCloud微信支付  
+如果您使用了BeeCloud微信支付，需要用微信开放平台Appid初始化。  
+
+```objc
+[BeeCloud initBCWXPay:@"微信开放平台appid"];
+```
+
+④ 初始化PayPal  
 如果你需要使用PayPal，使用以下方式初始化  
 
 ```objc
@@ -191,7 +194,7 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 [BeeCloud initPayPal:@"AVT1Ch18aTIlUJIeeCxvC7ZKQYHczGwiWm8jOwhrREc4a5FnbdwlqEB4evlHPXXUA67RAAZqZM0H8TCR" secret:@"EL-fkjkEUyxrwZAmrfn46awFXlX-h2nRkyCVhhpeVdlSRuhPJKXx3ZvUTTJqPQuAeomXA8PZ2MkX24vF" sandbox:YES];
 ```
 
-③ handleOpenUrl
+⑤ handleOpenUrl
 此方法用于处理从微信、支付宝钱包回到本应用时的回调
 
 ```objc
@@ -212,22 +215,25 @@ XXXXXXX does not contain bitcode. You must rebuild it with bitcode enabled (Xcod
 }
 ```
 
-④ 判断手机是否支持Apple Pay功能,以及是否已加载有可用的支付卡片
+⑥ 判断手机是否支持Apple Pay功能,以及是否已加载有可用的支付卡片
 
 ```objc
 	//0 表示不区分卡类型；1 表示只支持借记卡；2 表示支持信用卡；默认为0
 	[BeeCloud canMakeApplePayments: 0];
 ```
-⑤ 目前支持的支付渠道  
+⑦ 目前支持的支付渠道  
 
-```
-WX_APP  	 ->  微信APP支付
-ALI_APP 	 ->  支付宝APP支付
-UN_APP  	 ->  银联APP支付
-BD_APP  	 ->  百度APP支付
-APPLE		 ->  Apple Pay生产渠道(银联生产环境)
-APPLE_TEST   ->  Apple Pay测试渠道(银联测试环境)
-```
+|渠道代码|渠道名称|
+|:-------:|:-------:|
+WX_APP|微信APP支付
+ALI_APP|支付宝APP支付
+UN_APP|银联APP支付
+BD_APP|百度APP支付
+APPLE|Apple Pay生产渠道(银联生产环境)
+APPLE_TEST|Apple Pay测试渠道(银联测试环境)
+BC_APP|BeeCloud自有银联APP支付
+BC_WX_APP|BeeCloud自有微信APP支付  
+
 
 ### 支付
 

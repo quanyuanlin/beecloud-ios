@@ -10,19 +10,6 @@
 #import "BCPayObjects.h"
 #import "BCPayConstant.h"
 
-#pragma mark - BeeCloudDelegate
-
-@protocol BeeCloudDelegate <NSObject>
-@required
-/**
- *  不同类型的请求，对应不同的响应
- *
- *  @param resp 响应体
- */
-- (void)onBeeCloudResp:(BCBaseResp *)resp;
-
-@end
-
 #pragma mark - BeeCloud
 @interface BeeCloud : NSObject
 
@@ -141,6 +128,13 @@
  *  @param time 超时时间, 5.0代表5秒。
  */
 + (void)setNetworkTimeout:(NSTimeInterval)time;
+
+/**
+ *  配置BC_WX_APP支付环境
+ *
+ *  @param wxAppId 微信开放平台创建的应用appid。
+ */
++ (void)initBCWXPay:(NSString *)wxAppId;
 
 #pragma mark - Send BeeCloud Request
 
