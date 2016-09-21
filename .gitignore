@@ -20,3 +20,5 @@ products
 *.xcuserstate
 *.xcscmblueprint
 *.xcuserstate
+
+.DS_Store

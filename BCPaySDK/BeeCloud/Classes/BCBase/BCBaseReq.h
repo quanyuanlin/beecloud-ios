@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "BCPayConstant.h"
-//#import "NSString+IsValid.h"
-//#import "NSDictionary+Utils.h"
 
 #pragma mark BCBaseReq
 /**

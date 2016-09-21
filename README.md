@@ -18,7 +18,8 @@ SDK支持以下支付渠道:
  * Apple Pay   
 
 提供支付、支付订单以及退款订单的查询功能。  
-还提供了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，订单状态的查询以及订单撤销。  
+还提供了线下收款功能(包括微信扫码、微信刷卡、支付宝扫码、支付宝条形码)，订单状态的查询以及订单撤销。    
+为应对Apple官方要求，BeeCloud iOS SDK 为开发者提供实名认证API。  
 本SDK是根据[BeeCloud Rest API](https://github.com/beecloud/beecloud-rest-api) 开发的 iOS SDK, 适用于 **iOS 6** 及以上版本。   
 
 
@@ -570,6 +571,16 @@ req.refundNo = @"201606241290120"; // 商户按规则自定义退款订单号
 req.refundFee = @"10"; //以分为单位，小于等于订单的支付金额
 [BeeCloud sendBCReq:req];
 ```
+
+### 鉴权(实名认证)
+实名认证API，属于付费API(1.5元/次)。在BeeCloud官网账户余额系统充值，即可使用。  
+**对象名称：BCAuthReq**  
+**响应事件类型对象：`BCBaseResp`**
+
+```objc
+	[BCAuthReq authReqWithName:@"xxx" idNo:@"320724198610280010"];
+```
+
 
 ## 处理请求回调
 

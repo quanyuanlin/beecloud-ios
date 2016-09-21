@@ -42,7 +42,6 @@
         [BCPayUtil doErrorResponse:@"请检查是否全局初始化"];
         return;
     }
-    NSLog(@"bill_no %@", self.billNo);
     parameters[@"channel"] = cType;
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[self.totalFee integerValue]];
     parameters[@"bill_no"] = self.billNo;
