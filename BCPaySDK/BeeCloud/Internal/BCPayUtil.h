@@ -12,6 +12,7 @@
 #import "BCPayConstant.h"
 #import "BCPayCache.h"
 #import "BCPayObjects.h"
+#import "BCNetworkHelper.h"
 
 @interface BCPayUtil : NSObject
 

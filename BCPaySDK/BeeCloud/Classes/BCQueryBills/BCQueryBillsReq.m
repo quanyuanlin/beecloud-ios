@@ -9,6 +9,7 @@
 #import "BCQueryBillsReq.h"
 #import "BCPayUtil.h"
 
+
 #pragma mark query request
 @implementation BCQueryBillsReq
 
@@ -63,13 +64,19 @@
     
     BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCQueryBillsReq *weakSelf = self;
-    [manager GET:[BCPayUtil getBestHostWithFormat: kRestApiQueryBills] parameters:preparepara progress:nil
-         success:^(NSURLSessionTask *task, id response) {
-             BCPayLog(@"resp = %@", response);
-             [weakSelf doQueryBillsResponse:(NSDictionary *)response];
-         } failure:^(NSURLSessionTask *operation, NSError *error) {
-             [BCPayUtil doErrorResponse:kNetWorkError];
-         }];
+//    [manager GET:[BCPayUtil getBestHostWithFormat: kRestApiQueryBills] parameters:preparepara progress:nil
+//         success:^(NSURLSessionTask *task, id response) {
+//             BCPayLog(@"resp = %@", response);
+//             [weakSelf doQueryBillsResponse:(NSDictionary *)response];
+//         } failure:^(NSURLSessionTask *operation, NSError *error) {
+//             [BCPayUtil doErrorResponse:kNetWorkError];
+//         }];
+    [BCNetworkHelper getWithUrlString:[BCPayUtil getBestHostWithFormat: kRestApiQueryBills] parameters:preparepara success:^(NSDictionary *response) {
+        BCPayLog(@"resp = %@", response);
+        [weakSelf doQueryBillsResponse:(NSDictionary *)response];
+    } failure:^(NSError *error) {
+        [BCPayUtil doErrorResponse:kNetWorkError];
+    }];
 }
 
 - (BCQueryBillsResp *)doQueryBillsResponse:(NSDictionary *)response {

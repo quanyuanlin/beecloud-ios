@@ -59,23 +59,38 @@
         parameters[@"analysis"] = self.analysis;
     }
     
-    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak BCPayReq *weakSelf = self;
+    [BCNetworkHelper postWithUrlString:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters success:^(NSDictionary *response) {
+        if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
+            [BCPayUtil getErrorInResponse:(NSDictionary *)response];
+        } else {
+            if ([BCPayCache sharedInstance].sandbox) {
+                [weakSelf doPayActionInSandbox:(NSDictionary *)response];
+            } else {
+                [weakSelf doPayAction:(NSDictionary *)response];
+            }
+        }
+    } failure:^(NSError *error) {
+        [BCPayUtil doErrorResponse:kNetWorkError];
+    }];
     
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters progress:nil
-          success:^(NSURLSessionTask *task, id response) {
-              if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
-                  [BCPayUtil getErrorInResponse:(NSDictionary *)response];
-              } else {
-                  if ([BCPayCache sharedInstance].sandbox) {
-                      [weakSelf doPayActionInSandbox:(NSDictionary *)response];
-                  } else {
-                      [weakSelf doPayAction:(NSDictionary *)response];
-                  }
-              }
-          } failure:^(NSURLSessionTask *operation, NSError *error) {
-              [BCPayUtil doErrorResponse:kNetWorkError];
-          }];
+//    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
+//    __weak BCPayReq *weakSelf = self;
+//
+//    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiPay] parameters:parameters progress:nil
+//          success:^(NSURLSessionTask *task, id response) {
+//              if ([response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon] != 0) {
+//                  [BCPayUtil getErrorInResponse:(NSDictionary *)response];
+//              } else {
+//                  if ([BCPayCache sharedInstance].sandbox) {
+//                      [weakSelf doPayActionInSandbox:(NSDictionary *)response];
+//                  } else {
+//                      [weakSelf doPayAction:(NSDictionary *)response];
+//                  }
+//              }
+//          } failure:^(NSURLSessionTask *operation, NSError *error) {
+//              [BCPayUtil doErrorResponse:kNetWorkError];
+//          }];
 }
 
 #pragma mark - Pay Action
