@@ -27,7 +27,7 @@
      由于支付宝的政策原因，测试账号的支付宝支付不能在生产环境中使用，带来不便，敬请原谅！
      ApplePay 不支持模拟器运行；
      */ 
-    [BeeCloud initWithAppID:@"9455b4a3-e450-4e99-9cdb-6a74cd7a3417" andAppSecret:@"798c96a2-56bf-4048-a433-bc35173dc937"];
+    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee"];
 //    [BeeCloud initWithAppID:@"c5d1cba1-5e3f-4ba0-941d-9b0a371fe719" andAppSecret:@"4bfdd244-574d-4bf3-b034-0c751ed34fee" sandbox:YES];
     
     //初始化微信官方APP支付
