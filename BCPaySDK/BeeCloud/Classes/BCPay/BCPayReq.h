@@ -31,6 +31,11 @@
  */
 @property (nonatomic, retain) NSString *billNo;
 /**
+ *  商户自定义回调地址。订单支付成功，向notify_url发送异步通知。非必填。
+ *  商户可通过此参数设定回调地址，此地址会覆盖用户在控制台设置的回调地址。必须以http://或https://开头
+ */
+@property (nonatomic, strong) NSString *notify_url;
+/**
  *  订单失效时间,必须为非零正整数，单位为秒，建议不小于300。选填
  */
 @property (nonatomic, assign) NSInteger billTimeOut;

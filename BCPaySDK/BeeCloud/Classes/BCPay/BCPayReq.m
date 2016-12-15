@@ -47,6 +47,10 @@
     parameters[@"bill_no"] = self.billNo;
     parameters[@"title"] = self.title;
     
+    if (self.notify_url) {
+        parameters[@"notify_url"] = self.notify_url;
+    }
+    
     if (self.billTimeOut > 0) {
         parameters[@"bill_timeout"] = @(self.billTimeOut);
     }
