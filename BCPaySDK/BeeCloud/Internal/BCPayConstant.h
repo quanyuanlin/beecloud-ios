@@ -11,7 +11,7 @@
 #ifndef BCPaySDK_BCPayConstant_h
 #define BCPaySDK_BCPayConstant_h
 
-static NSString * const kApiVersion = @"3.6.0";//api版本号
+static NSString * const kApiVersion = @"3.6.2";//api版本号
 
 static NSString * const kNetWorkError = @"网络请求失败";
 static NSString * const kUnknownError = @"未知错误";
@@ -23,7 +23,7 @@ static NSString * const kKeyResponseCodeUrl = @"code_url";
 static NSString * const KKeyResponsePayResult = @"pay_result";
 static NSString * const kKeyResponseRevertResult = @"revert_status";
 
-static NSString * const kBCHost = @"https://apidynamic.beecloud.cn";
+static NSString * const kBCHost = @"https://api.beecloud.cn";
 
 static NSString * const reqApiVersion = @"/2/rest";
 
@@ -76,7 +76,11 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
     /**
      *  Alipay.
      */
-    BCPayUrlAlipay
+    BCPayUrlAlipay,
+    /**
+     *  UnionPay.
+     */
+    BCPayUrlUnionPay
 };
 
 

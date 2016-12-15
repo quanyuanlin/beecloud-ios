@@ -35,7 +35,7 @@
  */
 @property (nonatomic, assign) NSInteger billTimeOut;
 /**
- *  调用支付的app注册在info.plist中的scheme,支付宝支付必填
+ *  调用支付的app注册在info.plist中的scheme,支付宝、银联支付必填
  */
 @property (nonatomic, retain) NSString *scheme;
 /**

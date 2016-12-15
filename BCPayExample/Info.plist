@@ -41,6 +41,11 @@
 	<string>1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>uppayx1</string>
+		<string>uppayx2</string>
+		<string>uppayx3</string>
+		<string>uppaysdk</string>
+		<string>uppaywallet</string>
 		<string>weixin</string>
 		<string>alipay</string>
 		<string>wechat</string>
