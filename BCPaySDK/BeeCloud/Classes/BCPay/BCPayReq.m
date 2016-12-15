@@ -47,6 +47,10 @@
     parameters[@"bill_no"] = self.billNo;
     parameters[@"title"] = self.title;
     
+    if (self.notify_url) {
+        parameters[@"notify_url"] = self.notify_url;
+    }
+    
     if (self.billTimeOut > 0) {
         parameters[@"bill_timeout"] = @(self.billTimeOut);
     }
@@ -85,9 +89,10 @@
     if (response) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                     (NSDictionary *)response];
-        if (self.channel == PayChannelAliApp) {
+        if (self.channel == PayChannelAliApp || self.channel == PayChannelUnApp) {
             [dic setObject:self.scheme forKey:@"scheme"];
-        } else if (self.channel == PayChannelUnApp || self.channel == PayChannelApplePay ||
+        }
+        if (self.channel == PayChannelUnApp || self.channel == PayChannelApplePay ||
                    self.channel == PayChannelApplePayTest || self.channel == PayChannelBCApp ||
                    self.channel == PayChannelBCWXApp) {
             [dic setObject:self.viewController forKey:@"viewController"];
@@ -147,7 +152,7 @@
     } else if (!self.billNo.isValid || !self.billNo.isValidTraceNo || (self.billNo.length < 8) || (self.billNo.length > 32)) {
         [BCPayUtil doErrorResponse:@"billNo 必须是长度8~32位字母和/或数字组合成的字符串"];
         return NO;
-    } else if ((self.channel == PayChannelAliApp) && !self.scheme.isValid) {
+    } else if ((self.channel == PayChannelAliApp || self.channel == PayChannelUnApp) && !self.scheme.isValid) {
         [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
         return NO;
     } else if ((self.channel == PayChannelUnApp || self.channel == PayChannelApplePay ||

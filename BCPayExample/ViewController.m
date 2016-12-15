@@ -92,9 +92,9 @@
      */
     payReq.channel = channel; //支付渠道
     payReq.title = billTitle;//订单标题
-    payReq.totalFee = channel==PayChannelBCApp?@"100":@"10";//订单价格; channel为BC_APP的时候最小值为100，即1元
+    payReq.totalFee = @"10";//订单价格; channel为BC_APP的时候最小值为100，即1元
     payReq.billNo = billno;//商户自定义订单号
-    payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝必有参数
+    payReq.scheme = @"payDemo";//URL Scheme,在Info.plist中配置; 支付宝,银联必有参数
     payReq.billTimeOut = 300;//订单超时时间
     payReq.viewController = self; //银联支付和Sandbox环境必填
     payReq.cardType = 0; //0 表示不区分卡类型；1 表示只支持借记卡；2 表示支持信用卡；默认为0
