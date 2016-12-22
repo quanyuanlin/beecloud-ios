@@ -59,10 +59,14 @@
         if ([new_response statusCode] == 200) {
             //请求成功
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-            successBlock(dic);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                successBlock(dic);
+            });
         } else {
             //请求失败
-            failureBlock(error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                failureBlock(error);
+            });
         }
     }];
     [dataTask resume];  //开始请求
