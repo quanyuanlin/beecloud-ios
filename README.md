@@ -52,7 +52,7 @@ SDK支持以下支付渠道:
 
 - 下载的`BCPaySDK`文件夹下的`Channel`文件夹里包含了`支付宝`, `银联`, `微信`, `PayPal`,`OfflinePay`,`百度钱包`的原生SDK，请按需选择自己所需要的渠道。  
 
-- 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib`, `CoreTelephony.framework`,`CoreMotion.framework`(支付宝需要)。  
+- 最后加入系统库 `libz.dylib`, `libsqlite3.dylib`, `libc++.dylib`, `CoreTelephony.framework`,`Security.framework`,`CFNetwork.framework`,`CoreMotion.framework`,`SystemConfiguration.framework`。  
 > iOS9 加入`libz.1.2.5.tbd`、`libc++.tbd`、`libsqlite3.tbd` 
  
 - 使用PayPal支付，需要添加以下系统库：  

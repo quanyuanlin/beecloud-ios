@@ -88,6 +88,10 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelNone = 0,
     PayChannelBCApp,
     PayChannelBCWXApp,
+    PayChannelBCNative,
+    PayChannelBCAliQrcode,
+    PayChannelBCWxScan,
+    PayChannelBCAliScan,
     
     PayChannelWx = 10, //微信
     PayChannelWxApp,//微信APP
@@ -99,8 +103,8 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelAliApp,//支付宝APP
     PayChannelAliWeb,//支付宝网页即时到账
     PayChannelAliWap,//支付宝手机网页
-    PayChannelAliQrCode,//支付宝扫码即时到帐
-    PayChannelAliOfflineQrCode,//支付宝线下扫码
+    PayChannelAliQrcode,//支付宝扫码即时到帐
+    PayChannelAliOfflineQrcode,//支付宝线下扫码
     PayChannelAliScan,
     
     PayChannelUn = 30,//银联

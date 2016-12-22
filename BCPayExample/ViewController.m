@@ -54,8 +54,13 @@
                     @{@"channel":@"线下收款",
                       @"subChannel":@[@{@"sub":@(PayChannelWxNative), @"img":@"wx", @"title":@"微信扫码"},
                                       @{@"sub":@(PayChannelWxScan), @"img":@"wx", @"title":@"微信刷卡"},
-                                      @{@"sub":@(PayChannelAliOfflineQrCode), @"img":@"ali", @"title":@"支付宝扫码"},
-                                      @{@"sub":@(PayChannelAliScan), @"img":@"ali", @"title":@"支付宝刷卡"}]}
+                                      @{@"sub":@(PayChannelAliOfflineQrcode), @"img":@"ali", @"title":@"支付宝扫码"},
+                                      @{@"sub":@(PayChannelAliScan), @"img":@"ali", @"title":@"支付宝刷卡"}]},
+                      @{@"channel":@"BC线下收款",
+                        @"subChannel":@[@{@"sub":@(PayChannelBCNative), @"img":@"wx", @"title":@"微信扫码"},
+                                        @{@"sub":@(PayChannelBCWxScan), @"img":@"wx", @"title":@"微信刷卡"},
+                                        @{@"sub":@(PayChannelBCAliQrcode), @"img":@"ali", @"title":@"支付宝扫码"},
+                                        @{@"sub":@(PayChannelBCAliScan), @"img":@"ali", @"title":@"支付宝刷卡"}]}
                 ];
     
     NSArray *sandbox = @[@{@"channel":@"线上支付",
@@ -252,8 +257,10 @@
             if (resp.resultCode == 0) {
                 BCOfflinePayReq *payReq = (BCOfflinePayReq *)tempResp.request;
                 switch (payReq.channel) {
-                    case PayChannelAliOfflineQrCode:
+                    case PayChannelAliOfflineQrcode:
                     case PayChannelWxNative:
+                    case PayChannelBCNative:
+                    case PayChannelBCAliQrcode:
                         if (tempResp.codeurl.isValid) {
                             QRCodeViewController *qrCodeView = [[QRCodeViewController alloc] init];
                             qrCodeView.resp = tempResp;
@@ -263,6 +270,8 @@
                         break;
                     case PayChannelAliScan:
                     case PayChannelWxScan:
+                    case PayChannelBCWxScan:
+                    case PayChannelBCAliScan:
                     {
                         BCOfflineStatusReq *req = [[BCOfflineStatusReq alloc] init];
                         req.channel = payReq.channel;
@@ -411,11 +420,15 @@
                 [self doPay:channel];
                 break;
             case PayChannelWxNative:
-            case PayChannelAliOfflineQrCode:
+            case PayChannelAliOfflineQrcode:
+            case PayChannelBCAliQrcode:
+            case PayChannelBCNative:
                 [self doOfflinePay:channel authCode:@""];
                 break;
             case PayChannelWxScan:
             case PayChannelAliScan:
+            case PayChannelBCAliScan:
+            case PayChannelBCWxScan:
                 currentChannel = channel;
 #if TARGET_IPHONE_SIMULATOR
                 [self showAlertView:@"模拟器不能打开相机"];
@@ -436,7 +449,7 @@
                 [self doQuery:PayChannelWx];
                 break;
             case PayChannelAliScan:
-            case PayChannelAliOfflineQrCode:
+            case PayChannelAliOfflineQrcode:
                 [self doQuery:PayChannelAli];
                 break;
             default:
