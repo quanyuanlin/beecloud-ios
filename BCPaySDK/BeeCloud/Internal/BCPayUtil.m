@@ -65,8 +65,10 @@
         return BCPayUrlAlipay;
     else if ([url.scheme hasPrefix:@"wx"] && [url.host isEqualToString:@"pay"])
         return BCPayUrlWeChat;
-    else
-        return BCPayUrlUnknown;
+    else if ([url.host isEqualToString:@"uppayresult"]) {
+        return  BCPayUrlUnionPay;
+    }
+    return BCPayUrlUnknown;
 }
 
 + (NSString *)getBestHostWithFormat:(NSString *)format {
@@ -82,6 +84,18 @@
             break;
         case PayChannelBCWXApp:
             cType = @"BC_WX_APP";
+            break;
+        case PayChannelBCNative:
+            cType = @"BC_NATIVE";
+            break;
+        case PayChannelBCWxScan:
+            cType = @"BC_WX_SCAN";
+            break;
+        case PayChannelBCAliScan:
+            cType = @"BC_ALI_SCAN";
+            break;
+        case PayChannelBCAliQrcode:
+            cType = @"BC_ALI_QRCODE";
             break;
 #pragma mark PayChannel_WX
         case PayChannelWx:
@@ -112,10 +126,10 @@
         case PayChannelAliWap:
             cType = @"ALI_WAP";
             break;
-        case PayChannelAliQrCode:
+        case PayChannelAliQrcode:
             cType = @"ALI_QRCODE";
             break;
-        case PayChannelAliOfflineQrCode:
+        case PayChannelAliOfflineQrcode:
             cType = @"ALI_OFFLINE_QRCODE";
             break;
         case PayChannelAliScan:

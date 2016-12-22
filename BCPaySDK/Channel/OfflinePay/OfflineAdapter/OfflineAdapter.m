@@ -44,7 +44,8 @@
     parameters[@"total_fee"] = [NSNumber numberWithInteger:[req.totalFee integerValue]];
     parameters[@"bill_no"] = req.billNo;
     parameters[@"title"] = req.title;
-    if (req.channel == PayChannelWxScan || req.channel == PayChannelAliScan) {
+    if (req.channel == PayChannelWxScan || req.channel == PayChannelAliScan ||
+        req.channel == PayChannelBCAliScan || req.channel == PayChannelBCWxScan) {
         parameters[@"auth_code"] = req.authcode;
     }
     if (req.channel == PayChannelAliScan) {
@@ -61,7 +62,11 @@
     
     BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     __weak OfflineAdapter *weakSelf = [OfflineAdapter sharedInstance];
-    [manager POST:[BCPayUtil getBestHostWithFormat:kRestApiOfflinePay] parameters:parameters progress:nil
+    NSString *host = [BCPayUtil getBestHostWithFormat:kRestApiOfflinePay];
+    if(req.channel == PayChannelBCNative) {
+        host = [BCPayUtil getBestHostWithFormat:kRestApiPay];
+    }
+    [manager POST:host parameters:parameters progress:nil
           success:^(NSURLSessionTask *task, id response) {
               
               NSDictionary *source = (NSDictionary *)response;
@@ -71,7 +76,7 @@
               resp.resultMsg = [source stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
               resp.errDetail = [source stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
               if (resp.resultCode == 0) {
-                  if (req.channel == PayChannelAliOfflineQrCode || req.channel == PayChannelWxNative) {
+                  if (req.channel == PayChannelAliOfflineQrcode || req.channel == PayChannelWxNative || req.channel == PayChannelBCAliQrcode || req.channel == PayChannelBCNative) {
                       resp.codeurl = [source stringValueForKey:kKeyResponseCodeUrl defaultValue:@""];
                   }
               }
@@ -183,7 +188,8 @@
         } else if (!req.billNo.isValid || !req.billNo.isValidTraceNo || (req.billNo.length < 8) || (req.billNo.length > 32)) {
             [self doErrorResponse:@"billno 必须是长度8~32位字母和/或数字组合成的字符串"];
             return NO;
-        } else if ((req.channel == PayChannelAliScan || req.channel == PayChannelWxScan) && !req.authcode.isValid) {
+        } else if ((req.channel == PayChannelWxScan || req.channel == PayChannelAliScan ||
+                    req.channel == PayChannelBCAliScan || req.channel == PayChannelBCWxScan) && !req.authcode.isValid) {
             [self doErrorResponse:@"authcode 不是合法的字符串"];
             return NO;
         } else if ((req.channel == PayChannelAliScan) && (!req.terminalId.isValid || !req.storeId.isValid)) {
