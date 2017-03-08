@@ -89,12 +89,11 @@
     if (response) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
                                     (NSDictionary *)response];
-        if (self.channel == PayChannelAliApp || self.channel == PayChannelUnApp) {
+        if (self.channel == PayChannelAliApp || self.channel == PayChannelUnApp || self.channel == PayChannelBCAliApp) {
             [dic setObject:self.scheme forKey:@"scheme"];
         }
         if (self.channel == PayChannelUnApp || self.channel == PayChannelApplePay ||
-                   self.channel == PayChannelApplePayTest || self.channel == PayChannelBCApp ||
-                   self.channel == PayChannelBCWXApp) {
+                   self.channel == PayChannelApplePayTest || self.channel == PayChannelBCApp) {
             [dic setObject:self.viewController forKey:@"viewController"];
             if (self.channel == PayChannelApplePayTest || self.channel == PayChannelApplePay) {
                 [dic setObject:@(self.channel) forKey:@"channel"];
@@ -103,9 +102,11 @@
         [BCPayCache sharedInstance].bcResp.bcId = [dic objectForKey:@"id"];
         switch (self.channel) {
             case PayChannelWxApp:
+            case PayChannelBCWXApp:
                 bSendPay = [BeeCloudAdapter beeCloudWXPay:dic];
                 break;
             case PayChannelAliApp:
+            case PayChannelBCAliApp:
                 bSendPay = [BeeCloudAdapter beeCloudAliPay:dic];
                 break;
             case PayChannelBCApp:
@@ -119,9 +120,6 @@
             case PayChannelApplePay:
                 NSLog(@"applePay %@", dic);
                 bSendPay = [BeeCloudAdapter beeCloudApplePay:dic];
-                break;
-            case PayChannelBCWXApp:
-                [BeeCloudAdapter beeCloudBCWXPay:dic];
                 break;
             default:
                 break;
@@ -156,13 +154,13 @@
         [BCPayUtil doErrorResponse:@"scheme 不是合法的字符串，将导致无法从支付宝钱包返回应用"];
         return NO;
     } else if ((self.channel == PayChannelUnApp || self.channel == PayChannelApplePay ||
-                self.channel == PayChannelBCApp || self.channel == PayChannelBCWXApp) && (self.viewController == nil)) {
+                self.channel == PayChannelBCApp ) && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常支付"];
         return NO;
     } else if ([BeeCloud getCurrentMode] && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常支付"];
         return NO;
-    } else if ((self.channel == PayChannelWxApp && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getCurrentMode]) {
+    } else if (((self.channel == PayChannelWxApp || self.channel == PayChannelBCWXApp) && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getCurrentMode]) {
         [BCPayUtil doErrorResponse:@"未找到微信客户端，请先下载安装"];
         return NO;
     } else if ((self.channel == PayChannelApplePay || self.channel == PayChannelApplePayTest) && ![BeeCloud canMakeApplePayments:self.cardType]) {
