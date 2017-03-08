@@ -45,6 +45,7 @@
                       @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
                                       @{@"sub":@(PayChannelBCWXApp), @"img":@"wx", @"title":@"BC微信支付"},
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
+                                      @{@"sub":@(PayChannelBCAliApp), @"img":@"ali", @"title":@"BC支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
                                       @{@"sub":@(PayChannelBCApp), @"img":@"beepay", @"title":@"BeePay"},
                                       @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
@@ -417,6 +418,7 @@
             case PayChannelApplePayTest:
             case PayChannelBCApp:
             case PayChannelBCWXApp:
+            case PayChannelBCAliApp:
                 [self doPay:channel];
                 break;
             case PayChannelWxNative:

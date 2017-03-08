@@ -97,6 +97,9 @@
         case PayChannelBCAliQrcode:
             cType = @"BC_ALI_QRCODE";
             break;
+        case PayChannelBCAliApp:
+            cType = @"BC_ALI_APP";
+            break;
 #pragma mark PayChannel_WX
         case PayChannelWx:
             cType = @"WX";
