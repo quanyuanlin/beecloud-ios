@@ -14,9 +14,8 @@
 #import "QRCodeViewController.h"
 #import "ScanViewController.h"
 #import "PayChannelCell.h"
-#import "BDWalletSDKMainManager.h"
 
-@interface ViewController ()<BeeCloudDelegate, SCanViewDelegate, QRCodeDelegate,BDWalletSDKMainManagerDelegate> {
+@interface ViewController ()<BeeCloudDelegate, SCanViewDelegate, QRCodeDelegate> {
 //    PayPalConfiguration * _payPalConfig;
 //    PayPalPayment *_completedPayment;
     PayChannel currentChannel;
@@ -47,9 +46,6 @@
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                       @{@"sub":@(PayChannelBCAliApp), @"img":@"ali", @"title":@"BC支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
-                                      @{@"sub":@(PayChannelBCApp), @"img":@"beepay", @"title":@"BeePay"},
-                                      @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
-                                      @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
                                       @{@"sub":@(PayChannelApplePayTest), @"img":@"apple", @"title":@"ApplePay"} //相关文档 http://help.beecloud.cn/hc/kb/article/177410/?from=draft
                                       ]},
                     @{@"channel":@"线下收款",
@@ -69,7 +65,6 @@
                                         @{@"sub":@(PayChannelBCWXApp), @"img":@"wx", @"title":@"BC微信支付"},
                                         @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                         @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
-                                        @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
                                         @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"}
                                         ]}];
     channelList = [NSMutableArray arrayWithArray:[BeeCloud getCurrentMode] ? sandbox : live];
@@ -207,14 +202,10 @@
             // 支付请求响应
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
-                BCPayReq *payReq = (BCPayReq *)resp.request;
-                //百度钱包比较特殊需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
-                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
-                    [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
-                } else {
+//                BCPayReq *payReq = (BCPayReq *)resp.request;
                     //微信、支付宝、银联支付成功
-                    [self showAlertView:resp.resultMsg];
-                }
+                [self showAlertView:resp.resultMsg];
+                
             } else {
                 //支付取消或者支付失败
                 [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];

@@ -17,14 +17,6 @@
 		3606FCD81D925E1400DFED02 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC601D925E1400DFED02 /* AlipaySDK.framework */; };
 		3606FCD91D925E1400DFED02 /* ApplePayAdapter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3606FC641D925E1400DFED02 /* ApplePayAdapter.mm */; };
 		3606FCDA1D925E1400DFED02 /* libUPAPayPlugin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC651D925E1400DFED02 /* libUPAPayPlugin.a */; };
-		3606FCDB1D925E1400DFED02 /* BaiduAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606FC6B1D925E1400DFED02 /* BaiduAdapter.m */; };
-		3606FCDC1D925E1400DFED02 /* BaiduWalletSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3606FC6D1D925E1400DFED02 /* BaiduWalletSDKBundle.bundle */; };
-		3606FCDD1D925E1400DFED02 /* libBaiduWalletSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC6F1D925E1400DFED02 /* libBaiduWalletSDK.a */; };
-		3606FCDE1D925E1400DFED02 /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC731D925E1400DFED02 /* libASIHTTPRequest.a */; };
-		3606FCDF1D925E1400DFED02 /* libBaiduMobStatForSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC761D925E1400DFED02 /* libBaiduMobStatForSDK.a */; };
-		3606FCE01D925E1400DFED02 /* libTouchJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC771D925E1400DFED02 /* libTouchJSON.a */; };
-		3606FCE11D925E1400DFED02 /* libJSONKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC7A1D925E1400DFED02 /* libJSONKit.a */; };
-		3606FCE21D925E1400DFED02 /* libSDWebImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3606FC7C1D925E1400DFED02 /* libSDWebImage.a */; };
 		3606FCE91D925E1400DFED02 /* OfflineAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606FCAE1D925E1400DFED02 /* OfflineAdapter.m */; };
 		3606FCEA1D925E1400DFED02 /* BCOfflinePayReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606FCB11D925E1400DFED02 /* BCOfflinePayReq.m */; };
 		3606FCEB1D925E1400DFED02 /* BCOfflineRevertReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606FCB31D925E1400DFED02 /* BCOfflineRevertReq.m */; };
@@ -163,33 +155,6 @@
 		3606FC651D925E1400DFED02 /* libUPAPayPlugin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUPAPayPlugin.a; sourceTree = "<group>"; };
 		3606FC661D925E1400DFED02 /* UPAPayPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAPayPlugin.h; sourceTree = "<group>"; };
 		3606FC671D925E1400DFED02 /* UPAPayPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPAPayPluginDelegate.h; sourceTree = "<group>"; };
-		3606FC6A1D925E1400DFED02 /* BaiduAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduAdapter.h; sourceTree = "<group>"; };
-		3606FC6B1D925E1400DFED02 /* BaiduAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduAdapter.m; sourceTree = "<group>"; };
-		3606FC6D1D925E1400DFED02 /* BaiduWalletSDKBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BaiduWalletSDKBundle.bundle; sourceTree = "<group>"; };
-		3606FC6E1D925E1400DFED02 /* BDWalletSDKMainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDWalletSDKMainManager.h; sourceTree = "<group>"; };
-		3606FC6F1D925E1400DFED02 /* libBaiduWalletSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduWalletSDK.a; sourceTree = "<group>"; };
-		3606FC721D925E1400DFED02 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
-		3606FC731D925E1400DFED02 /* libASIHTTPRequest.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libASIHTTPRequest.a; sourceTree = "<group>"; };
-		3606FC761D925E1400DFED02 /* libBaiduMobStatForSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStatForSDK.a; sourceTree = "<group>"; };
-		3606FC771D925E1400DFED02 /* libTouchJSON.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTouchJSON.a; sourceTree = "<group>"; };
-		3606FC791D925E1400DFED02 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		3606FC7A1D925E1400DFED02 /* libJSONKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libJSONKit.a; sourceTree = "<group>"; };
-		3606FC7C1D925E1400DFED02 /* libSDWebImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSDWebImage.a; sourceTree = "<group>"; };
-		3606FC7D1D925E1400DFED02 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
-		3606FC7E1D925E1400DFED02 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
-		3606FC7F1D925E1400DFED02 /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
-		3606FC801D925E1400DFED02 /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
-		3606FC811D925E1400DFED02 /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
-		3606FC821D925E1400DFED02 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
-		3606FC831D925E1400DFED02 /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
-		3606FC841D925E1400DFED02 /* SDWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManager.h; sourceTree = "<group>"; };
-		3606FC851D925E1400DFED02 /* SDWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageOperation.h; sourceTree = "<group>"; };
-		3606FC861D925E1400DFED02 /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImagePrefetcher.h; sourceTree = "<group>"; };
-		3606FC871D925E1400DFED02 /* UIButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WebCache.h"; sourceTree = "<group>"; };
-		3606FC881D925E1400DFED02 /* UIImage+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GIF.h"; sourceTree = "<group>"; };
-		3606FC891D925E1400DFED02 /* UIImage+MultiFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MultiFormat.h"; sourceTree = "<group>"; };
-		3606FC8A1D925E1400DFED02 /* UIImage+WebP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WebP.h"; sourceTree = "<group>"; };
-		3606FC8B1D925E1400DFED02 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		3606FCAB1D925E1400DFED02 /* BCOffinePay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCOffinePay.h; sourceTree = "<group>"; };
 		3606FCAD1D925E1400DFED02 /* OfflineAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfflineAdapter.h; sourceTree = "<group>"; };
 		3606FCAE1D925E1400DFED02 /* OfflineAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfflineAdapter.m; sourceTree = "<group>"; };
@@ -377,29 +342,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				360A44A01D61C06400668FF5 /* libsqlite3.tbd in Frameworks */,
-				3606FCDD1D925E1400DFED02 /* libBaiduWalletSDK.a in Frameworks */,
 				36FAD4FB1D2FA5F000955FC0 /* CoreMotion.framework in Frameworks */,
 				361778F51CB666D800C4CCB0 /* CoreTelephony.framework in Frameworks */,
 				363B89391C97A79500DD2AB1 /* PassKit.framework in Frameworks */,
 				36379D371BC66A1300CA6C81 /* libc++.tbd in Frameworks */,
 				368EA8E41BB392AF00F1F9D3 /* libz.1.2.5.tbd in Frameworks */,
-				3606FCDE1D925E1400DFED02 /* libASIHTTPRequest.a in Frameworks */,
 				368EA8E21BB3929000F1F9D3 /* CoreGraphics.framework in Frameworks */,
 				368EA8E01BB3927700F1F9D3 /* ImageIO.framework in Frameworks */,
 				368EA8DE1BB3926D00F1F9D3 /* CFNetwork.framework in Frameworks */,
-				3606FCE01D925E1400DFED02 /* libTouchJSON.a in Frameworks */,
-				3606FCE11D925E1400DFED02 /* libJSONKit.a in Frameworks */,
 				368EA8DC1BB3925C00F1F9D3 /* MobileCoreServices.framework in Frameworks */,
 				36DCE4121B8F4A78004BB25E /* MessageUI.framework in Frameworks */,
 				368EA8D91BB3923F00F1F9D3 /* AddressBook.framework in Frameworks */,
 				368EA8DA1BB3923F00F1F9D3 /* AddressBookUI.framework in Frameworks */,
-				3606FCDF1D925E1400DFED02 /* libBaiduMobStatForSDK.a in Frameworks */,
 				3606FCF51D925E1400DFED02 /* libWeChatSDK.a in Frameworks */,
 				368EA8D61BB3922800F1F9D3 /* Security.framework in Frameworks */,
 				3606FCDA1D925E1400DFED02 /* libUPAPayPlugin.a in Frameworks */,
 				3606FCD81D925E1400DFED02 /* AlipaySDK.framework in Frameworks */,
 				36EA9C061E0278F800600181 /* libPaymentControl.a in Frameworks */,
-				3606FCE21D925E1400DFED02 /* libSDWebImage.a in Frameworks */,
 				36DCE4161B8F4ACA004BB25E /* AudioToolbox.framework in Frameworks */,
 				36DCE4141B8F4A93004BB25E /* CoreLocation.framework in Frameworks */,
 				36DCE40F1B8F4A5E004BB25E /* CoreMedia.framework in Frameworks */,
@@ -488,7 +447,6 @@
 			children = (
 				3606FC5C1D925E1400DFED02 /* AliPay */,
 				3606FC611D925E1400DFED02 /* ApplePay */,
-				3606FC681D925E1400DFED02 /* Baidu */,
 				3606FCAA1D925E1400DFED02 /* OfflinePay */,
 				3606FCC91D925E1400DFED02 /* UnionPay */,
 				3606FCD01D925E1400DFED02 /* WXPay */,
@@ -532,104 +490,6 @@
 				3606FC641D925E1400DFED02 /* ApplePayAdapter.mm */,
 			);
 			path = ApplePayAdapter;
-			sourceTree = "<group>";
-		};
-		3606FC681D925E1400DFED02 /* Baidu */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC691D925E1400DFED02 /* BaiduAdapter */,
-				3606FC6C1D925E1400DFED02 /* BDWalletSDK */,
-				3606FC701D925E1400DFED02 /* Dependency */,
-			);
-			path = Baidu;
-			sourceTree = "<group>";
-		};
-		3606FC691D925E1400DFED02 /* BaiduAdapter */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC6A1D925E1400DFED02 /* BaiduAdapter.h */,
-				3606FC6B1D925E1400DFED02 /* BaiduAdapter.m */,
-			);
-			path = BaiduAdapter;
-			sourceTree = "<group>";
-		};
-		3606FC6C1D925E1400DFED02 /* BDWalletSDK */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC6D1D925E1400DFED02 /* BaiduWalletSDKBundle.bundle */,
-				3606FC6E1D925E1400DFED02 /* BDWalletSDKMainManager.h */,
-				3606FC6F1D925E1400DFED02 /* libBaiduWalletSDK.a */,
-			);
-			path = BDWalletSDK;
-			sourceTree = "<group>";
-		};
-		3606FC701D925E1400DFED02 /* Dependency */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC711D925E1400DFED02 /* ASIHttpRequest */,
-				3606FC741D925E1400DFED02 /* BaiduMobStat */,
-				3606FC781D925E1400DFED02 /* JSONKit */,
-				3606FC7B1D925E1400DFED02 /* SDWebImage */,
-			);
-			path = Dependency;
-			sourceTree = "<group>";
-		};
-		3606FC711D925E1400DFED02 /* ASIHttpRequest */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC721D925E1400DFED02 /* ASIHTTPRequest.h */,
-				3606FC731D925E1400DFED02 /* libASIHTTPRequest.a */,
-			);
-			path = ASIHttpRequest;
-			sourceTree = "<group>";
-		};
-		3606FC741D925E1400DFED02 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC751D925E1400DFED02 /* BaiduMobStat */,
-				3606FC771D925E1400DFED02 /* libTouchJSON.a */,
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3606FC751D925E1400DFED02 /* BaiduMobStat */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC761D925E1400DFED02 /* libBaiduMobStatForSDK.a */,
-			);
-			path = BaiduMobStat;
-			sourceTree = "<group>";
-		};
-		3606FC781D925E1400DFED02 /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC791D925E1400DFED02 /* JSONKit.h */,
-				3606FC7A1D925E1400DFED02 /* libJSONKit.a */,
-			);
-			path = JSONKit;
-			sourceTree = "<group>";
-		};
-		3606FC7B1D925E1400DFED02 /* SDWebImage */ = {
-			isa = PBXGroup;
-			children = (
-				3606FC7C1D925E1400DFED02 /* libSDWebImage.a */,
-				3606FC7D1D925E1400DFED02 /* MKAnnotationView+WebCache.h */,
-				3606FC7E1D925E1400DFED02 /* NSData+ImageContentType.h */,
-				3606FC7F1D925E1400DFED02 /* SDImageCache.h */,
-				3606FC801D925E1400DFED02 /* SDWebImageCompat.h */,
-				3606FC811D925E1400DFED02 /* SDWebImageDecoder.h */,
-				3606FC821D925E1400DFED02 /* SDWebImageDownloader.h */,
-				3606FC831D925E1400DFED02 /* SDWebImageDownloaderOperation.h */,
-				3606FC841D925E1400DFED02 /* SDWebImageManager.h */,
-				3606FC851D925E1400DFED02 /* SDWebImageOperation.h */,
-				3606FC861D925E1400DFED02 /* SDWebImagePrefetcher.h */,
-				3606FC871D925E1400DFED02 /* UIButton+WebCache.h */,
-				3606FC881D925E1400DFED02 /* UIImage+GIF.h */,
-				3606FC891D925E1400DFED02 /* UIImage+MultiFormat.h */,
-				3606FC8A1D925E1400DFED02 /* UIImage+WebP.h */,
-				3606FC8B1D925E1400DFED02 /* UIImageView+WebCache.h */,
-			);
-			path = SDWebImage;
 			sourceTree = "<group>";
 		};
 		3606FCAA1D925E1400DFED02 /* OfflinePay */ = {
@@ -1110,7 +970,7 @@
 		364BC5A11B5E32FD00EAFCCE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = BeeCloud;
 				TargetAttributes = {
 					369750201B68C659009FAEDB = {
@@ -1166,7 +1026,6 @@
 				3618770A1C2D134B00CE4AED /* BeeCloud.bundle in Resources */,
 				367267DE1BAA63BC007D7C64 /* line@2x.png in Resources */,
 				369750341B68C659009FAEDB /* LaunchScreen.xib in Resources */,
-				3606FCDC1D925E1400DFED02 /* BaiduWalletSDKBundle.bundle in Resources */,
 				367267DD1BAA63BC007D7C64 /* pick_bg@2x.png in Resources */,
 				369750311B68C659009FAEDB /* Images.xcassets in Resources */,
 			);
@@ -1248,7 +1107,6 @@
 				36501E2B1C06E87300BC8B8A /* BCQueryBillResult.m in Sources */,
 				363AE73F1D546C55007AEE2F /* SubscriptionViewController.m in Sources */,
 				36501E561C06EF1100BC8B8A /* BCQueryRefundsReq.m in Sources */,
-				3606FCDB1D925E1400DFED02 /* BaiduAdapter.m in Sources */,
 				36501E2C1C06E87300BC8B8A /* BCQueryRefundResult.m in Sources */,
 				3606FCD91D925E1400DFED02 /* ApplePayAdapter.mm in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
@@ -1316,6 +1174,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1325,8 +1184,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -1359,6 +1220,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1368,8 +1230,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -1412,26 +1276,13 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = BCPayExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/PayPal",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/UnionPay",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/WXPay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/BDWalletSDK",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/dependency/BaiduMobStat/BaiduMobStat",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BaiDu/BDWalletSDK",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BaiDu/Dependency/BaiduMobStat/BaiduMobStat",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/ASIHTTPRequest",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/BaiduMobStat",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/JSONKit",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/SDWebImage",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/ApplePay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BCWXPay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BCSPay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/ASIHttpRequest",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/BaiduMobStat/BaiduMobStat",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1461,26 +1312,13 @@
 				);
 				GCC_INPUT_FILETYPE = automatic;
 				INFOPLIST_FILE = BCPayExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/PayPal",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/UnionPay",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/WXPay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/BDWalletSDK",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/dependency/BaiduMobStat/BaiduMobStat",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BaiDu/BDWalletSDK",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BaiDu/Dependency/BaiduMobStat/BaiduMobStat",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/ASIHTTPRequest",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/BaiduMobStat",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/JSONKit",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/SDWebImage",
 					"$(PROJECT_DIR)/BCPaySDK/Channel/ApplePay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BCWXPay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/BCSPay",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/ASIHttpRequest",
-					"$(PROJECT_DIR)/BCPaySDK/Channel/Baidu/Dependency/BaiduMobStat/BaiduMobStat",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1501,7 +1339,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BCPayTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
@@ -1520,7 +1358,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = BCPayTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
