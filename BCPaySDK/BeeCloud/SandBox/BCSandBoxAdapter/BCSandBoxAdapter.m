@@ -6,11 +6,11 @@
 //  Copyright © 2015年 BeeCloud. All rights reserved.
 //
 
-#import "BCSandboxAdapter.h"
+#import "BCSandBoxAdapter.h"
 #import "BeeCloudAdapterProtocol.h"
 #import "BCPayUtil.h"
 #import "BCPayCache.h"
-#import "PaySandboxViewController.h"
+#import "PaySandBoxViewController.h"
 
 @interface BCSandboxAdapter () <BeeCloudAdapterDelegate>
 
