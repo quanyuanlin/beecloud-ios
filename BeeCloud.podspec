@@ -54,13 +54,5 @@ Pod::Spec.new do |s|
 		offline.requires_arc = true
 		offline.dependency 'BeeCloud/Core'
 	end
-
-	s.subspec 'Baidu' do |baidu|
-    baidu.frameworks = 'CoreTelephony', 'AddressBook', 'AddressBookUI', 'AudioToolbox', 'CoreAudio', 'CoreGraphics', 'ImageIO', 'MapKit', 'MessageUI', 'MobileCoreServices', 'QuartzCore'
-    baidu.source_files = 'BCPaySDK/Channel/Baidu/Dependency/**/*.{h,m}', 'BCPaySDK/Channel/Baidu/BaiduAdapter/*.{h,m}','BCPaySDK/Channel/Baidu/BDWalletSDK/*.{h,m}'
-    baidu.resource = 'BCPaySDK/Channel/Baidu/**/*.bundle'
-    baidu.vendored_libraries = 'BCPaySDK/Channel/Baidu/**/*.a'
-    baidu.dependency 'BeeCloud/Core'
-    end
 	
 end

@@ -6,7 +6,7 @@
 //  Copyright © 2015年 BeeCloud. All rights reserved.
 //
 
-#import "PaySandboxViewController.h"
+#import "PaySandBoxViewController.h"
 #import "BeeCloud.h"
 
 @interface PaySandboxViewController () {
