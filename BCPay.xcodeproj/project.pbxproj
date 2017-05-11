@@ -20,6 +20,12 @@
 		367267DC1BAA63BC007D7C64 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 367267D81BAA63BC007D7C64 /* ScanViewController.m */; };
 		367267DD1BAA63BC007D7C64 /* pick_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */; };
 		367267DE1BAA63BC007D7C64 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367267DB1BAA63BC007D7C64 /* line@2x.png */; };
+		367D695D1EC4760D0092EE75 /* BCHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 367D69511EC4760D0092EE75 /* BCHTTPSessionManager.m */; };
+		367D695E1EC4760D0092EE75 /* BCNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 367D69541EC4760D0092EE75 /* BCNetworkReachabilityManager.m */; };
+		367D695F1EC4760D0092EE75 /* BCSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 367D69561EC4760D0092EE75 /* BCSecurityPolicy.m */; };
+		367D69601EC4760D0092EE75 /* BCURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 367D69581EC4760D0092EE75 /* BCURLRequestSerialization.m */; };
+		367D69611EC4760D0092EE75 /* BCURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 367D695A1EC4760D0092EE75 /* BCURLResponseSerialization.m */; };
+		367D69621EC4760D0092EE75 /* BCURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 367D695C1EC4760D0092EE75 /* BCURLSessionManager.m */; };
 		368EA8D61BB3922800F1F9D3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8D51BB3922800F1F9D3 /* Security.framework */; };
 		368EA8D91BB3923F00F1F9D3 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8D71BB3923F00F1F9D3 /* AddressBook.framework */; };
 		368EA8DA1BB3923F00F1F9D3 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 368EA8D81BB3923F00F1F9D3 /* AddressBookUI.framework */; };
@@ -148,6 +154,19 @@
 		367267D91BAA63BC007D7C64 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
 		367267DA1BAA63BC007D7C64 /* pick_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pick_bg@2x.png"; sourceTree = "<group>"; };
 		367267DB1BAA63BC007D7C64 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
+		367D69501EC4760D0092EE75 /* BCHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCHTTPSessionManager.h; sourceTree = "<group>"; };
+		367D69511EC4760D0092EE75 /* BCHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCHTTPSessionManager.m; sourceTree = "<group>"; };
+		367D69521EC4760D0092EE75 /* BCNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNetworking.h; sourceTree = "<group>"; };
+		367D69531EC4760D0092EE75 /* BCNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		367D69541EC4760D0092EE75 /* BCNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		367D69551EC4760D0092EE75 /* BCSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCSecurityPolicy.h; sourceTree = "<group>"; };
+		367D69561EC4760D0092EE75 /* BCSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCSecurityPolicy.m; sourceTree = "<group>"; };
+		367D69571EC4760D0092EE75 /* BCURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLRequestSerialization.h; sourceTree = "<group>"; };
+		367D69581EC4760D0092EE75 /* BCURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLRequestSerialization.m; sourceTree = "<group>"; };
+		367D69591EC4760D0092EE75 /* BCURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLResponseSerialization.h; sourceTree = "<group>"; };
+		367D695A1EC4760D0092EE75 /* BCURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLResponseSerialization.m; sourceTree = "<group>"; };
+		367D695B1EC4760D0092EE75 /* BCURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCURLSessionManager.h; sourceTree = "<group>"; };
+		367D695C1EC4760D0092EE75 /* BCURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCURLSessionManager.m; sourceTree = "<group>"; };
 		368EA8D51BB3922800F1F9D3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		368EA8D71BB3923F00F1F9D3 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		368EA8D81BB3923F00F1F9D3 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -387,6 +406,7 @@
 		364BC5A01B5E32FD00EAFCCE = {
 			isa = PBXGroup;
 			children = (
+				36B3DFC51EC464370032CBF3 /* BCPaySDK */,
 				369750221B68C659009FAEDB /* BCPayExample */,
 				7C43BF861BEDE22B0039B4E4 /* BCPayTest */,
 				364BC6E81B5F2AE700EAFCCE /* Frameworks */,
@@ -430,10 +450,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		367D694F1EC4760D0092EE75 /* BCNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				367D69501EC4760D0092EE75 /* BCHTTPSessionManager.h */,
+				367D69511EC4760D0092EE75 /* BCHTTPSessionManager.m */,
+				367D69521EC4760D0092EE75 /* BCNetworking.h */,
+				367D69531EC4760D0092EE75 /* BCNetworkReachabilityManager.h */,
+				367D69541EC4760D0092EE75 /* BCNetworkReachabilityManager.m */,
+				367D69551EC4760D0092EE75 /* BCSecurityPolicy.h */,
+				367D69561EC4760D0092EE75 /* BCSecurityPolicy.m */,
+				367D69571EC4760D0092EE75 /* BCURLRequestSerialization.h */,
+				367D69581EC4760D0092EE75 /* BCURLRequestSerialization.m */,
+				367D69591EC4760D0092EE75 /* BCURLResponseSerialization.h */,
+				367D695A1EC4760D0092EE75 /* BCURLResponseSerialization.m */,
+				367D695B1EC4760D0092EE75 /* BCURLSessionManager.h */,
+				367D695C1EC4760D0092EE75 /* BCURLSessionManager.m */,
+			);
+			path = BCNetworking;
+			sourceTree = "<group>";
+		};
 		369750221B68C659009FAEDB /* BCPayExample */ = {
 			isa = PBXGroup;
 			children = (
-				36B3DFC51EC464370032CBF3 /* BCPaySDK */,
 				360A449F1D61B39300668FF5 /* Subscription */,
 				367267D81BAA63BC007D7C64 /* ScanViewController.m */,
 				367267D91BAA63BC007D7C64 /* ScanViewController.h */,
@@ -478,7 +517,8 @@
 				36B3DFC61EC464370032CBF3 /* BeeCloud */,
 				36B3E03B1EC464370032CBF3 /* Channel */,
 			);
-			path = BCPaySDK;
+			name = BCPaySDK;
+			path = BCPayExample/BCPaySDK;
 			sourceTree = "<group>";
 		};
 		36B3DFC61EC464370032CBF3 /* BeeCloud */ = {
@@ -675,6 +715,7 @@
 		36B3E0131EC464370032CBF3 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				367D694F1EC4760D0092EE75 /* BCNetworking */,
 				36B3E0141EC464370032CBF3 /* BCCategory.h */,
 				36B3E0151EC464370032CBF3 /* BCNetworkHelper.h */,
 				36B3E0161EC464370032CBF3 /* BCNetworkHelper.m */,
@@ -1014,6 +1055,7 @@
 				36B3E0A21EC464370032CBF3 /* UnionPayAdapter.m in Sources */,
 				36B3E07A1EC464370032CBF3 /* BCQueryRefundsReq.m in Sources */,
 				36B3E09A1EC464370032CBF3 /* OfflineAdapter.m in Sources */,
+				367D695F1EC4760D0092EE75 /* BCSecurityPolicy.m in Sources */,
 				36B3E0731EC464370032CBF3 /* BCQueryBillByIdResp.m in Sources */,
 				36B3E0831EC464370032CBF3 /* BCNewSubscription.m in Sources */,
 				36B3E0741EC464370032CBF3 /* BCQueryBillsReq.m in Sources */,
@@ -1048,6 +1090,7 @@
 				36B3E07D1EC464370032CBF3 /* BCQueryRefundsCountResp.m in Sources */,
 				36B3E0841EC464370032CBF3 /* BCSubscription.m in Sources */,
 				36B3E06C1EC464370032CBF3 /* BCPayReq.m in Sources */,
+				367D69621EC4760D0092EE75 /* BCURLSessionManager.m in Sources */,
 				36B3E07C1EC464370032CBF3 /* BCQueryRefundsCountReq.m in Sources */,
 				36B3E0791EC464370032CBF3 /* BCQueryRefundByIdResp.m in Sources */,
 				36B3E0761EC464370032CBF3 /* BCQueryBillsCountReq.m in Sources */,
@@ -1062,14 +1105,18 @@
 				369B3A191BA95CB300051CCE /* GenQrCode.m in Sources */,
 				363AE73F1D546C55007AEE2F /* SubscriptionViewController.m in Sources */,
 				36B3E0821EC464370032CBF3 /* BCQueryRefundResult.m in Sources */,
+				367D695E1EC4760D0092EE75 /* BCNetworkReachabilityManager.m in Sources */,
+				367D695D1EC4760D0092EE75 /* BCHTTPSessionManager.m in Sources */,
 				36B3E0901EC464370032CBF3 /* NSDictionary+Utils.m in Sources */,
 				36B3E07B1EC464370032CBF3 /* BCQueryRefundsResp.m in Sources */,
+				367D69611EC4760D0092EE75 /* BCURLResponseSerialization.m in Sources */,
 				36B3E0911EC464370032CBF3 /* NSString+IsValid.m in Sources */,
 				36B3E09E1EC464370032CBF3 /* BCOfflinePayResp.m in Sources */,
 				36B3E0721EC464370032CBF3 /* BCQueryBillByIdReq.m in Sources */,
 				36B3E0981EC464370032CBF3 /* ApplePayAdapter.mm in Sources */,
 				36B3E07E1EC464370032CBF3 /* BCRefundStatusReq.m in Sources */,
 				369750261B68C659009FAEDB /* main.m in Sources */,
+				367D69601EC4760D0092EE75 /* BCURLRequestSerialization.m in Sources */,
 				36B3E0771EC464370032CBF3 /* BCQueryBillsCountResp.m in Sources */,
 				36B3E0691EC464370032CBF3 /* BCAuthReq.m in Sources */,
 			);

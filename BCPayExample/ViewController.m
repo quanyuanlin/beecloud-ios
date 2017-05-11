@@ -16,6 +16,7 @@
 #import "PayChannelCell.h"
 
 @interface ViewController ()<BeeCloudDelegate, SCanViewDelegate, QRCodeDelegate> {
+
     PayChannel currentChannel;
     NSMutableArray *channelList;
     NSString * billTitle;

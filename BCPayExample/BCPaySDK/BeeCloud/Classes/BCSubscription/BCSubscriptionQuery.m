@@ -29,7 +29,6 @@
 
 - (void)getPlans:(NSString *)plan_name interval:(NSString *)interval interval_count:(NSInteger)interval_count trial_days:(NSInteger)trial_days {
     NSMutableDictionary *params = [BCPayUtil prepareParametersForRequest];
-    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     
     if (self.created_before > 0) params[@"created_before"] = @(self.created_before);
     if (self.created_after > 0) params[@"created_after"] = @(self.created_after);
@@ -42,11 +41,11 @@
     if (interval_count > 0) params[@"interval_count"] = @(interval_count);
     if (trial_days > 0) params[@"trial_days"] = @(trial_days);
     
-    [manager GET:[NSString stringWithFormat:@"%@/plan", subscription_host] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)responseObject];
+    [BCNetworkHelper getWithUrlString:[NSString stringWithFormat:@"%@/plan", subscription_host] parameters:params success:^(NSDictionary *data) {
+        NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)data];
         response[@"type"] = self.count_only?@(BCSubTypePlansCount):@(BCSubTypePlans);
         [BCSubscription doSubscriptionResponse:response];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSError *error) {
         [BCSubscription doSubscriptionErrorResponse:kNetWorkError];
     }];
 }
@@ -58,7 +57,6 @@
 
 - (void)getSubscriptions:(NSString *)buyer_id plan_id:(NSString *)plan_id card_id:(NSString *)card_id {
     NSMutableDictionary *params = [BCPayUtil prepareParametersForRequest];
-    BCHTTPSessionManager *manager = [BCPayUtil getBCHTTPSessionManager];
     
     if (self.created_before > 0) params[@"created_before"] = @(self.created_before);
     if (self.created_after > 0) params[@"created_after"] = @(self.created_after);
@@ -77,11 +75,11 @@
     }
     
     __weak BCSubscriptionQuery *weakself = self;
-    [manager GET:[NSString stringWithFormat:@"%@/subscription", subscription_host] parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)responseObject];
+    [BCNetworkHelper getWithUrlString:[NSString stringWithFormat:@"%@/subscription", subscription_host] parameters:params success:^(NSDictionary *data) {
+        NSMutableDictionary *response = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)data];
         response[@"type"] = weakself.count_only?@(BCSubTypeSubscriptionsCount):@(BCSubTypeSubscriptions);
         [BCSubscription doSubscriptionResponse:response];
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+    } failure:^(NSError *error) {
         [BCSubscription doSubscriptionErrorResponse:kNetWorkError];
     }];
     
