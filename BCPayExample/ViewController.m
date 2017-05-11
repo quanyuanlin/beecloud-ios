@@ -14,11 +14,8 @@
 #import "QRCodeViewController.h"
 #import "ScanViewController.h"
 #import "PayChannelCell.h"
-#import "BDWalletSDKMainManager.h"
 
-@interface ViewController ()<BeeCloudDelegate, SCanViewDelegate, QRCodeDelegate,BDWalletSDKMainManagerDelegate> {
-//    PayPalConfiguration * _payPalConfig;
-//    PayPalPayment *_completedPayment;
+@interface ViewController ()<BeeCloudDelegate, SCanViewDelegate, QRCodeDelegate> {
     PayChannel currentChannel;
     NSMutableArray *channelList;
     NSString * billTitle;
@@ -45,10 +42,8 @@
                       @"subChannel":@[@{@"sub":@(PayChannelWxApp), @"img":@"wx", @"title":@"微信支付"},
                                       @{@"sub":@(PayChannelBCWXApp), @"img":@"wx", @"title":@"BC微信支付"},
                                       @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
+                                      @{@"sub":@(PayChannelBCAliApp), @"img":@"ali", @"title":@"BC支付宝"},
                                       @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
-                                      @{@"sub":@(PayChannelBCApp), @"img":@"beepay", @"title":@"BeePay"},
-                                      @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
-                                      @{@"sub":@(PayChannelPayPal), @"img":@"paypal", @"title":@"PayPal"},
                                       @{@"sub":@(PayChannelApplePayTest), @"img":@"apple", @"title":@"ApplePay"} //相关文档 http://help.beecloud.cn/hc/kb/article/177410/?from=draft
                                       ]},
                     @{@"channel":@"线下收款",
@@ -68,7 +63,6 @@
                                         @{@"sub":@(PayChannelBCWXApp), @"img":@"wx", @"title":@"BC微信支付"},
                                         @{@"sub":@(PayChannelAliApp), @"img":@"ali", @"title":@"支付宝"},
                                         @{@"sub":@(PayChannelUnApp), @"img":@"un", @"title":@"银联在线"},
-                                        @{@"sub":@(PayChannelBaiduApp), @"img":@"baidu", @"title":@"百度钱包"},
                                         @{@"sub":@(PayChannelApplePay), @"img":@"apple", @"title":@"ApplePay"}
                                         ]}];
     channelList = [NSMutableArray arrayWithArray:[BeeCloud getCurrentMode] ? sandbox : live];
@@ -126,76 +120,6 @@
     [BeeCloud sendBCReq:payReq];
 }
 
-#pragma mark - PayPal Pay
-/*
-- (void)doPayPal {
-    BCPayPalReq *payReq = [[BCPayPalReq alloc] init];
-    
-    _payPalConfig = [[PayPalConfiguration alloc] init];
-    _payPalConfig.acceptCreditCards = YES;
-    _payPalConfig.merchantName = @"Awesome Shirts, Inc.";
-    _payPalConfig.merchantPrivacyPolicyURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/privacy-full"];
-    _payPalConfig.merchantUserAgreementURL = [NSURL URLWithString:@"https://www.paypal.com/webapps/mpp/ua/useragreement-full"];
-    
-    _payPalConfig.languageOrLocale = [NSLocale preferredLanguages][0];
-    
-    _payPalConfig.payPalShippingAddressOption = PayPalShippingAddressOptionPayPal;
-    
-    PayPalItem *item1 = [PayPalItem itemWithName:@"Old jeans with holes"
-                                    withQuantity:2
-                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"84.99"]
-                                    withCurrency:@"USD"
-                                         withSku:@"Hip-00037"];
-    
-    PayPalItem *item2 = [PayPalItem itemWithName:@"Free rainbow patch"
-                                    withQuantity:1
-                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"0.00"]
-                                    withCurrency:@"USD"
-                                         withSku:@"Hip-00066"];
-    
-    PayPalItem *item3 = [PayPalItem itemWithName:@"Long-sleeve plaid shirt (mustache not included)"
-                                    withQuantity:1
-                                       withPrice:[NSDecimalNumber decimalNumberWithString:@"37.99"]
-                                    withCurrency:@"USD"
-                                         withSku:@"Hip-00291"];
-    
-    payReq.items = @[item1, item2, item3];
-    payReq.shipping = @"5.00";
-    payReq.tax = @"2.50";
-    payReq.shortDesc = billTitle;
-    payReq.viewController = self;
-    payReq.payConfig = _payPalConfig;
-    
-    [BeeCloud sendBCReq:payReq];
-    
-}
-
-#pragma mark - PayPal Verify
-- (void)doPayPalVerify {
-    BCPayPalVerifyReq *req = [[BCPayPalVerifyReq alloc] init];
-    req.payment = _completedPayment;
-    req.optional = @{@"key1":@"value1"};
-    [BeeCloud sendBCReq:req];
-}
-
-#pragma mark - PayPalPaymentDelegate
-
-- (void)payPalPaymentViewController:(PayPalPaymentViewController *)paymentViewController didCompletePayment:(PayPalPayment *)completedPayment {
-    NSLog(@"PayPal Payment Success! %@", completedPayment.description);
-    
-    _completedPayment = completedPayment;
-    
-    [self doPayPalVerify];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)payPalPaymentDidCancel:(PayPalPaymentViewController *)paymentViewController {
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
- */
-
 #pragma mark - BCPay回调
 
 - (void)onBeeCloudResp:(BCBaseResp *)resp {
@@ -206,14 +130,10 @@
             // 支付请求响应
             BCPayResp *tempResp = (BCPayResp *)resp;
             if (tempResp.resultCode == 0) {
-                BCPayReq *payReq = (BCPayReq *)resp.request;
-                //百度钱包比较特殊需要用户用获取到的orderInfo，调用百度钱包SDK发起支付
-                if (payReq.channel == PayChannelBaiduApp && ![BeeCloud getCurrentMode]) {
-                    [[BDWalletSDKMainManager getInstance] doPayWithOrderInfo:tempResp.paySource[@"orderInfo"] params:nil delegate:self];
-                } else {
+//                BCPayReq *payReq = (BCPayReq *)resp.request;
                     //微信、支付宝、银联支付成功
-                    [self showAlertView:resp.resultMsg];
-                }
+                [self showAlertView:resp.resultMsg];
+                
             } else {
                 //支付取消或者支付失败
                 [self showAlertView:[NSString stringWithFormat:@"%@ : %@",tempResp.resultMsg, tempResp.errDetail]];
@@ -417,6 +337,7 @@
             case PayChannelApplePayTest:
             case PayChannelBCApp:
             case PayChannelBCWXApp:
+            case PayChannelBCAliApp:
                 [self doPay:channel];
                 break;
             case PayChannelWxNative:

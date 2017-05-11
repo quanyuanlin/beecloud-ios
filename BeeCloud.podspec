@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
 
 	s.name         = 'BeeCloud'
-	s.version      = '3.6.2'
+	s.version      = '3.6.4'
 	s.summary      = 'BeeCloud 让支付更简单'
 	s.homepage     = 'http://beecloud.cn'
 	s.license      = 'MIT'
 	s.author       = { 'LacusRInz' => 'zhihaoq@beecloud.cn' }
 	s.platform     = :ios, '7.0'
-	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.6.2'}
+	s.source       = { :git => 'https://github.com/beecloud/beecloud-ios.git', :tag => 'v3.6.4'}
 	s.requires_arc = true
 	s.default_subspecs = "Core", "Alipay", "Wx", "UnionPay"
 	
@@ -49,34 +49,10 @@ Pod::Spec.new do |s|
 		apple.dependency 'BeeCloud/Core'
 	end
 
-	s.subspec 'PayPal' do |paypal|
-		paypal.frameworks = 'AudioToolbox','CoreLocation','MessageUI','CoreMedia','CoreVideo','Accelerate','AVFoundation'
-		paypal.vendored_libraries = 'BCPaySDK/Channel/PayPal/libPayPalMobile.a'
-		paypal.source_files = 'BCPaySDK/Channel/PayPal/PayPalAdapter/*.{h,m}', 'BCPaySDK/Channel/PayPal/*.h'
-		paypal.dependency 'BeeCloud/Core'
-	end
-
 	s.subspec 'Offline' do |offline|
 		offline.source_files = 'BCPaySDK/Channel/OfflinePay/**/*.{h,m}'
 		offline.requires_arc = true
 		offline.dependency 'BeeCloud/Core'
-	end
-
-	s.subspec 'Baidu' do |baidu|
-    baidu.frameworks = 'CoreTelephony', 'AddressBook', 'AddressBookUI', 'AudioToolbox', 'CoreAudio', 'CoreGraphics', 'ImageIO', 'MapKit', 'MessageUI', 'MobileCoreServices', 'QuartzCore'
-    baidu.source_files = 'BCPaySDK/Channel/Baidu/Dependency/**/*.{h,m}', 'BCPaySDK/Channel/Baidu/BaiduAdapter/*.{h,m}','BCPaySDK/Channel/Baidu/BDWalletSDK/*.{h,m}'
-    baidu.resource = 'BCPaySDK/Channel/Baidu/**/*.bundle'
-    baidu.vendored_libraries = 'BCPaySDK/Channel/Baidu/**/*.a'
-    baidu.dependency 'BeeCloud/Core'
-    end
-
-    s.subspec 'BCWXPay' do |bcWxPay|
-    	bcWxPay.frameworks = 'AVFoundation'
-		bcWxPay.vendored_libraries = 'BCPaySDK/Channel/BCWXPay/libSPaySDK.a'
-		bcWxPay.source_files = 'BCPaySDK/Channel/BCWXPay/BCWXPayAdapter/*.{h,m}', 'BCPaySDK/Channel/BCWXPay/include/*.h',
-		bcWxPay.resource = 'BCPaySDK/Channel/BCWXPay/**/*.bundle'	
-		bcWxPay.dependency 'BeeCloud/Wx'
-		bcWxPay.dependency 'MBProgressHUD', '~> 0.9.1'
 	end
 	
 end
