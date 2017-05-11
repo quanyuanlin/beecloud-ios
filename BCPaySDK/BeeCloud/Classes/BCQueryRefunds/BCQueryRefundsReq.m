@@ -80,7 +80,7 @@
     resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     resp.results = [self parseRefundsResults:response];
     resp.count = resp.results.count;
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
     return resp;
 }
 

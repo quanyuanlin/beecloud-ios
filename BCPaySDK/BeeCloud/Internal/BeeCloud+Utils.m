@@ -65,29 +65,21 @@
 #pragma mark - Offline Pay
 
 - (void)reqOfflinePay:(id)req {
-    [BeeCloudAdapter beeCloudOfflinePay:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterOffline, nil]];
+    [BeeCloudAdapter bcOfflinePay:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterOffline, nil]];
 }
 
 #pragma mark - OffLine BillStatus
 
 - (void)reqOfflineBillStatus:(id)req {
-    [BeeCloudAdapter beeCloudOfflineStatus:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterOffline, nil]];
+    [BeeCloudAdapter bcOfflineStatus:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterOffline, nil]];
 }
 
 #pragma mark - OffLine BillRevert
 
 - (void)reqOfflineBillRevert:(id)req {
-    [BeeCloudAdapter beeCloudOfflineRevert:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterOffline, nil]];
+    [BeeCloudAdapter bcOfflineRevert:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterOffline, nil]];
 }
 
-#pragma mark PayPal
 
-- (void)reqPayPal:(BCPayPalReq *)req {
-    [BeeCloudAdapter beeCloudPayPal:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterPayPal,nil]];
-}
-
-- (void)reqPayPalVerify:(BCPayPalVerifyReq *)req {
-    [BeeCloudAdapter beeCloudPayPalVerify:[NSMutableDictionary dictionaryWithObjectsAndKeys:req, kAdapterPayPal, nil]];
-}
 
 @end

@@ -12,7 +12,7 @@
 
 @implementation BeeCloudAdapter
 
-+ (BOOL)beeCloudRegisterWeChat:(NSString *)appid {
++ (BOOL)bcRegisterWeChat:(NSString *)appid {
     id adapter = [[NSClassFromString(kAdapterWXPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(registerWeChat:)]) {
         return [adapter registerWeChat:appid];
@@ -20,7 +20,7 @@
     return NO;
 }
 
-+ (BOOL)beeCloudIsWXAppInstalled {
++ (BOOL)bcIsWXAppInstalled {
     id adapter = [[NSClassFromString(kAdapterWXPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(isWXAppInstalled)]) {
         return [adapter isWXAppInstalled];
@@ -28,14 +28,7 @@
     return NO;
 }
 
-+ (void)beeCloudRegisterPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox {
-    id adapter = [[NSClassFromString(kAdapterPayPal) alloc] init];
-    if (adapter && [adapter respondsToSelector:@selector(registerPayPal:secret:sandbox:)]) {
-        [adapter registerPayPal:clientID secret:secret sandbox:isSandbox];
-    }
-}
-
-+ (BOOL)beeCloud:(NSString *)object handleOpenUrl:(NSURL *)url {
++ (BOOL)bc:(NSString *)object handleOpenUrl:(NSURL *)url {
     id adapter = [[NSClassFromString(object) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(handleOpenUrl:)]) {
         return [adapter handleOpenUrl:url];
@@ -43,7 +36,7 @@
     return NO;
 }
 
-+ (BOOL)beeCloudWXPay:(NSMutableDictionary *)dic {
++ (BOOL)bcWXPay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterWXPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(wxPay:)]) {
          return [adapter wxPay:dic];
@@ -51,7 +44,7 @@
     return NO;
 }
 
-+ (BOOL)beeCloudAliPay:(NSMutableDictionary *)dic {
++ (BOOL)bcAliPay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterAliPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(aliPay:)]) {
         return [adapter aliPay:dic];
@@ -59,7 +52,7 @@
     return NO;
 }
 
-+ (BOOL)beeCloudUnionPay:(NSMutableDictionary *)dic {
++ (BOOL)bcUnionPay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterUnionPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(unionPay:)]) {
         return [adapter unionPay:dic];
@@ -75,7 +68,7 @@
     return NO;
 }
 
-+ (BOOL)beeCloudApplePay:(NSMutableDictionary *)dic {
++ (BOOL)bcApplePay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterApplePay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(applePay:)]) {
         return [adapter applePay:dic];
@@ -83,7 +76,7 @@
     return NO;
 }
 
-+ (NSString *)beeCloudBaiduPay:(NSMutableDictionary *)dic {
++ (NSString *)bcBaiduPay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterBaidu) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(baiduPay:)]) {
         return [adapter baiduPay:dic];
@@ -99,54 +92,39 @@
     return NO;
 }
 
-+ (void)beeCloudPayPal:(NSMutableDictionary *)dic {
-    id adapter = [[NSClassFromString(kAdapterPayPal) alloc] init];
-    if (adapter && [adapter respondsToSelector:@selector(payPal:)]) {
-        [adapter payPal:dic];
-    }
-}
-
-+ (void)beeCloudPayPalVerify:(NSMutableDictionary *)dic {
-    id adapter = [[NSClassFromString(kAdapterPayPal) alloc] init];
-    if (adapter && [adapter respondsToSelector:@selector(payPalVerify:)]) {
-        [adapter payPalVerify:dic];
-    }
-}
-
-+ (void)beeCloudOfflinePay:(NSMutableDictionary *)dic {
++ (void)bcOfflinePay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterOffline) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(offlinePay:)]) {
         [adapter offlinePay:dic];
     }
 }
 
-+ (void)beeCloudOfflineStatus:(NSMutableDictionary *)dic {
++ (void)bcOfflineStatus:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterOffline) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(offlineStatus:)]) {
         [adapter offlineStatus:dic];
     }
 }
 
-+ (void)beeCloudOfflineRevert:(NSMutableDictionary *)dic {
++ (void)bcOfflineRevert:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterOffline) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(offlineRevert:)]) {
         [adapter offlineRevert:dic];
     }
 }
 
-+ (void)beeCloudInitBCWXPay:(NSString *)wxAppId {
++ (void)bcInitBCWXPay:(NSString *)wxAppId {
     id adapter = [[NSClassFromString(kAdapterBCWXPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(initBCWXPay:)]) {
         [adapter initBCWXPay:wxAppId];
     }
 }
 
-+ (void)beeCloudBCWXPay:(NSMutableDictionary *)dic {
++ (void)bcBCWXPay:(NSMutableDictionary *)dic {
     id adapter = [[NSClassFromString(kAdapterBCWXPay) alloc] init];
     if (adapter && [adapter respondsToSelector:@selector(bcWXPay:)]) {
         [adapter bcWXPay:dic];
     }
 }
-
 
 @end

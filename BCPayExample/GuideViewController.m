@@ -8,6 +8,8 @@
 
 #import "GuideViewController.h"
 #import "ViewController.h"
+#import "RedPacketViewController.h"
+
 
 @interface GuideViewController ()
 
@@ -39,5 +41,11 @@
         viewController.actionType = 3;
     }
 }
+
+- (IBAction)showRedPacket:(id)sender {
+    RedPacketViewController *redpacket = [[RedPacketViewController alloc] init];
+    [self.navigationController pushViewController:redpacket animated:YES];
+}
+
 
 @end

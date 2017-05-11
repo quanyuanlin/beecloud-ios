@@ -100,7 +100,7 @@
     resp.resultMsg = strMsg;
     resp.errDetail = payResult.errorDescription.isValid?payResult.errorDescription:strMsg;
     resp.paySource = @{@"otherInfo": payResult.otherInfo.isValid?payResult.otherInfo:@""};
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
     
 }
 

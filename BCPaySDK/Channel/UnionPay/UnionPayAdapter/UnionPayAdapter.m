@@ -62,7 +62,7 @@
     resp.resultCode = errcode;
     resp.resultMsg = strMsg;
     resp.errDetail = strMsg;
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
 }
 
 @end

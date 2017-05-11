@@ -33,20 +33,14 @@
 @property (nonatomic, assign) BOOL sandbox;
 
 /**
- *  PayPal client ID
+ *  ali redpacket appkey
  */
-@property (nonatomic, strong) NSString *payPalClientID;
+@property (nonatomic, strong) NSString *redPacketAppKey;
 
 /**
- *  PayPal secret
+ ali redpacket appsecret
  */
-@property (nonatomic, strong) NSString *payPalSecret;
-
-/**
- *  PayPal Sandbox Client ID
- */
-@property (nonatomic, assign) BOOL isPayPalSandbox;
-
+@property (nonatomic, strong) NSString *redPacketAppSecret;
 
 /**
  *  Default network timeout in seconds for all network requests. Change this value via [BeeCloud setNetworkTimeout:];
@@ -73,6 +67,6 @@
 /**
  *  BeeCloud response
  */
-+ (BOOL)beeCloudDoResponse;
++ (BOOL)bcDoResponse;
 
 @end

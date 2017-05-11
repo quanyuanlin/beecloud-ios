@@ -76,7 +76,7 @@
     resp.resultMsg = strMsg;
     resp.errDetail = strMsg;
     resp.paySource = resultDic;
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
 }
 
 @end

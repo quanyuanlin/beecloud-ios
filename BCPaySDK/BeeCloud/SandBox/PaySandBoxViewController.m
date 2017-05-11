@@ -160,7 +160,7 @@
     resp.resultCode = resultCode;
     resp.resultMsg = resultMsg;
     resp.errDetail = resultMsg;
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
 }
 
 - (void)back {

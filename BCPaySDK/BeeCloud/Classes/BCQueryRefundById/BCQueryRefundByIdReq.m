@@ -66,7 +66,7 @@
     if (refund) {
         resp.refund = [[BCQueryRefundResult alloc] initWithResult:refund];
     }
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
     return resp;
 }
 

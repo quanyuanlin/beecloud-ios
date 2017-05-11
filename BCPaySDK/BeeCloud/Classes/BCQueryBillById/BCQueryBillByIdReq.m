@@ -66,7 +66,7 @@
         if (bill) {
             resp.bill = [[BCQueryBillResult alloc] initWithResult:bill];
         }
-        [BCPayCache beeCloudDoResponse];
+        [BCPayCache bcDoResponse];
         return resp;
     }
     return nil;

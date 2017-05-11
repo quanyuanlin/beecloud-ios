@@ -28,11 +28,11 @@
 }
 
 - (void)test_beecloudDoResponse {
-    XCTAssertFalse([BCPayCache beeCloudDoResponse]);
+    XCTAssertFalse([BCPayCache bcDoResponse]);
     
     [BeeCloud setBeeCloudDelegate:self];
     
-    XCTAssertTrue([BCPayCache beeCloudDoResponse]);
+    XCTAssertTrue([BCPayCache bcDoResponse]);
 }
 
 - (void)onBeeCloudResp:(BCBaseResp *)resp {

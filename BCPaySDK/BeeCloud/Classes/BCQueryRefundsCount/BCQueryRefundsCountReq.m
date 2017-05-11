@@ -73,7 +73,7 @@
     resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     resp.count = [response integerValueForKey:@"count" defaultValue:0];
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
     return resp;
 }
 

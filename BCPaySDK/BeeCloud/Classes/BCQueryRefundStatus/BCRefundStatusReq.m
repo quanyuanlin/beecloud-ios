@@ -59,7 +59,7 @@
     resp.resultMsg = [dic stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [dic stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
     resp.refundStatus = [dic stringValueForKey:@"refund_status" defaultValue:@""];
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
     return resp;
 }
 

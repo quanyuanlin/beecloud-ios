@@ -61,8 +61,12 @@
 }
 
 + (BCPayUrlType)getUrlType:(NSURL *)url {
-    if ([url.host isEqualToString:@"safepay"])
+    if ([url.host isEqualToString:@"safepay"]) {
+        if ([url.scheme isEqualToString:[NSString stringWithFormat:@"rp%@",[BCPayCache sharedInstance].redPacketAppKey]]) {
+            return BCPayUrlRedPacket;
+        }
         return BCPayUrlAlipay;
+    }
     else if ([url.scheme hasPrefix:@"wx"] && [url.host isEqualToString:@"pay"])
         return BCPayUrlWeChat;
     else if ([url.host isEqualToString:@"uppayresult"]) {
@@ -154,16 +158,6 @@
         case PayChannelApplePayTest:
             cType = @"APPLE_TEST";
             break;
-#pragma mark PayChannel_PayPal
-        case PayChannelPayPal:
-            cType = @"PAYPAL";
-            break;
-        case PayChannelPayPalLive:
-            cType = @"PAYPAL_LIVE";
-            break;
-        case PayChannelPayPalSandbox:
-            cType = @"PAYPAL_SANDBOX";
-            break;
 #pragma mark PayChannel_Baidu
         case PayChannelBaidu:
             cType = @"BD";
@@ -190,7 +184,7 @@
     resp.resultCode = BCErrCodeCommon;
     resp.resultMsg = errMsg;
     resp.errDetail = errMsg;
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
     return resp;
 }
 
@@ -199,7 +193,7 @@
     resp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
     resp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
     resp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
     return resp;
 }
 

@@ -57,21 +57,7 @@
     if (!wxAppID.isValid) {
         return NO;
     }
-    return [BeeCloudAdapter beeCloudRegisterWeChat:wxAppID];
-}
-
-+ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox {
-    
-    if(clientID.isValid && secret.isValid) {
-        BCPayCache *instance = [BCPayCache sharedInstance];
-        instance.payPalClientID = clientID;
-        instance.payPalSecret = secret;
-        instance.isPayPalSandbox = isSandbox;
-        
-        [BeeCloudAdapter beeCloudRegisterPayPal:clientID secret:secret sandbox:isSandbox];
-        return YES;
-    }
-    return NO;
+    return [BeeCloudAdapter bcRegisterWeChat:wxAppID];
 }
 
 + (void)setBeeCloudDelegate:(id<BeeCloudDelegate>)delegate {
@@ -83,14 +69,19 @@
 }
 
 + (BOOL)handleOpenUrl:(NSURL *)url {
-    if (BCPayUrlWeChat == [BCPayUtil getUrlType:url]) {
-        return [BeeCloudAdapter beeCloud:kAdapterWXPay handleOpenUrl:url];
-    } else if (BCPayUrlAlipay == [BCPayUtil getUrlType:url]) {
-        return [BeeCloudAdapter beeCloud:kAdapterAliPay handleOpenUrl:url];
-    } else if (BCPayUrlUnionPay == [BCPayUtil getUrlType:url]) {
-        return [BeeCloudAdapter beeCloud:kAdapterUnionPay handleOpenUrl:url];
+    BCPayUrlType type = [BCPayUtil getUrlType:url];
+    if (BCPayUrlWeChat == type) {
+        return [BeeCloudAdapter bc:kAdapterWXPay handleOpenUrl:url];
+    } else if (BCPayUrlAlipay == type) {
+        return [BeeCloudAdapter bc:kAdapterAliPay handleOpenUrl:url];
+    } else if (BCPayUrlUnionPay == type) {
+        return [BeeCloudAdapter bc:kAdapterUnionPay handleOpenUrl:url];
     }
     return NO;
+}
+
++ (BCPayUrlType)getUrlType:(NSURL *)url {
+    return [BCPayUtil getUrlType:url];
 }
 
 + (BOOL)canMakeApplePayments:(NSUInteger)cardType {
@@ -110,8 +101,8 @@
 }
 
 + (void)initBCWXPay:(NSString *)wxAppId {
-    [BeeCloudAdapter beeCloudRegisterWeChat:wxAppId];
-    [BeeCloudAdapter beeCloudInitBCWXPay:wxAppId];
+    [BeeCloudAdapter bcRegisterWeChat:wxAppId];
+    [BeeCloudAdapter bcInitBCWXPay:wxAppId];
 }
 
 + (BOOL)sendBCReq:(BCBaseReq *)req {
@@ -145,12 +136,6 @@
         case BCObjsTypeRefundStatusReq://查询退款状态，目前只支持微信、百度
             [instance reqRefundStatus:(BCRefundStatusReq *)req];
             break;
-        case BCObjsTypePayPal:
-            [instance  reqPayPal:(BCPayPalReq *)req];
-            break;
-        case BCObjsTypePayPalVerify:
-            [instance reqPayPalVerify:(BCPayPalVerifyReq *)req];
-            break;
         case BCObjsTypeOfflinePayReq:
             [instance reqOfflinePay:req];
             break;
@@ -166,5 +151,7 @@
     }
     return bSend;
 }
+
+
 
 @end

@@ -23,7 +23,8 @@ static NSString * const kKeyResponseCodeUrl = @"code_url";
 static NSString * const KKeyResponsePayResult = @"pay_result";
 static NSString * const kKeyResponseRevertResult = @"revert_status";
 
-static NSString * const kBCHost = @"https://api.beecloud.cn";
+//static NSString * const kBCHost = @"https://api.beecloud.cn";
+static NSString * const kBCHost = @"http://123.56.82.71:8080";
 
 static NSString * const reqApiVersion = @"/2/rest";
 
@@ -43,10 +44,6 @@ static NSString * const kRestApiOfflinePay = @"%@%@/offline/bill";
 static NSString * const kRestApiOfflineBillStatus = @"%@%@/offline/bill/status";
 static NSString * const kRestApiOfflineBillRevert = @"%@%@/offline/bill/";
 
-//paypal accesstoken
-static NSString * const kPayPalAccessTokenProduction = @"https://api.paypal.com/v1/oauth2/token";
-static NSString * const kPayPalAccessTokenSandbox = @"https://api.sandbox.paypal.com/v1/oauth2/token";
-
 //sandbox
 static NSString * const kRestApiSandboxNotify = @"%@%@/notify/";
 
@@ -55,11 +52,11 @@ static NSString * const kAdapterWXPay = @"WXPayAdapter";
 static NSString * const kAdapterAliPay = @"AliPayAdapter";
 static NSString * const kAdapterUnionPay = @"UnionPayAdapter";
 static NSString * const kAdapterApplePay = @"ApplePayAdapter";
-static NSString * const kAdapterPayPal = @"PayPalAdapter";
 static NSString * const kAdapterOffline = @"OfflineAdapter";
 static NSString * const kAdapterBaidu = @"BaiduAdapter";
 static NSString * const kAdapterSandbox = @"BCSandboxAdapter";
 static NSString * const kAdapterBCWXPay = @"BCWXPayAdapter";
+static NSString * const kAdapterRedPacket = @"RedPacketAdapter";
 
 /**
  *  BCPay URL type for handling URLs.
@@ -80,9 +77,12 @@ typedef NS_ENUM(NSInteger, BCPayUrlType) {
     /**
      *  UnionPay.
      */
-    BCPayUrlUnionPay
+    BCPayUrlUnionPay,
+    /**
+     *  AliRedPacket.
+     */
+    BCPayUrlRedPacket
 };
-
 
 typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelNone = 0,
@@ -113,10 +113,6 @@ typedef NS_ENUM(NSInteger, PayChannel) {
     PayChannelUnWeb,//银联网页
     PayChannelApplePay,
     PayChannelApplePayTest,
-    
-    PayChannelPayPal = 40,
-    PayChannelPayPalLive,
-    PayChannelPayPalSandbox,
     
     PayChannelBaidu = 50,
     PayChannelBaiduApp,
@@ -165,9 +161,6 @@ typedef NS_ENUM(NSInteger, BCObjsType) {
     BCObjsTypeBaseResults = 300,
     BCObjsTypeBillResults,
     BCObjsTypeRefundResults,
-    
-    BCObjsTypePayPal = 400,
-    BCObjsTypePayPalVerify,
     
 };
 

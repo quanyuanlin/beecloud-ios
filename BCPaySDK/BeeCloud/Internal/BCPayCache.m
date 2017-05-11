@@ -22,9 +22,7 @@
         instance.appSecret = nil;
         instance.sandbox = NO;
         
-        instance.payPalClientID = nil;
-        instance.payPalSecret = nil;
-        instance.isPayPalSandbox = NO;
+        instance.redPacketAppKey = @"";
         
         instance.bcResp = [[BCBaseResp alloc] init];
         
@@ -35,7 +33,7 @@
     return instance;
 }
 
-+ (BOOL)beeCloudDoResponse {
++ (BOOL)bcDoResponse {
     id<BeeCloudDelegate> delegate = [BeeCloud getBeeCloudDelegate];
     if (delegate && [delegate respondsToSelector:@selector(onBeeCloudResp:)]) {
         [delegate onBeeCloudResp:[BCPayCache sharedInstance].bcResp];

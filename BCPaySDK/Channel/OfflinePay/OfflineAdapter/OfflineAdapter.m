@@ -80,7 +80,7 @@
                       resp.codeurl = [source stringValueForKey:kKeyResponseCodeUrl defaultValue:@""];
                   }
               }
-              [BCPayCache beeCloudDoResponse];
+              [BCPayCache bcDoResponse];
               
           } failure:^(NSURLSessionTask *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
@@ -124,7 +124,7 @@
               if (resp.resultCode == 0) {
                   resp.payResult = [response boolValueForKey:KKeyResponsePayResult defaultValue:NO];
               }
-              [BCPayCache beeCloudDoResponse];
+              [BCPayCache bcDoResponse];
           } failure:^(NSURLSessionTask *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
@@ -167,7 +167,7 @@
               if (resp.resultCode == 0) {
                   resp.revertStatus = [response boolValueForKey:kKeyResponseRevertResult defaultValue:NO];
               }
-              [BCPayCache beeCloudDoResponse];
+              [BCPayCache bcDoResponse];
           } failure:^(NSURLSessionTask *operation, NSError *error) {
               [weakSelf doErrorResponse:kNetWorkError];
           }];
@@ -206,7 +206,7 @@
     resp.resultCode = BCErrCodeCommon;
     resp.resultMsg = errMsg;
     resp.errDetail = errMsg;
-    [BCPayCache beeCloudDoResponse];
+    [BCPayCache bcDoResponse];
 }
 
 @end

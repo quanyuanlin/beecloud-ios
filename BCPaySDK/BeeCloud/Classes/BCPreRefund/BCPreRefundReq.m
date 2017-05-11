@@ -61,7 +61,7 @@
                   [BCPayCache sharedInstance].bcResp.resultCode = [response integerValueForKey:kKeyResponseResultCode defaultValue:BCErrCodeCommon];
                   [BCPayCache sharedInstance].bcResp.resultMsg = [response stringValueForKey:kKeyResponseResultMsg defaultValue:kUnknownError];
                   [BCPayCache sharedInstance].bcResp.errDetail = [response stringValueForKey:kKeyResponseErrDetail defaultValue:kUnknownError];
-                  [BCPayCache beeCloudDoResponse];
+                  [BCPayCache bcDoResponse];
               }
           } failure:^(NSURLSessionTask *operation, NSError *error) {
               [BCPayUtil doErrorResponse:kNetWorkError];

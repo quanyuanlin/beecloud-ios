@@ -87,8 +87,7 @@
 - (BOOL)doPayAction:(NSDictionary *)response {
     BOOL bSendPay = NO;
     if (response) {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:
-                                    (NSDictionary *)response];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)response];
         if (self.channel == PayChannelAliApp || self.channel == PayChannelUnApp || self.channel == PayChannelBCAliApp) {
             [dic setObject:self.scheme forKey:@"scheme"];
         }
@@ -103,23 +102,23 @@
         switch (self.channel) {
             case PayChannelWxApp:
             case PayChannelBCWXApp:
-                bSendPay = [BeeCloudAdapter beeCloudWXPay:dic];
+                bSendPay = [BeeCloudAdapter bcWXPay:dic];
                 break;
             case PayChannelAliApp:
             case PayChannelBCAliApp:
-                bSendPay = [BeeCloudAdapter beeCloudAliPay:dic];
+                bSendPay = [BeeCloudAdapter bcAliPay:dic];
                 break;
             case PayChannelBCApp:
             case PayChannelUnApp:
-                bSendPay = [BeeCloudAdapter beeCloudUnionPay:dic];
+                bSendPay = [BeeCloudAdapter bcUnionPay:dic];
                 break;
             case PayChannelBaiduApp:
-                bSendPay = [BeeCloudAdapter beeCloudBaiduPay:dic].isValid;
+                bSendPay = [BeeCloudAdapter bcBaiduPay:dic].isValid;
                 break;
             case PayChannelApplePayTest:
             case PayChannelApplePay:
                 NSLog(@"applePay %@", dic);
-                bSendPay = [BeeCloudAdapter beeCloudApplePay:dic];
+                bSendPay = [BeeCloudAdapter bcApplePay:dic];
                 break;
             default:
                 break;
@@ -160,7 +159,7 @@
     } else if ([BeeCloud getCurrentMode] && (self.viewController == nil)) {
         [BCPayUtil doErrorResponse:@"viewController 不合法，将导致无法正常支付"];
         return NO;
-    } else if (((self.channel == PayChannelWxApp || self.channel == PayChannelBCWXApp) && ![BeeCloudAdapter beeCloudIsWXAppInstalled]) && ![BeeCloud getCurrentMode]) {
+    } else if (((self.channel == PayChannelWxApp || self.channel == PayChannelBCWXApp) && ![BeeCloudAdapter bcIsWXAppInstalled]) && ![BeeCloud getCurrentMode]) {
         [BCPayUtil doErrorResponse:@"未找到微信客户端，请先下载安装"];
         return NO;
     } else if ((self.channel == PayChannelApplePay || self.channel == PayChannelApplePayTest) && ![BeeCloud canMakeApplePayments:self.cardType]) {

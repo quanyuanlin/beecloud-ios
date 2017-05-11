@@ -52,17 +52,6 @@
 + (BOOL)initWeChatPay:(NSString *)wxAppID;
 
 /**
- *  init PayPal
- *
- *  @param clientID paypal clientId
- *  @param secret   paypal secret
- *  @param isSandbox 是否是sandbox环境
- *
- *  @return  初始化成功返回YES; 若clientID或者secret不合法，初始化失败返回NO
- */
-+ (BOOL)initPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox;
-
-/**
  * 处理通过URL启动App时传递的数据。需要在application:openURL:sourceApplication:annotation:中调用。
  *
  * @param url 启动第三方应用时传递过来的URL
@@ -70,6 +59,15 @@
  * @return 成功返回YES，失败返回NO。
  */
 + (BOOL)handleOpenUrl:(NSURL *)url;
+
+
+/**
+ 获取url的类别
+
+ @param url 回调的url
+ @return 返回可被识别的类型枚举变量
+ */
++ (BCPayUrlType)getUrlType:(NSURL *)url;
 
 /**
  *  设置接收消息的对象

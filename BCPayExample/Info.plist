@@ -30,6 +30,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>payDemo</string>
+				<string>rp484bf78a04f94ab9bcee8f4302c2bdcd</string>
 			</array>
 		</dict>
 		<dict>
@@ -38,6 +39,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>wxf1aa465362b4c8f1</string>
+				<string>wx419f04c4a731303d</string>
 			</array>
 		</dict>
 	</array>

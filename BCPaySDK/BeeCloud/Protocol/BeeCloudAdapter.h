@@ -11,27 +11,23 @@
 
 @interface BeeCloudAdapter : NSObject
 
-+ (BOOL)beeCloudRegisterWeChat:(NSString *)appid;
-+ (BOOL)beeCloudIsWXAppInstalled;
-+ (void)beeCloudRegisterPayPal:(NSString *)clientID secret:(NSString *)secret sandbox:(BOOL)isSandbox;
-+ (BOOL)beeCloud:(NSString *)object handleOpenUrl:(NSURL *)url;
++ (BOOL)bcRegisterWeChat:(NSString *_Nonnull)appid;
++ (BOOL)bcIsWXAppInstalled;
++ (BOOL)bc:(NSString * _Nonnull)object handleOpenUrl:(NSURL *_Nonnull)url;
 
-+ (BOOL)beeCloudWXPay:(NSMutableDictionary *)dic;
-+ (BOOL)beeCloudAliPay:(NSMutableDictionary *)dic;
-+ (BOOL)beeCloudUnionPay:(NSMutableDictionary *)dic;
-+ (BOOL)beeCloudApplePay:(NSMutableDictionary *)dic;
-+ (NSString *)beeCloudBaiduPay:(NSMutableDictionary *)dic;
++ (BOOL)bcWXPay:(NSMutableDictionary *_Nonnull)dic;
++ (BOOL)bcAliPay:(NSMutableDictionary *_Nonnull)dic;
++ (BOOL)bcUnionPay:(NSMutableDictionary *_Nonnull)dic;
++ (BOOL)bcApplePay:(NSMutableDictionary *_Nonnull)dic;
++ (NSString *_Nonnull)bcBaiduPay:(NSMutableDictionary *_Nonnull)dic;
 + (BOOL)beecloudSandboxPay;
 + (BOOL)beecloudCanMakeApplePayments:(NSUInteger)cardType;
 
-+ (void)beeCloudPayPal:(NSMutableDictionary *)dic;
-+ (void)beeCloudPayPalVerify:(NSMutableDictionary *)dic;
-+ (void)beeCloudOfflinePay:(NSMutableDictionary *)dic;
-+ (void)beeCloudOfflineStatus:(NSMutableDictionary *)dic;
-+ (void)beeCloudOfflineRevert:(NSMutableDictionary *)dic;
++ (void)bcOfflinePay:(NSMutableDictionary *_Nonnull)dic;
++ (void)bcOfflineStatus:(NSMutableDictionary *_Nonnull)dic;
++ (void)bcOfflineRevert:(NSMutableDictionary *_Nonnull)dic;
 
-+ (void)beeCloudInitBCWXPay:(NSString *)wxAppId;
-+ (void)beeCloudBCWXPay:(NSMutableDictionary *)dic;
-
++ (void)bcInitBCWXPay:(NSString *_Nonnull)wxAppId;
++ (void)bcBCWXPay:(NSMutableDictionary *_Nonnull)dic;
 
 @end
